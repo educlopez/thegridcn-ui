@@ -220,14 +220,6 @@ export default function Home() {
                   <div className="absolute inset-0 -z-10 translate-y-full bg-primary transition-transform group-hover:translate-y-0" />
                 </Link>
               )}
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded border border-border/50 bg-card/30 px-10 py-4 font-mono text-sm font-bold tracking-wider text-foreground backdrop-blur-sm transition-all hover:border-primary/50 hover:bg-card/50"
-              >
-                VIEW SOURCE
-              </a>
             </div>
 
             {/* Install command */}
