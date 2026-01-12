@@ -39,11 +39,13 @@ Controls whether the components showcase page is accessible.
 - Leave unset or set to any other value to disable (default: disabled)
 
 When disabled:
+
 - The `/components` route will show a 404 page
 - Navigation links to the components page will be hidden
 - Useful for hiding the components page during initial deployment
 
 **Example for Vercel:**
+
 1. Go to your project settings in Vercel
 2. Navigate to Environment Variables
 3. Add `NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE` with value `"true"` to enable
