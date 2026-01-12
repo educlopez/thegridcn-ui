@@ -19,10 +19,11 @@ export function TronHeader({ navItems }: TronHeaderProps) {
   const { theme } = useTheme()
   const currentTheme = themes.find((t) => t.id === theme)
   const pathname = usePathname()
+  const isComponentsEnabled = process.env.NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE === "true"
 
   const defaultNavItems: NavItem[] = [
     { href: "/", label: "HOME" },
-    { href: "/components", label: "COMPONENTS" },
+    ...(isComponentsEnabled ? [{ href: "/components", label: "COMPONENTS" }] : []),
   ]
 
   const items = navItems || defaultNavItems
@@ -56,16 +57,16 @@ export function TronHeader({ navItems }: TronHeaderProps) {
                 <div className="absolute -bottom-2 -left-2 h-3 w-3 border-b-2 border-l-2 border-primary/60 transition-colors group-hover:border-primary" />
                 <div className="absolute -bottom-2 -right-2 h-3 w-3 border-b-2 border-r-2 border-primary/60 transition-colors group-hover:border-primary" />
 
-                <h1 className="px-2 py-1 font-display text-xl font-bold tracking-[0.2em] text-primary md:text-2xl">
-                  ARES
+                <h1 className="px-2 py-1 font-display text-sm font-bold tracking-[0.2em] text-primary md:text-base">
+                  THE GRIDCN
                 </h1>
               </Link>
 
               {/* Status indicator */}
               <div className="hidden items-center gap-2 md:flex">
                 <div
-                  className="h-2 w-2 animate-pulse rounded-full bg-primary"
-                  style={{ boxShadow: `0 0 10px ${currentTheme?.color}` }}
+                  className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary"
+                  style={{ boxShadow: `0 0 8px ${currentTheme?.color}` }}
                 />
                 <span className="font-mono text-[10px] tracking-widest text-muted-foreground">
                   SYSTEM ONLINE
@@ -102,17 +103,17 @@ export function TronHeader({ navItems }: TronHeaderProps) {
             <div className="flex items-center gap-4">
               {/* Current theme badge */}
               <div
-                className="hidden items-center gap-2 rounded border px-3 py-1.5 md:flex"
+                className="hidden items-center gap-1.5 rounded border px-2.5 py-1 md:flex"
                 style={{
                   borderColor: `${currentTheme?.color}50`,
                   backgroundColor: `${currentTheme?.color}10`,
                 }}
               >
                 <span
-                  className="h-2 w-2 rounded-full"
+                  className="h-1.5 w-1.5 rounded-full"
                   style={{
                     backgroundColor: currentTheme?.color,
-                    boxShadow: `0 0 8px ${currentTheme?.color}`,
+                    boxShadow: `0 0 6px ${currentTheme?.color}`,
                   }}
                 />
                 <span className="font-mono text-[10px] tracking-wider" style={{ color: currentTheme?.color }}>
@@ -123,12 +124,14 @@ export function TronHeader({ navItems }: TronHeaderProps) {
               <ThemeSwitcherCompact />
 
               {/* Mobile menu */}
-              <Link
-                href="/components"
-                className="rounded border border-primary/50 px-3 py-1.5 font-mono text-xs tracking-wider text-primary transition-colors hover:bg-primary/10 lg:hidden"
-              >
-                MENU
-              </Link>
+              {isComponentsEnabled && (
+                <Link
+                  href="/components"
+                  className="rounded border border-primary/50 px-3 py-1.5 font-mono text-xs tracking-wider text-primary transition-colors hover:bg-primary/10 lg:hidden"
+                >
+                  MENU
+                </Link>
+              )}
             </div>
           </div>
         </div>

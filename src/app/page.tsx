@@ -120,6 +120,8 @@ function FeatureCard({
 export default function Home() {
   const { theme } = useTheme();
   const currentTheme = themes.find((t) => t.id === theme);
+  const isComponentsEnabled =
+    process.env.NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE === "true";
 
   return (
     <div className="relative min-h-screen bg-background">
@@ -186,13 +188,13 @@ export default function Home() {
                   CLASSIFIED PROJECT
                 </div>
                 <h1
-                  className="font-display text-7xl font-black tracking-[0.15em] md:text-9xl lg:text-[10rem]"
+                  className="font-display text-6xl font-black tracking-[0.15em] md:text-8xl lg:text-[9rem]"
                   style={{
                     color: currentTheme?.color,
                     textShadow: `0 0 80px ${currentTheme?.color}50, 0 0 160px ${currentTheme?.color}30`,
                   }}
                 >
-                  ARES
+                  THE GRIDCN
                 </h1>
                 <div className="mt-4 font-mono text-sm tracking-[0.4em] text-primary md:text-base">
                   TRON THEME SYSTEM FOR SHADCN/UI
@@ -209,13 +211,15 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="mb-10 flex flex-wrap justify-center gap-4">
-              <Link
-                href="/components"
-                className="group relative overflow-hidden rounded border-2 border-primary bg-primary/20 px-10 py-4 font-mono text-sm font-bold tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_40px_var(--primary)]"
-              >
-                <span className="relative z-10">ENTER THE GRID</span>
-                <div className="absolute inset-0 -z-10 translate-y-full bg-primary transition-transform group-hover:translate-y-0" />
-              </Link>
+              {isComponentsEnabled && (
+                <Link
+                  href="/components"
+                  className="group relative overflow-hidden rounded border-2 border-primary bg-primary/20 px-10 py-4 font-mono text-sm font-bold tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_40px_var(--primary)]"
+                >
+                  <span className="relative z-10">ENTER THE GRID</span>
+                  <div className="absolute inset-0 -z-10 translate-y-full bg-primary transition-transform group-hover:translate-y-0" />
+                </Link>
+              )}
               <a
                 href="https://github.com"
                 target="_blank"
@@ -549,12 +553,14 @@ export default function Home() {
                   Explore all components, customize themes, and build immersive
                   digital experiences.
                 </p>
-                <Link
-                  href="/components"
-                  className="group relative inline-flex overflow-hidden rounded border-2 border-primary bg-primary px-12 py-4 font-mono text-sm font-bold tracking-wider text-primary-foreground transition-all hover:shadow-[0_0_40px_var(--primary)]"
-                >
-                  <span className="relative z-10">EXPLORE COMPONENTS</span>
-                </Link>
+                {isComponentsEnabled && (
+                  <Link
+                    href="/components"
+                    className="group relative inline-flex overflow-hidden rounded border-2 border-primary bg-primary px-12 py-4 font-mono text-sm font-bold tracking-wider text-primary-foreground transition-all hover:shadow-[0_0_40px_var(--primary)]"
+                  >
+                    <span className="relative z-10">EXPLORE COMPONENTS</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -565,7 +571,7 @@ export default function Home() {
       <footer className="relative z-10 border-t border-primary/30 bg-background/90 backdrop-blur-xl">
         {/* Footer uplink bar */}
         <TronUplinkHeader
-          leftText="SYSTEM: PROJECT ARES v1.0.0"
+          leftText="SYSTEM: THE GRIDCN v1.0.0"
           rightText="UPTIME: 99.9% - END OF LINE"
         />
 
@@ -581,7 +587,7 @@ export default function Home() {
                   <div className="absolute -bottom-px -right-px h-2 w-2 border-b border-r border-primary" />
                 </div>
                 <span className="font-display text-xl font-bold tracking-wider text-primary">
-                  ARES
+                  THE GRIDCN
                 </span>
               </div>
               <div className="h-8 w-px bg-primary/30" />

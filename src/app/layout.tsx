@@ -10,7 +10,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Project Ares | Tron-Inspired shadcn/ui Theme",
+  title: "The Gridcn | Tron-Inspired shadcn/ui Theme",
   description: "A Tron: Ares inspired theme system for shadcn/ui featuring Greek god color schemes",
   icons: {
     icon: "/favicon.ico",

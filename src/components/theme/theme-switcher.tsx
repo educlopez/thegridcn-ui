@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useTheme, themes, type Theme } from "./theme-provider"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { useTheme, themes, type Theme } from "./theme-provider";
+import { cn } from "@/lib/utils";
 
 export function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="flex flex-wrap gap-2">
@@ -32,43 +32,49 @@ export function ThemeSwitcher() {
         </button>
       ))}
     </div>
-  )
+  );
 }
 
 export function ThemeSwitcherCompact() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-2">
       {themes.map((t) => (
         <button
           key={t.id}
           onClick={() => setTheme(t.id)}
           title={`${t.name} - ${t.god}`}
           className={cn(
-            "relative h-8 w-8 rounded-full border-2 transition-all duration-300",
+            "relative size-5 rounded-full border-2 transition-all duration-300",
             "hover:scale-110",
             theme === t.id ? "scale-110" : "opacity-70 hover:opacity-100"
           )}
           style={{
             backgroundColor: t.color,
             borderColor: theme === t.id ? t.color : "transparent",
-            boxShadow: theme === t.id ? `0 0 15px ${t.color}, 0 0 30px ${t.color}40` : "none",
+            boxShadow:
+              theme === t.id
+                ? `0 0 12px ${t.color}, 0 0 24px ${t.color}40`
+                : "none",
           }}
         >
           {theme === t.id && (
-            <span className="absolute inset-0 animate-ping rounded-full opacity-30" style={{ backgroundColor: t.color }} />
+            <span
+              className="absolute inset-0 animate-ping rounded-full opacity-30"
+              style={{ backgroundColor: t.color }}
+            />
           )}
         </button>
       ))}
     </div>
-  )
+  );
 }
 
 export function ThemeSwitcherDropdown() {
-  const { theme, setTheme } = useTheme()
-  const [open, setOpen] = React.useState(false)
-  const currentTheme = themes.find((t) => t.id === theme)
+  const { theme, setTheme } = useTheme();
+  const [open, setOpen] = React.useState(false);
+  const currentTheme = themes.find((t) => t.id === theme);
 
   return (
     <div className="relative">
@@ -90,7 +96,12 @@ export function ThemeSwitcherDropdown() {
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
@@ -102,8 +113,8 @@ export function ThemeSwitcherDropdown() {
               <button
                 key={t.id}
                 onClick={() => {
-                  setTheme(t.id)
-                  setOpen(false)
+                  setTheme(t.id);
+                  setOpen(false);
                 }}
                 className={cn(
                   "flex w-full items-center gap-3 rounded-md px-3 py-2 text-left transition-all",
@@ -127,5 +138,5 @@ export function ThemeSwitcherDropdown() {
         </>
       )}
     </div>
-  )
+  );
 }

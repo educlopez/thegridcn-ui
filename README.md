@@ -29,6 +29,26 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Environment Variables
+
+### `NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE`
+
+Controls whether the components showcase page is accessible.
+
+- Set to `"true"` to enable the components page
+- Leave unset or set to any other value to disable (default: disabled)
+
+When disabled:
+- The `/components` route will show a 404 page
+- Navigation links to the components page will be hidden
+- Useful for hiding the components page during initial deployment
+
+**Example for Vercel:**
+1. Go to your project settings in Vercel
+2. Navigate to Environment Variables
+3. Add `NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE` with value `"true"` to enable
+4. Leave it unset or remove it to disable
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
