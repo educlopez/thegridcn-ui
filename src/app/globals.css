@@ -1,26 +1,468 @@
-@import "tailwindcss";
+/* Orbitron-style font for Tron aesthetic */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-rajdhani), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-orbitron), system-ui, sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-glow: var(--glow);
+  --color-glow-muted: var(--glow-muted);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ============================================
+   THEME: ARES (God of War) - RED
+   Default theme - Main movie theme
+   White/bluish text with red/orange accents
+   ============================================ */
+:root,
+[data-theme="ares"] {
+  --font-orbitron: 'Orbitron', system-ui, sans-serif;
+  --font-rajdhani: 'Rajdhani', system-ui, sans-serif;
+  --radius: 0.5rem;
+
+  /* Core Tron dark backgrounds - deep black with slight blue tint */
+  --background: oklch(0.06 0.02 250);
+  --foreground: oklch(0.95 0.02 220);
+
+  /* Ares Red - Primary accent color */
+  --primary: oklch(0.6 0.25 25);
+  --primary-foreground: oklch(0.98 0 0);
+
+  /* Cards & Popovers - Dark with subtle blue tint */
+  --card: oklch(0.1 0.02 250);
+  --card-foreground: oklch(0.92 0.02 220);
+  --popover: oklch(0.1 0.02 250);
+  --popover-foreground: oklch(0.92 0.02 220);
+
+  /* Secondary - Orange/amber for contrast */
+  --secondary: oklch(0.65 0.18 55);
+  --secondary-foreground: oklch(0.1 0 0);
+
+  /* Muted - Bluish gray for labels */
+  --muted: oklch(0.15 0.02 250);
+  --muted-foreground: oklch(0.6 0.04 220);
+
+  /* Accent - Bright orange */
+  --accent: oklch(0.7 0.2 50);
+  --accent-foreground: oklch(0.1 0 0);
+
+  /* Destructive */
+  --destructive: oklch(0.55 0.25 30);
+
+  /* Borders with red/orange glow */
+  --border: oklch(0.3 0.12 25);
+  --input: oklch(0.15 0.04 250);
+  --ring: oklch(0.6 0.25 25);
+
+  /* Glow effects - Red */
+  --glow: oklch(0.6 0.25 25);
+  --glow-muted: oklch(0.4 0.15 25);
+
+  /* Chart colors - Mix of red/orange tones */
+  --chart-1: oklch(0.6 0.25 25);
+  --chart-2: oklch(0.7 0.2 50);
+  --chart-3: oklch(0.55 0.22 35);
+  --chart-4: oklch(0.65 0.18 40);
+  --chart-5: oklch(0.75 0.15 60);
+
+  /* Sidebar */
+  --sidebar: oklch(0.08 0.02 250);
+  --sidebar-foreground: oklch(0.92 0.02 220);
+  --sidebar-primary: oklch(0.6 0.25 25);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.7 0.2 50);
+  --sidebar-accent-foreground: oklch(0.1 0 0);
+  --sidebar-border: oklch(0.3 0.12 25);
+  --sidebar-ring: oklch(0.6 0.25 25);
+}
+
+/* ============================================
+   THEME: TRON (User) - CYAN
+   Classic Tron aesthetic
+   ============================================ */
+[data-theme="tron"] {
+  --primary: oklch(0.75 0.18 195);
+  --primary-foreground: oklch(0.1 0 0);
+
+  --secondary: oklch(0.18 0.05 200);
+  --secondary-foreground: oklch(0.95 0 0);
+
+  --muted: oklch(0.15 0.03 200);
+  --muted-foreground: oklch(0.65 0 0);
+
+  --accent: oklch(0.7 0.15 195);
+  --accent-foreground: oklch(0.1 0 0);
+
+  --border: oklch(0.3 0.1 195);
+  --input: oklch(0.2 0.06 195);
+  --ring: oklch(0.75 0.18 195);
+
+  --glow: oklch(0.75 0.18 195);
+  --glow-muted: oklch(0.5 0.12 195);
+
+  --chart-1: oklch(0.75 0.18 195);
+  --chart-2: oklch(0.65 0.15 210);
+  --chart-3: oklch(0.7 0.12 180);
+  --chart-4: oklch(0.6 0.18 200);
+  --chart-5: oklch(0.8 0.1 190);
+
+  --sidebar-primary: oklch(0.75 0.18 195);
+  --sidebar-accent: oklch(0.18 0.05 200);
+  --sidebar-border: oklch(0.3 0.1 195);
+  --sidebar-ring: oklch(0.75 0.18 195);
+}
+
+/* ============================================
+   THEME: CLU (Program) - ORANGE
+   Antagonist theme
+   ============================================ */
+[data-theme="clu"] {
+  --primary: oklch(0.75 0.2 55);
+  --primary-foreground: oklch(0.1 0 0);
+
+  --secondary: oklch(0.18 0.06 50);
+  --secondary-foreground: oklch(0.95 0 0);
+
+  --muted: oklch(0.15 0.04 50);
+  --muted-foreground: oklch(0.65 0 0);
+
+  --accent: oklch(0.7 0.18 55);
+  --accent-foreground: oklch(0.1 0 0);
+
+  --border: oklch(0.3 0.1 55);
+  --input: oklch(0.2 0.06 55);
+  --ring: oklch(0.75 0.2 55);
+
+  --glow: oklch(0.75 0.2 55);
+  --glow-muted: oklch(0.5 0.12 55);
+
+  --chart-1: oklch(0.75 0.2 55);
+  --chart-2: oklch(0.7 0.18 45);
+  --chart-3: oklch(0.65 0.15 65);
+  --chart-4: oklch(0.8 0.15 50);
+  --chart-5: oklch(0.6 0.2 60);
+
+  --sidebar-primary: oklch(0.75 0.2 55);
+  --sidebar-accent: oklch(0.18 0.06 50);
+  --sidebar-border: oklch(0.3 0.1 55);
+  --sidebar-ring: oklch(0.75 0.2 55);
+}
+
+/* ============================================
+   THEME: ATHENA (Goddess of Wisdom) - YELLOW/GOLD
+   ============================================ */
+[data-theme="athena"] {
+  --primary: oklch(0.85 0.18 90);
+  --primary-foreground: oklch(0.1 0 0);
+
+  --secondary: oklch(0.18 0.05 85);
+  --secondary-foreground: oklch(0.95 0 0);
+
+  --muted: oklch(0.15 0.03 85);
+  --muted-foreground: oklch(0.65 0 0);
+
+  --accent: oklch(0.8 0.15 90);
+  --accent-foreground: oklch(0.1 0 0);
+
+  --border: oklch(0.35 0.1 90);
+  --input: oklch(0.2 0.06 90);
+  --ring: oklch(0.85 0.18 90);
+
+  --glow: oklch(0.85 0.18 90);
+  --glow-muted: oklch(0.55 0.12 90);
+
+  --chart-1: oklch(0.85 0.18 90);
+  --chart-2: oklch(0.8 0.15 100);
+  --chart-3: oklch(0.75 0.12 80);
+  --chart-4: oklch(0.7 0.18 95);
+  --chart-5: oklch(0.9 0.1 85);
+
+  --sidebar-primary: oklch(0.85 0.18 90);
+  --sidebar-accent: oklch(0.18 0.05 85);
+  --sidebar-border: oklch(0.35 0.1 90);
+  --sidebar-ring: oklch(0.85 0.18 90);
+}
+
+/* ============================================
+   THEME: APHRODITE (Goddess of Love) - PINK/MAGENTA
+   ============================================ */
+[data-theme="aphrodite"] {
+  --primary: oklch(0.7 0.22 340);
+  --primary-foreground: oklch(0.98 0 0);
+
+  --secondary: oklch(0.18 0.06 340);
+  --secondary-foreground: oklch(0.95 0 0);
+
+  --muted: oklch(0.15 0.04 340);
+  --muted-foreground: oklch(0.65 0 0);
+
+  --accent: oklch(0.65 0.2 340);
+  --accent-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.3 0.1 340);
+  --input: oklch(0.2 0.06 340);
+  --ring: oklch(0.7 0.22 340);
+
+  --glow: oklch(0.7 0.22 340);
+  --glow-muted: oklch(0.5 0.15 340);
+
+  --chart-1: oklch(0.7 0.22 340);
+  --chart-2: oklch(0.65 0.2 350);
+  --chart-3: oklch(0.75 0.18 330);
+  --chart-4: oklch(0.6 0.22 345);
+  --chart-5: oklch(0.8 0.15 335);
+
+  --sidebar-primary: oklch(0.7 0.22 340);
+  --sidebar-accent: oklch(0.18 0.06 340);
+  --sidebar-border: oklch(0.3 0.1 340);
+  --sidebar-ring: oklch(0.7 0.22 340);
+}
+
+/* ============================================
+   THEME: POSEIDON (God of Sea) - DEEP BLUE
+   ============================================ */
+[data-theme="poseidon"] {
+  --primary: oklch(0.6 0.2 250);
+  --primary-foreground: oklch(0.98 0 0);
+
+  --secondary: oklch(0.18 0.06 250);
+  --secondary-foreground: oklch(0.95 0 0);
+
+  --muted: oklch(0.15 0.04 250);
+  --muted-foreground: oklch(0.65 0 0);
+
+  --accent: oklch(0.55 0.18 250);
+  --accent-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.28 0.1 250);
+  --input: oklch(0.2 0.06 250);
+  --ring: oklch(0.6 0.2 250);
+
+  --glow: oklch(0.6 0.2 250);
+  --glow-muted: oklch(0.4 0.12 250);
+
+  --chart-1: oklch(0.6 0.2 250);
+  --chart-2: oklch(0.55 0.18 260);
+  --chart-3: oklch(0.65 0.15 240);
+  --chart-4: oklch(0.5 0.2 255);
+  --chart-5: oklch(0.7 0.12 245);
+
+  --sidebar-primary: oklch(0.6 0.2 250);
+  --sidebar-accent: oklch(0.18 0.06 250);
+  --sidebar-border: oklch(0.28 0.1 250);
+  --sidebar-ring: oklch(0.6 0.2 250);
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    /* Disabled smooth scroll to prevent navigation issues */
+    /* scroll-behavior: smooth; */
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-rajdhani), system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-orbitron), system-ui, sans-serif;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================
+   TRON GLOW UTILITIES
+   ============================================ */
+@layer utilities {
+  .glow {
+    box-shadow:
+      0 0 5px var(--glow),
+      0 0 10px var(--glow-muted),
+      0 0 20px var(--glow-muted);
+  }
+
+  .glow-sm {
+    box-shadow:
+      0 0 3px var(--glow),
+      0 0 6px var(--glow-muted);
+  }
+
+  .glow-lg {
+    box-shadow:
+      0 0 10px var(--glow),
+      0 0 20px var(--glow-muted),
+      0 0 40px var(--glow-muted),
+      0 0 60px var(--glow-muted);
+  }
+
+  .glow-text {
+    text-shadow:
+      0 0 5px var(--glow),
+      0 0 10px var(--glow-muted),
+      0 0 20px var(--glow-muted);
+  }
+
+  .glow-border {
+    border-color: var(--glow);
+    box-shadow:
+      0 0 5px var(--glow),
+      inset 0 0 5px var(--glow-muted);
+  }
+
+  /* Animated glow pulse */
+  .glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow:
+        0 0 5px var(--glow),
+        0 0 10px var(--glow-muted);
+    }
+    50% {
+      box-shadow:
+        0 0 10px var(--glow),
+        0 0 20px var(--glow),
+        0 0 30px var(--glow-muted);
+    }
+  }
+
+  /* Scanline effect */
+  .scanlines {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scanlines::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 4px
+    );
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Grid floor effect */
+  .grid-floor {
+    background-image:
+      linear-gradient(var(--glow-muted) 1px, transparent 1px),
+      linear-gradient(90deg, var(--glow-muted) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center center;
+  }
+
+  /* Circuit pattern */
+  .circuit-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v20M30 40v20M0 30h20M40 30h20M30 30m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0' fill='none' stroke='%23333' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 60px 60px;
+  }
+
+  /* Neon text */
+  .neon-text {
+    color: var(--glow);
+    text-shadow:
+      0 0 5px var(--glow),
+      0 0 10px var(--glow),
+      0 0 20px var(--glow),
+      0 0 40px var(--glow);
+  }
+
+  /* Font display utility */
+  .font-display {
+    font-family: var(--font-orbitron), system-ui, sans-serif;
+  }
+}
+
+/* ============================================
+   COMPONENT OVERRIDES FOR TRON AESTHETIC
+   ============================================ */
+.btn-glow {
+  transition-property: all;
+  transition-duration: 300ms;
+}
+
+.btn-glow:hover {
+  box-shadow:
+    0 0 5px var(--glow),
+    0 0 10px var(--glow-muted),
+    0 0 20px var(--glow-muted);
+}
+
+.card-tron {
+  border-width: 1px;
+  border-color: var(--border);
+  transition-property: all;
+  transition-duration: 300ms;
+}
+
+.card-tron:hover {
+  border-color: var(--glow);
+  box-shadow:
+    0 0 5px var(--glow),
+    inset 0 0 5px var(--glow-muted);
+}
+
+.input-tron:focus {
+  border-color: var(--glow);
+  box-shadow:
+    0 0 3px var(--glow),
+    0 0 6px var(--glow-muted);
 }
