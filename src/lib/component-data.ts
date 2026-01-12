@@ -1,5 +1,14 @@
 // Component data structure for the showcase
-export type ComponentType = "block" | "tron-movie";
+export type ComponentType =
+  | "block"
+  | "tron-movie"
+  | "overlay"
+  | "feedback"
+  | "layout"
+  | "data"
+  | "navigation"
+  | "button"
+  | "form";
 
 export interface ComponentItem {
   id: string;
@@ -9,9 +18,8 @@ export interface ComponentItem {
   section: string;
 }
 
-export const componentSections: Record<
-  ComponentType,
-  { title: string; items: ComponentItem[] }
+export const componentSections: Partial<
+  Record<ComponentType, { title: string; items: ComponentItem[] }>
 > = {
   block: {
     title: "Blocks",

@@ -79,7 +79,7 @@ export default function ComponentsPage() {
   }
 
   const selectedComponent = selectedComponentId
-    ? getComponentById(selectedComponentId)
+    ? getComponentById(selectedComponentId) ?? null
     : null;
 
   const handleItemSelect = (item: ComponentItem) => {
