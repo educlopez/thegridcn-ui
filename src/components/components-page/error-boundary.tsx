@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
 interface ErrorBoundaryProps {
-  children: React.ReactNode
-  fallback?: React.ReactNode
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
 }
 
 interface ErrorBoundaryState {
-  hasError: boolean
-  error: Error | null
+  hasError: boolean;
+  error: Error | null;
 }
 
 export class ComponentErrorBoundary extends React.Component<
@@ -17,16 +17,16 @@ export class ComponentErrorBoundary extends React.Component<
   ErrorBoundaryState
 > {
   constructor(props: ErrorBoundaryProps) {
-    super(props)
-    this.state = { hasError: false, error: null }
+    super(props);
+    this.state = { hasError: false, error: null };
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { hasError: true, error }
+    return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("Component preview error:", error, errorInfo)
+    console.error("Component preview error:", error, errorInfo);
   }
 
   render() {
@@ -39,7 +39,8 @@ export class ComponentErrorBoundary extends React.Component<
                 Component Preview Error
               </p>
               <p className="mt-2 text-xs text-muted-foreground">
-                {this.state.error?.message || "An error occurred while rendering the component"}
+                {this.state.error?.message ||
+                  "An error occurred while rendering the component"}
               </p>
               <button
                 onClick={() => this.setState({ hasError: false, error: null })}
@@ -50,9 +51,9 @@ export class ComponentErrorBoundary extends React.Component<
             </div>
           </div>
         )
-      )
+      );
     }
 
-    return this.props.children
+    return this.props.children;
   }
 }

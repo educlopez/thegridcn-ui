@@ -15,60 +15,72 @@ function GridFloor({ color }: { color: string }) {
   const meshRef = React.useRef<THREE.Mesh>(null)
   const materialRef = React.useRef<THREE.ShaderMaterial>(null)
 
+  // Keep a ref to the latest color - updated synchronously during render
+  const colorRef = React.useRef(color)
+  colorRef.current = color
+
+  // Create uniforms object once using useMemo
+  const uniforms = React.useMemo(
+    () => ({
+      uTime: { value: 0 },
+      uColor: { value: hexToThreeColor(color) },
+    }),
+    [] // Create once
+  )
+
   useFrame((state) => {
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = state.clock.elapsedTime
+      // Always update color from ref (which is always current)
+      materialRef.current.uniforms.uColor.value.set(colorRef.current)
     }
   })
 
-  const gridShader = {
-    uniforms: {
-      uTime: { value: 0 },
-      uColor: { value: hexToThreeColor(color) },
-    },
-    vertexShader: `
-      varying vec2 vUv;
-      varying vec3 vPosition;
+  const vertexShader = `
+    varying vec2 vUv;
+    varying vec3 vPosition;
 
-      void main() {
-        vUv = uv;
-        vPosition = position;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: `
-      uniform float uTime;
-      uniform vec3 uColor;
-      varying vec2 vUv;
-      varying vec3 vPosition;
+    void main() {
+      vUv = uv;
+      vPosition = position;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `
 
-      void main() {
-        // Create grid lines
-        vec2 grid = abs(fract(vPosition.xz * 0.5 - 0.5) - 0.5) / fwidth(vPosition.xz * 0.5);
-        float line = min(grid.x, grid.y);
-        float gridLine = 1.0 - min(line, 1.0);
+  const fragmentShader = `
+    uniform float uTime;
+    uniform vec3 uColor;
+    varying vec2 vUv;
+    varying vec3 vPosition;
 
-        // Distance fade
-        float dist = length(vPosition.xz) / 50.0;
-        float fade = 1.0 - smoothstep(0.0, 1.0, dist);
+    void main() {
+      // Create grid lines
+      vec2 grid = abs(fract(vPosition.xz * 0.5 - 0.5) - 0.5) / fwidth(vPosition.xz * 0.5);
+      float line = min(grid.x, grid.y);
+      float gridLine = 1.0 - min(line, 1.0);
 
-        // Pulse effect
-        float pulse = sin(uTime * 2.0 - length(vPosition.xz) * 0.3) * 0.2 + 0.8;
+      // Distance fade
+      float dist = length(vPosition.xz) / 50.0;
+      float fade = 1.0 - smoothstep(0.0, 1.0, dist);
 
-        // Combine
-        float alpha = gridLine * fade * pulse * 0.6;
+      // Pulse effect
+      float pulse = sin(uTime * 2.0 - length(vPosition.xz) * 0.3) * 0.2 + 0.8;
 
-        gl_FragColor = vec4(uColor, alpha);
-      }
-    `,
-  }
+      // Combine
+      float alpha = gridLine * fade * pulse * 0.6;
+
+      gl_FragColor = vec4(uColor, alpha);
+    }
+  `
 
   return (
     <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}>
       <planeGeometry args={[100, 100, 100, 100]} />
       <shaderMaterial
         ref={materialRef}
-        {...gridShader}
+        uniforms={uniforms}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
         transparent
         side={THREE.DoubleSide}
         depthWrite={false}

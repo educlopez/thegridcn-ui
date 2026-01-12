@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Badge } from "@/components/ui/badge"
-import { type ComponentItem, componentSections } from "@/lib/component-data"
-import { ComponentPreview } from "./component-preview"
-import { ComponentErrorBoundary } from "./error-boundary"
+import * as React from "react";
+import { Badge } from "@/components/ui/badge";
+import { type ComponentItem, componentSections } from "@/lib/component-data";
+import { ComponentPreview } from "./component-preview";
+import { ComponentErrorBoundary } from "./error-boundary";
 
 interface PreviewProps {
-  component: ComponentItem | null
+  component: ComponentItem | null;
 }
 
 export function Preview({ component }: PreviewProps) {
@@ -49,5 +49,5 @@ export function Preview({ component }: PreviewProps) {
         )}
       </div>
     </div>
-  )
+  );
 }

@@ -51,17 +51,29 @@ function TunnelWalls({ color }: { color: string }) {
   const meshRef = React.useRef<THREE.Mesh>(null)
   const materialRef = React.useRef<THREE.ShaderMaterial>(null)
 
+  // Keep a ref to the latest color - updated synchronously during render
+  const colorRef = React.useRef(color)
+  colorRef.current = color
+
+  // Create uniforms once
+  const uniforms = React.useMemo(
+    () => ({
+      uTime: { value: 0 },
+      uColor: { value: new THREE.Color(color) },
+    }),
+    []
+  )
+
   useFrame((state) => {
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = state.clock.elapsedTime
+      // Always update color from ref (which is always current)
+      materialRef.current.uniforms.uColor.value.set(colorRef.current)
     }
   })
 
   const tunnelShader = {
-    uniforms: {
-      uTime: { value: 0 },
-      uColor: { value: new THREE.Color(color) },
-    },
+    uniforms,
     vertexShader: `
       varying vec2 vUv;
       varying vec3 vPosition;
