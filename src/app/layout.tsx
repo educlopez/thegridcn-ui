@@ -4,6 +4,7 @@ import { Geist_Mono } from "next/font/google"
 import { ThemeProvider, DynamicFavicon } from "@/components/theme"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
+import "@/styles/tron-style.css"
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",

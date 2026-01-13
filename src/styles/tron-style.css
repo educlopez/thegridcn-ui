@@ -1,0 +1,1161 @@
+/* ==========================================
+   TRON: ARES STYLE SYSTEM FOR SHADCN/UI
+   ==========================================
+
+   Authentic Tron: Ares movie UI styling for shadcn/ui components.
+   Based on actual movie reference frames.
+
+   Usage: Add data-tron-intensity="light|medium|heavy" to <html> or any container.
+
+   Example:
+   <html data-theme="ares" data-tron-intensity="medium">
+
+   Intensity Levels:
+   - light:  Subtle glows, enhanced borders
+   - medium: Glowing borders, corner brackets, grid overlays
+   - heavy:  Full HUD aesthetic with scanlines, animations, dot matrix
+
+   ========================================== */
+
+/* ==========================================
+   CSS CUSTOM PROPERTIES
+   ========================================== */
+
+[data-tron-intensity] {
+  /* Glow spread sizes */
+  --tron-glow-spread-sm: 4px;
+  --tron-glow-spread-md: 10px;
+  --tron-glow-spread-lg: 20px;
+  --tron-glow-spread-xl: 40px;
+
+  /* Corner bracket dimensions */
+  --tron-corner-size: 16px;
+  --tron-corner-thickness: 2px;
+
+  /* Border settings */
+  --tron-border-width: 1px;
+
+  /* Animation durations */
+  --tron-transition: 0.25s ease-out;
+  --tron-pulse-duration: 2.5s;
+
+  /* Scanline settings */
+  --tron-scanline-opacity: 0.04;
+  --tron-scanline-gap: 3px;
+
+  /* Grid pattern settings */
+  --tron-grid-size: 20px;
+  --tron-grid-opacity: 0.03;
+
+  /* Dot matrix settings */
+  --tron-dot-size: 1px;
+  --tron-dot-gap: 8px;
+
+  /* Typography */
+  --tron-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --tron-letter-spacing: 0.1em;
+  --tron-letter-spacing-wide: 0.2em;
+}
+
+/* Light intensity */
+[data-tron-intensity="light"] {
+  --tron-glow-intensity: 0.4;
+  --tron-border-glow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 40%, transparent);
+  --tron-hover-glow: 0 0 var(--tron-glow-spread-md) color-mix(in oklch, var(--glow) 60%, transparent);
+  --tron-corner-size: 12px;
+}
+
+/* Medium intensity */
+[data-tron-intensity="medium"] {
+  --tron-glow-intensity: 0.7;
+  --tron-border-glow:
+    0 0 var(--tron-glow-spread-sm) var(--glow),
+    0 0 var(--tron-glow-spread-md) color-mix(in oklch, var(--glow-muted) 50%, transparent);
+  --tron-hover-glow:
+    0 0 var(--tron-glow-spread-md) var(--glow),
+    0 0 var(--tron-glow-spread-lg) color-mix(in oklch, var(--glow-muted) 60%, transparent);
+}
+
+/* Heavy intensity - Full HUD mode */
+[data-tron-intensity="heavy"] {
+  --tron-glow-intensity: 1;
+  --tron-corner-size: 20px;
+  --tron-scanline-opacity: 0.05;
+  --tron-grid-opacity: 0.04;
+  --tron-border-glow:
+    0 0 var(--tron-glow-spread-sm) var(--glow),
+    0 0 var(--tron-glow-spread-md) var(--glow),
+    0 0 var(--tron-glow-spread-lg) color-mix(in oklch, var(--glow-muted) 40%, transparent);
+  --tron-hover-glow:
+    0 0 var(--tron-glow-spread-md) var(--glow),
+    0 0 var(--tron-glow-spread-lg) var(--glow),
+    0 0 var(--tron-glow-spread-xl) color-mix(in oklch, var(--glow-muted) 50%, transparent);
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+@keyframes tron-glow-pulse {
+  0%, 100% {
+    box-shadow: var(--tron-border-glow);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: var(--tron-hover-glow);
+    opacity: 0.9;
+  }
+}
+
+@keyframes tron-scan-line {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+@keyframes tron-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+  97% { opacity: 1; }
+}
+
+@keyframes tron-data-stream {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 var(--tron-grid-size); }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  [data-tron-intensity] *,
+  [data-tron-intensity] *::before,
+  [data-tron-intensity] *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================
+   GLOBAL TYPOGRAPHY OVERRIDE
+   ========================================== */
+
+[data-tron-intensity] [data-slot] {
+  font-family: var(--tron-font);
+}
+
+/* ==========================================
+   BUTTON STYLES - TRON: ARES ACCURATE
+   ========================================== */
+
+/* Base button styling */
+[data-tron-intensity] [data-slot="button"] {
+  position: relative;
+  overflow: hidden;
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing);
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 0;
+  transition:
+    box-shadow var(--tron-transition),
+    border-color var(--tron-transition),
+    background-color var(--tron-transition),
+    color var(--tron-transition);
+}
+
+/* Fill animation pseudo-element */
+[data-tron-intensity] [data-slot="button"]::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--primary);
+  transform: translateY(100%);
+  transition: transform var(--tron-transition);
+}
+
+/* Ensure button content stays above fill */
+[data-tron-intensity] [data-slot="button"] > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Default variant - Primary CTA (like "ENTER THE GRID") */
+[data-tron-intensity] [data-slot="button"][data-variant="default"] {
+  border: 2px solid var(--primary);
+  background-color: color-mix(in oklch, var(--primary) 15%, transparent);
+  color: var(--primary);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="default"]:hover:not(:disabled) {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 0 var(--tron-glow-spread-xl) var(--glow);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="default"]:hover:not(:disabled)::before {
+  transform: translateY(0);
+}
+
+/* Button focus */
+[data-tron-intensity] [data-slot="button"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 var(--tron-glow-spread-lg) var(--glow);
+}
+
+/* Outline variant - Secondary action */
+[data-tron-intensity] [data-slot="button"][data-variant="outline"] {
+  border: 1px solid color-mix(in oklch, var(--primary) 40%, var(--border));
+  background-color: transparent;
+  color: var(--muted-foreground);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="outline"]:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 var(--tron-glow-spread-lg) color-mix(in oklch, var(--glow) 50%, transparent);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="outline"]::before {
+  display: none;
+}
+
+/* Secondary variant */
+[data-tron-intensity] [data-slot="button"][data-variant="secondary"] {
+  border: 1px solid color-mix(in oklch, var(--primary) 30%, var(--border));
+  background-color: color-mix(in oklch, var(--primary) 8%, transparent);
+  color: var(--foreground);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="secondary"]:hover:not(:disabled) {
+  border-color: var(--primary);
+  box-shadow: 0 0 var(--tron-glow-spread-md) color-mix(in oklch, var(--glow) 40%, transparent);
+}
+
+/* Ghost variant */
+[data-tron-intensity] [data-slot="button"][data-variant="ghost"] {
+  color: var(--muted-foreground);
+  border: 1px solid transparent;
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="ghost"]:hover:not(:disabled) {
+  background-color: color-mix(in oklch, var(--primary) 12%, transparent);
+  color: var(--primary);
+  border-color: color-mix(in oklch, var(--primary) 30%, transparent);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="ghost"]::before {
+  display: none;
+}
+
+/* Link variant */
+[data-tron-intensity] [data-slot="button"][data-variant="link"] {
+  color: var(--primary);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="link"]:hover:not(:disabled) {
+  text-shadow: 0 0 var(--tron-glow-spread-sm) var(--glow);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="link"]::before {
+  display: none;
+}
+
+/* Destructive variant */
+[data-tron-intensity] [data-slot="button"][data-variant="destructive"] {
+  border: 2px solid var(--destructive);
+  background-color: color-mix(in oklch, var(--destructive) 15%, transparent);
+  color: var(--destructive);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="destructive"]:hover:not(:disabled) {
+  background-color: var(--destructive);
+  color: white;
+  box-shadow: 0 0 var(--tron-glow-spread-xl) var(--destructive);
+}
+
+[data-tron-intensity] [data-slot="button"][data-variant="destructive"]::before {
+  background-color: var(--destructive);
+}
+
+/* Heavy intensity button enhancements */
+[data-tron-intensity="heavy"] [data-slot="button"][data-variant="default"] {
+  box-shadow: var(--tron-border-glow);
+  animation: tron-flicker 4s ease-in-out infinite;
+}
+
+[data-tron-intensity="heavy"] [data-slot="button"][data-variant="default"]:hover:not(:disabled) {
+  animation: none;
+}
+
+/* Light intensity - more subtle */
+[data-tron-intensity="light"] [data-slot="button"][data-variant="default"] {
+  border-width: 1px;
+  background-color: color-mix(in oklch, var(--primary) 8%, transparent);
+}
+
+/* ==========================================
+   CARD STYLES - DOSSIER/DATA CARD PATTERN
+   ========================================== */
+
+/* Base card - Tron: Ares data panel style */
+[data-tron-intensity] [data-slot="card"] {
+  position: relative;
+  border-radius: 0;
+  border: 1px solid color-mix(in oklch, var(--primary) 40%, var(--border));
+  background-color: color-mix(in oklch, var(--card) 90%, transparent);
+  transition:
+    box-shadow var(--tron-transition),
+    border-color var(--tron-transition);
+}
+
+/* Card hover effect */
+[data-tron-intensity] [data-slot="card"]:hover {
+  border-color: var(--primary);
+  box-shadow: var(--tron-border-glow);
+}
+
+/* Corner brackets - Movie accurate HUD frame */
+[data-tron-intensity="medium"] [data-slot="card"],
+[data-tron-intensity="heavy"] [data-slot="card"] {
+  overflow: visible;
+}
+
+[data-tron-intensity="medium"] [data-slot="card"]::before,
+[data-tron-intensity="heavy"] [data-slot="card"]::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    /* Top-left */
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    /* Top-right */
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    /* Bottom-left */
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    /* Bottom-right */
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right;
+  background-size:
+    var(--tron-corner-size) var(--tron-corner-thickness),
+    var(--tron-corner-thickness) var(--tron-corner-size);
+  background-repeat: no-repeat;
+}
+
+/* Heavy: Grid overlay pattern (like satellite imagery screens) */
+[data-tron-intensity="heavy"] [data-slot="card"]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    /* Scanlines */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, var(--tron-scanline-opacity)) 2px,
+      rgba(0, 0, 0, var(--tron-scanline-opacity)) var(--tron-scanline-gap)
+    ),
+    /* Grid lines */
+    linear-gradient(to right, color-mix(in oklch, var(--primary) 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklch, var(--primary) 8%, transparent) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    var(--tron-grid-size) var(--tron-grid-size),
+    var(--tron-grid-size) var(--tron-grid-size);
+  z-index: 1;
+  border-radius: inherit;
+}
+
+/* Card header - "RECORDED SUBJECT" style label */
+[data-tron-intensity] [data-slot="card-header"] {
+  position: relative;
+  border-bottom: 1px solid color-mix(in oklch, var(--primary) 30%, var(--border));
+}
+
+/* Card title - Large text with left accent */
+[data-tron-intensity] [data-slot="card-title"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing);
+  text-transform: uppercase;
+  position: relative;
+  padding-left: 12px;
+}
+
+[data-tron-intensity] [data-slot="card-title"]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--primary);
+  box-shadow: 0 0 var(--tron-glow-spread-sm) var(--glow);
+}
+
+/* Heavy: title glow */
+[data-tron-intensity="heavy"] [data-slot="card-title"] {
+  text-shadow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 50%, transparent);
+}
+
+/* Card description - Small uppercase label */
+[data-tron-intensity] [data-slot="card-description"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing-wide);
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+/* ==========================================
+   INPUT & TEXTAREA - DATA FIELD STYLE
+   ========================================== */
+
+[data-tron-intensity] [data-slot="input"],
+[data-tron-intensity] [data-slot="textarea"] {
+  font-family: var(--tron-font);
+  letter-spacing: 0.05em;
+  border-radius: 0;
+  border: 1px solid color-mix(in oklch, var(--primary) 30%, var(--border));
+  background-color: color-mix(in oklch, var(--background) 80%, transparent);
+  transition:
+    box-shadow var(--tron-transition),
+    border-color var(--tron-transition),
+    background-color var(--tron-transition);
+}
+
+/* Input focus - Glowing data field */
+[data-tron-intensity] [data-slot="input"]:focus,
+[data-tron-intensity] [data-slot="textarea"]:focus {
+  border-color: var(--primary);
+  background-color: color-mix(in oklch, var(--primary) 5%, var(--background));
+  box-shadow:
+    var(--tron-border-glow),
+    inset 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 10%, transparent);
+  outline: none;
+}
+
+/* Input hover */
+[data-tron-intensity] [data-slot="input"]:hover:not(:focus):not(:disabled),
+[data-tron-intensity] [data-slot="textarea"]:hover:not(:focus):not(:disabled) {
+  border-color: color-mix(in oklch, var(--primary) 60%, var(--border));
+}
+
+/* Placeholder styling */
+[data-tron-intensity] [data-slot="input"]::placeholder,
+[data-tron-intensity] [data-slot="textarea"]::placeholder {
+  text-transform: uppercase;
+  letter-spacing: var(--tron-letter-spacing);
+  font-size: 0.85em;
+}
+
+/* Heavy: enhanced input effects */
+[data-tron-intensity="heavy"] [data-slot="input"]:focus,
+[data-tron-intensity="heavy"] [data-slot="textarea"]:focus {
+  box-shadow:
+    var(--tron-hover-glow),
+    inset 0 0 var(--tron-glow-spread-md) color-mix(in oklch, var(--glow) 15%, transparent);
+}
+
+/* ==========================================
+   SELECT - DROPDOWN PANEL STYLE
+   ========================================== */
+
+[data-tron-intensity] [data-slot="select-trigger"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing);
+  text-transform: uppercase;
+  border-radius: 0;
+  border: 1px solid color-mix(in oklch, var(--primary) 30%, var(--border));
+  transition:
+    box-shadow var(--tron-transition),
+    border-color var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="select-trigger"]:hover:not(:disabled) {
+  border-color: color-mix(in oklch, var(--primary) 60%, var(--border));
+}
+
+[data-tron-intensity] [data-slot="select-trigger"]:focus,
+[data-tron-intensity] [data-slot="select-trigger"][data-state="open"] {
+  border-color: var(--primary);
+  box-shadow: var(--tron-border-glow);
+  outline: none;
+}
+
+/* Select content dropdown */
+[data-tron-intensity] [data-slot="select-content"] {
+  border-radius: 0;
+  border: 1px solid var(--primary);
+  box-shadow: var(--tron-border-glow);
+  backdrop-filter: blur(12px);
+  background-color: color-mix(in oklch, var(--popover) 95%, transparent);
+}
+
+/* Select items */
+[data-tron-intensity] [data-slot="select-item"] {
+  font-family: var(--tron-font);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+[data-tron-intensity] [data-slot="select-item"]:hover,
+[data-tron-intensity] [data-slot="select-item"]:focus {
+  background-color: color-mix(in oklch, var(--primary) 15%, transparent);
+}
+
+[data-tron-intensity] [data-slot="select-item"][data-state="checked"] {
+  background-color: color-mix(in oklch, var(--primary) 20%, transparent);
+}
+
+/* Corner brackets on dropdown */
+[data-tron-intensity="medium"] [data-slot="select-content"],
+[data-tron-intensity="heavy"] [data-slot="select-content"] {
+  overflow: visible;
+}
+
+[data-tron-intensity="medium"] [data-slot="select-content"]::before,
+[data-tron-intensity="heavy"] [data-slot="select-content"]::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right;
+  background-size:
+    var(--tron-corner-size) var(--tron-corner-thickness),
+    var(--tron-corner-thickness) var(--tron-corner-size);
+  background-repeat: no-repeat;
+}
+
+/* ==========================================
+   DROPDOWN MENU - CONTEXT MENU STYLE
+   ========================================== */
+
+[data-tron-intensity] [data-slot="dropdown-menu-content"] {
+  border-radius: 0;
+  border: 1px solid var(--primary);
+  box-shadow: var(--tron-border-glow);
+  backdrop-filter: blur(12px);
+  background-color: color-mix(in oklch, var(--popover) 95%, transparent);
+}
+
+[data-tron-intensity] [data-slot="dropdown-menu-item"] {
+  font-family: var(--tron-font);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+[data-tron-intensity] [data-slot="dropdown-menu-item"]:hover,
+[data-tron-intensity] [data-slot="dropdown-menu-item"]:focus {
+  background-color: color-mix(in oklch, var(--primary) 15%, transparent);
+}
+
+/* Corner brackets */
+[data-tron-intensity="medium"] [data-slot="dropdown-menu-content"]::before,
+[data-tron-intensity="heavy"] [data-slot="dropdown-menu-content"]::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right;
+  background-size:
+    var(--tron-corner-size) var(--tron-corner-thickness),
+    var(--tron-corner-thickness) var(--tron-corner-size);
+  background-repeat: no-repeat;
+}
+
+/* ==========================================
+   DIALOG - HUD MODAL PANEL
+   ========================================== */
+
+/* Dialog overlay - Dark with blur */
+[data-tron-intensity] [data-slot="dialog-overlay"] {
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+[data-tron-intensity="heavy"] [data-slot="dialog-overlay"] {
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Dialog content - Main HUD panel */
+[data-tron-intensity] [data-slot="dialog-content"] {
+  border-radius: 0;
+  border: 1px solid var(--primary);
+  box-shadow: var(--tron-hover-glow);
+  backdrop-filter: blur(16px);
+  background-color: color-mix(in oklch, var(--card) 95%, transparent);
+  position: relative;
+  overflow: visible;
+}
+
+/* Corner brackets on dialog */
+[data-tron-intensity="medium"] [data-slot="dialog-content"]::before,
+[data-tron-intensity="heavy"] [data-slot="dialog-content"]::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  z-index: 10;
+  background:
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right;
+  background-size:
+    var(--tron-corner-size) var(--tron-corner-thickness),
+    var(--tron-corner-thickness) var(--tron-corner-size);
+  background-repeat: no-repeat;
+}
+
+/* Heavy: Scanline and grid overlay */
+[data-tron-intensity="heavy"] [data-slot="dialog-content"]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, var(--tron-scanline-opacity)) 2px,
+      rgba(0, 0, 0, var(--tron-scanline-opacity)) var(--tron-scanline-gap)
+    );
+  z-index: 1;
+}
+
+/* Dialog title */
+[data-tron-intensity] [data-slot="dialog-title"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing);
+  text-transform: uppercase;
+}
+
+[data-tron-intensity="heavy"] [data-slot="dialog-title"] {
+  text-shadow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 60%, transparent);
+}
+
+/* Dialog description */
+[data-tron-intensity] [data-slot="dialog-description"] {
+  font-family: var(--tron-font);
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================
+   TABS - SEGMENTED CONTROL STYLE
+   ========================================== */
+
+[data-tron-intensity] [data-slot="tabs-list"] {
+  border-radius: 0;
+  border: 1px solid color-mix(in oklch, var(--primary) 30%, var(--border));
+  background-color: color-mix(in oklch, var(--muted) 50%, transparent);
+}
+
+[data-tron-intensity] [data-slot="tabs-trigger"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing);
+  text-transform: uppercase;
+  font-size: 11px;
+  border-radius: 0;
+  transition:
+    box-shadow var(--tron-transition),
+    background-color var(--tron-transition),
+    color var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="tabs-trigger"]:hover:not([data-state="active"]) {
+  background-color: color-mix(in oklch, var(--primary) 10%, transparent);
+}
+
+/* Active tab - Highlighted segment */
+[data-tron-intensity] [data-slot="tabs-trigger"][data-state="active"] {
+  background-color: color-mix(in oklch, var(--primary) 20%, transparent);
+  color: var(--primary);
+  box-shadow: inset 0 -2px 0 var(--primary);
+}
+
+[data-tron-intensity="medium"] [data-slot="tabs-trigger"][data-state="active"],
+[data-tron-intensity="heavy"] [data-slot="tabs-trigger"][data-state="active"] {
+  box-shadow:
+    inset 0 -2px 0 var(--primary),
+    0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 30%, transparent);
+}
+
+/* Heavy: text glow on active */
+[data-tron-intensity="heavy"] [data-slot="tabs-trigger"][data-state="active"] {
+  text-shadow: 0 0 var(--tron-glow-spread-sm) var(--glow);
+}
+
+/* Tab content */
+[data-tron-intensity] [data-slot="tabs-content"] {
+  border-radius: 0;
+}
+
+/* ==========================================
+   BADGE - STATUS INDICATOR STYLE
+   ========================================== */
+
+/* Badge base - Like "ANOMALY FOUND" status boxes */
+[data-tron-intensity] [data-slot="badge"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing);
+  text-transform: uppercase;
+  border-radius: 0;
+  font-size: 10px;
+  font-weight: 600;
+  border: 1px solid color-mix(in oklch, var(--primary) 60%, var(--border));
+  transition:
+    box-shadow var(--tron-transition),
+    background-color var(--tron-transition);
+}
+
+/* Medium/Heavy: Badge glow */
+[data-tron-intensity="medium"] [data-slot="badge"],
+[data-tron-intensity="heavy"] [data-slot="badge"] {
+  box-shadow: var(--tron-border-glow);
+}
+
+/* Heavy: pulsing badge */
+[data-tron-intensity="heavy"] [data-slot="badge"] {
+  animation: tron-glow-pulse 3s ease-in-out infinite;
+}
+
+/* Default variant badge */
+[data-tron-intensity] [data-slot="badge"][data-variant="default"] {
+  background-color: color-mix(in oklch, var(--primary) 20%, transparent);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Secondary variant */
+[data-tron-intensity] [data-slot="badge"][data-variant="secondary"] {
+  background-color: color-mix(in oklch, var(--secondary) 30%, transparent);
+}
+
+/* Destructive variant */
+[data-tron-intensity] [data-slot="badge"][data-variant="destructive"] {
+  background-color: color-mix(in oklch, var(--destructive) 20%, transparent);
+  color: var(--destructive);
+  border-color: var(--destructive);
+}
+
+/* Outline variant */
+[data-tron-intensity] [data-slot="badge"][data-variant="outline"] {
+  background-color: transparent;
+}
+
+/* ==========================================
+   ALERT - NOTIFICATION BOX STYLE
+   ========================================== */
+
+/* Alert base - Like "AIRCRAFT N-T355 INBOUND" notification */
+[data-tron-intensity] [data-slot="alert"] {
+  font-family: var(--tron-font);
+  border-radius: 0;
+  border: 1px solid color-mix(in oklch, var(--primary) 50%, var(--border));
+  background-color: color-mix(in oklch, var(--card) 90%, transparent);
+  position: relative;
+  overflow: visible;
+  transition:
+    box-shadow var(--tron-transition),
+    border-color var(--tron-transition);
+}
+
+/* Left accent bar */
+[data-tron-intensity] [data-slot="alert"]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--primary);
+  box-shadow: 0 0 var(--tron-glow-spread-sm) var(--glow);
+}
+
+/* Medium/Heavy: glow and corner brackets */
+[data-tron-intensity="medium"] [data-slot="alert"],
+[data-tron-intensity="heavy"] [data-slot="alert"] {
+  box-shadow: var(--tron-border-glow);
+}
+
+/* Alert title */
+[data-tron-intensity] [data-slot="alert-title"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing);
+  text-transform: uppercase;
+}
+
+[data-tron-intensity="heavy"] [data-slot="alert-title"] {
+  text-shadow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 40%, transparent);
+}
+
+/* Alert description */
+[data-tron-intensity] [data-slot="alert-description"] {
+  font-family: var(--tron-font);
+  letter-spacing: 0.02em;
+}
+
+/* Destructive alert */
+[data-tron-intensity] [data-slot="alert"][data-variant="destructive"] {
+  border-color: var(--destructive);
+}
+
+[data-tron-intensity] [data-slot="alert"][data-variant="destructive"]::before {
+  background-color: var(--destructive);
+  box-shadow: 0 0 var(--tron-glow-spread-sm) var(--destructive);
+}
+
+/* ==========================================
+   PROGRESS - TIMELINE/SEGMENT BAR STYLE
+   ========================================== */
+
+/* Progress track - Like video timeline */
+[data-tron-intensity] [data-slot="progress"] {
+  border-radius: 0;
+  border: 1px solid color-mix(in oklch, var(--primary) 40%, var(--border));
+  background-color: color-mix(in oklch, var(--muted) 50%, transparent);
+  overflow: hidden;
+  height: 8px;
+}
+
+/* Medium/Heavy: inner glow */
+[data-tron-intensity="medium"] [data-slot="progress"],
+[data-tron-intensity="heavy"] [data-slot="progress"] {
+  box-shadow: inset 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 15%, transparent);
+}
+
+/* Progress indicator - Glowing fill */
+[data-tron-intensity] [data-slot="progress-indicator"] {
+  border-radius: 0;
+  background-color: var(--primary);
+  box-shadow:
+    0 0 var(--tron-glow-spread-md) var(--glow),
+    inset 0 1px 0 color-mix(in oklch, white 30%, transparent);
+}
+
+/* Heavy: animated glow pulse */
+[data-tron-intensity="heavy"] [data-slot="progress-indicator"] {
+  animation: tron-glow-pulse var(--tron-pulse-duration) ease-in-out infinite;
+}
+
+/* ==========================================
+   CHECKBOX & SWITCH - TOGGLE CONTROLS
+   ========================================== */
+
+/* Checkbox */
+[data-tron-intensity] [data-slot="checkbox"] {
+  border-radius: 0;
+  border: 1px solid color-mix(in oklch, var(--primary) 50%, var(--border));
+  transition:
+    box-shadow var(--tron-transition),
+    border-color var(--tron-transition),
+    background-color var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="checkbox"]:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+
+[data-tron-intensity] [data-slot="checkbox"]:focus-visible {
+  box-shadow: var(--tron-border-glow);
+  outline: none;
+}
+
+[data-tron-intensity] [data-slot="checkbox"][data-state="checked"] {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: var(--tron-border-glow);
+}
+
+/* Switch */
+[data-tron-intensity] [data-slot="switch"] {
+  border-radius: 0;
+  border: 1px solid color-mix(in oklch, var(--primary) 40%, var(--border));
+  transition:
+    box-shadow var(--tron-transition),
+    border-color var(--tron-transition),
+    background-color var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="switch"]:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+
+[data-tron-intensity] [data-slot="switch"]:focus-visible {
+  box-shadow: var(--tron-border-glow);
+  outline: none;
+}
+
+[data-tron-intensity] [data-slot="switch"][data-state="checked"] {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: var(--tron-border-glow);
+}
+
+/* ==========================================
+   SLIDER - DATA CONTROL
+   ========================================== */
+
+[data-tron-intensity] [data-slot="slider-track"] {
+  border-radius: 0;
+  border: 1px solid color-mix(in oklch, var(--primary) 30%, var(--border));
+  background-color: color-mix(in oklch, var(--muted) 50%, transparent);
+}
+
+[data-tron-intensity] [data-slot="slider-range"] {
+  border-radius: 0;
+  background-color: var(--primary);
+  box-shadow: 0 0 var(--tron-glow-spread-sm) var(--glow);
+}
+
+[data-tron-intensity] [data-slot="slider-thumb"] {
+  border-radius: 0;
+  border: 2px solid var(--primary);
+  background-color: var(--background);
+  transition:
+    box-shadow var(--tron-transition),
+    transform var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="slider-thumb"]:hover {
+  box-shadow: var(--tron-border-glow);
+  transform: scale(1.15);
+}
+
+[data-tron-intensity] [data-slot="slider-thumb"]:focus-visible {
+  box-shadow: var(--tron-hover-glow);
+  outline: none;
+}
+
+/* ==========================================
+   TOOLTIP - INFO POPUP
+   ========================================== */
+
+[data-tron-intensity] [data-slot="tooltip-content"] {
+  font-family: var(--tron-font);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 11px;
+  border-radius: 0;
+  border: 1px solid var(--primary);
+  box-shadow: var(--tron-border-glow);
+  background-color: color-mix(in oklch, var(--popover) 95%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+[data-tron-intensity="heavy"] [data-slot="tooltip-content"] {
+  text-shadow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 30%, transparent);
+}
+
+/* ==========================================
+   POPOVER - DROPDOWN PANEL
+   ========================================== */
+
+[data-tron-intensity] [data-slot="popover-content"] {
+  border-radius: 0;
+  border: 1px solid var(--primary);
+  box-shadow: var(--tron-border-glow);
+  backdrop-filter: blur(12px);
+  background-color: color-mix(in oklch, var(--popover) 95%, transparent);
+  position: relative;
+  overflow: visible;
+}
+
+/* Corner brackets */
+[data-tron-intensity="medium"] [data-slot="popover-content"]::before,
+[data-tron-intensity="heavy"] [data-slot="popover-content"]::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top left,
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    linear-gradient(to bottom, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) top right,
+    linear-gradient(to right, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom left,
+    linear-gradient(to left, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right,
+    linear-gradient(to top, var(--primary) var(--tron-corner-size), transparent var(--tron-corner-size)) bottom right;
+  background-size:
+    var(--tron-corner-size) var(--tron-corner-thickness),
+    var(--tron-corner-thickness) var(--tron-corner-size);
+  background-repeat: no-repeat;
+}
+
+/* ==========================================
+   SEPARATOR - DIVIDER LINE
+   ========================================== */
+
+[data-tron-intensity] [data-slot="separator"] {
+  background-color: color-mix(in oklch, var(--primary) 40%, var(--border));
+}
+
+[data-tron-intensity="medium"] [data-slot="separator"],
+[data-tron-intensity="heavy"] [data-slot="separator"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 20%, transparent);
+}
+
+/* ==========================================
+   TABLE - DATA GRID STYLE
+   ========================================== */
+
+[data-tron-intensity] [data-slot="table"] {
+  font-family: var(--tron-font);
+  border: 1px solid color-mix(in oklch, var(--primary) 30%, var(--border));
+}
+
+[data-tron-intensity] [data-slot="table-header"] {
+  background-color: color-mix(in oklch, var(--primary) 10%, transparent);
+  border-bottom: 1px solid color-mix(in oklch, var(--primary) 40%, var(--border));
+}
+
+[data-tron-intensity] [data-slot="table-head"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing);
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+[data-tron-intensity="heavy"] [data-slot="table-head"] {
+  text-shadow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 30%, transparent);
+}
+
+[data-tron-intensity] [data-slot="table-row"] {
+  border-bottom: 1px solid color-mix(in oklch, var(--primary) 20%, var(--border));
+  transition: background-color var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="table-row"]:hover {
+  background-color: color-mix(in oklch, var(--primary) 8%, transparent);
+}
+
+[data-tron-intensity] [data-slot="table-cell"] {
+  font-family: var(--tron-font);
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================
+   AVATAR - USER ICON
+   ========================================== */
+
+[data-tron-intensity] [data-slot="avatar"] {
+  border-radius: 0;
+  border: 2px solid color-mix(in oklch, var(--primary) 50%, var(--border));
+  transition: box-shadow var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="avatar"]:hover {
+  border-color: var(--primary);
+  box-shadow: var(--tron-border-glow);
+}
+
+/* ==========================================
+   SKELETON - LOADING PLACEHOLDER
+   ========================================== */
+
+[data-tron-intensity] [data-slot="skeleton"] {
+  border-radius: 0;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklch, var(--primary) 5%, var(--muted)),
+    color-mix(in oklch, var(--primary) 15%, var(--muted)),
+    color-mix(in oklch, var(--primary) 5%, var(--muted))
+  );
+  background-size: 200% 100%;
+  animation: tron-data-stream 1.5s ease-in-out infinite;
+}
+
+/* ==========================================
+   LABEL - FIELD LABEL
+   ========================================== */
+
+[data-tron-intensity] [data-slot="label"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing-wide);
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+/* ==========================================
+   ACCORDION - EXPANDABLE SECTIONS
+   ========================================== */
+
+[data-tron-intensity] [data-slot="accordion-item"] {
+  border-color: color-mix(in oklch, var(--primary) 30%, var(--border));
+}
+
+[data-tron-intensity] [data-slot="accordion-trigger"] {
+  font-family: var(--tron-font);
+  letter-spacing: var(--tron-letter-spacing);
+  text-transform: uppercase;
+}
+
+[data-tron-intensity] [data-slot="accordion-trigger"]:hover {
+  background-color: color-mix(in oklch, var(--primary) 8%, transparent);
+}
+
+/* ==========================================
+   OPT-OUT SELECTOR
+   ========================================== */
+
+/* Use data-tron-style="none" to disable Tron effects on specific elements */
+[data-tron-style="none"],
+[data-tron-style="none"] * {
+  box-shadow: revert !important;
+  text-shadow: revert !important;
+  animation: revert !important;
+  border-radius: revert !important;
+  font-family: revert !important;
+  letter-spacing: revert !important;
+  text-transform: revert !important;
+}
+
+[data-tron-style="none"]::before,
+[data-tron-style="none"]::after {
+  display: none !important;
+}

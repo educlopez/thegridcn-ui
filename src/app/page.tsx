@@ -220,6 +220,14 @@ export default function Home() {
                   <div className="absolute inset-0 -z-10 translate-y-full bg-primary transition-transform group-hover:translate-y-0" />
                 </Link>
               )}
+              <Link
+                href="https://github.com/educlopez/thegridcn-ui"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative overflow-hidden rounded border border-primary/30 bg-transparent px-10 py-4 font-mono text-sm font-bold tracking-wider text-muted-foreground transition-all hover:border-primary/50 hover:text-primary hover:shadow-[0_0_20px_var(--primary)]"
+              >
+                <span className="relative z-10">VIEW ON GITHUB</span>
+              </Link>
             </div>
 
             {/* Install command */}

@@ -2,12 +2,14 @@
 
 import * as React from "react";
 import { Settings } from "lucide-react";
-import { themes, useTheme } from "@/components/theme";
+import { themes, tronIntensities, useTheme } from "@/components/theme";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
+import { TronIntensitySwitcherCompact } from "@/components/theme/tron-intensity-switcher";
 
 export function Customizer() {
-  const { theme } = useTheme();
+  const { theme, tronIntensity } = useTheme();
   const currentTheme = themes.find((t) => t.id === theme);
+  const currentIntensity = tronIntensities.find((i) => i.id === tronIntensity);
 
   return (
     <div className="sticky top-[88px] z-30 hidden h-[calc(100vh-88px)] w-64 overflow-y-auto border-l border-primary/20 bg-background/50 backdrop-blur-sm xl:flex xl:flex-col">
@@ -35,6 +37,16 @@ export function Customizer() {
                 Theme
               </div>
               <ThemeSwitcher />
+            </div>
+
+            <div>
+              <div className="mb-2 block text-xs font-medium text-foreground">
+                Tron Intensity
+              </div>
+              <TronIntensitySwitcherCompact />
+              <p className="mt-2 text-[10px] text-muted-foreground">
+                {currentIntensity?.description}
+              </p>
             </div>
 
             <div>
