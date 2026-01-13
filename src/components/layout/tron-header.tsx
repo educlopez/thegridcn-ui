@@ -135,22 +135,6 @@ export function TronHeader({ navItems }: TronHeaderProps) {
             </div>
           </div>
         </div>
-
-        {/* Bottom tech readout */}
-        <div className="border-t border-primary/20 bg-background/40">
-          <div className="container mx-auto flex items-center justify-between px-4 py-1">
-            <div className="flex items-center gap-4 font-mono text-[10px] text-muted-foreground">
-              <span>GRID_ID: <span className="text-primary">7A3F</span></span>
-              <span className="hidden sm:inline">SEC: <span className="text-primary">ALPHA</span></span>
-              <span className="hidden md:inline">CYCLES: <span className="text-primary">∞</span></span>
-            </div>
-            <div className="flex items-center gap-4 font-mono text-[10px] text-muted-foreground">
-              <span className="hidden sm:inline">LAT: <span className="text-foreground">40.7128°N</span></span>
-              <span className="hidden sm:inline">LNG: <span className="text-foreground">74.0060°W</span></span>
-              <span>v<span className="text-primary">2.0</span></span>
-            </div>
-          </div>
-        </div>
       </div>
     </header>
   )

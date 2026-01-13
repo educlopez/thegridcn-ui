@@ -2,12 +2,8 @@
 
 import * as React from "react";
 import dynamic from "next/dynamic";
-import Link from "next/link";
-import { ArrowLeftIcon } from "lucide-react";
 import { TronHeader } from "@/components/layout";
 import { TronUplinkHeader } from "@/components/tron-ui";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   ItemExplorer,
   Preview,
@@ -26,18 +22,12 @@ const TronGrid3D = dynamic(
 );
 
 export default function ComponentsPage() {
-  // Check if components page is enabled via environment variable
-  const isEnabled = process.env.NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE === "true";
-
-  // Call all hooks unconditionally (React rules)
   const [selectedComponentId, setSelectedComponentId] = React.useState<
     string | null
   >(null);
 
   // Get component from URL hash or default
   React.useEffect(() => {
-    if (!isEnabled) return;
-
     const hash = window.location.hash.slice(1);
     if (hash) {
       const component = getComponentById(hash);
@@ -45,38 +35,14 @@ export default function ComponentsPage() {
         setSelectedComponentId(component.id);
       }
     } else {
-      // Default to first block, or first component if no blocks
-      const allComponents = getAllComponents();
-      const firstBlock = allComponents.find((c) => c.type === "block");
-      if (firstBlock) {
-        setSelectedComponentId(firstBlock.id);
-      } else if (allComponents.length > 0) {
-        setSelectedComponentId(allComponents[0].id);
+      // Default to data-card component
+      const dataCard = getComponentById("data-card");
+      if (dataCard) {
+        setSelectedComponentId(dataCard.id);
+        window.history.replaceState(null, "", `#${dataCard.id}`);
       }
     }
-  }, [isEnabled]);
-
-  // If disabled, show 404-like content
-  if (!isEnabled) {
-    return (
-      <div className="relative flex min-h-screen flex-col items-center justify-center bg-background">
-        <div className="text-center">
-          <h1 className="mb-4 font-display text-4xl font-bold tracking-wider text-primary md:text-6xl">
-            404
-          </h1>
-          <p className="mb-8 font-mono text-sm text-muted-foreground">
-            PAGE NOT FOUND
-          </p>
-          <Button asChild variant="outline">
-            <Link href="/">
-              <ArrowLeftIcon className="mr-2 h-4 w-4" />
-              Return Home
-            </Link>
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  }, []);
 
   const selectedComponent = selectedComponentId
     ? getComponentById(selectedComponentId) ?? null
@@ -109,41 +75,9 @@ export default function ComponentsPage() {
         rightText="REGISTRY ACCESS: FULL - 50+ MODULES LOADED"
       />
 
-      {/* Main header bar */}
-      <header className="sticky top-[88px] z-50 w-full border-b border-primary/30 bg-background/80 backdrop-blur-xl">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button
-                asChild
-                variant="outline"
-                size="sm"
-                className="rounded-lg border-primary/30"
-              >
-                <Link href="/">
-                  <ArrowLeftIcon className="h-4 w-4" />
-                  Back
-                </Link>
-              </Button>
-              <Separator orientation="vertical" className="h-6" />
-              <div className="font-mono text-sm font-medium text-muted-foreground">
-                Component Showcase
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="font-mono text-[10px] tracking-widest text-muted-foreground">
-                {selectedComponent
-                  ? selectedComponent.title.toUpperCase()
-                  : "NO SELECTION"}
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Main content */}
       <main className="relative z-10">
-        <div className="flex h-[calc(100vh-88px-64px)]">
+        <div className="flex min-h-[calc(100vh-88px)]">
           {/* Left Sidebar - Component Explorer */}
           <ItemExplorer
             currentItemId={selectedComponentId || undefined}
@@ -151,7 +85,7 @@ export default function ComponentsPage() {
           />
 
           {/* Main Preview Area */}
-          <div className="flex flex-1 flex-col gap-4 p-6">
+          <div className="flex flex-1 flex-col p-6">
             <Preview component={selectedComponent} />
           </div>
 
