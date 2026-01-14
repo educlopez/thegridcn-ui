@@ -147,19 +147,19 @@ export default function Home() {
           <TronGridMap />
           <TronGridScanOverlay />
 
+          {/* Uplink header bar - project info */}
+          <TronUplinkHeader
+            leftText={`THEME: ${currentTheme?.name.toUpperCase() || "ARES"} - ${currentTheme?.god.toUpperCase() || "GOD OF WAR"}`}
+            rightText="COMPONENTS: 50+ MODULES • THEMES: 6 VARIANTS • STATUS: ACTIVE"
+          />
+
           {/* HUD corner frames */}
-          <div className="pointer-events-none absolute inset-4 z-20 hidden lg:block">
+          <div className="pointer-events-none absolute left-4 right-4 top-10 bottom-4 z-20 hidden lg:block">
             <div className="absolute left-0 top-0 h-24 w-24 border-l-2 border-t-2 border-primary/50" />
             <div className="absolute right-0 top-0 h-24 w-24 border-r-2 border-t-2 border-primary/50" />
             <div className="absolute bottom-0 left-0 h-24 w-24 border-b-2 border-l-2 border-primary/50" />
             <div className="absolute bottom-0 right-0 h-24 w-24 border-b-2 border-r-2 border-primary/50" />
           </div>
-
-          {/* Uplink header bar - movie accurate */}
-          <TronUplinkHeader
-            leftText="UPLINK: ORBITAL RELAY CHANNEL 27A"
-            rightText="RADAR CROSS SECTION: 2.1M² - NONSTANDARD REFLECTION"
-          />
 
           {/* Main hero content */}
           <div className="container relative mx-auto px-4 py-12 md:py-20">

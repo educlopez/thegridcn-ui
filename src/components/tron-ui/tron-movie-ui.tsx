@@ -2,6 +2,17 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
+import { useTheme, themes } from "@/components/theme"
+
+// Complementary colors for each theme
+const complementaryColors: Record<string, { border: string; bg: string; text: string; textMuted: string }> = {
+  ares: { border: "border-cyan-500/30", bg: "bg-cyan-500/5", text: "text-cyan-400", textMuted: "text-cyan-400/70" },
+  tron: { border: "border-orange-500/30", bg: "bg-orange-500/5", text: "text-orange-400", textMuted: "text-orange-400/70" },
+  clu: { border: "border-blue-500/30", bg: "bg-blue-500/5", text: "text-blue-400", textMuted: "text-blue-400/70" },
+  athena: { border: "border-purple-500/30", bg: "bg-purple-500/5", text: "text-purple-400", textMuted: "text-purple-400/70" },
+  aphrodite: { border: "border-green-500/30", bg: "bg-green-500/5", text: "text-green-400", textMuted: "text-green-400/70" },
+  poseidon: { border: "border-amber-500/30", bg: "bg-amber-500/5", text: "text-amber-400", textMuted: "text-amber-400/70" },
+}
 
 // Uplink status bar - exactly like "UPLINK: ORBITAL RELAY CHANNEL 27A | RADAR CROSS SECTION"
 interface TronUplinkHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -15,16 +26,22 @@ export function TronUplinkHeader({
   className,
   ...props
 }: TronUplinkHeaderProps) {
+  const { theme } = useTheme()
+  const currentTheme = themes.find((t) => t.id === theme)
+  const complementary = complementaryColors[theme] || complementaryColors.tron
+
   return (
     <div
       className={cn(
-        "flex items-center justify-between border-y border-cyan-500/30 bg-cyan-500/5 px-4 py-1.5 font-mono text-[10px] tracking-widest",
+        "flex items-center justify-between border-y px-4 py-1.5 font-mono text-[10px] tracking-widest",
+        complementary.border,
+        complementary.bg,
         className
       )}
       {...props}
     >
-      <span className="text-cyan-400">{leftText}</span>
-      {rightText && <span className="text-cyan-400/70">{rightText}</span>}
+      <span className={complementary.text}>{leftText}</span>
+      {rightText && <span className={complementary.textMuted}>{rightText}</span>}
     </div>
   )
 }
