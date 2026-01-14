@@ -2,7 +2,8 @@
 
 <div align="center">
 
-<img width="3308" height="1860" alt="CleanShot 2026-01-14 at 15 14 18@2x" src="https://github.com/user-attachments/assets/c4abd1f5-fad6-4931-b644-bbce718f145c" />
+<img width="1280" height="640" alt="image" src="https://github.com/user-attachments/assets/4efc27a3-768d-4c6a-88ab-6af3a8452d61" />
+
 
 ---
 
