@@ -98,7 +98,7 @@ project-ares/
 The project consists of two main pages:
 
 - **Home** (`/`) - Landing page with theme selector, features, and project overview
-- **Components** (`/components`) - Interactive showcase of all available components (requires `NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE=true`)
+- **Components** (`/components`) - Interactive showcase of all available components
 
 ## 🎨 Themes
 
@@ -210,28 +210,6 @@ export function MyPage() {
 
 ## ⚙️ Configuration
 
-### Environment Variables
-
-#### `NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE`
-
-Controls whether the components showcase page is accessible.
-
-- Set to `"true"` to enable the components page
-- Leave unset or set to any other value to disable (default: disabled)
-
-When disabled:
-
-- The `/components` route will show a 404 page
-- Navigation links to the components page will be hidden
-- Useful for hiding the components page during initial deployment
-
-**Example for Vercel:**
-
-1. Go to your project settings in Vercel
-2. Navigate to Environment Variables
-3. Add `NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE` with value `"true"` to enable
-4. Leave it unset or remove it to disable
-
 ### Customization
 
 The theme system uses CSS custom properties (CSS variables) defined in `src/app/globals.css`. You can customize:
@@ -259,7 +237,7 @@ The theme system uses CSS custom properties (CSS variables) defined in `src/app/
 The project includes two pages:
 
 - **Home Page** ([thegridcn.com](https://thegridcn.com)) - Features the theme system, project overview, and key information
-- **Components Page** ([thegridcn.com/components](https://thegridcn.com/components)) - Interactive showcase of all 50+ components with live examples (requires `NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE=true` to be enabled)
+- **Components Page** ([thegridcn.com/components](https://thegridcn.com/components)) - Interactive showcase of all 50+ components with live examples
 
 ### Theme System
 
@@ -280,8 +258,7 @@ The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new)
 
 1. Push your code to GitHub
 2. Import your repository in Vercel
-3. Configure environment variables if needed
-4. Deploy!
+3. Deploy!
 
 The project is optimized for Vercel's platform and will work out of the box.
 

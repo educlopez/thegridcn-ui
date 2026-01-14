@@ -110,8 +110,7 @@ export function TronMovieTimer({
     <div className={cn("text-center font-mono", className)} {...props}>
       <div className="flex items-baseline justify-center">
         <span
-          className="text-5xl font-light tracking-[0.15em] text-foreground md:text-7xl lg:text-8xl"
-          style={{ textShadow: "0 0 40px rgba(255, 255, 255, 0.3)" }}
+          className="text-5xl font-light tracking-[0.15em] text-foreground glow-text md:text-7xl lg:text-8xl"
         >
           {primary}
         </span>
@@ -121,8 +120,7 @@ export function TronMovieTimer({
       </div>
       {secondary && (
         <div
-          className="mt-2 text-2xl tracking-[0.2em] text-amber-500/80 md:text-3xl lg:text-4xl"
-          style={{ textShadow: "0 0 20px rgba(245, 158, 11, 0.3)" }}
+          className="mt-2 text-2xl tracking-[0.2em] text-primary/80 glow-text md:text-3xl lg:text-4xl"
         >
           {secondary}
         </div>
@@ -260,18 +258,17 @@ export function TronDerezCountdown({
       )}
       {...props}
     >
-      <span className="text-[9px] tracking-widest text-red-400/70">
+      <span className="text-[9px] tracking-widest text-primary/70">
         TIME TO DE-RESOLUTION
       </span>
       <div className="flex items-baseline">
         <span
-          className="text-3xl font-bold tracking-wider text-red-500"
-          style={{ textShadow: "0 0 15px rgba(239, 68, 68, 0.5)" }}
+          className="text-3xl font-bold tracking-wider text-primary glow-text"
         >
           {time}
         </span>
         {milliseconds && (
-          <span className="ml-0.5 text-lg text-red-500/70">-{milliseconds}</span>
+          <span className="ml-0.5 text-lg text-primary/70">-{milliseconds}</span>
         )}
       </div>
     </div>
