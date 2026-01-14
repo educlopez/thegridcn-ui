@@ -2,6 +2,10 @@
 
 <div align="center">
 
+<img width="3308" height="1860" alt="CleanShot 2026-01-14 at 15 14 18@2x" src="https://github.com/user-attachments/assets/c4abd1f5-fad6-4931-b644-bbce718f145c" />
+
+---
+
 **An authentic Tron: Ares inspired theme system for shadcn/ui**
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=flat-square&logo=next.js)](https://nextjs.org/)
