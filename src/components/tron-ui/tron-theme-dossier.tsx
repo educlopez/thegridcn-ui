@@ -1,8 +1,15 @@
 "use client"
 
 import * as React from "react"
+import dynamic from "next/dynamic"
 import { cn } from "@/lib/utils"
 import { themes, useTheme } from "@/components/theme"
+
+// Dynamic import for 3D component to avoid SSR issues
+const TronGodAvatar3D = dynamic(
+  () => import("@/components/tron-3d/tron-god-avatar").then((mod) => mod.TronGodAvatar3D),
+  { ssr: false }
+)
 
 interface ThemeDossierCardProps {
   themeId: string
@@ -110,17 +117,16 @@ function ThemeDossierCard({
 
         {/* Content grid */}
         <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 p-4">
-          {/* Avatar placeholder */}
+          {/* 3D Avatar */}
           <div className="row-span-4 flex items-start">
             <div
-              className="flex h-16 w-16 items-center justify-center rounded border font-display text-2xl font-bold"
+              className="relative overflow-hidden rounded border"
               style={{
                 borderColor: `${themeColor}50`,
-                backgroundColor: `${themeColor}10`,
-                color: themeColor,
+                backgroundColor: `${themeColor}05`,
               }}
             >
-              {themeName.charAt(0)}
+              <TronGodAvatar3D themeId={themeId} color={themeColor} size={64} />
             </div>
           </div>
 
