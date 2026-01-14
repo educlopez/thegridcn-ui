@@ -19,11 +19,10 @@ export function TronHeader({ navItems }: TronHeaderProps) {
   const { theme } = useTheme()
   const currentTheme = themes.find((t) => t.id === theme)
   const pathname = usePathname()
-  const isComponentsEnabled = process.env.NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE === "true"
 
   const defaultNavItems: NavItem[] = [
     { href: "/", label: "HOME" },
-    ...(isComponentsEnabled ? [{ href: "/components", label: "COMPONENTS" }] : []),
+    { href: "/components", label: "COMPONENTS" },
   ]
 
   const items = navItems || defaultNavItems
@@ -124,14 +123,12 @@ export function TronHeader({ navItems }: TronHeaderProps) {
               <ThemeSwitcherCompact />
 
               {/* Mobile menu */}
-              {isComponentsEnabled && (
-                <Link
-                  href="/components"
-                  className="rounded border border-primary/50 px-3 py-1.5 font-mono text-xs tracking-wider text-primary transition-colors hover:bg-primary/10 lg:hidden"
-                >
-                  MENU
-                </Link>
-              )}
+              <Link
+                href="/components"
+                className="rounded border border-primary/50 px-3 py-1.5 font-mono text-xs tracking-wider text-primary transition-colors hover:bg-primary/10 lg:hidden"
+              >
+                MENU
+              </Link>
             </div>
           </div>
         </div>

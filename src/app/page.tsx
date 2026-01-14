@@ -120,8 +120,6 @@ function FeatureCard({
 export default function Home() {
   const { theme } = useTheme();
   const currentTheme = themes.find((t) => t.id === theme);
-  const isComponentsEnabled =
-    process.env.NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE === "true";
 
   return (
     <div className="relative min-h-screen bg-background">
@@ -211,15 +209,13 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="mb-10 flex flex-wrap justify-center gap-4">
-              {isComponentsEnabled && (
-                <Link
-                  href="/components"
-                  className="group relative overflow-hidden rounded border-2 border-primary bg-primary/20 px-10 py-4 font-mono text-sm font-bold tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_40px_var(--primary)]"
-                >
-                  <span className="relative z-10">ENTER THE GRID</span>
-                  <div className="absolute inset-0 -z-10 translate-y-full bg-primary transition-transform group-hover:translate-y-0" />
-                </Link>
-              )}
+              <Link
+                href="/components"
+                className="group relative overflow-hidden rounded border-2 border-primary bg-primary/20 px-10 py-4 font-mono text-sm font-bold tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_40px_var(--primary)]"
+              >
+                <span className="relative z-10">ENTER THE GRID</span>
+                <div className="absolute inset-0 -z-10 translate-y-full bg-primary transition-transform group-hover:translate-y-0" />
+              </Link>
               <Link
                 href="https://github.com/educlopez/thegridcn-ui"
                 target="_blank"
@@ -553,14 +549,12 @@ export default function Home() {
                   Explore all components, customize themes, and build immersive
                   digital experiences.
                 </p>
-                {isComponentsEnabled && (
-                  <Link
-                    href="/components"
-                    className="group relative inline-flex overflow-hidden rounded border-2 border-primary bg-primary px-12 py-4 font-mono text-sm font-bold tracking-wider text-primary-foreground transition-all hover:shadow-[0_0_40px_var(--primary)]"
-                  >
-                    <span className="relative z-10">EXPLORE COMPONENTS</span>
-                  </Link>
-                )}
+                <Link
+                  href="/components"
+                  className="group relative inline-flex overflow-hidden rounded border-2 border-primary bg-primary px-12 py-4 font-mono text-sm font-bold tracking-wider text-primary-foreground transition-all hover:shadow-[0_0_40px_var(--primary)]"
+                >
+                  <span className="relative z-10">EXPLORE COMPONENTS</span>
+                </Link>
               </div>
             </div>
           </div>

@@ -47,7 +47,7 @@ Themes use CSS variables via `data-theme` attribute on `<html>`. Theme state per
 
 ### Environment Variables
 
-- `NEXT_PUBLIC_ENABLE_COMPONENTS_PAGE` - Set to `"true"` to enable `/components` route
+No environment variables are required. The `/components` route is always accessible.
 
 ### Fonts
 
