@@ -5,6 +5,7 @@ import { ThemeProvider, DynamicFavicon } from "@/components/theme"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 import "@/styles/tron-style.css"
+import { Analytics } from '@vercel/analytics/next';
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -83,6 +84,7 @@ export default function RootLayout({
         />
         <ThemeProvider defaultTheme="ares" storageKey="project-ares-theme">
           <DynamicFavicon />
+
           {children}
           <Toaster
             position="bottom-right"
@@ -94,6 +96,7 @@ export default function RootLayout({
               },
             }}
           />
+          <Analytics/>
         </ThemeProvider>
       </body>
     </html>
