@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm registry:build && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "registry:update": "tsx scripts/update-registry.ts",
+    "registry:build": "shadcn build && tsx scripts/enhance-registry-files.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -69,8 +71,11 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "shadcn": "^3.7.0",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "tw-animate-css": "^1.4.0",
+    "type-fest": "^5.4.1",
     "typescript": "^5"
   }
 }
