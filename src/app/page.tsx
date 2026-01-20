@@ -462,7 +462,7 @@ export default function Home() {
             <div className="mx-auto max-w-4xl">
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
                 {[
-                  { name: "Next.js", version: "14+", status: "CORE" },
+                  { name: "Next.js", version: "16", status: "CORE" },
                   { name: "React", version: "19", status: "UI" },
                   { name: "Tailwind", version: "4", status: "STYLE" },
                   {
@@ -471,7 +471,7 @@ export default function Home() {
                     status: "COMPONENTS",
                   },
                   { name: "Three.js", version: "R182", status: "3D" },
-                  { name: "TypeScript", version: "5+", status: "TYPES" },
+                  { name: "TypeScript", version: "5", status: "TYPES" },
                 ].map((tech) => (
                   <div
                     key={tech.name}
