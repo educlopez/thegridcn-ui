@@ -5,6 +5,9 @@ import * as React from "react"
 export type Theme = "ares" | "tron" | "clu" | "athena" | "aphrodite" | "poseidon"
 export type TronIntensity = "none" | "light" | "medium" | "heavy"
 
+const STORAGE_KEY = "project-ares-theme"
+const INTENSITY_KEY = "project-ares-theme-intensity"
+
 export const themes: { id: Theme; name: string; god: string; color: string }[] = [
   { id: "ares", name: "Ares", god: "God of War", color: "#ff3333" },
   { id: "tron", name: "Tron", god: "User", color: "#00d4ff" },
@@ -21,13 +24,6 @@ export const tronIntensities: { id: TronIntensity; name: string; description: st
   { id: "heavy", name: "Heavy", description: "Full Tron aesthetic with animations" },
 ]
 
-type ThemeProviderProps = {
-  children: React.ReactNode
-  defaultTheme?: Theme
-  defaultIntensity?: TronIntensity
-  storageKey?: string
-}
-
 type ThemeProviderState = {
   theme: Theme
   setTheme: (theme: Theme) => void
@@ -35,81 +31,59 @@ type ThemeProviderState = {
   setTronIntensity: (intensity: TronIntensity) => void
 }
 
-const initialState: ThemeProviderState = {
-  theme: "ares",
-  setTheme: () => null,
-  tronIntensity: "medium",
-  setTronIntensity: () => null,
-}
+const ThemeProviderContext = React.createContext<ThemeProviderState | undefined>(undefined)
 
-const ThemeProviderContext = React.createContext<ThemeProviderState>(initialState)
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Start with defaults (matches server render)
+  const [theme, setThemeState] = React.useState<Theme>("ares")
+  const [tronIntensity, setIntensityState] = React.useState<TronIntensity>("medium")
 
-export function ThemeProvider({
-  children,
-  defaultTheme = "ares",
-  defaultIntensity = "medium",
-  storageKey = "project-ares-theme",
-  ...props
-}: ThemeProviderProps) {
-  const [theme, setTheme] = React.useState<Theme>(defaultTheme)
-  const [tronIntensity, setTronIntensity] = React.useState<TronIntensity>(defaultIntensity)
-  const [mounted, setMounted] = React.useState(false)
-
+  // Sync state from localStorage after mount (inline script already set DOM)
   React.useEffect(() => {
-    setMounted(true)
-    const storedTheme = localStorage.getItem(storageKey) as Theme | null
+    const storedTheme = localStorage.getItem(STORAGE_KEY)
     if (storedTheme && themes.some((t) => t.id === storedTheme)) {
-      setTheme(storedTheme)
+      setThemeState(storedTheme as Theme)
     }
-    const storedIntensity = localStorage.getItem(`${storageKey}-intensity`) as TronIntensity | null
+
+    const storedIntensity = localStorage.getItem(INTENSITY_KEY)
     if (storedIntensity && tronIntensities.some((i) => i.id === storedIntensity)) {
-      setTronIntensity(storedIntensity)
+      setIntensityState(storedIntensity as TronIntensity)
     }
-  }, [storageKey])
+  }, [])
 
-  React.useEffect(() => {
-    if (!mounted) return
+  const setTheme = React.useCallback((newTheme: Theme) => {
+    setThemeState(newTheme)
+    localStorage.setItem(STORAGE_KEY, newTheme)
+    document.documentElement.setAttribute("data-theme", newTheme)
+  }, [])
 
-    const root = window.document.documentElement
-    root.setAttribute("data-theme", theme)
-    localStorage.setItem(storageKey, theme)
-  }, [theme, storageKey, mounted])
+  const setTronIntensity = React.useCallback((newIntensity: TronIntensity) => {
+    setIntensityState(newIntensity)
+    localStorage.setItem(INTENSITY_KEY, newIntensity)
 
-  React.useEffect(() => {
-    if (!mounted) return
-
-    const root = window.document.documentElement
-    if (tronIntensity === "none") {
-      root.removeAttribute("data-tron-intensity")
+    if (newIntensity === "none") {
+      document.documentElement.removeAttribute("data-tron-intensity")
     } else {
-      root.setAttribute("data-tron-intensity", tronIntensity)
+      document.documentElement.setAttribute("data-tron-intensity", newIntensity)
     }
-    localStorage.setItem(`${storageKey}-intensity`, tronIntensity)
-  }, [tronIntensity, storageKey, mounted])
+  }, [])
 
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      setTheme(theme)
-    },
-    tronIntensity,
-    setTronIntensity: (intensity: TronIntensity) => {
-      setTronIntensity(intensity)
-    },
-  }
+  const value = React.useMemo(
+    () => ({ theme, setTheme, tronIntensity, setTronIntensity }),
+    [theme, setTheme, tronIntensity, setTronIntensity]
+  )
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeProviderContext.Provider value={value}>
       {children}
     </ThemeProviderContext.Provider>
   )
 }
 
-export const useTheme = () => {
+export function useTheme() {
   const context = React.useContext(ThemeProviderContext)
-
-  if (context === undefined)
+  if (!context) {
     throw new Error("useTheme must be used within a ThemeProvider")
-
+  }
   return context
 }

@@ -485,7 +485,7 @@ export function TronGodAvatar3D({ themeId, color, size = 64, className }: TronGo
       <Canvas
         camera={{ position: [0, 0, 2], fov: 50 }}
         gl={{ antialias: true, alpha: true }}
-        style={{ background: "transparent" }}
+        style={{ background: "transparent", pointerEvents: "none" }}
       >
         <GlitchProvider>
           <GodAvatar themeId={themeId} color={color} />

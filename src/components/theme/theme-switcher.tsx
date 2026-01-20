@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useTheme, themes, type Theme } from "./theme-provider";
+import { useTheme, themes } from "./theme-provider";
 import { cn } from "@/lib/utils";
 
 export function ThemeSwitcher() {
@@ -82,13 +82,7 @@ export function ThemeSwitcherDropdown() {
         onClick={() => setOpen(!open)}
         className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 transition-all hover:border-primary hover:glow-sm"
       >
-        <span
-          className="h-3 w-3 rounded-full"
-          style={{
-            backgroundColor: currentTheme?.color,
-            boxShadow: `0 0 8px ${currentTheme?.color}`,
-          }}
-        />
+        <span className="h-3 w-3 rounded-full bg-primary [box-shadow:0_0_8px_var(--primary)]" />
         <span className="font-medium">{currentTheme?.name}</span>
         <svg
           className={cn("h-4 w-4 transition-transform", open && "rotate-180")}

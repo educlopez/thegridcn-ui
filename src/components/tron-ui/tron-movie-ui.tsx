@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { useTheme, themes } from "@/components/theme"
+import { useTheme } from "@/components/theme"
 
 // Complementary colors for each theme
 const complementaryColors: Record<string, { border: string; bg: string; text: string; textMuted: string }> = {
@@ -27,7 +27,6 @@ export function TronUplinkHeader({
   ...props
 }: TronUplinkHeaderProps) {
   const { theme } = useTheme()
-  const currentTheme = themes.find((t) => t.id === theme)
   const complementary = complementaryColors[theme] || complementaryColors.tron
 
   return (
@@ -267,21 +266,6 @@ export function TronDerezCountdown({
   className,
   ...props
 }: TronDerezCountdownProps) {
-  const { theme } = useTheme()
-  const currentTheme = themes.find((t) => t.id === theme)
-
-  // Convert hex to rgba with opacity for soft glow
-  const hexToRgba = (hex: string, opacity: number) => {
-    const r = parseInt(hex.slice(1, 3), 16)
-    const g = parseInt(hex.slice(3, 5), 16)
-    const b = parseInt(hex.slice(5, 7), 16)
-    return `rgba(${r}, ${g}, ${b}, ${opacity})`
-  }
-
-  const glowColor = currentTheme?.color
-    ? hexToRgba(currentTheme.color, 0.3)
-    : "rgba(255, 51, 51, 0.3)"
-
   return (
     <div
       className={cn(
@@ -294,12 +278,7 @@ export function TronDerezCountdown({
         TIME TO DE-RESOLUTION
       </span>
       <div className="flex items-baseline">
-        <span
-          className="text-3xl font-bold tracking-wider text-primary"
-          style={{
-            textShadow: `0 0 2px ${glowColor}, 0 0 4px ${glowColor}`,
-          }}
-        >
+        <span className="text-3xl font-bold tracking-wider text-primary [text-shadow:0_0_2px_oklch(from_var(--primary)_l_c_h/0.3),0_0_4px_oklch(from_var(--primary)_l_c_h/0.3)]">
           {time}
         </span>
         {milliseconds && (

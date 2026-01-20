@@ -60,10 +60,7 @@ export function Customizer() {
                 <div className="text-[10px] text-muted-foreground">
                   {currentTheme?.god}
                 </div>
-                <div
-                  className="mt-2 h-8 w-full rounded border border-primary/30"
-                  style={{ backgroundColor: currentTheme?.color }}
-                />
+                <div className="mt-2 h-8 w-full rounded border border-primary/30 bg-primary" />
               </div>
             </div>
           </div>

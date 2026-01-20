@@ -205,7 +205,7 @@ export function TronGrid3D({
       <Canvas
         camera={{ position: [0, 5, 10], fov: 60 }}
         gl={{ antialias: true, alpha: true }}
-        style={{ background: "transparent" }}
+        style={{ background: "transparent", pointerEvents: "none" }}
       >
         <fog attach="fog" args={["#000", 10, 50]} />
 

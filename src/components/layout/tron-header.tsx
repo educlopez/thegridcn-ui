@@ -63,10 +63,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
 
               {/* Status indicator */}
               <div className="hidden items-center gap-2 md:flex">
-                <div
-                  className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary"
-                  style={{ boxShadow: `0 0 8px ${currentTheme?.color}` }}
-                />
+                <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary [box-shadow:0_0_8px_var(--primary)]" />
                 <span className="font-mono text-[10px] tracking-widest text-muted-foreground">
                   SYSTEM ONLINE
                 </span>
@@ -101,21 +98,9 @@ export function TronHeader({ navItems }: TronHeaderProps) {
             {/* Right section - Theme & Actions */}
             <div className="flex items-center gap-4">
               {/* Current theme badge */}
-              <div
-                className="hidden items-center gap-1.5 rounded border px-2.5 py-1 md:flex"
-                style={{
-                  borderColor: `${currentTheme?.color}50`,
-                  backgroundColor: `${currentTheme?.color}10`,
-                }}
-              >
-                <span
-                  className="h-1.5 w-1.5 rounded-full"
-                  style={{
-                    backgroundColor: currentTheme?.color,
-                    boxShadow: `0 0 6px ${currentTheme?.color}`,
-                  }}
-                />
-                <span className="font-mono text-[10px] tracking-wider" style={{ color: currentTheme?.color }}>
+              <div className="hidden items-center gap-1.5 rounded border border-primary/50 bg-primary/10 px-2.5 py-1 md:flex">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary [box-shadow:0_0_6px_var(--primary)]" />
+                <span className="font-mono text-[10px] tracking-wider text-primary">
                   {currentTheme?.name.toUpperCase()}
                 </span>
               </div>

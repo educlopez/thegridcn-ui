@@ -16,7 +16,6 @@ import {
   TronGridMap,
 } from "@/components/tron-ui";
 import { TronHeader } from "@/components/layout";
-import { cn } from "@/lib/utils";
 
 // Dynamic import for Three.js components (client-side only)
 const TronGrid3D = dynamic(
@@ -124,7 +123,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-background">
       {/* 3D Background */}
-      <div className="fixed inset-0 z-0">
+      <div className="pointer-events-none fixed inset-0 z-0">
         <TronGrid3D
           className="h-full w-full"
           enableParticles
@@ -185,13 +184,7 @@ export default function Home() {
                 <div className="mb-3 font-mono text-[10px] tracking-[0.5em] text-muted-foreground">
                   CLASSIFIED PROJECT
                 </div>
-                <h1
-                  className="font-display text-6xl font-black tracking-[0.15em] md:text-8xl lg:text-[9rem]"
-                  style={{
-                    color: currentTheme?.color,
-                    textShadow: `0 0 80px ${currentTheme?.color}50, 0 0 160px ${currentTheme?.color}30`,
-                  }}
-                >
+                <h1 className="font-display text-6xl font-black tracking-[0.15em] text-primary md:text-8xl lg:text-[9rem] [text-shadow:0_0_80px_oklch(from_var(--primary)_l_c_h/0.5),0_0_160px_oklch(from_var(--primary)_l_c_h/0.3)]">
                   THE GRIDCN
                 </h1>
                 <div className="mt-4 font-mono text-sm tracking-[0.4em] text-primary md:text-base">
@@ -317,13 +310,7 @@ export default function Home() {
               <div className="mb-4 font-mono text-[10px] tracking-widest text-muted-foreground">
                 [ SYSTEM CAPABILITIES ]
               </div>
-              <h2
-                className="font-display text-3xl font-bold tracking-wider md:text-4xl lg:text-5xl"
-                style={{
-                  color: currentTheme?.color,
-                  textShadow: `0 0 40px ${currentTheme?.color}40`,
-                }}
-              >
+              <h2 className="font-display text-3xl font-bold tracking-wider text-primary md:text-4xl lg:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
                 CORE FEATURES
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
@@ -467,13 +454,7 @@ export default function Home() {
               <div className="mb-4 font-mono text-[10px] tracking-widest text-muted-foreground">
                 [ SYSTEM ARCHITECTURE ]
               </div>
-              <h2
-                className="font-display text-3xl font-bold tracking-wider md:text-4xl lg:text-5xl"
-                style={{
-                  color: currentTheme?.color,
-                  textShadow: `0 0 40px ${currentTheme?.color}40`,
-                }}
-              >
+              <h2 className="font-display text-3xl font-bold tracking-wider text-primary md:text-4xl lg:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
                 TECH STACK
               </h2>
             </div>
@@ -536,13 +517,7 @@ export default function Home() {
                 <div className="mb-2 font-mono text-[10px] tracking-[0.3em] text-muted-foreground">
                   AWAITING USER INPUT
                 </div>
-                <h2
-                  className="mb-6 font-display text-4xl font-bold tracking-wider md:text-5xl"
-                  style={{
-                    color: currentTheme?.color,
-                    textShadow: `0 0 40px ${currentTheme?.color}40`,
-                  }}
-                >
+                <h2 className="mb-6 font-display text-4xl font-bold tracking-wider text-primary md:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
                   READY TO ENTER?
                 </h2>
                 <p className="mx-auto mb-8 max-w-xl text-muted-foreground">
