@@ -20,7 +20,20 @@ interface ThemeDossierCardProps {
   onClick: () => void
 }
 
-function ThemeDossierCard({
+// Static theme descriptions - hoisted outside component to avoid recreation (rendering-hoist-jsx pattern)
+const themeDescriptions: Record<string, { role: string; origin: string; power: string }> = {
+  ares: { role: "GOD OF WAR", origin: "OLYMPUS", power: "COMBAT MASTERY" },
+  tron: { role: "SECURITY PROGRAM", origin: "ENCOM MAINFRAME", power: "SYSTEM DEFENSE" },
+  clu: { role: "SYSTEM ADMIN", origin: "THE GRID", power: "TOTAL CONTROL" },
+  athena: { role: "GODDESS OF WISDOM", origin: "OLYMPUS", power: "STRATEGIC INSIGHT" },
+  aphrodite: { role: "GODDESS OF LOVE", origin: "OLYMPUS", power: "ALLURE" },
+  poseidon: { role: "GOD OF THE SEA", origin: "OLYMPUS", power: "OCEAN MASTERY" },
+}
+
+const defaultDescription = { role: "UNKNOWN", origin: "UNKNOWN", power: "UNKNOWN" }
+
+// Memoized card component to prevent unnecessary re-renders (rerender-memo pattern)
+const ThemeDossierCard = React.memo(function ThemeDossierCard({
   themeId,
   themeName,
   themeColor,
@@ -28,16 +41,7 @@ function ThemeDossierCard({
   isActive,
   onClick,
 }: ThemeDossierCardProps) {
-  const themeDescriptions: Record<string, { role: string; origin: string; power: string }> = {
-    ares: { role: "GOD OF WAR", origin: "OLYMPUS", power: "COMBAT MASTERY" },
-    tron: { role: "SECURITY PROGRAM", origin: "ENCOM MAINFRAME", power: "SYSTEM DEFENSE" },
-    clu: { role: "SYSTEM ADMIN", origin: "THE GRID", power: "TOTAL CONTROL" },
-    athena: { role: "GODDESS OF WISDOM", origin: "OLYMPUS", power: "STRATEGIC INSIGHT" },
-    aphrodite: { role: "GODDESS OF LOVE", origin: "OLYMPUS", power: "ALLURE" },
-    poseidon: { role: "GOD OF THE SEA", origin: "OLYMPUS", power: "OCEAN MASTERY" },
-  }
-
-  const desc = themeDescriptions[themeId] || { role: "UNKNOWN", origin: "UNKNOWN", power: "UNKNOWN" }
+  const desc = themeDescriptions[themeId] ?? defaultDescription
 
   return (
     <button
@@ -200,21 +204,41 @@ function ThemeDossierCard({
       </div>
     </button>
   )
+})
+
+// Hoist static background style (rendering-hoist-jsx pattern)
+const backgroundGridStyle = {
+  backgroundImage:
+    "linear-gradient(var(--primary) 1px, transparent 1px), linear-gradient(90deg, var(--primary) 1px, transparent 1px)",
+  backgroundSize: "40px 40px",
 }
 
 export function TronThemeDossierSelector() {
   const { theme, setTheme } = useTheme()
+
+  // Memoize the theme cards to avoid recreation
+  const themeCards = React.useMemo(
+    () =>
+      themes.map((t) => (
+        <ThemeDossierCard
+          key={t.id}
+          themeId={t.id}
+          themeName={t.name}
+          themeColor={t.color}
+          godName={t.god}
+          isActive={theme === t.id}
+          onClick={() => setTheme(t.id)}
+        />
+      )),
+    [theme, setTheme]
+  )
 
   return (
     <section className="relative py-16">
       {/* Background grid */}
       <div
         className="pointer-events-none absolute inset-0 opacity-10"
-        style={{
-          backgroundImage:
-            "linear-gradient(var(--primary) 1px, transparent 1px), linear-gradient(90deg, var(--primary) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
+        style={backgroundGridStyle}
       />
 
       <div className="container relative mx-auto px-4">
@@ -241,17 +265,7 @@ export function TronThemeDossierSelector() {
 
         {/* Theme grid */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {themes.map((t) => (
-            <ThemeDossierCard
-              key={t.id}
-              themeId={t.id}
-              themeName={t.name}
-              themeColor={t.color}
-              godName={t.god}
-              isActive={theme === t.id}
-              onClick={() => setTheme(t.id)}
-            />
-          ))}
+          {themeCards}
         </div>
 
         {/* Bottom status bar */}

@@ -8,6 +8,7 @@ export type TronIntensity = "none" | "light" | "medium" | "heavy"
 const STORAGE_KEY = "project-ares-theme"
 const INTENSITY_KEY = "project-ares-theme-intensity"
 
+// Theme data is static, so we define it outside the component to avoid recreation
 export const themes: { id: Theme; name: string; god: string; color: string }[] = [
   { id: "ares", name: "Ares", god: "God of War", color: "#ff3333" },
   { id: "tron", name: "Tron", god: "User", color: "#00d4ff" },
@@ -16,6 +17,10 @@ export const themes: { id: Theme; name: string; god: string; color: string }[] =
   { id: "aphrodite", name: "Aphrodite", god: "Goddess of Love", color: "#ff1493" },
   { id: "poseidon", name: "Poseidon", god: "God of Sea", color: "#0066ff" },
 ]
+
+// Set for O(1) theme lookups (js-set-map-lookups pattern)
+const themeIds = new Set(themes.map((t) => t.id))
+const intensityIds = new Set(["none", "light", "medium", "heavy"] as TronIntensity[])
 
 export const tronIntensities: { id: TronIntensity; name: string; description: string }[] = [
   { id: "none", name: "Off", description: "Standard shadcn style" },
@@ -34,19 +39,22 @@ type ThemeProviderState = {
 const ThemeProviderContext = React.createContext<ThemeProviderState | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Start with defaults (matches server render)
+  // Start with defaults (matches server render to avoid hydration mismatch)
+  // The inline script in layout.tsx already sets the correct data-theme attribute
   const [theme, setThemeState] = React.useState<Theme>("ares")
   const [tronIntensity, setIntensityState] = React.useState<TronIntensity>("medium")
 
-  // Sync state from localStorage after mount (inline script already set DOM)
+  // Sync React state from localStorage after hydration completes
+  // This is necessary because SSR renders with defaults, and we need to
+  // update React state to match what the inline script already set on the DOM
   React.useEffect(() => {
     const storedTheme = localStorage.getItem(STORAGE_KEY)
-    if (storedTheme && themes.some((t) => t.id === storedTheme)) {
+    if (storedTheme && themeIds.has(storedTheme as Theme)) {
       setThemeState(storedTheme as Theme)
     }
 
     const storedIntensity = localStorage.getItem(INTENSITY_KEY)
-    if (storedIntensity && tronIntensities.some((i) => i.id === storedIntensity)) {
+    if (storedIntensity && intensityIds.has(storedIntensity as TronIntensity)) {
       setIntensityState(storedIntensity as TronIntensity)
     }
   }, [])

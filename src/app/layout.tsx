@@ -6,9 +6,12 @@ import "./globals.css"
 import "@/styles/tron-style.css"
 import { Analytics } from '@vercel/analytics/next';
 
+// Optimize font loading with display: swap to prevent invisible text during load
+// This improves Largest Contentful Paint (LCP) and First Contentful Paint (FCP)
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 })
 
 export const metadata: Metadata = {
