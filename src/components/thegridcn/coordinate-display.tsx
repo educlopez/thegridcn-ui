@@ -33,13 +33,13 @@ export function CoordinateDisplay({
         <span className="text-lg font-bold text-primary">
           {heading}°
         </span>
-        <span className="text-xs text-muted-foreground">{`${String(Math.floor(Math.random() * 200)).padStart(3, "0")}`}</span>
+        <span className="text-xs text-foreground/80">{`${String(Math.floor(Math.random() * 200)).padStart(3, "0")}`}</span>
         <span className="font-bold text-primary">{bearing}</span>
       </div>
 
       {/* Lat/Long */}
       {(latitude || longitude) && (
-        <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+        <div className="text-[10px] uppercase tracking-widest text-foreground/80">
           {latitude && <span>LAT {latitude}</span>}
           {latitude && longitude && <span> · </span>}
           {longitude && <span>LNG {longitude}</span>}
@@ -48,7 +48,7 @@ export function CoordinateDisplay({
 
       {/* Label */}
       {label && (
-        <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+        <div className="text-[10px] uppercase tracking-widest text-foreground/80">
           {label}
         </div>
       )}

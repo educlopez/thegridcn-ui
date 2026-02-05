@@ -60,6 +60,8 @@ export function MapMarker({
 
       {/* Marker label */}
       <div
+        data-slot="tron-map-marker"
+        data-variant={variant}
         className={cn(
           "relative rounded border px-3 py-1 font-mono text-sm font-bold uppercase tracking-wider",
           styles.bg,
@@ -100,7 +102,7 @@ export function MapMarker({
 
       {/* Coordinates */}
       {coordinates && (
-        <div className="mt-1 font-mono text-[10px] text-muted-foreground">
+        <div className="mt-1 font-mono text-[10px] text-foreground/80">
           {coordinates}
         </div>
       )}

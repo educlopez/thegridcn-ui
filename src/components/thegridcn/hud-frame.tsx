@@ -15,6 +15,7 @@ export function HUDFrame({
 }: HUDFrameProps) {
   return (
     <div
+      data-slot="tron-hud-frame"
       className={cn(
         "relative border border-primary/30 bg-background/50 backdrop-blur-sm",
         className

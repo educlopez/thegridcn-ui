@@ -63,6 +63,7 @@ export function Radar({
 
   return (
     <div
+      data-slot="tron-radar"
       className={cn("relative overflow-hidden rounded-full bg-background/80", className)}
       style={{ width: size, height: size }}
       {...props}

@@ -51,8 +51,8 @@ export function ArrivalPanel({
         </div>
         <div className="mt-2 flex items-center justify-center gap-2">
           <span
+            data-slot="tron-arrival-time"
             className="bg-red-500/90 px-4 py-1 font-mono text-xl font-bold tracking-wider text-white"
-            style={{ textShadow: "0 0 10px rgba(239, 68, 68, 0.5)" }}
           >
             {time}
           </span>

@@ -15,25 +15,21 @@ const colorStyles = {
   red: {
     beam: "from-red-500 to-transparent",
     bg: "bg-red-500/90",
-    glow: "shadow-[0_0_20px_rgba(239,68,68,0.5)]",
     line: "bg-red-500",
   },
   cyan: {
     beam: "from-cyan-500 to-transparent",
     bg: "bg-cyan-500/90",
-    glow: "shadow-[0_0_20px_rgba(6,182,212,0.5)]",
     line: "bg-cyan-500",
   },
   amber: {
     beam: "from-amber-500 to-transparent",
     bg: "bg-amber-500/90",
-    glow: "shadow-[0_0_20px_rgba(245,158,11,0.5)]",
     line: "bg-amber-500",
   },
   primary: {
     beam: "from-primary to-transparent",
     bg: "bg-primary/90",
-    glow: "shadow-[0_0_20px_var(--primary)]",
     line: "bg-primary",
   },
 }
@@ -59,10 +55,11 @@ export function BeamMarker({
 
       {/* Label box */}
       <div
+        data-slot="tron-beam-marker"
+        data-color={beamColor}
         className={cn(
           "relative px-4 py-1 font-mono text-sm font-bold tracking-wider text-white",
-          colors.bg,
-          colors.glow
+          colors.bg
         )}
       >
         {label}

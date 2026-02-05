@@ -46,13 +46,11 @@ export function AnomalyBanner({
             </div>
           )}
           <h2
+            data-slot="tron-anomaly-title"
             className={cn(
               "font-display text-4xl font-black tracking-[0.2em] text-amber-500 md:text-5xl lg:text-6xl",
               animated && "animate-pulse"
             )}
-            style={{
-              textShadow: "0 0 40px rgba(245, 158, 11, 0.5), 0 0 80px rgba(245, 158, 11, 0.3)",
-            }}
           >
             {title}
           </h2>

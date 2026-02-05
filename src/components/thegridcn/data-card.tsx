@@ -12,7 +12,7 @@ interface DataFieldProps {
 function DataField({ label, value, highlight = false }: DataFieldProps) {
   return (
     <div className="space-y-1">
-      <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+      <div className="text-[10px] uppercase tracking-widest text-foreground/80">
         {label}
       </div>
       <div className="flex items-center gap-2">
@@ -53,6 +53,8 @@ export function DataCard({
 
   return (
     <div
+      data-slot="tron-data-card"
+      data-status={status}
       className={cn(
         "relative overflow-hidden rounded border bg-card/80 backdrop-blur-sm",
         statusColors[status],
@@ -67,7 +69,7 @@ export function DataCard({
       {(title || subtitle) && (
         <div className="border-b border-border/50 px-4 py-2">
           {subtitle && (
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
+            <div className="text-[10px] uppercase tracking-widest text-foreground/80">
               {subtitle}
             </div>
           )}

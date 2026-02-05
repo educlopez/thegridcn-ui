@@ -56,7 +56,7 @@ export function VideoPlayer({
             {/* Rewind 10 */}
             <button
               onClick={onRewind}
-              className="flex items-center gap-1 px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:text-primary"
+              className="flex items-center gap-1 px-2 py-1 font-mono text-xs text-foreground/80 transition-colors hover:text-primary"
             >
               <span className="text-[10px]">—</span>
               <span>10</span>
@@ -64,7 +64,7 @@ export function VideoPlayer({
             </button>
 
             {/* Skip back */}
-            <button className="p-1 text-muted-foreground transition-colors hover:text-primary">
+            <button className="p-1 text-foreground/80 transition-colors hover:text-primary">
               <SkipBack className="h-4 w-4" />
             </button>
 
@@ -81,14 +81,14 @@ export function VideoPlayer({
             </button>
 
             {/* Skip forward */}
-            <button className="p-1 text-muted-foreground transition-colors hover:text-primary">
+            <button className="p-1 text-foreground/80 transition-colors hover:text-primary">
               <SkipForward className="h-4 w-4" />
             </button>
 
             {/* Fast forward 10 */}
             <button
               onClick={onFastForward}
-              className="flex items-center gap-1 px-2 py-1 font-mono text-xs text-muted-foreground transition-colors hover:text-primary"
+              className="flex items-center gap-1 px-2 py-1 font-mono text-xs text-foreground/80 transition-colors hover:text-primary"
             >
               <FastForward className="h-4 w-4" />
               <span>10</span>
@@ -101,12 +101,12 @@ export function VideoPlayer({
 
           {/* Timestamp */}
           <div className="mt-2 text-center">
-            <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            <span className="font-mono text-xs uppercase tracking-widest text-foreground/80">
               [{status === "playing" ? "PLAY" : "PAUSE"}]
             </span>
             <div className="font-mono text-lg tracking-wider text-primary">
               {currentTime}{" "}
-              <span className="text-xs text-muted-foreground">ELAPSED</span>
+              <span className="text-xs text-foreground/80">ELAPSED</span>
             </div>
           </div>
         </div>

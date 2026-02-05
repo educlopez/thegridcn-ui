@@ -43,6 +43,8 @@ export function Timer({
     <div className={cn("text-center", className)} {...props}>
       <div className="flex items-baseline justify-center gap-1">
         <span
+          data-slot="tron-timer-value"
+          data-variant={variant}
           className={cn(
             "font-mono font-light tracking-wider",
             sizeStyles[size],
@@ -59,7 +61,7 @@ export function Timer({
               size === "lg" && "text-xl",
               size === "md" && "text-base",
               size === "sm" && "text-sm",
-              "text-muted-foreground"
+              "text-foreground/80"
             )}
           >
             {label}
@@ -69,7 +71,7 @@ export function Timer({
       {sublabel && (
         <div
           className={cn(
-            "mt-2 font-mono tracking-wider text-muted-foreground/70",
+            "mt-2 font-mono tracking-wider text-foreground/60",
             size === "xl" && "text-3xl",
             size === "lg" && "text-2xl",
             size === "md" && "text-lg",

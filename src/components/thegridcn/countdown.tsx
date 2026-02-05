@@ -41,10 +41,12 @@ export function Countdown({
       className={cn("flex items-center gap-3 font-mono", className)}
       {...props}
     >
-      <span className="text-sm uppercase tracking-widest text-muted-foreground">
+      <span className="text-sm uppercase tracking-widest text-foreground/80">
         {label}:
       </span>
       <span
+        data-slot="tron-countdown-value"
+        data-variant={variant}
         className={cn(
           "rounded border px-3 py-1 text-lg font-bold tracking-wider",
           styles.bg,

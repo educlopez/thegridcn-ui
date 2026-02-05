@@ -17,7 +17,7 @@ export function SpeedIndicator({
     <div className={cn("flex items-center gap-2", className)}>
       <span className="font-mono text-3xl font-bold text-primary">{speed}</span>
       <div className="flex flex-col">
-        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+        <span className="text-[10px] uppercase tracking-widest text-foreground/80">
           KM/H
         </span>
         <div className="h-1 w-16 overflow-hidden rounded-full bg-muted">

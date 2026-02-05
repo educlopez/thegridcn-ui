@@ -12,7 +12,7 @@ interface StatProps {
 export function Stat({ label, value, unit, direction }: StatProps) {
   return (
     <div className="flex items-center gap-2 font-mono">
-      <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+      <span className="text-[10px] uppercase tracking-widest text-foreground/80">
         {label}
       </span>
       <span

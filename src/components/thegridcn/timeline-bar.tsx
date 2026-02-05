@@ -30,6 +30,7 @@ export function TimelineBar({
 
         {/* Progress indicator (red line) */}
         <div
+          data-slot="tron-progress-indicator"
           className="absolute top-0 h-full w-1 bg-red-500"
           style={{ left: `${progress}%` }}
         />

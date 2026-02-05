@@ -30,7 +30,8 @@ export function VideoProgress({
 
         {/* Current position indicator */}
         <div
-          className="absolute top-0 h-full w-0.5 bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+          data-slot="tron-progress-indicator"
+          className="absolute top-0 h-full w-0.5 bg-foreground"
           style={{ left: `${progress}%` }}
         />
 

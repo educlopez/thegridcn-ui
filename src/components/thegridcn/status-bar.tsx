@@ -24,6 +24,8 @@ export function StatusBar({
 
   return (
     <div
+      data-slot="tron-status-bar"
+      data-variant={variant}
       className={cn(
         "flex items-center justify-between border-y px-4 py-2 font-mono text-xs uppercase tracking-widest",
         variantStyles[variant],
@@ -31,10 +33,10 @@ export function StatusBar({
       )}
       {...props}
     >
-      <div className="flex items-center gap-4 text-muted-foreground">
+      <div className="flex items-center gap-4 text-foreground/80">
         {leftContent}
       </div>
-      <div className="flex items-center gap-4 text-muted-foreground">
+      <div className="flex items-center gap-4 text-foreground/80">
         {rightContent}
       </div>
     </div>
@@ -65,6 +67,7 @@ export function InfoPanel({
 
   return (
     <div
+      data-slot="tron-info-panel"
       className={cn(
         "relative overflow-hidden rounded border border-border/50 bg-card/50 backdrop-blur-sm",
         className
@@ -75,12 +78,12 @@ export function InfoPanel({
       <div className="flex items-center justify-between border-b border-border/50 bg-muted/30 px-4 py-2">
         <div className="flex items-center gap-3">
           <div className={cn("h-2 w-2 rounded-full", statusIndicator[status])} />
-          <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/80">
             {subtitle}
           </span>
         </div>
         {timestamp && (
-          <span className="font-mono text-[10px] text-muted-foreground">
+          <span className="font-mono text-[10px] text-foreground/80">
             {timestamp}
           </span>
         )}
@@ -143,7 +146,7 @@ export function UplinkBar({
 
       <div className="flex items-center gap-4">
         {status && (
-          <span className="uppercase tracking-widest text-muted-foreground">
+          <span className="uppercase tracking-widest text-foreground/80">
             {status}
           </span>
         )}
@@ -191,6 +194,7 @@ export function ProgressTimeline({
 
         {/* Red progress indicator like in the movie */}
         <div
+          data-slot="tron-progress-indicator"
           className="absolute top-0 h-full w-1 bg-red-500"
           style={{ left: `${progress}%`, transform: "translateX(-50%)" }}
         />
@@ -209,7 +213,7 @@ export function ProgressTimeline({
       </div>
 
       {/* Labels */}
-      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-foreground/80">
         <span>00:00</span>
         {currentLabel && <span className="text-primary">{currentLabel}</span>}
         <span>END</span>

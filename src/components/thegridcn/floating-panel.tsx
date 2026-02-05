@@ -21,6 +21,7 @@ export function FloatingPanel({
 }: FloatingPanelProps) {
   return (
     <div
+      data-slot="tron-floating-panel"
       className={cn(
         "relative w-64 border border-primary/30 bg-background/80 backdrop-blur-md",
         position === "right" && "text-right",

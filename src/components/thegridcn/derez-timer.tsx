@@ -18,6 +18,7 @@ export function DerezTimer({
 }: DerezTimerProps) {
   return (
     <div
+      data-slot="tron-derez-timer"
       className={cn(
         "inline-flex flex-col items-end rounded border border-primary/30 bg-primary/10 px-4 py-2",
         className

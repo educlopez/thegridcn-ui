@@ -1140,6 +1140,176 @@
 }
 
 /* ==========================================
+   THEGRIDCN COMPONENTS
+   ========================================== */
+
+/* Data Card */
+[data-tron-intensity] [data-slot="tron-data-card"] {
+  box-shadow: var(--tron-border-glow);
+  transition: box-shadow var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="tron-data-card"]:hover {
+  box-shadow: var(--tron-hover-glow);
+}
+
+[data-tron-intensity] [data-slot="tron-data-card"][data-status="alert"] {
+  box-shadow: 0 0 var(--tron-glow-spread-md) oklch(63.7% 0.24 25.3 / calc(0.3 * var(--tron-glow-intensity)));
+}
+
+/* HUD Frame */
+[data-tron-intensity] [data-slot="tron-hud-frame"] {
+  box-shadow: var(--tron-border-glow);
+  transition: box-shadow var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="tron-hud-frame"]:hover {
+  box-shadow: var(--tron-hover-glow);
+}
+
+/* Floating Panel */
+[data-tron-intensity] [data-slot="tron-floating-panel"] {
+  box-shadow: var(--tron-border-glow);
+  transition: box-shadow var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="tron-floating-panel"]:hover {
+  box-shadow: var(--tron-hover-glow);
+}
+
+/* Derez Timer */
+[data-tron-intensity] [data-slot="tron-derez-timer"] {
+  box-shadow: var(--tron-border-glow);
+}
+
+[data-tron-intensity="heavy"] [data-slot="tron-derez-timer"] {
+  animation: tron-glow-pulse var(--tron-pulse-duration) ease-in-out infinite;
+}
+
+/* Radar */
+[data-tron-intensity] [data-slot="tron-radar"] {
+  box-shadow: var(--tron-border-glow);
+}
+
+[data-tron-intensity="heavy"] [data-slot="tron-radar"] {
+  animation: tron-glow-pulse var(--tron-pulse-duration) ease-in-out infinite;
+}
+
+/* Countdown Value */
+[data-tron-intensity] [data-slot="tron-countdown-value"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) calc(40% * var(--tron-glow-intensity)), transparent);
+}
+
+[data-tron-intensity] [data-slot="tron-countdown-value"][data-variant="danger"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) oklch(63.7% 0.24 25.3 / calc(0.3 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity] [data-slot="tron-countdown-value"][data-variant="warning"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) oklch(79.5% 0.16 86 / calc(0.3 * var(--tron-glow-intensity)));
+}
+
+/* Timer Value */
+[data-tron-intensity] [data-slot="tron-timer-value"][data-variant="default"] {
+  text-shadow: 0 0 var(--tron-glow-spread-sm) var(--glow),
+               0 0 var(--tron-glow-spread-md) var(--glow-muted);
+}
+
+[data-tron-intensity] [data-slot="tron-timer-value"][data-variant="countdown"] {
+  text-shadow: 0 0 var(--tron-glow-spread-sm) oklch(63.7% 0.24 25.3 / calc(0.5 * var(--tron-glow-intensity)));
+}
+
+/* Status Bar */
+[data-tron-intensity] [data-slot="tron-status-bar"][data-variant="alert"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) oklch(63.7% 0.24 25.3 / calc(0.2 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity] [data-slot="tron-status-bar"][data-variant="info"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) oklch(78.9% 0.15 194.8 / calc(0.2 * var(--tron-glow-intensity)));
+}
+
+/* Info Panel */
+[data-tron-intensity] [data-slot="tron-info-panel"] {
+  box-shadow: var(--tron-border-glow);
+  transition: box-shadow var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="tron-info-panel"]:hover {
+  box-shadow: var(--tron-hover-glow);
+}
+
+/* Progress Indicator (red line) */
+[data-tron-intensity] [data-slot="tron-progress-indicator"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) oklch(63.7% 0.24 25.3 / calc(0.5 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity="heavy"] [data-slot="tron-progress-indicator"] {
+  box-shadow: 0 0 var(--tron-glow-spread-md) oklch(63.7% 0.24 25.3 / 0.6);
+}
+
+/* Map Marker */
+[data-tron-intensity] [data-slot="tron-map-marker"][data-variant="primary"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) oklch(78.9% 0.15 194.8 / calc(0.3 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity] [data-slot="tron-map-marker"][data-variant="danger"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) oklch(63.7% 0.24 25.3 / calc(0.3 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity] [data-slot="tron-map-marker"][data-variant="highlight"] {
+  box-shadow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) calc(30% * var(--tron-glow-intensity)), transparent);
+}
+
+/* Alert Banner */
+[data-tron-intensity] [data-slot="tron-alert-banner"] {
+  box-shadow: 0 0 var(--tron-glow-spread-lg) var(--_alert-glow-color);
+}
+
+[data-tron-intensity] [data-slot="tron-alert-banner"][data-variant="warning"] {
+  --_alert-glow-color: oklch(79.5% 0.16 86 / calc(0.3 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity] [data-slot="tron-alert-banner"][data-variant="danger"] {
+  --_alert-glow-color: oklch(63.7% 0.24 25.3 / calc(0.3 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity] [data-slot="tron-alert-banner"][data-variant="info"] {
+  --_alert-glow-color: oklch(78.9% 0.15 194.8 / calc(0.3 * var(--tron-glow-intensity)));
+}
+
+/* Beam Marker */
+[data-tron-intensity] [data-slot="tron-beam-marker"] {
+  box-shadow: 0 0 var(--tron-glow-spread-lg) var(--_beam-glow-color);
+}
+
+[data-tron-intensity] [data-slot="tron-beam-marker"][data-color="red"] {
+  --_beam-glow-color: oklch(63.7% 0.24 25.3 / calc(0.5 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity] [data-slot="tron-beam-marker"][data-color="cyan"] {
+  --_beam-glow-color: oklch(78.9% 0.15 194.8 / calc(0.5 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity] [data-slot="tron-beam-marker"][data-color="amber"] {
+  --_beam-glow-color: oklch(79.5% 0.16 86 / calc(0.5 * var(--tron-glow-intensity)));
+}
+
+[data-tron-intensity] [data-slot="tron-beam-marker"][data-color="primary"] {
+  --_beam-glow-color: color-mix(in oklch, var(--glow) calc(50% * var(--tron-glow-intensity)), transparent);
+}
+
+/* Arrival Time */
+[data-tron-intensity] [data-slot="tron-arrival-time"] {
+  box-shadow: 0 0 var(--tron-glow-spread-md) oklch(63.7% 0.24 25.3 / calc(0.5 * var(--tron-glow-intensity)));
+  text-shadow: 0 0 var(--tron-glow-spread-sm) oklch(63.7% 0.24 25.3 / calc(0.5 * var(--tron-glow-intensity)));
+}
+
+/* Anomaly Title */
+[data-tron-intensity] [data-slot="tron-anomaly-title"] {
+  text-shadow: 0 0 var(--tron-glow-spread-xl) oklch(79.5% 0.16 86 / calc(0.5 * var(--tron-glow-intensity))),
+               0 0 calc(var(--tron-glow-spread-xl) * 2) oklch(79.5% 0.16 86 / calc(0.3 * var(--tron-glow-intensity)));
+}
+
+/* ==========================================
    OPT-OUT SELECTOR
    ========================================== */
 
