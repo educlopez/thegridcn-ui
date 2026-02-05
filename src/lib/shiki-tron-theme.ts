@@ -1,55 +1,57 @@
 import type { ThemeRegistration } from "shiki";
 
-// Tron-inspired theme for Shiki syntax highlighting
+// Tron: Ares terminal-inspired theme for Shiki syntax highlighting
+// Based on the movie's red, orange, and white terminal aesthetic
 export const tronTheme: ThemeRegistration = {
-  name: "tron",
+  name: "tron-ares",
   type: "dark",
   colors: {
-    "editor.background": "#0C1421",
-    "editor.foreground": "#E0E6ED",
-    "editor.lineHighlightBackground": "#1A2535",
-    "editor.selectionBackground": "#2D4A6A",
-    "editorCursor.foreground": "#FF6B6B",
-    "editorLineNumber.foreground": "#4A5568",
-    "editorLineNumber.activeForeground": "#FF6B6B",
+    // Deep black background like the movie terminals
+    "editor.background": "#0A0A0F",
+    "editor.foreground": "#F0F0F0",
+    "editor.lineHighlightBackground": "#1A0A0A",
+    "editor.selectionBackground": "#4A1515",
+    "editorCursor.foreground": "#FF5544",
+    "editorLineNumber.foreground": "#4A2020",
+    "editorLineNumber.activeForeground": "#FF5544",
   },
   tokenColors: [
-    // Comments - muted
+    // Comments - muted gray
     {
       scope: ["comment", "punctuation.definition.comment"],
       settings: {
-        foreground: "#4A5568",
+        foreground: "#666666",
         fontStyle: "italic",
       },
     },
-    // Strings - cyan/teal
+    // Strings - white (like data values in terminal)
     {
       scope: ["string", "string.quoted"],
       settings: {
-        foreground: "#6EE7B7",
+        foreground: "#FFFFFF",
       },
     },
-    // Numbers - orange
+    // Numbers - bright orange (like percentage displays)
     {
       scope: ["constant.numeric"],
       settings: {
-        foreground: "#F59E0B",
+        foreground: "#FF8C00",
       },
     },
-    // Keywords - primary (will be themed)
+    // Keywords - bright red (primary terminal color)
     {
       scope: [
         "keyword",
         "keyword.control",
-        "keyword.operator",
         "storage.type",
         "storage.modifier",
       ],
       settings: {
-        foreground: "#FF6B6B",
+        foreground: "#FF4136",
+        fontStyle: "bold",
       },
     },
-    // Functions - cyan
+    // Functions - orange (like function calls in terminal)
     {
       scope: [
         "entity.name.function",
@@ -57,10 +59,10 @@ export const tronTheme: ThemeRegistration = {
         "meta.function-call",
       ],
       settings: {
-        foreground: "#22D3EE",
+        foreground: "#FFA500",
       },
     },
-    // Classes/Types - gold
+    // Classes/Types - white bold (like important labels)
     {
       scope: [
         "entity.name.type",
@@ -69,52 +71,60 @@ export const tronTheme: ThemeRegistration = {
         "support.class",
       ],
       settings: {
-        foreground: "#FBBF24",
+        foreground: "#FFFFFF",
+        fontStyle: "bold",
       },
     },
-    // Variables - foreground
+    // Variables - light gray/white
     {
       scope: ["variable", "variable.other"],
       settings: {
-        foreground: "#E0E6ED",
+        foreground: "#E8E8E8",
       },
     },
-    // Properties - light blue
+    // Properties - orange
     {
       scope: ["variable.other.property", "support.type.property-name"],
       settings: {
-        foreground: "#93C5FD",
+        foreground: "#FF7744",
       },
     },
-    // Constants - pink
+    // Constants - bright orange (like "ready" status)
     {
       scope: ["constant", "constant.language", "variable.other.constant"],
       settings: {
-        foreground: "#F472B6",
+        foreground: "#FF8C00",
       },
     },
-    // Punctuation - muted
+    // Punctuation - dim red/gray
     {
       scope: ["punctuation", "meta.brace"],
       settings: {
-        foreground: "#6B7280",
+        foreground: "#AA4444",
       },
     },
-    // Tags (JSX/HTML) - primary
+    // Tags (JSX/HTML) - bright red
     {
-      scope: ["entity.name.tag", "punctuation.definition.tag"],
+      scope: ["entity.name.tag"],
       settings: {
-        foreground: "#FF6B6B",
+        foreground: "#FF4136",
       },
     },
-    // Attributes - cyan
+    // Tag brackets - red
+    {
+      scope: ["punctuation.definition.tag"],
+      settings: {
+        foreground: "#CC3333",
+      },
+    },
+    // Attributes - orange
     {
       scope: ["entity.other.attribute-name"],
       settings: {
-        foreground: "#22D3EE",
+        foreground: "#FFA500",
       },
     },
-    // Imports/Exports - purple
+    // Imports/Exports - red
     {
       scope: [
         "keyword.control.import",
@@ -122,28 +132,137 @@ export const tronTheme: ThemeRegistration = {
         "keyword.control.from",
       ],
       settings: {
-        foreground: "#A78BFA",
+        foreground: "#FF4136",
       },
     },
     // Operators - orange
     {
-      scope: ["keyword.operator.assignment", "keyword.operator.comparison"],
+      scope: [
+        "keyword.operator",
+        "keyword.operator.assignment",
+        "keyword.operator.comparison",
+        "keyword.operator.arithmetic",
+        "keyword.operator.logical",
+      ],
       settings: {
-        foreground: "#F59E0B",
+        foreground: "#FF7744",
       },
     },
-    // Template literals
+    // Template literals - white
     {
-      scope: ["string.template", "punctuation.definition.template-expression"],
+      scope: ["string.template"],
       settings: {
-        foreground: "#6EE7B7",
+        foreground: "#FFFFFF",
       },
     },
-    // Regex
+    // Template expression punctuation - orange
+    {
+      scope: ["punctuation.definition.template-expression"],
+      settings: {
+        foreground: "#FF8C00",
+      },
+    },
+    // Regex - orange
     {
       scope: ["string.regexp"],
       settings: {
-        foreground: "#F472B6",
+        foreground: "#FF7744",
+      },
+    },
+    // Boolean/null - bright orange
+    {
+      scope: ["constant.language.boolean", "constant.language.null", "constant.language.undefined"],
+      settings: {
+        foreground: "#FF8C00",
+        fontStyle: "bold",
+      },
+    },
+    // Type annotations - orange
+    {
+      scope: ["entity.name.type.alias", "entity.name.type.interface", "entity.name.type.enum"],
+      settings: {
+        foreground: "#FFA500",
+      },
+    },
+    // Object keys - white
+    {
+      scope: ["meta.object-literal.key"],
+      settings: {
+        foreground: "#FFFFFF",
+      },
+    },
+    // Parameters - light gray
+    {
+      scope: ["variable.parameter"],
+      settings: {
+        foreground: "#E0E0E0",
+      },
+    },
+    // Decorators - orange
+    {
+      scope: ["meta.decorator", "punctuation.decorator"],
+      settings: {
+        foreground: "#FFA500",
+      },
+    },
+    // this/self keyword - red
+    {
+      scope: ["variable.language.this", "variable.language.self"],
+      settings: {
+        foreground: "#FF4136",
+        fontStyle: "italic",
+      },
+    },
+    // Spread operator - orange
+    {
+      scope: ["keyword.operator.spread", "keyword.operator.rest"],
+      settings: {
+        foreground: "#FF7744",
+      },
+    },
+    // Arrow function - orange
+    {
+      scope: ["storage.type.function.arrow"],
+      settings: {
+        foreground: "#FF7744",
+      },
+    },
+    // Markdown headings - red bold
+    {
+      scope: ["markup.heading", "entity.name.section"],
+      settings: {
+        foreground: "#FF4136",
+        fontStyle: "bold",
+      },
+    },
+    // Markdown bold - white bold
+    {
+      scope: ["markup.bold"],
+      settings: {
+        foreground: "#FFFFFF",
+        fontStyle: "bold",
+      },
+    },
+    // Markdown italic - light gray italic
+    {
+      scope: ["markup.italic"],
+      settings: {
+        foreground: "#E0E0E0",
+        fontStyle: "italic",
+      },
+    },
+    // Markdown code - orange
+    {
+      scope: ["markup.inline.raw", "markup.fenced_code"],
+      settings: {
+        foreground: "#FFA500",
+      },
+    },
+    // Markdown links - red
+    {
+      scope: ["markup.underline.link"],
+      settings: {
+        foreground: "#FF4136",
       },
     },
   ],
