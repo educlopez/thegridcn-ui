@@ -39,7 +39,7 @@ const ItemButton = React.memo(function ItemButton({
         "hover:bg-primary/10 hover:text-primary",
         isActive
           ? "bg-primary/20 text-primary border-l-2 border-primary"
-          : "text-foreground/80"
+          : "text-foreground"
       )}
     >
       {item.title}
@@ -89,12 +89,12 @@ const ExplorerSection = React.memo(function ExplorerSection({
       <CollapsibleTrigger className="flex w-full items-center gap-2 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary">
         <ChevronRightIcon
           className={cn(
-            "h-3.5 w-3.5 text-foreground/80 transition-transform",
+            "h-3.5 w-3.5 text-foreground transition-transform",
             isOpen ? "rotate-90" : ""
           )}
         />
         <span>{title}</span>
-        <span className="ml-auto rounded border border-primary/20 bg-primary/5 px-1.5 py-0.5 text-[10px] text-primary/60">
+        <span className="ml-auto rounded border border-primary/30 bg-primary/5 px-1.5 py-0.5 text-[10px] text-primary">
           {items.length}
         </span>
       </CollapsibleTrigger>
@@ -152,8 +152,22 @@ export function ItemExplorer({
   const content = (
     <div className="p-4">
       {!isMobile && (
-        <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
-          COMPONENT REGISTRY
+        <div className="mb-4">
+          {/* Panel Header - Tron style with diagonal cut */}
+          <div className="relative">
+            {/* Top line */}
+            <div className="absolute -top-1 left-0 right-4 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
+            {/* Diagonal cut element */}
+            <div className="absolute -top-1 right-0 h-4 w-4">
+              <div className="absolute right-0 top-0 h-px w-4 bg-primary/40" style={{ transform: 'rotate(-45deg)', transformOrigin: 'right top' }} />
+            </div>
+
+            <div className="border-b border-primary/30 pb-2 pt-1">
+              <span className="font-mono text-[11px] tracking-[0.2em] text-foreground">
+                REGISTRY: <span className="text-foreground/70">01.IDX</span>
+              </span>
+            </div>
+          </div>
         </div>
       )}
       <div className="space-y-1">
@@ -181,6 +195,22 @@ export function ItemExplorer({
           onItemSelect={onItemSelect}
         />
       </div>
+
+      {/* Footer Status - Terminal style */}
+      {!isMobile && (
+        <div className="mt-auto border-t border-foreground/20 pt-3">
+          <div className="flex items-center gap-2 font-mono text-[8px]">
+            <span className="text-foreground">IDX:</span>
+            <span className="text-primary">OK</span>
+            <span className="text-foreground/50">|</span>
+            <span className="text-foreground">MOD:</span>
+            <span className="text-primary">
+              {tronMovieSection ? tronMovieSection.items.length + standardComponents.length : standardComponents.length}
+            </span>
+            <span className="ml-auto text-foreground/70">.END.</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 
@@ -189,10 +219,22 @@ export function ItemExplorer({
     return content;
   }
 
-  // Desktop version - with sticky wrapper
+  // Desktop version
   return (
-    <div className="sticky top-[88px] z-30 hidden h-[calc(100vh-88px)] w-64 overflow-y-auto border-r border-primary/20 bg-background/50 backdrop-blur-sm xl:flex xl:flex-col">
-      {content}
+    <div className="relative z-30 hidden h-full w-64 shrink-0 overflow-y-auto border-r border-primary/30 bg-panel xl:flex xl:flex-col"
+    >
+      {/* CRT scanline effect */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+        }}
+      />
+
+      <div className="relative flex-1">
+        {content}
+      </div>
     </div>
   );
 }

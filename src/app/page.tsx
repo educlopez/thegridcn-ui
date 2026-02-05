@@ -3,6 +3,7 @@
 import * as React from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { themes, useTheme } from "@/components/theme";
 import {
   Reticle,
@@ -47,15 +48,36 @@ const availableComponents = [
 const packageManagers = [
   { id: "pnpm", command: "pnpm dlx" },
   { id: "npm", command: "npx" },
-  { id: "yarn", command: "yarn dlx" },
-  { id: "bun", command: "bunx" },
+  { id: "yarn", command: "yarn" },
+  { id: "bun", command: "bunx --bun" },
 ] as const;
 
 // Terminal install component
 function TerminalInstall() {
+  const router = useRouter();
   const [selectedPm, setSelectedPm] = React.useState<string>("pnpm");
   const [isOpen, setIsOpen] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [scrollOffset, setScrollOffset] = React.useState(0);
+  const listRef = React.useRef<HTMLDivElement>(null);
+  const pmSelectorRef = React.useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (pmSelectorRef.current && !pmSelectorRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [isOpen]);
+
+  const VISIBLE_ITEMS = 5;
 
   const currentPm = packageManagers.find((pm) => pm.id === selectedPm) || packageManagers[0];
   const command = `${currentPm.command} shadcn@latest list @thegridcn`;
@@ -66,24 +88,76 @@ function TerminalInstall() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Navigate to selected component
+  const navigateToComponent = React.useCallback(() => {
+    const component = availableComponents[selectedIndex];
+    router.push(`/components#${component}`);
+  }, [selectedIndex, router]);
+
+  // Handle keyboard navigation
+  const handleKeyDown = React.useCallback((e: KeyboardEvent) => {
+    if (e.key === "ArrowDown" || e.key === "j") {
+      e.preventDefault();
+      setSelectedIndex((prev) => {
+        const next = Math.min(prev + 1, availableComponents.length - 1);
+        // Adjust scroll offset if needed
+        if (next >= scrollOffset + VISIBLE_ITEMS) {
+          setScrollOffset(next - VISIBLE_ITEMS + 1);
+        }
+        return next;
+      });
+    } else if (e.key === "ArrowUp" || e.key === "k") {
+      e.preventDefault();
+      setSelectedIndex((prev) => {
+        const next = Math.max(prev - 1, 0);
+        // Adjust scroll offset if needed
+        if (next < scrollOffset) {
+          setScrollOffset(next);
+        }
+        return next;
+      });
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      navigateToComponent();
+    }
+  }, [scrollOffset, navigateToComponent]);
+
+  // Handle wheel scroll on list - prevent page scroll completely
+  const handleWheel = React.useCallback((e: WheelEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const direction = e.deltaY > 0 ? 1 : -1;
+    setScrollOffset((prev) => {
+      const next = Math.max(0, Math.min(prev + direction, availableComponents.length - VISIBLE_ITEMS));
+      return next;
+    });
+  }, []);
+
+  React.useEffect(() => {
+    const listElement = listRef.current;
+    if (listElement) {
+      // Use passive: false to allow preventDefault
+      listElement.addEventListener("wheel", handleWheel, { passive: false });
+      listElement.addEventListener("keydown", handleKeyDown as unknown as EventListener);
+      return () => {
+        listElement.removeEventListener("wheel", handleWheel);
+        listElement.removeEventListener("keydown", handleKeyDown as unknown as EventListener);
+      };
+    }
+  }, [handleKeyDown, handleWheel]);
+
+  const visibleComponents = availableComponents.slice(scrollOffset, scrollOffset + VISIBLE_ITEMS);
+  const hasMoreAbove = scrollOffset > 0;
+  const hasMoreBelow = scrollOffset + VISIBLE_ITEMS < availableComponents.length;
+
   return (
     <div className="relative w-full max-w-2xl">
-      <div className="relative overflow-hidden border border-primary/30 bg-background/50 backdrop-blur-sm">
+      <div className="relative overflow-hidden border border-primary/30 bg-panel">
         {/* Corner brackets - Tron style */}
         <div className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-primary" />
         <div className="absolute -right-px -top-px h-4 w-4 border-r-2 border-t-2 border-primary" />
         <div className="absolute -bottom-px -left-px h-4 w-4 border-b-2 border-l-2 border-primary" />
         <div className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-primary" />
-
-        {/* Grid pattern overlay */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-5"
-          style={{
-            backgroundImage:
-              "linear-gradient(var(--primary) 1px, transparent 1px), linear-gradient(90deg, var(--primary) 1px, transparent 1px)",
-            backgroundSize: "20px 20px",
-          }}
-        />
 
         {/* Scanline effect */}
         <div
@@ -94,24 +168,38 @@ function TerminalInstall() {
           }}
         />
 
-        {/* Header */}
-        <div className="relative flex items-center justify-between border-b border-primary/30 bg-primary/5 px-4 py-2.5">
-          <div className="flex items-center gap-2">
-            <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary">
-              TERMINAL
-            </span>
+        {/* Header - Tron Ares style */}
+        <div className="relative border-b border-primary/30 bg-primary/5 px-4 py-2">
+          {/* Top accent line */}
+          <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-primary via-primary/50 to-transparent" />
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {/* Status indicator */}
+              <div className="flex items-center gap-1">
+                <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
+                <div className="h-1.5 w-3 bg-primary/60" />
+              </div>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+                TERMINAL-01.SYS
+              </span>
+            </div>
+
+            <div className="flex items-center gap-4 font-mono text-[9px] tracking-wider">
+              <span className="text-foreground/50">SEC:0</span>
+              <span className="text-primary">[ ACTIVE ]</span>
+            </div>
           </div>
         </div>
 
         {/* Content */}
         <div className="relative space-y-3 p-4">
           {/* Command line with package manager selector */}
-          <div className="flex items-center gap-2 font-mono text-sm">
+          <div className="flex flex-wrap items-center gap-2 font-mono text-sm">
             <span className="text-primary glow-text">$</span>
 
             {/* Package manager selector */}
-            <div className="relative">
+            <div ref={pmSelectorRef} className="relative">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center gap-1 border-b border-dashed border-primary/50 text-primary transition-colors hover:border-primary"
@@ -128,7 +216,7 @@ function TerminalInstall() {
               </button>
 
               {isOpen && (
-                <div className="absolute left-0 top-full z-50 mt-1 min-w-[100px] border border-primary/30 bg-background/95 backdrop-blur-md">
+                <div className="absolute left-0 top-full z-50 mt-1 min-w-[100px] border border-primary/30 bg-panel">
                   {packageManagers.map((pm) => (
                     <button
                       key={pm.id}
@@ -169,21 +257,69 @@ function TerminalInstall() {
             </button>
           </div>
 
-          {/* Output - component list */}
+          {/* Interactive component selector */}
           <div className="border-l-2 border-primary/20 pl-3">
-            <div className="mb-2 font-mono text-[10px] uppercase tracking-wider text-foreground/80">
-              Available components:
+            <div className="mb-2 flex items-center justify-between">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-primary">
+                ◆ Select component to install <span className="text-foreground/60">(scroll to navigate)</span>
+              </span>
+              <span className="font-mono text-[10px] text-foreground/60">
+                {selectedIndex + 1}/{availableComponents.length}
+              </span>
             </div>
-            <div className="flex flex-wrap gap-1.5">
-              {availableComponents.map((comp) => (
-                <Link
-                  key={comp}
-                  href={`/components#${comp}`}
-                  className="border border-primary/30 bg-primary/5 px-1.5 py-0.5 font-mono text-[10px] text-primary transition-colors hover:border-primary hover:bg-primary/20"
-                >
-                  {comp}
-                </Link>
-              ))}
+
+            {/* Scrollable list */}
+            <div
+              ref={listRef}
+              className="relative select-none outline-none"
+              tabIndex={0}
+              onMouseEnter={() => listRef.current?.focus()}
+              onMouseLeave={() => listRef.current?.blur()}
+            >
+              {/* Scroll up indicator - always reserve space */}
+              <div className={`flex items-center gap-2 py-1 font-mono text-[11px] ${hasMoreAbove ? "text-foreground/40" : "invisible"}`}>
+                <span>↑</span>
+                <span>{scrollOffset} more</span>
+              </div>
+
+              {/* Visible items */}
+              <div className="space-y-0.5">
+                {visibleComponents.map((comp, idx) => {
+                  const actualIndex = scrollOffset + idx;
+                  const isSelected = actualIndex === selectedIndex;
+                  return (
+                    <Link
+                      key={comp}
+                      href={`/components#${comp}`}
+                      onClick={() => setSelectedIndex(actualIndex)}
+                      onMouseEnter={() => setSelectedIndex(actualIndex)}
+                      className={`flex items-center gap-2 py-1 font-mono text-sm transition-colors ${
+                        isSelected
+                          ? "text-primary"
+                          : "text-foreground/70 hover:text-foreground"
+                      }`}
+                    >
+                      <span className={isSelected ? "text-primary" : "text-foreground/40"}>
+                        {isSelected ? "◆" : "◇"}
+                      </span>
+                      <span className={isSelected ? "underline underline-offset-2" : ""}>
+                        {comp}
+                      </span>
+                      {isSelected && (
+                        <span className="ml-auto text-[9px] text-primary/50">
+                          [ENTER]
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              {/* Scroll down indicator - always reserve space */}
+              <div className={`flex items-center gap-2 py-1 font-mono text-[11px] ${hasMoreBelow ? "text-foreground/40" : "invisible"}`}>
+                <span>↓</span>
+                <span>{availableComponents.length - scrollOffset - VISIBLE_ITEMS} more</span>
+              </div>
             </div>
           </div>
 
@@ -191,7 +327,7 @@ function TerminalInstall() {
           <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider">
             <span className="inline-block h-1.5 w-1.5 animate-pulse bg-primary" />
             <span className="text-primary">{availableComponents.length} COMPONENTS READY</span>
-            <span className="text-foreground/80">+ ALL NATIVE SHADCN/UI COMPONENTS</span>
+            <span className="text-foreground/60">+ ALL NATIVE SHADCN/UI</span>
           </div>
         </div>
       </div>
@@ -655,7 +791,17 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-primary/30 bg-background/90 backdrop-blur-xl">
+      <footer
+        className="relative z-10 border-t border-primary/30 bg-panel"
+      >
+        {/* CRT scanline effect */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+          }}
+        />
         {/* Footer uplink bar */}
         <UplinkHeader
           leftText="SYSTEM: THE GRIDCN v1.0.0"
@@ -667,12 +813,12 @@ export default function Home() {
             {/* Logo section */}
             <div className="flex items-center gap-4">
               <TheGridcnLogo size="lg" />
-              <div className="h-8 w-px bg-primary/30" />
+              <div className="h-8 w-px bg-primary/40" />
               <div className="font-mono text-[10px]">
-                <div className="tracking-widest text-foreground/80">
+                <div className="tracking-widest text-foreground">
                   TRON-INSPIRED
                 </div>
-                <div className="tracking-wider text-foreground">
+                <div className="tracking-wider text-primary">
                   THEME SYSTEM
                 </div>
               </div>
@@ -684,7 +830,7 @@ export default function Home() {
                 (tech) => (
                   <span
                     key={tech}
-                    className="border border-border/30 bg-card/20 px-2 py-1 font-mono text-[9px] tracking-wider text-foreground/80"
+                    className="border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[9px] tracking-wider text-foreground"
                   >
                     {tech}
                   </span>
@@ -695,11 +841,11 @@ export default function Home() {
 
           {/* Bottom copyright line */}
           <div className="mt-8 flex items-center justify-center gap-4">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/20" />
-            <span className="font-mono text-[9px] tracking-widest text-foreground/80">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/30" />
+            <span className="font-mono text-[9px] tracking-widest text-foreground">
               GRID YEAR {new Date().getFullYear()} • ALL PROGRAMS RESERVED
             </span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/20" />
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/30" />
           </div>
         </div>
       </footer>

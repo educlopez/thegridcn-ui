@@ -6,9 +6,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Panel background - defined before @theme so it's available for utilities */
+:root {
+  --panel: #0C1421;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-panel: var(--panel);
   --font-sans: var(--font-rajdhani), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-orbitron), system-ui, sans-serif;

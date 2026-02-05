@@ -2,34 +2,35 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Copy, Check, ChevronDown } from "lucide-react";
+import { Copy, Check, ChevronDown, Code, Eye } from "lucide-react";
 import { type ComponentItem, componentSections } from "@/lib/component-data";
 import { ComponentPreview } from "./component-preview";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { cn } from "@/lib/utils";
-import { useTheme } from "@/components/theme";
 
-// Complementary colors for each theme (opposite on color wheel for contrast)
-const complementaryColors: Record<string, { border: string; bg: string; bgHover: string; text: string; textMuted: string }> = {
-  ares: { border: "border-cyan-500/30", bg: "bg-cyan-500/10", bgHover: "hover:bg-cyan-500/20", text: "text-cyan-400", textMuted: "text-cyan-400/70" },
-  tron: { border: "border-orange-500/30", bg: "bg-orange-500/10", bgHover: "hover:bg-orange-500/20", text: "text-orange-400", textMuted: "text-orange-400/70" },
-  clu: { border: "border-blue-500/30", bg: "bg-blue-500/10", bgHover: "hover:bg-blue-500/20", text: "text-blue-400", textMuted: "text-blue-400/70" },
-  athena: { border: "border-purple-500/30", bg: "bg-purple-500/10", bgHover: "hover:bg-purple-500/20", text: "text-purple-400", textMuted: "text-purple-400/70" },
-  aphrodite: { border: "border-green-500/30", bg: "bg-green-500/10", bgHover: "hover:bg-green-500/20", text: "text-green-400", textMuted: "text-green-400/70" },
-  poseidon: { border: "border-amber-500/30", bg: "bg-amber-500/10", bgHover: "hover:bg-amber-500/20", text: "text-amber-400", textMuted: "text-amber-400/70" },
-};
+type ViewMode = "preview" | "code";
 
 interface PreviewProps {
   component: ComponentItem | null;
 }
 
 // Map component IDs to their registry names
-function getRegistryName(componentId: string): string {
+function getRegistryName(componentId: string): string | null {
   // Special cases where registry name differs from component ID
   const specialMappings: Record<string, string> = {
     "alert-banner": "thegridcn-alert",
   };
-  return specialMappings[componentId] || componentId;
+
+  if (specialMappings[componentId]) {
+    return specialMappings[componentId];
+  }
+
+  // Standard shadcn components have -example suffix in ID but not in registry
+  if (componentId.endsWith("-example")) {
+    return componentId.replace(/-example$/, "");
+  }
+
+  return componentId;
 }
 
 type PackageManager = "pnpm" | "npm" | "yarn" | "bun";
@@ -37,9 +38,121 @@ type PackageManager = "pnpm" | "npm" | "yarn" | "bun";
 const packageManagerCommands: Record<PackageManager, string> = {
   pnpm: "pnpm dlx shadcn@latest add",
   npm: "npx shadcn@latest add",
-  yarn: "npx shadcn@latest add",
-  bun: "bunx shadcn@latest add",
+  yarn: "yarn shadcn@latest add",
+  bun: "bunx --bun shadcn@latest add",
 };
+
+// Code viewer component with Shiki syntax highlighting
+function CodeViewer({ componentId }: { componentId: string }) {
+  const [code, setCode] = React.useState<string | null>(null);
+  const [highlightedCode, setHighlightedCode] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+  const [copied, setCopied] = React.useState(false);
+
+  const registryName = getRegistryName(componentId);
+
+  // Fetch code and highlight it
+  React.useEffect(() => {
+    // Handle components without registry files
+    if (!registryName) {
+      setLoading(false);
+      setError("Source code not available for this component");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setHighlightedCode(null);
+
+    fetch(`/r/${registryName}.json`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Component not found");
+        return res.json();
+      })
+      .then(async (data) => {
+        if (data.files && data.files[0]?.content) {
+          const sourceCode = data.files[0].content;
+          setCode(sourceCode);
+
+          // Dynamically import shiki to avoid SSR issues
+          const { codeToHtml } = await import("shiki");
+          const { tronTheme } = await import("@/lib/shiki-tron-theme");
+
+          const html = await codeToHtml(sourceCode, {
+            lang: "tsx",
+            theme: tronTheme,
+          });
+
+          setHighlightedCode(html);
+        } else {
+          setError("No source code available");
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to load code:", err);
+        setError("Failed to load source code");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [registryName]);
+
+  const handleCopy = async () => {
+    if (code) {
+      await navigator.clipboard.writeText(code);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex h-full items-center justify-center bg-panel">
+        <div className="flex items-center gap-2 font-mono text-xs text-foreground/60">
+          <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
+          Loading source code...
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-full items-center justify-center bg-panel">
+        <div className="font-mono text-xs text-foreground/60">{error}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative flex h-full flex-col bg-panel">
+      {/* Copy button */}
+      <button
+        onClick={handleCopy}
+        className="absolute right-4 top-4 z-10 flex items-center gap-1.5 rounded border border-primary/30 bg-panel px-2 py-1 font-mono text-[10px] text-primary transition-all hover:bg-primary/20"
+      >
+        {copied ? (
+          <>
+            <Check className="h-3 w-3" />
+            COPIED
+          </>
+        ) : (
+          <>
+            <Copy className="h-3 w-3" />
+            COPY
+          </>
+        )}
+      </button>
+
+      {/* Code display with Shiki highlighting */}
+      <div
+        className="shiki-code h-full overflow-auto p-4 text-sm leading-relaxed [&_pre]:!bg-transparent [&_code]:!bg-transparent"
+        dangerouslySetInnerHTML={{ __html: highlightedCode || "" }}
+      />
+    </div>
+  );
+}
 
 function InstallCommand({ componentId }: { componentId: string }) {
   const [copied, setCopied] = React.useState(false);
@@ -47,13 +160,15 @@ function InstallCommand({ componentId }: { componentId: string }) {
   const [packageManager, setPackageManager] = React.useState<PackageManager>("pnpm");
   const [dropdownPosition, setDropdownPosition] = React.useState({ top: 0, left: 0 });
   const buttonRef = React.useRef<HTMLButtonElement>(null);
-  const { theme } = useTheme();
-  const colors = complementaryColors[theme] || complementaryColors.tron;
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
 
   const registryName = getRegistryName(componentId);
-  const command = `${packageManagerCommands[packageManager]} @thegridcn/${registryName}`;
+  const command = registryName
+    ? `${packageManagerCommands[packageManager]} @thegridcn/${registryName}`
+    : "";
 
   const handleCopy = async () => {
+    if (!command) return;
     await navigator.clipboard.writeText(command);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -81,7 +196,12 @@ function InstallCommand({ componentId }: { componentId: string }) {
 
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
-      if (buttonRef.current && !buttonRef.current.contains(target)) {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(target) &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(target)
+      ) {
         setIsOpen(false);
       }
     };
@@ -91,19 +211,22 @@ function InstallCommand({ componentId }: { componentId: string }) {
 
   const packageManagers: PackageManager[] = ["pnpm", "npm", "yarn", "bun"];
 
+  // Don't show install command for components without registry
+  if (!registryName) {
+    return (
+      <div className="flex items-center gap-2 rounded border border-foreground/20 bg-foreground/5 px-3 py-1.5 font-mono text-[10px] text-foreground/50">
+        <span>PREVIEW ONLY</span>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-w-0 max-w-full items-center">
       {/* Package manager selector */}
       <button
         ref={buttonRef}
         onClick={handleToggle}
-        className={cn(
-          "flex items-center gap-1 rounded-l border border-r-0 px-2 py-1.5 font-mono text-xs transition-all",
-          colors.border,
-          colors.bg,
-          colors.bgHover,
-          colors.text
-        )}
+        className="flex items-center gap-1 rounded-l border border-r-0 border-primary/30 bg-primary/10 px-2 py-1.5 font-mono text-xs text-primary transition-all hover:bg-primary/20"
       >
         {packageManager}
         <ChevronDown className={cn("h-3 w-3 transition-transform", isOpen && "rotate-180")} />
@@ -113,10 +236,8 @@ function InstallCommand({ componentId }: { componentId: string }) {
       {isOpen && typeof document !== "undefined" &&
         ReactDOM.createPortal(
           <div
-            className={cn(
-              "fixed z-[9999] min-w-[80px] overflow-hidden rounded border bg-background shadow-lg shadow-black/20",
-              colors.border
-            )}
+            ref={dropdownRef}
+            className="fixed z-[9999] min-w-[80px] overflow-hidden rounded border border-primary/30 bg-panel shadow-lg shadow-black/20"
             style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
           >
             {packageManagers.map((pm) => (
@@ -124,10 +245,10 @@ function InstallCommand({ componentId }: { componentId: string }) {
                 key={pm}
                 onClick={() => handleSelect(pm)}
                 className={cn(
-                  "block w-full px-3 py-1.5 text-left font-mono text-xs transition-colors",
-                  colors.textMuted,
-                  colors.bgHover,
-                  pm === packageManager && cn(colors.bg, colors.text)
+                  "block w-full px-3 py-1.5 text-left font-mono text-xs transition-colors hover:bg-primary/20",
+                  pm === packageManager
+                    ? "bg-primary/10 text-primary"
+                    : "text-foreground/70"
                 )}
               >
                 {pm}
@@ -141,17 +262,11 @@ function InstallCommand({ componentId }: { componentId: string }) {
       {/* Command display and copy button */}
       <button
         onClick={handleCopy}
-        className={cn(
-          "group flex min-w-0 flex-1 items-center gap-2 rounded-r border px-3 py-1.5 font-mono text-xs transition-all",
-          colors.border,
-          colors.bg,
-          colors.bgHover,
-          colors.textMuted
-        )}
+        className="group flex min-w-0 flex-1 items-center gap-2 rounded-r border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-xs text-primary/80 transition-all hover:bg-primary/20"
       >
         <code className="truncate">{command}</code>
         {copied ? (
-          <Check className={cn("h-3.5 w-3.5 shrink-0", colors.text)} />
+          <Check className="h-3.5 w-3.5 shrink-0 text-primary" />
         ) : (
           <Copy className="h-3.5 w-3.5 shrink-0 opacity-50 group-hover:opacity-100" />
         )}
@@ -161,6 +276,13 @@ function InstallCommand({ componentId }: { componentId: string }) {
 }
 
 export function Preview({ component }: PreviewProps) {
+  const [viewMode, setViewMode] = React.useState<ViewMode>("preview");
+
+  // Reset to preview when component changes
+  React.useEffect(() => {
+    setViewMode("preview");
+  }, [component?.id]);
+
   return (
     <div className="relative flex h-full min-w-0 flex-col">
       <div className="relative mx-auto flex h-full w-full min-w-0 flex-col overflow-hidden rounded-lg border border-primary/20 bg-background/50 ring-1 ring-primary/10">
@@ -168,21 +290,71 @@ export function Preview({ component }: PreviewProps) {
 
         {component ? (
           <div className="relative z-10 flex h-full min-h-0 flex-col">
-            <div className="flex shrink-0 flex-col gap-2 border-b border-primary/20 bg-primary/5 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-              <div className="shrink-0">
-                <h3 className="font-mono text-sm font-semibold tracking-wider text-primary">
-                  {component.title}
-                </h3>
-                <p className="text-xs text-foreground/80">
-                  {componentSections[component.type]?.title}
-                </p>
+            {/* Header with bg-panel and CRT effect */}
+            <div className="relative shrink-0 border-b border-primary/20 bg-panel px-4 py-3">
+              {/* CRT scanline effect */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-[0.03]"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+                }}
+              />
+              <div className="relative flex flex-col gap-3">
+                {/* Top row: title and install command */}
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                  <div className="shrink-0">
+                    <h3 className="font-mono text-sm font-semibold tracking-wider text-primary">
+                      {component.title}
+                    </h3>
+                    <p className="text-xs text-foreground/80">
+                      {componentSections[component.type]?.title}
+                    </p>
+                  </div>
+                  <InstallCommand componentId={component.id} />
+                </div>
+
+                {/* View mode tabs */}
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setViewMode("preview")}
+                    className={cn(
+                      "flex items-center gap-1.5 rounded px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider transition-all",
+                      viewMode === "preview"
+                        ? "bg-primary/20 text-primary"
+                        : "text-foreground/60 hover:bg-primary/10 hover:text-foreground"
+                    )}
+                  >
+                    <Eye className="h-3 w-3" />
+                    Preview
+                  </button>
+                  <button
+                    onClick={() => setViewMode("code")}
+                    className={cn(
+                      "flex items-center gap-1.5 rounded px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider transition-all",
+                      viewMode === "code"
+                        ? "bg-primary/20 text-primary"
+                        : "text-foreground/60 hover:bg-primary/10 hover:text-foreground"
+                    )}
+                  >
+                    <Code className="h-3 w-3" />
+                    Code
+                  </button>
+                </div>
               </div>
-              <InstallCommand componentId={component.id} />
             </div>
-            <div className="min-h-0 flex-1 overflow-y-auto p-6">
-              <ComponentErrorBoundary>
-                <ComponentPreview component={component} />
-              </ComponentErrorBoundary>
+
+            {/* Content area */}
+            <div className="min-h-0 flex-1 overflow-hidden">
+              {viewMode === "preview" ? (
+                <div className="h-full overflow-y-auto p-6">
+                  <ComponentErrorBoundary>
+                    <ComponentPreview component={component} />
+                  </ComponentErrorBoundary>
+                </div>
+              ) : (
+                <CodeViewer componentId={component.id} />
+              )}
             </div>
           </div>
         ) : (

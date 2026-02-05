@@ -127,37 +127,38 @@ export default function ComponentsPage() {
       {/* Mobile Explorer Panel */}
       <div
         className={cn(
-          "fixed left-0 top-0 z-50 h-full w-72 transform border-r border-primary/30 bg-background transition-transform duration-300 ease-in-out xl:hidden",
+          "fixed left-0 top-0 z-50 h-full w-72 transform border-r border-primary/30 bg-panel transition-transform duration-300 ease-in-out xl:hidden",
           explorerOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        {/* Panel Header */}
-        <div className="flex h-16 items-center justify-between border-b border-primary/30 px-4">
-          <span className="font-mono text-xs tracking-widest text-primary">
-            [ COMPONENT REGISTRY ]
+        {/* CRT scanline effect */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+          }}
+        />
+        {/* Panel Header - Tron terminal style */}
+        <div className="relative flex h-14 items-center justify-between border-b border-primary/20 px-4">
+          {/* Top accent line */}
+          <div className="absolute left-0 right-8 top-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
+
+          <span className="font-mono text-[11px] tracking-[0.2em] text-foreground">
+            REGISTRY: <span className="text-foreground/70">01.IDX</span>
           </span>
+
           <button
             onClick={() => setExplorerOpen(false)}
-            className="flex items-center justify-center rounded border border-primary/50 p-2 text-primary transition-colors hover:bg-primary/10"
+            className="flex items-center justify-center text-foreground/50 transition-colors hover:text-primary"
             aria-label="Close panel"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
-        {/* Scan line effect */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-[0.02]"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(0deg, transparent, transparent 2px, currentColor 2px, currentColor 4px)",
-            }}
-          />
-        </div>
-
         {/* Explorer Content - use the same content as ItemExplorer */}
-        <div className="relative h-[calc(100%-4rem)] overflow-y-auto">
+        <div className="relative h-[calc(100%-3.5rem)] overflow-y-auto">
           <ItemExplorer
             currentItemId={selectedComponentId || undefined}
             onItemSelect={handleItemSelect}
@@ -178,44 +179,45 @@ export default function ComponentsPage() {
       {/* Mobile Customizer Panel */}
       <div
         className={cn(
-          "fixed right-0 top-0 z-50 h-full w-72 transform border-l border-primary/30 bg-background transition-transform duration-300 ease-in-out xl:hidden",
+          "fixed right-0 top-0 z-50 h-full w-72 transform border-l border-primary/30 bg-panel transition-transform duration-300 ease-in-out xl:hidden",
           customizerOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
-        {/* Panel Header */}
-        <div className="flex h-16 items-center justify-between border-b border-primary/30 px-4">
-          <span className="font-mono text-xs tracking-widest text-primary">
-            [ CUSTOMIZER ]
+        {/* CRT scanline effect */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+          }}
+        />
+        {/* Panel Header - Tron terminal style */}
+        <div className="relative flex h-14 items-center justify-between border-b border-primary/20 px-4">
+          {/* Top accent line */}
+          <div className="absolute left-0 right-8 top-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
+
+          <span className="font-mono text-[11px] tracking-[0.2em] text-foreground">
+            CONFIG: <span className="text-foreground/70">02.SYS</span>
           </span>
+
           <button
             onClick={() => setCustomizerOpen(false)}
-            className="flex items-center justify-center rounded border border-primary/50 p-2 text-primary transition-colors hover:bg-primary/10"
+            className="flex items-center justify-center text-foreground/50 transition-colors hover:text-primary"
             aria-label="Close panel"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
-        {/* Scan line effect */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-[0.02]"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(0deg, transparent, transparent 2px, currentColor 2px, currentColor 4px)",
-            }}
-          />
-        </div>
-
         {/* Customizer Content */}
-        <div className="relative h-[calc(100%-4rem)] overflow-y-auto">
+        <div className="relative h-[calc(100%-3.5rem)] overflow-y-auto">
           <Customizer isMobile />
         </div>
       </div>
 
       {/* Main content */}
       <main className="relative z-10 overflow-x-hidden">
-        <div className="flex min-h-[calc(100vh-88px)]">
+        <div className="flex h-[calc(100vh-88px)]">
           {/* Left Sidebar - Component Explorer (Desktop) */}
           <ItemExplorer
             currentItemId={selectedComponentId || undefined}
@@ -223,7 +225,7 @@ export default function ComponentsPage() {
           />
 
           {/* Main Preview Area */}
-          <div className="flex min-w-0 flex-1 flex-col p-4 pb-24 md:p-6 xl:pb-6">
+          <div className="flex min-w-0 flex-1 flex-col overflow-hidden p-4 pb-24 md:p-6 xl:pb-6">
             <Preview component={selectedComponent} />
           </div>
 
@@ -233,7 +235,17 @@ export default function ComponentsPage() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-primary/30 bg-background/90 backdrop-blur-xl">
+      <footer
+        className="relative z-10 border-t border-primary/30 bg-panel"
+      >
+        {/* CRT scanline effect */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+          }}
+        />
         <UplinkHeader
           leftText="SYSTEM: THE GRIDCN v1.0.0"
           rightText="UPTIME: 99.9% - END OF LINE"
@@ -243,12 +255,12 @@ export default function ComponentsPage() {
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             <div className="flex items-center gap-4">
               <TheGridcnLogo size="lg" />
-              <div className="h-8 w-px bg-primary/30" />
+              <div className="h-8 w-px bg-primary/40" />
               <div className="font-mono text-[10px]">
-                <div className="tracking-widest text-foreground/80">
+                <div className="tracking-widest text-foreground">
                   TRON-INSPIRED
                 </div>
-                <div className="tracking-wider text-foreground">
+                <div className="tracking-wider text-primary">
                   THEME SYSTEM
                 </div>
               </div>
@@ -259,7 +271,7 @@ export default function ComponentsPage() {
                 (tech) => (
                   <span
                     key={tech}
-                    className="border border-border/30 bg-card/20 px-2 py-1 font-mono text-[9px] tracking-wider text-foreground/80"
+                    className="border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[9px] tracking-wider text-foreground"
                   >
                     {tech}
                   </span>
@@ -269,11 +281,11 @@ export default function ComponentsPage() {
           </div>
 
           <div className="mt-8 flex items-center justify-center gap-4">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/20" />
-            <span className="font-mono text-[9px] tracking-widest text-foreground/80">
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/30" />
+            <span className="font-mono text-[9px] tracking-widest text-foreground">
               GRID YEAR {new Date().getFullYear()} • ALL PROGRAMS RESERVED
             </span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/20" />
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/30" />
           </div>
         </div>
       </footer>

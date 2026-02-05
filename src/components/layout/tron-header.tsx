@@ -122,20 +122,19 @@ export function TronHeader({ navItems }: TronHeaderProps) {
   return (
     <header className="sticky top-0 z-50">
       {/* Main header bar */}
-      <div className="relative border-b border-primary/30 bg-background/60 backdrop-blur-xl">
+      <div
+        className="relative border-b border-primary/30 bg-panel"
+      >
+        {/* CRT scanline effect */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+          }}
+        />
         {/* Top accent line */}
         <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
-
-        {/* Scan line effect */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(0deg, transparent, transparent 2px, currentColor 2px, currentColor 4px)",
-            }}
-          />
-        </div>
 
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
@@ -156,7 +155,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
                     "group relative px-4 py-2 font-mono text-xs tracking-widest transition-colors",
                     pathname === item.href
                       ? "text-primary"
-                      : "text-foreground/80 hover:text-primary"
+                      : "text-foreground hover:text-primary"
                   )}
                 >
                   {/* Active/Hover indicator */}
@@ -221,33 +220,34 @@ export function TronHeader({ navItems }: TronHeaderProps) {
       {/* Mobile Menu Panel */}
       <div
         className={cn(
-          "fixed right-0 top-0 z-50 h-full w-72 transform border-l border-primary/30 bg-background transition-transform duration-300 ease-in-out lg:hidden",
+          "fixed right-0 top-0 z-50 h-full w-72 transform border-l border-primary/30 bg-panel transition-transform duration-300 ease-in-out lg:hidden",
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
-        {/* Menu Header */}
-        <div className="flex h-16 items-center justify-between border-b border-primary/30 px-4">
-          <span className="font-mono text-xs tracking-widest text-primary">
-            [ NAVIGATION ]
+        {/* CRT scanline effect */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+          }}
+        />
+        {/* Menu Header - Tron terminal style */}
+        <div className="relative flex h-14 items-center justify-between border-b border-primary/20 px-4">
+          {/* Top accent line */}
+          <div className="absolute left-0 right-8 top-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
+
+          <span className="font-mono text-[11px] tracking-[0.2em] text-foreground">
+            NAVIGATION: <span className="text-foreground/70">00.SYS</span>
           </span>
+
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center justify-center rounded border border-primary/50 p-2 text-primary transition-colors hover:bg-primary/10"
+            className="flex items-center justify-center text-foreground/50 transition-colors hover:text-primary"
             aria-label="Close menu"
           >
-            <CloseIcon className="h-5 w-5" />
+            <CloseIcon className="h-4 w-4" />
           </button>
-        </div>
-
-        {/* Scan line effect */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-[0.02]"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(0deg, transparent, transparent 2px, currentColor 2px, currentColor 4px)",
-            }}
-          />
         </div>
 
         {/* Menu Content */}
@@ -295,7 +295,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
 
           {/* Social Links */}
           <div className="flex flex-col gap-3">
-            <span className="font-mono text-[10px] tracking-widest text-foreground/60">
+            <span className="font-mono text-[10px] tracking-widest text-foreground">
               EXTERNAL LINKS
             </span>
 
@@ -303,7 +303,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
               href="https://github.com/educlopez/thegridcn-ui"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded border border-primary/20 px-4 py-3 font-mono text-sm tracking-wider text-foreground/80 transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+              className="flex items-center gap-3 rounded border border-primary/30 px-4 py-3 font-mono text-sm tracking-wider text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
             >
               <GitHubIcon className="h-5 w-5 text-primary" />
               <span>GITHUB</span>
@@ -313,7 +313,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
               href="https://x.com/educalvolpz"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded border border-primary/20 px-4 py-3 font-mono text-sm tracking-wider text-foreground/80 transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+              className="flex items-center gap-3 rounded border border-primary/30 px-4 py-3 font-mono text-sm tracking-wider text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
             >
               <XIcon className="h-5 w-5 text-primary" />
               <span>X / TWITTER</span>
@@ -322,8 +322,8 @@ export function TronHeader({ navItems }: TronHeaderProps) {
 
           {/* Footer */}
           <div className="mt-auto pt-6">
-            <div className="rounded border border-primary/20 bg-primary/5 p-3">
-              <div className="font-mono text-[10px] tracking-widest text-primary/70">
+            <div className="rounded border border-primary/30 bg-primary/5 p-3">
+              <div className="font-mono text-[10px] tracking-widest text-foreground">
                 SYSTEM STATUS
               </div>
               <div className="mt-1 font-mono text-xs text-primary">

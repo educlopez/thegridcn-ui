@@ -1,11 +1,19 @@
 // Core components
 export { DataCard } from "./data-card"
 export { Alert, AlertBanner } from "./alert"
-export { Timer, Countdown, DerezTimer } from "./timer"
-export { Reticle, HUDFrame, Stat, SpeedIndicator, RegenIndicator } from "./hud"
+export { Timer } from "./timer"
+export { Countdown } from "./countdown"
+export { DerezTimer } from "./derez-timer"
+export { Reticle } from "./reticle"
+export { HUDFrame } from "./hud-frame"
+export { Stat } from "./stat"
+export { SpeedIndicator } from "./speed-indicator"
+export { RegenIndicator } from "./regen-indicator"
 export { VideoPlayer, FastForwardOverlay } from "./video-player"
 export { StatusBar, InfoPanel, UplinkBar, ProgressTimeline } from "./status-bar"
-export { Radar, MapMarker, CoordinateDisplay } from "./map"
+export { Radar } from "./radar"
+export { MapMarker } from "./map-marker"
+export { CoordinateDisplay } from "./coordinate-display"
 
 // 3D Components
 export { Grid3D } from "./grid"
