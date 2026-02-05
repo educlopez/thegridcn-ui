@@ -3,7 +3,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Copy, Check, ChevronDown, Code, Eye } from "lucide-react";
-import { type ComponentItem, componentSections } from "@/lib/component-data";
+import { type ComponentItem } from "@/lib/component-data";
+import { AnomalyBanner } from "@/components/thegridcn";
 import { ComponentPreview } from "./component-preview";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { cn } from "@/lib/utils";
@@ -108,7 +109,7 @@ function CodeViewer({ componentId }: { componentId: string }) {
 
   if (loading) {
     return (
-      <div className="flex h-full items-center justify-center bg-panel">
+      <div className="flex h-full items-center justify-center bg-black">
         <div className="flex items-center gap-2 font-mono text-xs text-foreground/60">
           <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
           Loading source code...
@@ -119,18 +120,18 @@ function CodeViewer({ componentId }: { componentId: string }) {
 
   if (error) {
     return (
-      <div className="flex h-full items-center justify-center bg-panel">
+      <div className="flex h-full items-center justify-center bg-black">
         <div className="font-mono text-xs text-foreground/60">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="relative flex h-full flex-col bg-panel">
+    <div className="relative flex h-full flex-col bg-black">
       {/* Copy button */}
       <button
         onClick={handleCopy}
-        className="absolute right-4 top-4 z-10 flex items-center gap-1.5 rounded border border-primary/30 bg-panel px-2 py-1 font-mono text-[10px] text-primary transition-all hover:bg-primary/20"
+        className="absolute right-4 top-4 z-10 flex items-center gap-1.5 rounded border border-primary/30 bg-black/80 px-2 py-1 font-mono text-[10px] text-primary transition-all hover:bg-primary/20"
       >
         {copied ? (
           <>
@@ -285,7 +286,18 @@ export function Preview({ component }: PreviewProps) {
 
   return (
     <div className="relative flex h-full min-w-0 flex-col">
-      <div className="relative mx-auto flex h-full w-full min-w-0 flex-col overflow-hidden rounded-lg border border-primary/20 bg-background/50 ring-1 ring-primary/10">
+      {/* Component title banner - outside the terminal */}
+      {component && (
+        <div className="mb-4 shrink-0">
+          <AnomalyBanner
+            title={component.title}
+            animated={false}
+            className="scale-75 origin-center"
+          />
+        </div>
+      )}
+
+      <div className="relative mx-auto flex min-h-0 flex-1 w-full min-w-0 flex-col overflow-hidden rounded-lg border border-primary/20 bg-background/50 ring-1 ring-primary/10">
         <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-br from-background/80 to-background/40" />
 
         {component ? (
@@ -300,26 +312,13 @@ export function Preview({ component }: PreviewProps) {
                     "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
                 }}
               />
-              <div className="relative flex flex-col gap-3">
-                {/* Top row: title and install command */}
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-                  <div className="shrink-0">
-                    <h3 className="font-mono text-sm font-semibold tracking-wider text-primary">
-                      {component.title}
-                    </h3>
-                    <p className="text-xs text-foreground/80">
-                      {componentSections[component.type]?.title}
-                    </p>
-                  </div>
-                  <InstallCommand componentId={component.id} />
-                </div>
-
+              <div className="relative flex flex-wrap items-center gap-3">
                 {/* View mode tabs */}
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => setViewMode("preview")}
                     className={cn(
-                      "flex items-center gap-1.5 rounded px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider transition-all",
+                      "flex items-center gap-1.5 rounded px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider transition-all",
                       viewMode === "preview"
                         ? "bg-primary/20 text-primary"
                         : "text-foreground/60 hover:bg-primary/10 hover:text-foreground"
@@ -331,7 +330,7 @@ export function Preview({ component }: PreviewProps) {
                   <button
                     onClick={() => setViewMode("code")}
                     className={cn(
-                      "flex items-center gap-1.5 rounded px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider transition-all",
+                      "flex items-center gap-1.5 rounded px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider transition-all",
                       viewMode === "code"
                         ? "bg-primary/20 text-primary"
                         : "text-foreground/60 hover:bg-primary/10 hover:text-foreground"
@@ -340,6 +339,11 @@ export function Preview({ component }: PreviewProps) {
                     <Code className="h-3 w-3" />
                     Code
                   </button>
+                </div>
+
+                {/* Install command - pushed to the right */}
+                <div className="ml-auto">
+                  <InstallCommand componentId={component.id} />
                 </div>
               </div>
             </div>

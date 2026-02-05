@@ -1,0 +1,186 @@
+[  466707ms] [ERROR] ./src/app/page.tsx:224:6
+Parsing ecmascript source code failed
+  222 |         </div>
+  223 |       </div>
+> 224 |     </div>
+      |      ^^^^^
+  225 |   );
+  226 | }
+  227 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:3127
+[  469429ms] [ERROR] ./src/app/page.tsx:224:6
+Parsing ecmascript source code failed
+  222 |         </div>
+  223 |       </div>
+> 224 |     </div>
+      |      ^^^^^
+  225 |   );
+  226 | }
+  227 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:3127
+[  496360ms] [ERROR] ./src/app/page.tsx:211:6
+Parsing ecmascript source code failed
+  209 |         </div>
+  210 |       </div>
+> 211 |     </div>
+      |      ^^^^^
+  212 |   );
+  213 | }
+  214 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:3127
+[  496515ms] [ERROR] ./src/app/page.tsx:211:6
+Parsing ecmascript source code failed
+  209 |         </div>
+  210 |       </div>
+> 211 |     </div>
+      |      ^^^^^
+  212 |   );
+  213 | }
+  214 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:3127
+[  498610ms] [ERROR] ./src/app/page.tsx:211:6
+Parsing ecmascript source code failed
+  209 |         </div>
+  210 |       </div>
+> 211 |     </div>
+      |      ^^^^^
+  212 |   );
+  213 | }
+  214 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:3127
+[  500106ms] [ERROR] ./src/app/page.tsx:211:6
+Parsing ecmascript source code failed
+  209 |         </div>
+  210 |       </div>
+> 211 |     </div>
+      |      ^^^^^
+  212 |   );
+  213 | }
+  214 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:3127
+[  503730ms] [ERROR] ./src/app/page.tsx:211:6
+Parsing ecmascript source code failed
+  209 |         </div>
+  210 |       </div>
+> 211 |     </div>
+      |      ^^^^^
+  212 |   );
+  213 | }
+  214 |
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:3127
+[  522704ms] [ERROR] ./src/app/page.tsx:204:1
+Parsing ecmascript source code failed
+  202 |     </div>
+  203 |   );
+> 204 | }
+      | ^
+  205 |
+  206 | // Feature card component
+  207 | function FeatureCard({
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:3127
+[  528859ms] [ERROR] ./src/app/page.tsx:204:1
+Parsing ecmascript source code failed
+  202 |     </div>
+  203 |   );
+> 204 | }
+      | ^
+  205 |
+  206 | // Feature card component
+  207 | function FeatureCard({
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/app/page.tsx [Client Component Browser]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/page.tsx [Client Component SSR]
+    ./src/app/page.tsx [Server Component] @ http://localhost:3000/_next/static/chunks/1629d_next_dist_9e7c62d6._.js:3127
+[  748963ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3H2MuZeJ9rufDuZS6D2nt' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/1629d_next_dist_client_10237014._.js:10876
+[  749956ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3H2MuZeJ9rufDuZS6D2nt' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/1629d_next_dist_client_10237014._.js:10876
+[  750940ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3H2MuZeJ9rufDuZS6D2nt' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/1629d_next_dist_client_10237014._.js:10876
+[  751943ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3H2MuZeJ9rufDuZS6D2nt' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/1629d_next_dist_client_10237014._.js:10876
+[  752951ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3H2MuZeJ9rufDuZS6D2nt' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/1629d_next_dist_client_10237014._.js:10876
+[  757963ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=3H2MuZeJ9rufDuZS6D2nt' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/1629d_next_dist_client_10237014._.js:10876

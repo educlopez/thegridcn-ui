@@ -6,8 +6,8 @@ export const tronTheme: ThemeRegistration = {
   name: "tron-ares",
   type: "dark",
   colors: {
-    // Deep black background like the movie terminals
-    "editor.background": "#0A0A0F",
+    // Pure black background like the preview area
+    "editor.background": "#000000",
     "editor.foreground": "#F0F0F0",
     "editor.lineHighlightBackground": "#1A0A0A",
     "editor.selectionBackground": "#4A1515",
