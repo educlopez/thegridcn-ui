@@ -17,6 +17,7 @@ import {
 interface ItemExplorerProps {
   currentItemId?: string;
   onItemSelect?: (item: ComponentItem) => void;
+  isMobile?: boolean;
 }
 
 // Memoized item button component (rerender-memo pattern)
@@ -109,6 +110,7 @@ const ExplorerSection = React.memo(function ExplorerSection({
 export function ItemExplorer({
   currentItemId,
   onItemSelect,
+  isMobile = false,
 }: ItemExplorerProps) {
   // Use functional setState for toggle (rerender-functional-setstate pattern)
   const [openSections, setOpenSections] = React.useState<Set<string>>(
@@ -147,38 +149,50 @@ export function ItemExplorer({
   // Get tron-movie section data
   const tronMovieSection = componentSections["tron-movie"];
 
-  return (
-    <div className="sticky top-[88px] z-30 hidden h-[calc(100vh-88px)] w-64 overflow-y-auto border-r border-primary/20 bg-background/50 backdrop-blur-sm xl:flex xl:flex-col">
-      <div className="p-4">
+  const content = (
+    <div className="p-4">
+      {!isMobile && (
         <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
           COMPONENT REGISTRY
         </div>
-        <div className="space-y-1">
-          {/* GridCN section (Tron: Ares) */}
-          {tronMovieSection ? (
-            <ExplorerSection
-              sectionKey="tron-movie"
-              title={tronMovieSection.title}
-              items={tronMovieSection.items}
-              isOpen={isTronMovieOpen}
-              onToggle={toggleTronMovie}
-              currentItemId={currentItemId}
-              onItemSelect={onItemSelect}
-            />
-          ) : null}
-
-          {/* Components section */}
+      )}
+      <div className="space-y-1">
+        {/* GridCN section (Tron: Ares) */}
+        {tronMovieSection ? (
           <ExplorerSection
-            sectionKey="components"
-            title="Components"
-            items={standardComponents}
-            isOpen={isComponentsOpen}
-            onToggle={toggleComponents}
+            sectionKey="tron-movie"
+            title={tronMovieSection.title}
+            items={tronMovieSection.items}
+            isOpen={isTronMovieOpen}
+            onToggle={toggleTronMovie}
             currentItemId={currentItemId}
             onItemSelect={onItemSelect}
           />
-        </div>
+        ) : null}
+
+        {/* Components section */}
+        <ExplorerSection
+          sectionKey="components"
+          title="Components"
+          items={standardComponents}
+          isOpen={isComponentsOpen}
+          onToggle={toggleComponents}
+          currentItemId={currentItemId}
+          onItemSelect={onItemSelect}
+        />
       </div>
+    </div>
+  );
+
+  // Mobile version - just render the content
+  if (isMobile) {
+    return content;
+  }
+
+  // Desktop version - with sticky wrapper
+  return (
+    <div className="sticky top-[88px] z-30 hidden h-[calc(100vh-88px)] w-64 overflow-y-auto border-r border-primary/20 bg-background/50 backdrop-blur-sm xl:flex xl:flex-col">
+      {content}
     </div>
   );
 }

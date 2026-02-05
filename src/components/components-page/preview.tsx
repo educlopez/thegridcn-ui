@@ -92,7 +92,7 @@ function InstallCommand({ componentId }: { componentId: string }) {
   const packageManagers: PackageManager[] = ["pnpm", "npm", "yarn", "bun"];
 
   return (
-    <div className="flex items-center">
+    <div className="flex min-w-0 max-w-full items-center">
       {/* Package manager selector */}
       <button
         ref={buttonRef}
@@ -142,14 +142,14 @@ function InstallCommand({ componentId }: { componentId: string }) {
       <button
         onClick={handleCopy}
         className={cn(
-          "group flex items-center gap-2 rounded-r border px-3 py-1.5 font-mono text-xs transition-all",
+          "group flex min-w-0 flex-1 items-center gap-2 rounded-r border px-3 py-1.5 font-mono text-xs transition-all",
           colors.border,
           colors.bg,
           colors.bgHover,
           colors.textMuted
         )}
       >
-        <code className="whitespace-nowrap">{command}</code>
+        <code className="truncate">{command}</code>
         {copied ? (
           <Check className={cn("h-3.5 w-3.5 shrink-0", colors.text)} />
         ) : (
@@ -162,8 +162,8 @@ function InstallCommand({ componentId }: { componentId: string }) {
 
 export function Preview({ component }: PreviewProps) {
   return (
-    <div className="relative flex h-full flex-col">
-      <div className="relative mx-auto flex h-full w-full flex-col rounded-lg border border-primary/20 bg-background/50 ring-1 ring-primary/10">
+    <div className="relative flex h-full min-w-0 flex-col">
+      <div className="relative mx-auto flex h-full w-full min-w-0 flex-col overflow-hidden rounded-lg border border-primary/20 bg-background/50 ring-1 ring-primary/10">
         <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-br from-background/80 to-background/40" />
 
         {component ? (
