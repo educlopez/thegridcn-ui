@@ -79,10 +79,8 @@ project-ares/
 │   │   ├── page.tsx         # Homepage (/)
 │   │   └── globals.css      # Global styles & theme definitions
 │   ├── components/
-│   │   ├── ui/              # shadcn/ui components (50+)
-│   │   ├── tron-ui/         # Tron-specific UI components
-│   │   ├── tron-3d/         # Three.js 3D effects
-│   │   ├── tron-effects/    # Visual effects (scanlines, glows)
+│   │   ├── ui/              # shadcn/ui base components (55+)
+│   │   ├── thegridcn/       # Tron-inspired UI, 3D, effects, and movie components
 │   │   ├── theme/           # Theme provider & switcher
 │   │   ├── showcase/        # Component showcase sections
 │   │   └── layout/          # Layout components
@@ -189,15 +187,16 @@ function MyComponent() {
 
 ```tsx
 import { Button } from "@/components/ui/button";
-import { TronDossierCard } from "@/components/tron-ui";
+import { DataCard } from "@/components/thegridcn";
 
 export function MyPage() {
   return (
     <div>
       <Button>Enter the Grid</Button>
-      <TronDossierCard
-        category="PROGRAM"
-        name="FLYNN"
+      <DataCard
+        subtitle="PROGRAM"
+        title="FLYNN"
+        status="active"
         fields={[
           { label: "STATUS", value: "ACTIVE" },
           { label: "TYPE", value: "USER" },

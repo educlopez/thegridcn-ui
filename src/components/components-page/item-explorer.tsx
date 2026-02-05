@@ -38,7 +38,7 @@ const ItemButton = React.memo(function ItemButton({
         "hover:bg-primary/10 hover:text-primary",
         isActive
           ? "bg-primary/20 text-primary border-l-2 border-primary"
-          : "text-muted-foreground"
+          : "text-foreground/80"
       )}
     >
       {item.title}
@@ -88,7 +88,7 @@ const ExplorerSection = React.memo(function ExplorerSection({
       <CollapsibleTrigger className="flex w-full items-center gap-2 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary">
         <ChevronRightIcon
           className={cn(
-            "h-3.5 w-3.5 text-muted-foreground transition-transform",
+            "h-3.5 w-3.5 text-foreground/80 transition-transform",
             isOpen ? "rotate-90" : ""
           )}
         />
@@ -150,7 +150,7 @@ export function ItemExplorer({
   return (
     <div className="sticky top-[88px] z-30 hidden h-[calc(100vh-88px)] w-64 overflow-y-auto border-r border-primary/20 bg-background/50 backdrop-blur-sm xl:flex xl:flex-col">
       <div className="p-4">
-        <div className="mb-4 font-mono text-[10px] tracking-widest text-muted-foreground">
+        <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
           COMPONENT REGISTRY
         </div>
         <div className="space-y-1">

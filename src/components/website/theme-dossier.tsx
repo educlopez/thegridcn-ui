@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils"
 import { themes, useTheme } from "@/components/theme"
 
 // Dynamic import for 3D component to avoid SSR issues
-const TronGodAvatar3D = dynamic(
-  () => import("@/components/tron-3d/tron-god-avatar").then((mod) => mod.TronGodAvatar3D),
+const GodAvatar3D = dynamic(
+  () => import("@/components/website/god-avatar").then((mod) => mod.GodAvatar3D),
   { ssr: false }
 )
 
@@ -130,34 +130,34 @@ const ThemeDossierCard = React.memo(function ThemeDossierCard({
                 backgroundColor: `${themeColor}05`,
               }}
             >
-              <TronGodAvatar3D themeId={themeId} color={themeColor} size={64} />
+              <GodAvatar3D themeId={themeId} color={themeColor} size={64} />
             </div>
           </div>
 
           {/* Data fields */}
           <div className="flex items-baseline gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-foreground/80">
               DESIGNATION
             </span>
             <span className="font-mono text-sm text-foreground">{godName.toUpperCase()}</span>
           </div>
 
           <div className="flex items-baseline gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-foreground/80">
               ROLE
             </span>
             <span className="font-mono text-sm text-foreground">{desc.role}</span>
           </div>
 
           <div className="flex items-baseline gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-foreground/80">
               ORIGIN
             </span>
             <span className="font-mono text-sm text-foreground">{desc.origin}</span>
           </div>
 
           <div className="flex items-baseline gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-foreground/80">
               PRIMARY
             </span>
             <span
@@ -184,7 +184,7 @@ const ThemeDossierCard = React.memo(function ThemeDossierCard({
             >
               - {desc.power}
             </span>
-            <span className="font-mono text-[10px] text-muted-foreground">
+            <span className="font-mono text-[10px] text-foreground/80">
               THEME:{themeId.toUpperCase()}
             </span>
           </div>
@@ -213,7 +213,7 @@ const backgroundGridStyle = {
   backgroundSize: "40px 40px",
 }
 
-export function TronThemeDossierSelector() {
+export function ThemeDossierSelector() {
   const { theme, setTheme } = useTheme()
 
   // Memoize the theme cards to avoid recreation
@@ -259,7 +259,7 @@ export function TronThemeDossierSelector() {
         </div>
 
         {/* Subtitle */}
-        <p className="mb-8 text-center font-mono text-sm text-muted-foreground">
+        <p className="mb-8 text-center font-mono text-sm text-foreground/80">
           [ IDENTITY PROFILES • CLICK TO ACTIVATE ]
         </p>
 
@@ -272,11 +272,11 @@ export function TronThemeDossierSelector() {
         <div className="mt-8 flex items-center justify-between border-t border-primary/30 pt-4">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-            <span className="font-mono text-xs text-muted-foreground">
+            <span className="font-mono text-xs text-foreground/80">
               SYSTEM STATUS: OPERATIONAL
             </span>
           </div>
-          <div className="font-mono text-xs text-muted-foreground">
+          <div className="font-mono text-xs text-foreground/80">
             {themes.length} THEMES AVAILABLE
           </div>
         </div>

@@ -167,7 +167,7 @@ export const FieldsPreview = React.memo(function FieldsPreview() {
                 >
                   Kubernetes
                 </Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-foreground/80">
                   Run GPU workloads on a K8s configured cluster. This is the
                   default.
                 </p>
@@ -182,7 +182,7 @@ export const FieldsPreview = React.memo(function FieldsPreview() {
                 >
                   Virtual Machine
                 </Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-foreground/80">
                   Run workloads on a virtual machine instance.
                 </p>
               </div>

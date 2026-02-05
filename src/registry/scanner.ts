@@ -182,9 +182,7 @@ export async function scanComponents(
   // Default directories to scan
   const defaultDirs = [
     join(process.cwd(), "src/components/ui"),
-    join(process.cwd(), "src/components/tron-ui"),
-    join(process.cwd(), "src/components/tron-3d"),
-    join(process.cwd(), "src/components/tron-effects"),
+    join(process.cwd(), "src/components/thegridcn"),
   ]
 
   const dirsToScan = componentsDirs || defaultDirs
@@ -202,9 +200,7 @@ export async function scanComponents(
  * Determines the registry type based on component path
  */
 function getRegistryType(componentPath: string): "components:ui" | "registry:component" {
-  if (componentPath.includes("/tron-ui/") || 
-      componentPath.includes("/tron-3d/") || 
-      componentPath.includes("/tron-effects/")) {
+  if (componentPath.includes("/thegridcn/")) {
     return "registry:component"
   }
   return "components:ui"

@@ -290,7 +290,7 @@ export const AspectRatioExamplePreview = React.memo(function AspectRatioExampleP
         className="overflow-hidden rounded-lg border border-border bg-muted"
       >
         <div className="flex h-full items-center justify-center">
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-foreground/80">
             16:9 Aspect Ratio
           </span>
         </div>
@@ -422,7 +422,7 @@ export const CarouselExamplePreview = React.memo(function CarouselExamplePreview
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index}>
             <div className="flex h-48 items-center justify-center rounded-md border border-border bg-muted">
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-foreground/80">
                 Slide {index + 1}
               </span>
             </div>
@@ -440,7 +440,7 @@ export const ChartExamplePreview = React.memo(function ChartExamplePreview() {
   return (
     <div className="w-full max-w-md">
       <div className="h-48 rounded-md border border-border bg-muted/30 flex items-center justify-center">
-        <span className="text-sm text-muted-foreground">
+        <span className="text-sm text-foreground/80">
           Chart Component
         </span>
       </div>
@@ -587,7 +587,7 @@ export const DrawerExamplePreview = React.memo(function DrawerExamplePreview() {
           </DrawerDescription>
         </DrawerHeader>
         <div className="p-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground/80">
             Drawer content goes here.
           </p>
         </div>
@@ -670,7 +670,7 @@ export const HoverCardExamplePreview = React.memo(function HoverCardExamplePrevi
           </Avatar>
           <div className="space-y-1">
             <h4 className="text-sm font-semibold">Tron</h4>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground/80">
               Security program. Fights for the users.
             </p>
           </div>
@@ -845,7 +845,7 @@ export const NavigationMenuExamplePreview = React.memo(function NavigationMenuEx
                     href="#"
                   >
                     <div className="text-sm font-medium">Security</div>
-                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                    <p className="line-clamp-2 text-sm leading-snug text-foreground/80">
                       System protection protocols
                     </p>
                   </a>
@@ -910,7 +910,7 @@ export const PopoverExamplePreview = React.memo(function PopoverExamplePreview()
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Grid Status</h4>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground/80">
               Current system parameters and diagnostics.
             </p>
           </div>
@@ -962,7 +962,7 @@ export const RadioGroupExamplePreview = React.memo(function RadioGroupExamplePre
 export const ResizableExamplePreview = React.memo(function ResizableExamplePreview() {
   return (
     <div className="w-full max-w-md h-48 rounded-md border border-border bg-muted/30 flex items-center justify-center">
-      <span className="text-sm text-muted-foreground">
+      <span className="text-sm text-foreground/80">
         Resizable Component
       </span>
     </div>
@@ -1009,7 +1009,7 @@ export const SeparatorExamplePreview = React.memo(function SeparatorExamplePrevi
     <div className="space-y-4 max-w-md">
       <div>
         <h4 className="text-sm font-semibold">Grid System</h4>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-foreground/80">
           Digital frontier simulation environment
         </p>
       </div>
@@ -1307,7 +1307,7 @@ export const ComponentExamplePreview = React.memo(function ComponentExamplePrevi
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-foreground/80">
             This demonstrates how components can be combined to create
             complex interfaces.
           </p>

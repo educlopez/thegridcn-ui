@@ -88,7 +88,7 @@ export function ItemPicker({
                   className="cursor-pointer"
                 >
                   <span>{item.title}</span>
-                  <span className="text-muted-foreground ml-auto text-xs opacity-0 group-data-[selected=true]:opacity-100">
+                  <span className="text-foreground/80 ml-auto text-xs opacity-0 group-data-[selected=true]:opacity-100">
                     {group.title}
                   </span>
                 </CommandItem>

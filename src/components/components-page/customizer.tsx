@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 // Dynamic import for 3D component to avoid SSR issues
 const GodAvatar3D = dynamic(
-  () => import("@/components/thegridcn/god-avatar").then((mod) => mod.GodAvatar3D),
+  () => import("@/components/website/god-avatar").then((mod) => mod.GodAvatar3D),
   { ssr: false }
 );
 
@@ -22,7 +22,7 @@ export function Customizer() {
       <div className="p-4">
         <div className="mb-4 flex items-center gap-2">
           <Settings className="h-4 w-4 text-primary" />
-          <div className="font-mono text-[10px] tracking-widest text-muted-foreground">
+          <div className="font-mono text-[10px] tracking-widest text-foreground/80">
             CUSTOMIZER
           </div>
         </div>
@@ -32,7 +32,7 @@ export function Customizer() {
             <div className="mb-3 text-xs font-medium text-foreground">
               Build your own Tron theme
             </div>
-            <p className="text-[11px] leading-relaxed text-muted-foreground">
+            <p className="text-[11px] leading-relaxed text-foreground/80">
               Customize the theme, colors, and styling to match your vision.
             </p>
           </div>
@@ -66,7 +66,7 @@ export function Customizer() {
                     <span
                       className={cn(
                         "font-mono text-[9px] tracking-wider",
-                        theme === t.id ? "text-primary" : "text-muted-foreground"
+                        theme === t.id ? "text-primary" : "text-foreground/80"
                       )}
                     >
                       {t.name.toUpperCase()}
@@ -81,7 +81,7 @@ export function Customizer() {
                 Tron Intensity
               </div>
               <TronIntensitySwitcherCompact />
-              <p className="mt-2 text-[10px] text-muted-foreground">
+              <p className="mt-2 text-[10px] text-foreground/80">
                 {currentIntensity?.description}
               </p>
             </div>

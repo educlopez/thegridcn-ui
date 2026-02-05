@@ -3,7 +3,7 @@
 import * as React from "react";
 import dynamic from "next/dynamic";
 import { TronHeader, TheGridcnLogo } from "@/components/layout";
-import { TronUplinkHeader } from "@/components/tron-ui";
+import { UplinkHeader } from "@/components/thegridcn";
 import {
   ItemExplorer,
   Preview,
@@ -16,8 +16,8 @@ import {
 } from "@/lib/component-data";
 
 // Dynamic import for Three.js (client-side only)
-const TronGrid3D = dynamic(
-  () => import("@/components/tron-3d").then((mod) => mod.TronGrid3D),
+const Grid3D = dynamic(
+  () => import("@/components/thegridcn/grid").then((mod) => mod.Grid3D),
   { ssr: false }
 );
 
@@ -57,23 +57,24 @@ export default function ComponentsPage() {
     <div className="relative min-h-screen bg-background">
       {/* 3D Background */}
       <div className="fixed inset-0 z-0">
-        <TronGrid3D
+        <Grid3D
           className="h-full w-full"
           enableParticles
           enableBeams={false}
           cameraAnimation={false}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/70 to-background" />
       </div>
 
       {/* Header */}
       <TronHeader />
 
       {/* Uplink header bar */}
-      <TronUplinkHeader
-        leftText="UPLINK: COMPONENT DATABASE CHANNEL 01"
-        rightText="REGISTRY ACCESS: FULL - 50+ MODULES LOADED"
-      />
+      <div className="relative z-10">
+        <UplinkHeader
+          leftText="UPLINK: COMPONENT DATABASE CHANNEL 01"
+          rightText="REGISTRY ACCESS: FULL - 50+ MODULES LOADED"
+        />
+      </div>
 
       {/* Main content */}
       <main className="relative z-10">
@@ -96,7 +97,7 @@ export default function ComponentsPage() {
 
       {/* Footer */}
       <footer className="relative z-10 border-t border-primary/30 bg-background/90 backdrop-blur-xl">
-        <TronUplinkHeader
+        <UplinkHeader
           leftText="SYSTEM: THE GRIDCN v1.0.0"
           rightText="UPTIME: 99.9% - END OF LINE"
         />
@@ -107,7 +108,7 @@ export default function ComponentsPage() {
               <TheGridcnLogo size="lg" />
               <div className="h-8 w-px bg-primary/30" />
               <div className="font-mono text-[10px]">
-                <div className="tracking-widest text-muted-foreground">
+                <div className="tracking-widest text-foreground/80">
                   TRON-INSPIRED
                 </div>
                 <div className="tracking-wider text-foreground">
@@ -121,7 +122,7 @@ export default function ComponentsPage() {
                 (tech) => (
                   <span
                     key={tech}
-                    className="border border-border/30 bg-card/20 px-2 py-1 font-mono text-[9px] tracking-wider text-muted-foreground"
+                    className="border border-border/30 bg-card/20 px-2 py-1 font-mono text-[9px] tracking-wider text-foreground/80"
                   >
                     {tech}
                   </span>
@@ -132,7 +133,7 @@ export default function ComponentsPage() {
 
           <div className="mt-8 flex items-center justify-center gap-4">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/20" />
-            <span className="font-mono text-[9px] tracking-widest text-muted-foreground">
+            <span className="font-mono text-[9px] tracking-widest text-foreground/80">
               GRID YEAR {new Date().getFullYear()} • ALL PROGRAMS RESERVED
             </span>
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/20" />

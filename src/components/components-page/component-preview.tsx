@@ -20,14 +20,14 @@ const PreviewNotFound = React.memo(function PreviewNotFound({
         <p className="font-mono text-sm font-semibold text-primary">
           Component preview not available
         </p>
-        <p className="mt-2 text-xs text-muted-foreground">
+        <p className="mt-2 text-xs text-foreground/80">
           ID:{" "}
           <code className="rounded bg-muted px-1 py-0.5">{component.id}</code>
         </p>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <p className="mt-1 text-xs text-foreground/80">
           Title: {component.title}
         </p>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <p className="mt-1 text-xs text-foreground/80">
           Type: {component.type}
         </p>
       </div>
@@ -48,7 +48,7 @@ export function ComponentPreview({ component }: ComponentPreviewProps) {
   // Early return for null component
   if (!component) {
     return (
-      <div className="text-center text-muted-foreground">
+      <div className="text-center text-foreground/80">
         <p>No component selected</p>
       </div>
     );

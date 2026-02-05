@@ -3,27 +3,27 @@
 import * as React from "react"
 import { SectionWrapper, ComponentCard } from "./section-wrapper"
 import {
-  TronDataCard,
-  TronAlert,
-  TronAlertBanner,
-  TronTimer,
-  TronCountdown,
-  TronDerezTimer,
-  TronReticle,
-  TronHUDFrame,
-  TronStat,
-  TronSpeedIndicator,
-  TronRegenIndicator,
-  TronVideoPlayer,
-  TronFastForwardOverlay,
-  TronStatusBar,
-  TronInfoPanel,
-  TronUplinkBar,
-  TronProgressTimeline,
-  TronMapMarker,
-  TronCoordinateDisplay,
-  TronRadar,
-} from "@/components/tron-ui"
+  DataCard,
+  Alert,
+  AlertBanner,
+  Timer,
+  Countdown,
+  DerezTimer,
+  Reticle,
+  HUDFrame,
+  Stat,
+  SpeedIndicator,
+  RegenIndicator,
+  VideoPlayer,
+  FastForwardOverlay,
+  StatusBar,
+  InfoPanel,
+  UplinkBar,
+  ProgressTimeline,
+  MapMarker,
+  CoordinateDisplay,
+  Radar,
+} from "@/components/thegridcn"
 
 export function TronMovieSection() {
   const [videoStatus, setVideoStatus] = React.useState<"playing" | "paused">("paused")
@@ -36,7 +36,7 @@ export function TronMovieSection() {
       {/* Data Cards / Dossiers */}
       <ComponentCard title="Data Cards (Dossier Style)">
         <div className="grid gap-4 md:grid-cols-2">
-          <TronDataCard
+          <DataCard
             subtitle="RECORDED SUBJECT"
             title="AJAY SINGH"
             status="active"
@@ -49,7 +49,7 @@ export function TronMovieSection() {
             ]}
           />
 
-          <TronDataCard
+          <DataCard
             subtitle="PROGRAM PROFILE"
             title="ARES"
             status="alert"
@@ -67,19 +67,19 @@ export function TronMovieSection() {
       <ComponentCard title="Alert Banners">
         <div className="space-y-4">
           <div className="flex flex-wrap gap-4">
-            <TronAlert variant="warning">ANOMALY FOUND</TronAlert>
-            <TronAlert variant="danger">THREAT DETECTED</TronAlert>
-            <TronAlert variant="info">SYSTEM ONLINE</TronAlert>
-            <TronAlert variant="success" animated={false}>SCAN COMPLETE</TronAlert>
+            <Alert variant="warning">ANOMALY FOUND</Alert>
+            <Alert variant="danger">THREAT DETECTED</Alert>
+            <Alert variant="info">SYSTEM ONLINE</Alert>
+            <Alert variant="success" animated={false}>SCAN COMPLETE</Alert>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
-            <TronAlertBanner
+            <AlertBanner
               title="ANOMALY DETECTED"
               subtitle="PRIORITY ALERT"
               variant="warning"
             />
-            <TronAlertBanner
+            <AlertBanner
               title="DERESOLUTION IMMINENT"
               subtitle="CRITICAL WARNING"
               variant="danger"
@@ -91,7 +91,7 @@ export function TronMovieSection() {
       {/* Timers & Countdowns */}
       <ComponentCard title="Timers & Countdowns">
         <div className="space-y-8">
-          <TronTimer
+          <Timer
             hours={4}
             minutes={27}
             seconds={53}
@@ -101,11 +101,11 @@ export function TronMovieSection() {
           />
 
           <div className="flex flex-wrap items-center gap-6">
-            <TronCountdown value="00:38 MINUTES" label="EVE KIM ARRIVAL" variant="danger" />
-            <TronDerezTimer minutes={16} seconds={48} milliseconds={50} />
+            <Countdown value="00:38 MINUTES" label="EVE KIM ARRIVAL" variant="danger" />
+            <DerezTimer minutes={16} seconds={48} milliseconds={50} />
           </div>
 
-          <TronTimer
+          <Timer
             hours={0}
             minutes={8}
             seconds={24}
@@ -121,31 +121,31 @@ export function TronMovieSection() {
         <div className="grid gap-6 md:grid-cols-2">
           {/* Targeting Reticles */}
           <div className="flex flex-wrap items-center justify-center gap-6">
-            <TronReticle size={100} variant="default" />
-            <TronReticle size={100} variant="locked" />
-            <TronReticle size={100} variant="scanning" />
+            <Reticle size={100} variant="default" />
+            <Reticle size={100} variant="locked" />
+            <Reticle size={100} variant="scanning" />
           </div>
 
           {/* HUD Frame */}
-          <TronHUDFrame label="SYSTEM STATUS">
+          <HUDFrame label="SYSTEM STATUS">
             <div className="space-y-3">
-              <TronStat label="SPEED" value={160} unit="KM/H" direction="up" />
-              <TronStat label="ACCEL" value={2.76} unit="G" direction="neutral" />
-              <TronStat label="TEMP" value={78} unit="°C" direction="down" />
+              <Stat label="SPEED" value={160} unit="KM/H" direction="up" />
+              <Stat label="ACCEL" value={2.76} unit="G" direction="neutral" />
+              <Stat label="TEMP" value={78} unit="°C" direction="down" />
             </div>
-          </TronHUDFrame>
+          </HUDFrame>
         </div>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-8">
-          <TronSpeedIndicator speed={160} />
-          <TronRegenIndicator />
+          <SpeedIndicator speed={160} />
+          <RegenIndicator />
         </div>
       </ComponentCard>
 
       {/* Video Player */}
       <ComponentCard title="Video Player Controls">
         <div className="grid gap-6 lg:grid-cols-2">
-          <TronVideoPlayer
+          <VideoPlayer
             currentTime="08:24:22"
             status={videoStatus}
             onPlay={() => setVideoStatus("playing")}
@@ -154,10 +154,10 @@ export function TronMovieSection() {
             <div className="flex h-full items-center justify-center text-muted-foreground">
               [VIDEO FEED]
             </div>
-          </TronVideoPlayer>
+          </VideoPlayer>
 
           <div className="flex items-center justify-center rounded border border-primary/30 bg-card">
-            <TronFastForwardOverlay direction="forward" className="h-full w-full py-8" />
+            <FastForwardOverlay direction="forward" className="h-full w-full py-8" />
           </div>
         </div>
       </ComponentCard>
@@ -165,13 +165,13 @@ export function TronMovieSection() {
       {/* Status Bars */}
       <ComponentCard title="Status Bars & Panels">
         <div className="space-y-4">
-          <TronUplinkBar
+          <UplinkBar
             channel="ORBITAL RELAY CHANNEL 27A"
             status="RADAR CROSS SECTION: 2.1M² - NONSTANDARD REFLECTION"
             signal="strong"
           />
 
-          <TronStatusBar
+          <StatusBar
             leftContent={
               <span>SYSTEM: ACTIVE</span>
             }
@@ -184,16 +184,16 @@ export function TronMovieSection() {
           />
 
           <div className="grid gap-4 md:grid-cols-2">
-            <TronInfoPanel
+            <InfoPanel
               title="AIRCRAFT N-T355 INBOUND..."
               subtitle="MOTORIZATION"
               status="pending"
               timestamp="12:58:18:07"
             >
-              <TronCountdown value="00:38 MINUTES" label="EVE KIM ARRIVAL" variant="danger" />
-            </TronInfoPanel>
+              <Countdown value="00:38 MINUTES" label="EVE KIM ARRIVAL" variant="danger" />
+            </InfoPanel>
 
-            <TronInfoPanel
+            <InfoPanel
               title="CITRUS SINENSIS"
               subtitle="ANALYSIS ACTIVE"
               status="active"
@@ -208,10 +208,10 @@ export function TronMovieSection() {
                   <span>+8.2°C ABV AMBIENT</span>
                 </div>
               </div>
-            </TronInfoPanel>
+            </InfoPanel>
           </div>
 
-          <TronProgressTimeline
+          <ProgressTimeline
             progress={35}
             markers={[
               { position: 10, active: true },
@@ -229,14 +229,14 @@ export function TronMovieSection() {
         <div className="grid gap-6 md:grid-cols-2">
           {/* Map Markers */}
           <div className="flex h-64 items-end justify-around rounded border border-border/50 bg-muted/20 px-4 pb-8">
-            <TronMapMarker label="ARES" variant="danger" showBeam />
-            <TronMapMarker label="EVE" variant="primary" coordinates="1 732m" />
-            <TronMapMarker label="ATHENA" variant="danger" showBeam />
+            <MapMarker label="ARES" variant="danger" showBeam />
+            <MapMarker label="EVE" variant="primary" coordinates="1 732m" />
+            <MapMarker label="ATHENA" variant="danger" showBeam />
           </div>
 
           {/* Radar & Coordinates */}
           <div className="flex flex-col items-center justify-center gap-4">
-            <TronRadar
+            <Radar
               size={180}
               targets={[
                 { x: 30, y: 35 },
@@ -244,7 +244,7 @@ export function TronMovieSection() {
                 { x: 45, y: 70 },
               ]}
             />
-            <TronCoordinateDisplay
+            <CoordinateDisplay
               heading={76}
               bearing="NE"
               latitude="40.2033167"
@@ -270,7 +270,7 @@ export function TronMovieSection() {
 
           {/* Top bar */}
           <div className="absolute left-0 right-0 top-0">
-            <TronUplinkBar
+            <UplinkBar
               channel="ORBITAL RELAY CHANNEL 27A"
               status="ACTIVE"
               signal="strong"
@@ -279,7 +279,7 @@ export function TronMovieSection() {
 
           {/* Left panel */}
           <div className="absolute left-4 top-16 w-48">
-            <TronDataCard
+            <DataCard
               subtitle="TARGET"
               title="EVE KIM"
               status="active"
@@ -292,20 +292,20 @@ export function TronMovieSection() {
 
           {/* Center reticle */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <TronReticle size={150} variant="scanning" />
+            <Reticle size={150} variant="scanning" />
           </div>
 
           {/* Right panel */}
           <div className="absolute right-4 top-16">
-            <TronDerezTimer minutes={16} seconds={48} milliseconds={50} />
+            <DerezTimer minutes={16} seconds={48} milliseconds={50} />
             <div className="mt-4">
-              <TronSpeedIndicator speed={160} />
+              <SpeedIndicator speed={160} />
             </div>
           </div>
 
           {/* Bottom bar */}
           <div className="absolute bottom-4 left-4 right-4">
-            <TronProgressTimeline
+            <ProgressTimeline
               progress={42}
               markers={[{ position: 42, active: true }]}
               currentLabel="TRACKING"
@@ -314,7 +314,7 @@ export function TronMovieSection() {
 
           {/* Alert */}
           <div className="absolute left-1/2 top-24 -translate-x-1/2">
-            <TronAlert variant="warning" animated>ANOMALY FOUND</TronAlert>
+            <Alert variant="warning" animated>ANOMALY FOUND</Alert>
           </div>
         </div>
       </ComponentCard>

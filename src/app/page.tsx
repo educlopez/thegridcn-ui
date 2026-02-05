@@ -5,26 +5,67 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { themes, useTheme } from "@/components/theme";
 import {
-  TronReticle,
-  TronThemeDossierSelector,
-  TronStatusStrip,
-  TronGridScanOverlay,
-  TronRadar,
-  TronUplinkHeader,
-  TronDerezCountdown,
-  TronDossierCard,
-  TronGridMap,
-} from "@/components/tron-ui";
+  Reticle,
+  GridScanOverlay,
+  Radar,
+  UplinkHeader,
+} from "@/components/thegridcn";
+import {
+  ThemeDossierSelector,
+  StatusStrip,
+  DerezCountdown,
+  DossierCard,
+  GridMap,
+} from "@/components/website";
 import { TronHeader, TheGridcnLogo } from "@/components/layout";
 
 // Dynamic import for Three.js components (client-side only)
-const TronGrid3D = dynamic(
-  () => import("@/components/tron-3d").then((mod) => mod.TronGrid3D),
+const Grid3D = dynamic(
+  () => import("@/components/thegridcn/grid").then((mod) => mod.Grid3D),
   { ssr: false }
 );
 
+// Available components for terminal display
+const availableComponents = [
+  // 3D Components
+  "grid-3d", "tunnel", "god-avatar",
+  // Data Display
+  "data-card", "status-bar", "video-player", "floating-panel",
+  // Timers
+  "timer", "countdown", "derez-timer",
+  // HUD Elements
+  "reticle", "hud-frame", "stat", "speed-indicator", "regen-indicator", "radar", "hud-corner-frame",
+  // Feedback & Alerts
+  "alert-banner", "anomaly-banner", "arrival-panel",
+  // Navigation & Location
+  "location-display", "uplink-header", "beam-marker", "timeline-bar", "video-progress",
+  // Effects
+  "circuit-background", "glow-container", "crt-effect", "grid-scan-overlay",
+];
+
+// Package manager commands
+const packageManagers = [
+  { id: "pnpm", command: "pnpm dlx" },
+  { id: "npm", command: "npx" },
+  { id: "yarn", command: "yarn dlx" },
+  { id: "bun", command: "bunx" },
+] as const;
+
 // Terminal install component
 function TerminalInstall() {
+  const [selectedPm, setSelectedPm] = React.useState<string>("pnpm");
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
+
+  const currentPm = packageManagers.find((pm) => pm.id === selectedPm) || packageManagers[0];
+  const command = `${currentPm.command} shadcn@latest list @thegridcn`;
+
+  const copyCommand = () => {
+    navigator.clipboard.writeText(command);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="relative w-full max-w-2xl">
       <div className="relative overflow-hidden border border-primary/30 bg-background/50 backdrop-blur-sm">
@@ -64,16 +105,93 @@ function TerminalInstall() {
         </div>
 
         {/* Content */}
-        <div className="relative p-4">
-          <div className="flex items-start gap-2 font-mono text-sm">
+        <div className="relative space-y-3 p-4">
+          {/* Command line with package manager selector */}
+          <div className="flex items-center gap-2 font-mono text-sm">
             <span className="text-primary glow-text">$</span>
-            <code className="flex-1 break-all text-foreground">
-              install theme
+
+            {/* Package manager selector */}
+            <div className="relative">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex items-center gap-1 border-b border-dashed border-primary/50 text-primary transition-colors hover:border-primary"
+              >
+                <span>{currentPm.command}</span>
+                <svg
+                  className={`h-3 w-3 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isOpen && (
+                <div className="absolute left-0 top-full z-50 mt-1 min-w-[100px] border border-primary/30 bg-background/95 backdrop-blur-md">
+                  {packageManagers.map((pm) => (
+                    <button
+                      key={pm.id}
+                      onClick={() => {
+                        setSelectedPm(pm.id);
+                        setIsOpen(false);
+                      }}
+                      className={`block w-full px-3 py-1.5 text-left text-xs transition-colors hover:bg-primary/10 ${
+                        selectedPm === pm.id ? "bg-primary/10 text-primary" : "text-foreground"
+                      }`}
+                    >
+                      {pm.command}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <code className="text-foreground">
+              shadcn@latest list <span className="text-primary">@thegridcn</span>
             </code>
+
+            {/* Copy button */}
+            <button
+              onClick={copyCommand}
+              className="ml-auto text-foreground/80 transition-colors hover:text-primary"
+              title="Copy command"
+            >
+              {copied ? (
+                <svg className="h-4 w-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+              )}
+            </button>
           </div>
-          <div className="mt-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+
+          {/* Output - component list */}
+          <div className="border-l-2 border-primary/20 pl-3">
+            <div className="mb-2 font-mono text-[10px] uppercase tracking-wider text-foreground/80">
+              Available components:
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {availableComponents.map((comp) => (
+                <Link
+                  key={comp}
+                  href={`/components#${comp}`}
+                  className="border border-primary/30 bg-primary/5 px-1.5 py-0.5 font-mono text-[10px] text-primary transition-colors hover:border-primary hover:bg-primary/20"
+                >
+                  {comp}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Status line */}
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider">
             <span className="inline-block h-1.5 w-1.5 animate-pulse bg-primary" />
-            <span className="text-primary">COMING SOON</span>
+            <span className="text-primary">{availableComponents.length} COMPONENTS READY</span>
+            <span className="text-foreground/80">+ ALL NATIVE SHADCN/UI COMPONENTS</span>
           </div>
         </div>
       </div>
@@ -109,7 +227,7 @@ function FeatureCard({
       <h3 className="mb-2 font-display text-sm font-bold tracking-wider text-foreground">
         {title}
       </h3>
-      <p className="text-xs leading-relaxed text-muted-foreground">
+      <p className="text-xs leading-relaxed text-foreground/80">
         {description}
       </p>
     </div>
@@ -124,7 +242,7 @@ export default function Home() {
     <div className="relative min-h-screen bg-background">
       {/* 3D Background */}
       <div className="pointer-events-none fixed inset-0 z-0">
-        <TronGrid3D
+        <Grid3D
           className="h-full w-full"
           enableParticles
           enableBeams
@@ -141,11 +259,11 @@ export default function Home() {
         {/* Hero section */}
         <section className="relative min-h-[100vh] overflow-hidden">
           {/* Grid map overlay */}
-          <TronGridMap />
-          <TronGridScanOverlay />
+          <GridMap />
+          <GridScanOverlay />
 
           {/* Uplink header bar - project info */}
-          <TronUplinkHeader
+          <UplinkHeader
             leftText={`THEME: ${currentTheme?.name.toUpperCase() || "ARES"} - ${currentTheme?.god.toUpperCase() || "GOD OF WAR"}`}
             rightText="COMPONENTS: 50+ MODULES • THEMES: 6 VARIANTS • STATUS: ACTIVE"
           />
@@ -176,12 +294,12 @@ export default function Home() {
 
               {/* Scanning reticle */}
               <div className="absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 opacity-20">
-                <TronReticle size={500} variant="scanning" />
+                <Reticle size={500} variant="scanning" />
               </div>
 
               {/* Title content */}
               <div className="relative z-10 py-12 text-center md:py-16">
-                <div className="mb-3 font-mono text-[10px] tracking-[0.5em] text-muted-foreground">
+                <div className="mb-3 font-mono text-[10px] tracking-[0.5em] text-foreground/80">
                   CLASSIFIED PROJECT
                 </div>
                 <h1 className="font-display text-6xl font-black tracking-[0.15em] text-primary md:text-8xl lg:text-[9rem] [text-shadow:0_0_80px_oklch(from_var(--primary)_l_c_h/0.5),0_0_160px_oklch(from_var(--primary)_l_c_h/0.3)]">
@@ -194,7 +312,7 @@ export default function Home() {
             </div>
 
             {/* Subtitle */}
-            <p className="mx-auto mb-8 max-w-2xl text-center text-lg text-muted-foreground">
+            <p className="mx-auto mb-8 max-w-2xl text-center text-lg text-foreground/80">
               An authentic <span className="text-primary">Tron: Ares</span>{" "}
               inspired theme featuring Greek god color schemes, movie UI
               components, and immersive 3D effects.
@@ -213,7 +331,7 @@ export default function Home() {
                 href="https://github.com/educlopez/thegridcn-ui"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative overflow-hidden rounded border border-primary/30 bg-transparent px-10 py-4 font-mono text-sm font-bold tracking-wider text-muted-foreground transition-all hover:border-primary/50 hover:text-primary hover:shadow-[0_0_20px_var(--primary)]"
+                className="group relative overflow-hidden rounded border border-primary/30 bg-transparent px-10 py-4 font-mono text-sm font-bold tracking-wider text-foreground/80 transition-all hover:border-primary/50 hover:text-primary hover:shadow-[0_0_20px_var(--primary)]"
               >
                 <span className="relative z-10">VIEW ON GITHUB</span>
               </Link>
@@ -221,7 +339,7 @@ export default function Home() {
 
             {/* Install command */}
             <div className="mx-auto w-full max-w-2xl">
-              <div className="mb-3 text-center font-mono text-[10px] tracking-widest text-muted-foreground">
+              <div className="mb-3 text-center font-mono text-[10px] tracking-widest text-foreground/80">
                 [ QUICK INSTALL ]
               </div>
               <TerminalInstall />
@@ -229,7 +347,7 @@ export default function Home() {
 
             {/* Side panels - Dossier card style (left) */}
             <div className="pointer-events-none absolute left-0 top-1/3 hidden xl:block">
-              <TronDossierCard
+              <DossierCard
                 category="RECORDED SUBJECT"
                 name={currentTheme?.name.toUpperCase() || "ARES"}
                 fields={[
@@ -251,12 +369,12 @@ export default function Home() {
 
             {/* Side panel - De-resolution timer and radar (right) */}
             <div className="pointer-events-none absolute right-0 top-1/3 hidden flex-col items-end gap-4 xl:flex">
-              <TronDerezCountdown time="16:48" milliseconds="50" />
+              <DerezCountdown time="16:48" milliseconds="50" />
               <div className="rounded border border-primary/30 bg-background/80 p-4 backdrop-blur-md">
-                <div className="mb-2 font-mono text-[9px] tracking-widest text-muted-foreground">
+                <div className="mb-2 font-mono text-[9px] tracking-widest text-foreground/80">
                   PROXIMITY SCAN
                 </div>
-                <TronRadar
+                <Radar
                   size={140}
                   targets={[
                     { x: 30, y: 35 },
@@ -272,7 +390,7 @@ export default function Home() {
             <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
             <div className="flex items-center justify-center gap-8 py-3">
               <div className="h-px w-24 bg-gradient-to-r from-transparent to-primary/50" />
-              <div className="animate-bounce font-mono text-[9px] tracking-widest text-muted-foreground">
+              <div className="animate-bounce font-mono text-[9px] tracking-widest text-foreground/80">
                 ↓ SCROLL ↓
               </div>
               <div className="h-px w-24 bg-gradient-to-l from-transparent to-primary/50" />
@@ -282,7 +400,7 @@ export default function Home() {
 
         {/* Theme Selector */}
         <div id="themes">
-          <TronThemeDossierSelector />
+          <ThemeDossierSelector />
         </div>
 
         {/* Features Section */}
@@ -292,10 +410,10 @@ export default function Home() {
         >
           {/* Section background */}
           <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
-          <TronGridScanOverlay />
+          <GridScanOverlay />
 
           {/* Status bar */}
-          <TronStatusStrip
+          <StatusStrip
             variant="default"
             items={[
               { label: "SECTION", value: "CAPABILITIES", highlighted: true },
@@ -307,13 +425,13 @@ export default function Home() {
           <div className="container relative mx-auto px-4 pt-8">
             {/* Section header */}
             <div className="mb-16 text-center">
-              <div className="mb-4 font-mono text-[10px] tracking-widest text-muted-foreground">
+              <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
                 [ SYSTEM CAPABILITIES ]
               </div>
               <h2 className="font-display text-3xl font-bold tracking-wider text-primary md:text-4xl lg:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
                 CORE FEATURES
               </h2>
-              <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+              <p className="mx-auto mt-4 max-w-xl text-foreground/80">
                 Everything you need to build authentic Tron-inspired interfaces
               </p>
             </div>
@@ -440,7 +558,7 @@ export default function Home() {
         {/* Tech Stack */}
         <section className="relative border-t border-primary/20 py-24">
           {/* Status bar */}
-          <TronStatusStrip
+          <StatusStrip
             variant="default"
             items={[
               { label: "SECTION", value: "ARCHITECTURE", highlighted: true },
@@ -451,7 +569,7 @@ export default function Home() {
 
           <div className="container mx-auto px-4 pt-8">
             <div className="mb-12 text-center">
-              <div className="mb-4 font-mono text-[10px] tracking-widest text-muted-foreground">
+              <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
                 [ SYSTEM ARCHITECTURE ]
               </div>
               <h2 className="font-display text-3xl font-bold tracking-wider text-primary md:text-4xl lg:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
@@ -482,7 +600,7 @@ export default function Home() {
                     <div className="absolute -bottom-px -right-px h-3 w-3 border-b-2 border-r-2 border-primary/40 transition-colors group-hover:border-primary" />
 
                     <div className="text-center">
-                      <div className="font-mono text-[8px] tracking-widest text-muted-foreground">
+                      <div className="font-mono text-[8px] tracking-widest text-foreground/80">
                         {tech.status}
                       </div>
                       <div className="font-display text-sm font-bold tracking-wider text-primary">
@@ -501,7 +619,7 @@ export default function Home() {
 
         {/* Final CTA */}
         <section className="relative border-t border-primary/20 py-24">
-          <TronGridScanOverlay />
+          <GridScanOverlay />
 
           <div className="container relative mx-auto px-4 text-center">
             {/* HUD frame around CTA */}
@@ -514,13 +632,13 @@ export default function Home() {
               </div>
 
               <div className="relative px-8 py-12 md:px-16">
-                <div className="mb-2 font-mono text-[10px] tracking-[0.3em] text-muted-foreground">
+                <div className="mb-2 font-mono text-[10px] tracking-[0.3em] text-foreground/80">
                   AWAITING USER INPUT
                 </div>
                 <h2 className="mb-6 font-display text-4xl font-bold tracking-wider text-primary md:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
                   READY TO ENTER?
                 </h2>
-                <p className="mx-auto mb-8 max-w-xl text-muted-foreground">
+                <p className="mx-auto mb-8 max-w-xl text-foreground/80">
                   Explore all components, customize themes, and build immersive
                   digital experiences.
                 </p>
@@ -539,7 +657,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="relative z-10 border-t border-primary/30 bg-background/90 backdrop-blur-xl">
         {/* Footer uplink bar */}
-        <TronUplinkHeader
+        <UplinkHeader
           leftText="SYSTEM: THE GRIDCN v1.0.0"
           rightText="UPTIME: 99.9% - END OF LINE"
         />
@@ -551,7 +669,7 @@ export default function Home() {
               <TheGridcnLogo size="lg" />
               <div className="h-8 w-px bg-primary/30" />
               <div className="font-mono text-[10px]">
-                <div className="tracking-widest text-muted-foreground">
+                <div className="tracking-widest text-foreground/80">
                   TRON-INSPIRED
                 </div>
                 <div className="tracking-wider text-foreground">
@@ -566,7 +684,7 @@ export default function Home() {
                 (tech) => (
                   <span
                     key={tech}
-                    className="border border-border/30 bg-card/20 px-2 py-1 font-mono text-[9px] tracking-wider text-muted-foreground"
+                    className="border border-border/30 bg-card/20 px-2 py-1 font-mono text-[9px] tracking-wider text-foreground/80"
                   >
                     {tech}
                   </span>
@@ -578,7 +696,7 @@ export default function Home() {
           {/* Bottom copyright line */}
           <div className="mt-8 flex items-center justify-center gap-4">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/20" />
-            <span className="font-mono text-[9px] tracking-widest text-muted-foreground">
+            <span className="font-mono text-[9px] tracking-widest text-foreground/80">
               GRID YEAR {new Date().getFullYear()} • ALL PROGRAMS RESERVED
             </span>
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/20" />

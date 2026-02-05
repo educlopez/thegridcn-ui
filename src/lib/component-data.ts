@@ -64,6 +64,29 @@ export const componentSections: Partial<
   "tron-movie": {
     title: "GridCN",
     items: [
+      // 3D Components
+      {
+        id: "grid-3d",
+        name: "grid-3d",
+        title: "Grid 3D",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "tunnel",
+        name: "tunnel",
+        title: "Tunnel",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "god-avatar",
+        name: "god-avatar",
+        title: "God Avatar",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      // Data Display
       {
         id: "data-card",
         name: "data-card",
@@ -72,12 +95,20 @@ export const componentSections: Partial<
         section: "tron-movie",
       },
       {
-        id: "alert-banner",
-        name: "alert-banner",
-        title: "Alert Banner",
+        id: "status-bar",
+        name: "status-bar",
+        title: "Status Bar",
         type: "tron-movie",
         section: "tron-movie",
       },
+      {
+        id: "video-player",
+        name: "video-player",
+        title: "Video Player",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      // Timers
       {
         id: "timer",
         name: "timer",
@@ -99,6 +130,7 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // HUD Elements
       {
         id: "reticle",
         name: "reticle",
@@ -135,16 +167,110 @@ export const componentSections: Partial<
         section: "tron-movie",
       },
       {
-        id: "status-bar",
-        name: "status-bar",
-        title: "Status Bar",
+        id: "radar",
+        name: "radar",
+        title: "Radar",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      // Feedback
+      {
+        id: "alert-banner",
+        name: "alert-banner",
+        title: "Alert Banner",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      // Effects
+      {
+        id: "circuit-background",
+        name: "circuit-background",
+        title: "Circuit Background",
         type: "tron-movie",
         section: "tron-movie",
       },
       {
-        id: "radar",
-        name: "radar",
-        title: "Radar",
+        id: "glow-container",
+        name: "glow-container",
+        title: "Glow Container",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "crt-effect",
+        name: "crt-effect",
+        title: "CRT Effect",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      // Cinematic UI
+      {
+        id: "anomaly-banner",
+        name: "anomaly-banner",
+        title: "Anomaly Banner",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "hud-corner-frame",
+        name: "hud-corner-frame",
+        title: "HUD Corner Frame",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "video-progress",
+        name: "video-progress",
+        title: "Video Progress",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "floating-panel",
+        name: "floating-panel",
+        title: "Floating Panel",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "grid-scan-overlay",
+        name: "grid-scan-overlay",
+        title: "Grid Scan Overlay",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "location-display",
+        name: "location-display",
+        title: "Location Display",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "uplink-header",
+        name: "uplink-header",
+        title: "Uplink Header",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "arrival-panel",
+        name: "arrival-panel",
+        title: "Arrival Panel",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "beam-marker",
+        name: "beam-marker",
+        title: "Beam Marker",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "timeline-bar",
+        name: "timeline-bar",
+        title: "Timeline Bar",
         type: "tron-movie",
         section: "tron-movie",
       },

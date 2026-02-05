@@ -51,7 +51,7 @@ function InstallCommand({ componentId }: { componentId: string }) {
   const colors = complementaryColors[theme] || complementaryColors.tron;
 
   const registryName = getRegistryName(componentId);
-  const command = `${packageManagerCommands[packageManager]} "@thegridcn/${registryName}"`;
+  const command = `${packageManagerCommands[packageManager]} @thegridcn/${registryName}`;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(command);
@@ -173,7 +173,7 @@ export function Preview({ component }: PreviewProps) {
                 <h3 className="font-mono text-sm font-semibold tracking-wider text-primary">
                   {component.title}
                 </h3>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-foreground/80">
                   {componentSections[component.type]?.title}
                 </p>
               </div>
@@ -187,10 +187,10 @@ export function Preview({ component }: PreviewProps) {
           </div>
         ) : (
           <div className="relative z-10 flex h-full flex-col items-center justify-center p-8 text-center">
-            <div className="mb-4 font-mono text-[10px] tracking-widest text-muted-foreground">
+            <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
               [ NO COMPONENT SELECTED ]
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground/80">
               Select a component from the sidebar to preview it here
             </p>
           </div>

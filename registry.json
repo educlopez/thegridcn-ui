@@ -33,6 +33,17 @@
       ]
     },
     {
+      "name": "alert",
+      "type": "registry:component",
+      "title": "Alert",
+      "files": [
+        {
+          "path": "src/components/thegridcn/alert.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "alert-dialog",
       "type": "registry:component",
       "title": "Alert Dialog",
@@ -47,6 +58,28 @@
       ],
       "dependencies": [
         "@radix-ui/react-alert-dialog"
+      ]
+    },
+    {
+      "name": "anomaly-banner",
+      "type": "registry:component",
+      "title": "Anomaly Banner",
+      "files": [
+        {
+          "path": "src/components/thegridcn/anomaly-banner.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "arrival-panel",
+      "type": "registry:component",
+      "title": "Arrival Panel",
+      "files": [
+        {
+          "path": "src/components/thegridcn/arrival-panel.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -90,6 +123,17 @@
       "dependencies": [
         "@radix-ui/react-slot",
         "class-variance-authority"
+      ]
+    },
+    {
+      "name": "beam-marker",
+      "type": "registry:component",
+      "title": "Beam Marker",
+      "files": [
+        {
+          "path": "src/components/thegridcn/beam-marker.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -223,7 +267,7 @@
       "title": "Circuit Background",
       "files": [
         {
-          "path": "src/components/tron-effects/circuit-background.tsx",
+          "path": "src/components/thegridcn/circuit-background.tsx",
           "type": "registry:component"
         }
       ]
@@ -273,6 +317,29 @@
       "dependencies": [
         "@radix-ui/react-context-menu",
         "lucide-react"
+      ]
+    },
+    {
+      "name": "crt-effect",
+      "type": "registry:component",
+      "title": "Crt Effect",
+      "description": "CRT monitor effect with scanlines, vignette, flicker, and scan sweep animation.\n * Wrap any content to give it a retro CRT monitor appearance.",
+      "files": [
+        {
+          "path": "src/components/thegridcn/crt-effect.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "data-card",
+      "type": "registry:component",
+      "title": "Data Card",
+      "files": [
+        {
+          "path": "src/components/thegridcn/data-card.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -352,6 +419,17 @@
       ]
     },
     {
+      "name": "floating-panel",
+      "type": "registry:component",
+      "title": "Floating Panel",
+      "files": [
+        {
+          "path": "src/components/thegridcn/floating-panel.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "form",
       "type": "registry:component",
       "title": "Form",
@@ -376,9 +454,25 @@
       "title": "Glow Container",
       "files": [
         {
-          "path": "src/components/tron-effects/glow-container.tsx",
+          "path": "src/components/thegridcn/glow-container.tsx",
           "type": "registry:component"
         }
+      ]
+    },
+    {
+      "name": "grid",
+      "type": "registry:component",
+      "title": "Grid",
+      "description": "Convert hex to THREE.Color",
+      "files": [
+        {
+          "path": "src/components/thegridcn/grid.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": [
+        "@react-three/fiber",
+        "three"
       ]
     },
     {
@@ -387,7 +481,18 @@
       "title": "Grid Floor",
       "files": [
         {
-          "path": "src/components/tron-effects/grid-floor.tsx",
+          "path": "src/components/thegridcn/grid-floor.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "grid-scan-overlay",
+      "type": "registry:component",
+      "title": "Grid Scan Overlay",
+      "files": [
+        {
+          "path": "src/components/thegridcn/grid-scan-overlay.tsx",
           "type": "registry:component"
         }
       ]
@@ -404,6 +509,28 @@
       ],
       "dependencies": [
         "@radix-ui/react-hover-card"
+      ]
+    },
+    {
+      "name": "hud",
+      "type": "registry:component",
+      "title": "Hud",
+      "files": [
+        {
+          "path": "src/components/thegridcn/hud.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "hud-corner-frame",
+      "type": "registry:component",
+      "title": "Hud Corner Frame",
+      "files": [
+        {
+          "path": "src/components/thegridcn/hud-corner-frame.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -495,6 +622,28 @@
       ]
     },
     {
+      "name": "location-display",
+      "type": "registry:component",
+      "title": "Location Display",
+      "files": [
+        {
+          "path": "src/components/thegridcn/location-display.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "map",
+      "type": "registry:component",
+      "title": "Map",
+      "files": [
+        {
+          "path": "src/components/thegridcn/map.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "menubar",
       "type": "registry:component",
       "title": "Menubar",
@@ -583,17 +732,6 @@
       "dependencies": [
         "@radix-ui/react-radio-group",
         "lucide-react"
-      ]
-    },
-    {
-      "name": "scanlines",
-      "type": "registry:component",
-      "title": "Scanlines",
-      "files": [
-        {
-          "path": "src/components/tron-effects/scanlines.tsx",
-          "type": "registry:component"
-        }
       ]
     },
     {
@@ -733,6 +871,17 @@
       ]
     },
     {
+      "name": "status-bar",
+      "type": "registry:component",
+      "title": "Status Bar",
+      "files": [
+        {
+          "path": "src/components/thegridcn/status-bar.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
       "name": "switch",
       "type": "registry:component",
       "title": "Switch",
@@ -778,6 +927,28 @@
       "files": [
         {
           "path": "src/components/ui/textarea.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "timeline-bar",
+      "type": "registry:component",
+      "title": "Timeline Bar",
+      "files": [
+        {
+          "path": "src/components/thegridcn/timeline-bar.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "timer",
+      "type": "registry:component",
+      "title": "Timer",
+      "files": [
+        {
+          "path": "src/components/thegridcn/timer.tsx",
           "type": "registry:component"
         }
       ]
@@ -830,143 +1001,10 @@
       ]
     },
     {
-      "name": "thegridcn-alert",
-      "type": "registry:component",
-      "title": "TheGridcn Alert",
-      "files": [
-        {
-          "path": "src/components/thegridcn/alert.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "cinematic-hud",
-      "type": "registry:component",
-      "title": "Cinematic Hud",
-      "description": "Grid scan overlay effect",
-      "files": [
-        {
-          "path": "src/components/thegridcn/cinematic-hud.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "data-card",
-      "type": "registry:component",
-      "title": "Data Card",
-      "files": [
-        {
-          "path": "src/components/thegridcn/data-card.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "god-avatar",
-      "type": "registry:component",
-      "title": "God Avatar",
-      "description": "3D avatar component",
-      "files": [
-        {
-          "path": "src/components/thegridcn/god-avatar.tsx",
-          "type": "registry:component"
-        }
-      ],
-      "dependencies": [
-        "@react-three/fiber",
-        "three"
-      ]
-    },
-    {
-      "name": "grid-3d",
-      "type": "registry:component",
-      "title": "Grid 3D",
-      "description": "3D grid floor component",
-      "files": [
-        {
-          "path": "src/components/thegridcn/grid.tsx",
-          "type": "registry:component"
-        }
-      ],
-      "dependencies": [
-        "@react-three/fiber",
-        "three"
-      ]
-    },
-    {
-      "name": "hud",
-      "type": "registry:component",
-      "title": "HUD",
-      "files": [
-        {
-          "path": "src/components/thegridcn/hud.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "map",
-      "type": "registry:component",
-      "title": "Map",
-      "files": [
-        {
-          "path": "src/components/thegridcn/map.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "movie-ui",
-      "type": "registry:component",
-      "title": "Movie UI",
-      "description": "Cinematic UI elements",
-      "files": [
-        {
-          "path": "src/components/thegridcn/movie-ui.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "status-bar",
-      "type": "registry:component",
-      "title": "Status Bar",
-      "files": [
-        {
-          "path": "src/components/thegridcn/status-bar.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "theme-dossier",
-      "type": "registry:component",
-      "title": "Theme Dossier",
-      "files": [
-        {
-          "path": "src/components/thegridcn/theme-dossier.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "timer",
-      "type": "registry:component",
-      "title": "Timer",
-      "files": [
-        {
-          "path": "src/components/thegridcn/timer.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
       "name": "tunnel",
       "type": "registry:component",
       "title": "Tunnel",
-      "description": "3D tunnel effect",
+      "description": "Instanced tunnel rings for better performance",
       "files": [
         {
           "path": "src/components/thegridcn/tunnel.tsx",
@@ -976,6 +1014,17 @@
       "dependencies": [
         "@react-three/fiber",
         "three"
+      ]
+    },
+    {
+      "name": "uplink-header",
+      "type": "registry:component",
+      "title": "Uplink Header",
+      "files": [
+        {
+          "path": "src/components/thegridcn/uplink-header.tsx",
+          "type": "registry:component"
+        }
       ]
     },
     {
@@ -990,6 +1039,17 @@
       ],
       "dependencies": [
         "lucide-react"
+      ]
+    },
+    {
+      "name": "video-progress",
+      "type": "registry:component",
+      "title": "Video Progress",
+      "files": [
+        {
+          "path": "src/components/thegridcn/video-progress.tsx",
+          "type": "registry:component"
+        }
       ]
     }
   ]

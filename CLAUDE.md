@@ -23,9 +23,7 @@ Package manager: **pnpm**
 
 - `src/app/` - Next.js App Router pages and layouts
 - `src/components/ui/` - 55+ shadcn/ui base components
-- `src/components/tron-ui/` - Custom Tron movie-inspired UI elements (TronDataCard, TronHUD, TronAlert, etc.)
-- `src/components/tron-3d/` - Three.js 3D components (TronGrid3D, TronTunnel) - always dynamically imported with `ssr: false`
-- `src/components/tron-effects/` - Visual effects (CircuitBackground, GlowContainer, Scanlines)
+- `src/components/thegridcn/` - Tron-inspired UI components (DataCard, HUD, Alert, Timer, Map, Radar), 3D components (Grid3D, Tunnel - always dynamically imported with `ssr: false`), and visual effects (CircuitBackground, GlowContainer, Scanlines)
 - `src/components/theme/` - Theme provider and switcher using React Context
 - `src/components/showcase/` - Component showcase sections for homepage
 - `src/components/components-page/` - Component explorer UI

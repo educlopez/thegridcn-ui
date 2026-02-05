@@ -38,7 +38,7 @@ export class ComponentErrorBoundary extends React.Component<
               <p className="font-mono text-sm font-semibold text-destructive">
                 Component Preview Error
               </p>
-              <p className="mt-2 text-xs text-muted-foreground">
+              <p className="mt-2 text-xs text-foreground/80">
                 {this.state.error?.message ||
                   "An error occurred while rendering the component"}
               </p>
