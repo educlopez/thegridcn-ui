@@ -9,6 +9,60 @@ function hexToThreeColor(hex: string): THREE.Color {
   return new THREE.Color(hex)
 }
 
+// Hologram shaders - hoisted outside component for performance
+const hologramVertexShader = `
+  uniform float uTime;
+  uniform float uGlitchIntensity;
+  varying vec2 vUv;
+  varying vec3 vPosition;
+  varying vec3 vNormal;
+
+  void main() {
+    vUv = uv;
+    vPosition = position;
+    vNormal = normal;
+
+    // Glitch effect
+    vec3 pos = position;
+    float glitch = sin(uTime * 20.0 + position.y * 10.0) * uGlitchIntensity;
+    pos.x += glitch;
+
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+  }
+`
+
+const hologramFragmentShader = `
+  uniform float uTime;
+  uniform vec3 uColor;
+  uniform float uScanlineIntensity;
+  varying vec2 vUv;
+  varying vec3 vPosition;
+  varying vec3 vNormal;
+
+  void main() {
+    // Base color with fresnel effect
+    vec3 viewDir = normalize(cameraPosition - vPosition);
+    float fresnel = pow(1.0 - dot(vNormal, viewDir), 2.0);
+
+    // Scanlines
+    float scanline = sin(vPosition.y * 50.0 + uTime * 5.0) * 0.5 + 0.5;
+    scanline = pow(scanline, 3.0) * uScanlineIntensity;
+
+    // Horizontal scan sweep
+    float sweep = sin(uTime * 2.0) * 0.5 + 0.5;
+    float sweepLine = smoothstep(sweep - 0.05, sweep, vUv.y) * smoothstep(sweep + 0.05, sweep, vUv.y);
+
+    // Combine
+    float alpha = 0.3 + fresnel * 0.5 + scanline + sweepLine * 0.3;
+    alpha *= 0.8;
+
+    // Flickering
+    float flicker = sin(uTime * 30.0) * 0.05 + 0.95;
+
+    gl_FragColor = vec4(uColor * flicker, alpha * flicker);
+  }
+`
+
 // Shared glitch context - so all materials in an avatar glitch together
 const GlitchContext = React.createContext<React.MutableRefObject<number> | null>(null)
 
@@ -52,70 +106,16 @@ function HologramMaterial({ color, wireframe = false }: { color: string; wirefra
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = state.clock.elapsedTime
       materialRef.current.uniforms.uColor.value.set(colorRef.current)
-      // Use shared glitch value from context
       materialRef.current.uniforms.uGlitchIntensity.value = glitchRef?.current ?? 0
     }
   })
-
-  const vertexShader = `
-    uniform float uTime;
-    uniform float uGlitchIntensity;
-    varying vec2 vUv;
-    varying vec3 vPosition;
-    varying vec3 vNormal;
-
-    void main() {
-      vUv = uv;
-      vPosition = position;
-      vNormal = normal;
-
-      // Glitch effect
-      vec3 pos = position;
-      float glitch = sin(uTime * 20.0 + position.y * 10.0) * uGlitchIntensity;
-      pos.x += glitch;
-
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-    }
-  `
-
-  const fragmentShader = `
-    uniform float uTime;
-    uniform vec3 uColor;
-    uniform float uScanlineIntensity;
-    varying vec2 vUv;
-    varying vec3 vPosition;
-    varying vec3 vNormal;
-
-    void main() {
-      // Base color with fresnel effect
-      vec3 viewDir = normalize(cameraPosition - vPosition);
-      float fresnel = pow(1.0 - dot(vNormal, viewDir), 2.0);
-
-      // Scanlines
-      float scanline = sin(vPosition.y * 50.0 + uTime * 5.0) * 0.5 + 0.5;
-      scanline = pow(scanline, 3.0) * uScanlineIntensity;
-
-      // Horizontal scan sweep
-      float sweep = sin(uTime * 2.0) * 0.5 + 0.5;
-      float sweepLine = smoothstep(sweep - 0.05, sweep, vUv.y) * smoothstep(sweep + 0.05, sweep, vUv.y);
-
-      // Combine
-      float alpha = 0.3 + fresnel * 0.5 + scanline + sweepLine * 0.3;
-      alpha *= 0.8;
-
-      // Flickering
-      float flicker = sin(uTime * 30.0) * 0.05 + 0.95;
-
-      gl_FragColor = vec4(uColor * flicker, alpha * flicker);
-    }
-  `
 
   return (
     <shaderMaterial
       ref={materialRef}
       uniforms={uniforms}
-      vertexShader={vertexShader}
-      fragmentShader={fragmentShader}
+      vertexShader={hologramVertexShader}
+      fragmentShader={hologramFragmentShader}
       transparent
       side={THREE.DoubleSide}
       wireframe={wireframe}
@@ -125,9 +125,11 @@ function HologramMaterial({ color, wireframe = false }: { color: string; wirefra
   )
 }
 
-// Floating particles around the avatar
-function AvatarParticles({ color, count = 30 }: { color: string; count?: number }) {
+// Floating particles around the avatar - reduced count for performance
+function AvatarParticles({ color, count = 20 }: { color: string; count?: number }) {
   const pointsRef = React.useRef<THREE.Points>(null)
+  const geometryRef = React.useRef<THREE.BufferGeometry>(null)
+  const materialRef = React.useRef<THREE.PointsMaterial>(null)
 
   const particlesPosition = React.useMemo(() => {
     const positions = new Float32Array(count * 3)
@@ -142,6 +144,14 @@ function AvatarParticles({ color, count = 30 }: { color: string; count?: number 
     return positions
   }, [count])
 
+  // Cleanup
+  React.useEffect(() => {
+    return () => {
+      geometryRef.current?.dispose()
+      materialRef.current?.dispose()
+    }
+  }, [])
+
   useFrame((state) => {
     if (pointsRef.current) {
       pointsRef.current.rotation.y = state.clock.elapsedTime * 0.3
@@ -150,13 +160,14 @@ function AvatarParticles({ color, count = 30 }: { color: string; count?: number 
 
   return (
     <points ref={pointsRef}>
-      <bufferGeometry>
+      <bufferGeometry ref={geometryRef}>
         <bufferAttribute
           attach="attributes-position"
           args={[particlesPosition, 3]}
         />
       </bufferGeometry>
       <pointsMaterial
+        ref={materialRef}
         color={color}
         size={0.03}
         transparent
@@ -472,20 +483,20 @@ function GodAvatar({ themeId, color }: { themeId: string; color: string }) {
 }
 
 // Main exported component
-interface TronGodAvatar3DProps {
+interface GodAvatar3DProps {
   themeId: string
   color: string
   size?: number
   className?: string
 }
 
-export function TronGodAvatar3D({ themeId, color, size = 64, className }: TronGodAvatar3DProps) {
+export function GodAvatar3D({ themeId, color, size = 64, className }: GodAvatar3DProps) {
   return (
     <div className={className} style={{ width: size, height: size }}>
       <Canvas
         camera={{ position: [0, 0, 2], fov: 50 }}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-        dpr={[1, 2]}
+        dpr={[1, 2]} // Limit DPR to max 2 for performance
         style={{ background: "transparent", pointerEvents: "none" }}
       >
         <GlitchProvider>

@@ -1,14 +1,20 @@
 "use client";
 
 import * as React from "react";
+import dynamic from "next/dynamic";
 import { Settings } from "lucide-react";
 import { themes, tronIntensities, useTheme } from "@/components/theme";
-import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { TronIntensitySwitcherCompact } from "@/components/theme/tron-intensity-switcher";
+import { cn } from "@/lib/utils";
+
+// Dynamic import for 3D component to avoid SSR issues
+const GodAvatar3D = dynamic(
+  () => import("@/components/thegridcn/god-avatar").then((mod) => mod.GodAvatar3D),
+  { ssr: false }
+);
 
 export function Customizer() {
-  const { theme, tronIntensity } = useTheme();
-  const currentTheme = themes.find((t) => t.id === theme);
+  const { theme, setTheme, tronIntensity } = useTheme();
   const currentIntensity = tronIntensities.find((i) => i.id === tronIntensity);
 
   return (
@@ -33,10 +39,41 @@ export function Customizer() {
 
           <div className="space-y-4">
             <div>
-              <div className="mb-2 block text-xs font-medium text-foreground">
+              <div className="mb-3 block text-xs font-medium text-foreground">
                 Theme
               </div>
-              <ThemeSwitcher />
+              <div className="grid grid-cols-3 gap-2">
+                {themes.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setTheme(t.id)}
+                    className={cn(
+                      "group flex flex-col items-center rounded border p-2 transition-all",
+                      theme === t.id
+                        ? "border-primary bg-primary/10"
+                        : "border-border/50 bg-card/30 hover:border-primary/50 hover:bg-card/50"
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "relative mb-1 overflow-hidden rounded",
+                        theme === t.id ? "ring-1 ring-primary/50" : ""
+                      )}
+                      style={{ backgroundColor: `${t.color}10` }}
+                    >
+                      <GodAvatar3D themeId={t.id} color={t.color} size={56} />
+                    </div>
+                    <span
+                      className={cn(
+                        "font-mono text-[9px] tracking-wider",
+                        theme === t.id ? "text-primary" : "text-muted-foreground"
+                      )}
+                    >
+                      {t.name.toUpperCase()}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div>
@@ -47,21 +84,6 @@ export function Customizer() {
               <p className="mt-2 text-[10px] text-muted-foreground">
                 {currentIntensity?.description}
               </p>
-            </div>
-
-            <div>
-              <div className="mb-2 block text-xs font-medium text-foreground">
-                Current Theme
-              </div>
-              <div className="rounded border border-primary/20 bg-primary/5 p-3">
-                <div className="mb-2 font-mono text-[10px] tracking-wider text-primary">
-                  {currentTheme?.name.toUpperCase()}
-                </div>
-                <div className="text-[10px] text-muted-foreground">
-                  {currentTheme?.god}
-                </div>
-                <div className="mt-2 h-8 w-full rounded border border-primary/30 bg-primary" />
-              </div>
             </div>
           </div>
         </div>

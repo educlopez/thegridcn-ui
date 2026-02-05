@@ -3,21 +3,21 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-interface TronMapMarkerProps extends React.HTMLAttributes<HTMLDivElement> {
+interface MapMarkerProps extends React.HTMLAttributes<HTMLDivElement> {
   label: string
   variant?: "default" | "primary" | "danger" | "highlight"
   coordinates?: string
   showBeam?: boolean
 }
 
-export function TronMapMarker({
+export function MapMarker({
   label,
   variant = "default",
   coordinates,
   showBeam = false,
   className,
   ...props
-}: TronMapMarkerProps) {
+}: MapMarkerProps) {
   const variantStyles = {
     default: {
       bg: "bg-muted/80",
@@ -108,7 +108,7 @@ export function TronMapMarker({
   )
 }
 
-interface TronCoordinateDisplayProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CoordinateDisplayProps extends React.HTMLAttributes<HTMLDivElement> {
   heading?: number
   bearing?: string
   latitude?: string
@@ -116,7 +116,7 @@ interface TronCoordinateDisplayProps extends React.HTMLAttributes<HTMLDivElement
   label?: string
 }
 
-export function TronCoordinateDisplay({
+export function CoordinateDisplay({
   heading = 0,
   bearing = "NE",
   latitude,
@@ -124,7 +124,7 @@ export function TronCoordinateDisplay({
   label,
   className,
   ...props
-}: TronCoordinateDisplayProps) {
+}: CoordinateDisplayProps) {
   return (
     <div
       className={cn(
@@ -161,21 +161,21 @@ export function TronCoordinateDisplay({
   )
 }
 
-interface TronRadarProps extends React.HTMLAttributes<HTMLDivElement> {
+interface RadarProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: number
   targets?: { x: number; y: number; label?: string }[]
   sweepEnabled?: boolean
   sweepSpeed?: number
 }
 
-export function TronRadar({
+export function Radar({
   size = 200,
   targets = [],
   sweepEnabled = true,
   sweepSpeed = 3,
   className,
   ...props
-}: TronRadarProps) {
+}: RadarProps) {
   const [rotation, setRotation] = React.useState(0)
 
   React.useEffect(() => {

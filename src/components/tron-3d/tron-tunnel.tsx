@@ -201,7 +201,8 @@ export function TronTunnel({
     <div className={className}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        dpr={[1, 2]}
         style={{ background: "transparent", pointerEvents: "none" }}
       >
         <fog attach="fog" args={["#000", 5, 35]} />

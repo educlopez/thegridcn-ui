@@ -830,63 +830,47 @@
       ]
     },
     {
-      "name": "tron-alert",
+      "name": "thegridcn-alert",
       "type": "registry:component",
-      "title": "Tron Alert",
+      "title": "TheGridcn Alert",
       "files": [
         {
-          "path": "src/components/tron-ui/tron-alert.tsx",
+          "path": "src/components/thegridcn/alert.tsx",
           "type": "registry:component"
         }
       ]
     },
     {
-      "name": "tron-cinematic-hud",
+      "name": "cinematic-hud",
       "type": "registry:component",
-      "title": "Tron Cinematic Hud",
+      "title": "Cinematic Hud",
       "description": "Grid scan overlay effect",
       "files": [
         {
-          "path": "src/components/tron-ui/tron-cinematic-hud.tsx",
+          "path": "src/components/thegridcn/cinematic-hud.tsx",
           "type": "registry:component"
         }
       ]
     },
     {
-      "name": "tron-data-card",
+      "name": "data-card",
       "type": "registry:component",
-      "title": "Tron Data Card",
+      "title": "Data Card",
       "files": [
         {
-          "path": "src/components/tron-ui/tron-data-card.tsx",
+          "path": "src/components/thegridcn/data-card.tsx",
           "type": "registry:component"
         }
       ]
     },
     {
-      "name": "tron-god-avatar",
+      "name": "god-avatar",
       "type": "registry:component",
-      "title": "Tron God Avatar",
-      "description": "Convert hex to THREE.Color",
+      "title": "God Avatar",
+      "description": "3D avatar component",
       "files": [
         {
-          "path": "src/components/tron-3d/tron-god-avatar.tsx",
-          "type": "registry:component"
-        }
-      ],
-      "dependencies": [
-        "@react-three/fiber",
-        "three"
-      ]
-    },
-    {
-      "name": "tron-grid",
-      "type": "registry:component",
-      "title": "Tron Grid",
-      "description": "Convert hex to THREE.Color",
-      "files": [
-        {
-          "path": "src/components/tron-3d/tron-grid.tsx",
+          "path": "src/components/thegridcn/god-avatar.tsx",
           "type": "registry:component"
         }
       ],
@@ -896,80 +880,13 @@
       ]
     },
     {
-      "name": "tron-hud",
+      "name": "grid-3d",
       "type": "registry:component",
-      "title": "Tron Hud",
+      "title": "Grid 3D",
+      "description": "3D grid floor component",
       "files": [
         {
-          "path": "src/components/tron-ui/tron-hud.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "tron-map",
-      "type": "registry:component",
-      "title": "Tron Map",
-      "files": [
-        {
-          "path": "src/components/tron-ui/tron-map.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "tron-movie-ui",
-      "type": "registry:component",
-      "title": "Tron Movie Ui",
-      "description": "Regen indicator - \">>> REGEN <<<\"",
-      "files": [
-        {
-          "path": "src/components/tron-ui/tron-movie-ui.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "tron-status-bar",
-      "type": "registry:component",
-      "title": "Tron Status Bar",
-      "files": [
-        {
-          "path": "src/components/tron-ui/tron-status-bar.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "tron-theme-dossier",
-      "type": "registry:component",
-      "title": "Tron Theme Dossier",
-      "files": [
-        {
-          "path": "src/components/tron-ui/tron-theme-dossier.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "tron-timer",
-      "type": "registry:component",
-      "title": "Tron Timer",
-      "files": [
-        {
-          "path": "src/components/tron-ui/tron-timer.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
-      "name": "tron-tunnel",
-      "type": "registry:component",
-      "title": "Tron Tunnel",
-      "description": "Tunnel ring component",
-      "files": [
-        {
-          "path": "src/components/tron-3d/tron-tunnel.tsx",
+          "path": "src/components/thegridcn/grid.tsx",
           "type": "registry:component"
         }
       ],
@@ -979,12 +896,95 @@
       ]
     },
     {
-      "name": "tron-video-player",
+      "name": "hud",
       "type": "registry:component",
-      "title": "Tron Video Player",
+      "title": "HUD",
       "files": [
         {
-          "path": "src/components/tron-ui/tron-video-player.tsx",
+          "path": "src/components/thegridcn/hud.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "map",
+      "type": "registry:component",
+      "title": "Map",
+      "files": [
+        {
+          "path": "src/components/thegridcn/map.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "movie-ui",
+      "type": "registry:component",
+      "title": "Movie UI",
+      "description": "Cinematic UI elements",
+      "files": [
+        {
+          "path": "src/components/thegridcn/movie-ui.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "status-bar",
+      "type": "registry:component",
+      "title": "Status Bar",
+      "files": [
+        {
+          "path": "src/components/thegridcn/status-bar.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "theme-dossier",
+      "type": "registry:component",
+      "title": "Theme Dossier",
+      "files": [
+        {
+          "path": "src/components/thegridcn/theme-dossier.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "timer",
+      "type": "registry:component",
+      "title": "Timer",
+      "files": [
+        {
+          "path": "src/components/thegridcn/timer.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "tunnel",
+      "type": "registry:component",
+      "title": "Tunnel",
+      "description": "3D tunnel effect",
+      "files": [
+        {
+          "path": "src/components/thegridcn/tunnel.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": [
+        "@react-three/fiber",
+        "three"
+      ]
+    },
+    {
+      "name": "video-player",
+      "type": "registry:component",
+      "title": "Video Player",
+      "files": [
+        {
+          "path": "src/components/thegridcn/video-player.tsx",
           "type": "registry:component"
         }
       ],
