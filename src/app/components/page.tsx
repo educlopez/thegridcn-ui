@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import dynamic from "next/dynamic";
-import { TronHeader } from "@/components/layout";
+import { TronHeader, TheGridcnLogo } from "@/components/layout";
 import { TronUplinkHeader } from "@/components/tron-ui";
 import {
   ItemExplorer,
@@ -104,17 +104,7 @@ export default function ComponentsPage() {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             <div className="flex items-center gap-4">
-              <div className="relative">
-                <div className="absolute -inset-2 border border-primary/30">
-                  <div className="absolute -left-px -top-px h-2 w-2 border-l border-t border-primary" />
-                  <div className="absolute -right-px -top-px h-2 w-2 border-r border-t border-primary" />
-                  <div className="absolute -bottom-px -left-px h-2 w-2 border-b border-l border-primary" />
-                  <div className="absolute -bottom-px -right-px h-2 w-2 border-b border-r border-primary" />
-                </div>
-                <span className="font-display text-xl font-bold tracking-wider text-primary">
-                  THE GRIDCN
-                </span>
-              </div>
+              <TheGridcnLogo size="lg" />
               <div className="h-8 w-px bg-primary/30" />
               <div className="font-mono text-[10px]">
                 <div className="tracking-widest text-muted-foreground">

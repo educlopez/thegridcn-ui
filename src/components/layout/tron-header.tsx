@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ThemeSwitcherCompact, themes, useTheme } from "@/components/theme"
 import { cn } from "@/lib/utils"
+import { TheGridcnLogo } from "./thegridcn-logo"
 
 interface NavItem {
   href: string
@@ -48,17 +49,9 @@ export function TronHeader({ navItems }: TronHeaderProps) {
           <div className="flex h-16 items-center justify-between">
             {/* Left section - Logo */}
             <div className="flex items-center gap-6">
-              {/* Logo with HUD frame */}
-              <Link href="/" className="group relative">
-                {/* Corner brackets */}
-                <div className="absolute -left-2 -top-2 h-3 w-3 border-l-2 border-t-2 border-primary/60 transition-colors group-hover:border-primary" />
-                <div className="absolute -right-2 -top-2 h-3 w-3 border-r-2 border-t-2 border-primary/60 transition-colors group-hover:border-primary" />
-                <div className="absolute -bottom-2 -left-2 h-3 w-3 border-b-2 border-l-2 border-primary/60 transition-colors group-hover:border-primary" />
-                <div className="absolute -bottom-2 -right-2 h-3 w-3 border-b-2 border-r-2 border-primary/60 transition-colors group-hover:border-primary" />
-
-                <h1 className="px-2 py-1 font-display text-sm font-bold tracking-[0.2em] text-primary md:text-base">
-                  THE GRIDCN
-                </h1>
+              {/* Logo */}
+              <Link href="/" className="transition-opacity hover:opacity-80">
+                <TheGridcnLogo size="sm" />
               </Link>
 
               {/* Status indicator */}
