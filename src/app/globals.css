@@ -1,6 +1,3 @@
-/* Orbitron-style font for Tron aesthetic */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
-
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -64,8 +61,6 @@
    ============================================ */
 :root,
 [data-theme="tron"] {
-  --font-orbitron: 'Orbitron', system-ui, sans-serif;
-  --font-rajdhani: 'Rajdhani', system-ui, sans-serif;
   --radius: 0.5rem;
 
   /* Core Tron dark backgrounds - deep black with slight blue tint */
@@ -445,7 +440,7 @@
 
   /* Font display utility */
   .font-display {
-    font-family: var(--font-orbitron), system-ui, sans-serif;
+    font-family: var(--font-display);
   }
 }
 

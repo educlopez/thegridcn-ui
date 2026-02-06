@@ -25,7 +25,12 @@ import {
 import { SectionWrapper, ComponentCard } from "./section-wrapper"
 
 export function FormsSection() {
-  const [date, setDate] = React.useState<Date | undefined>(new Date())
+  const [date, setDate] = React.useState<Date | undefined>(undefined)
+
+  // Set initial date after hydration to avoid server/client mismatch
+  React.useEffect(() => {
+    setDate(new Date())
+  }, [])
   const [sliderValue, setSliderValue] = React.useState([50])
 
   return (

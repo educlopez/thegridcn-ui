@@ -1,17 +1,30 @@
 import type { Metadata } from "next"
-import { Geist_Mono } from "next/font/google"
+import { Geist_Mono, Orbitron, Rajdhani } from "next/font/google"
 import { ThemeProvider } from "@/components/theme"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
 import "@/styles/tron-style.css"
 import { Analytics } from '@vercel/analytics/next';
 
-// Optimize font loading with display: swap to prevent invisible text during load
-// This improves Largest Contentful Paint (LCP) and First Contentful Paint (FCP)
+// Optimize font loading with next/font — self-hosted, no external requests
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   display: "swap",
+})
+
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800", "900"],
+})
+
+const rajdhani = Rajdhani({
+  variable: "--font-rajdhani",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
 })
 
 export const metadata: Metadata = {
@@ -72,10 +85,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${orbitron.variable} ${rajdhani.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script id="theme-init" dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script
+          id="schema-org"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -161,7 +175,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${geistMono.variable} antialiased`}>
+      <body className="antialiased">
         <ThemeProvider>
           {children}
           <Toaster
