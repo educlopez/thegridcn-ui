@@ -386,6 +386,17 @@
     }
   }
 
+  /* CRT scanline overlay — primary-colored, used on panels/headers */
+  .crt-scanlines {
+    background-image: repeating-linear-gradient(
+      0deg,
+      var(--primary),
+      var(--primary) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+
   /* Scanline effect */
   .scanlines {
     position: relative;

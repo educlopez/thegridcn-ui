@@ -133,11 +133,7 @@ export default function ComponentsPage() {
       >
         {/* CRT scanline effect */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-          }}
+          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
         />
         {/* Panel Header - Tron terminal style */}
         <div className="relative flex h-14 items-center justify-between border-b border-primary/20 px-4">
@@ -185,11 +181,7 @@ export default function ComponentsPage() {
       >
         {/* CRT scanline effect */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-          }}
+          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
         />
         {/* Panel Header - Tron terminal style */}
         <div className="relative flex h-14 items-center justify-between border-b border-primary/20 px-4">
@@ -240,11 +232,7 @@ export default function ComponentsPage() {
       >
         {/* CRT scanline effect */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-          }}
+          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
         />
         <UplinkHeader
           leftText="SYSTEM: THE GRIDCN v1.0.0"

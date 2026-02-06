@@ -225,11 +225,7 @@ export function ItemExplorer({
     >
       {/* CRT scanline effect */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-        }}
+        className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
       />
 
       <div className="relative flex-1">

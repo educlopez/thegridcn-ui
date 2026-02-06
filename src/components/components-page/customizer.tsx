@@ -2,9 +2,13 @@
 
 import * as React from "react";
 import dynamic from "next/dynamic";
-import { themes, tronIntensities, useTheme } from "@/components/theme";
+import { themes, tronIntensities, useTheme, type Theme } from "@/components/theme";
 import { TronIntensitySwitcherCompact } from "@/components/theme/tron-intensity-switcher";
 import { cn } from "@/lib/utils";
+
+// Maps for O(1) lookups
+const themeById = new Map<Theme, (typeof themes)[number]>(themes.map((t) => [t.id, t]));
+const intensityById = new Map(tronIntensities.map((i) => [i.id, i]));
 
 // Dynamic import for 3D component to avoid SSR issues
 const GodAvatar3D = dynamic(
@@ -94,8 +98,8 @@ interface CustomizerProps {
 
 export function Customizer({ isMobile = false }: CustomizerProps) {
   const { theme, setTheme, tronIntensity } = useTheme();
-  const currentTheme = themes.find((t) => t.id === theme);
-  const currentIntensity = tronIntensities.find((i) => i.id === tronIntensity);
+  const currentTheme = themeById.get(theme);
+  const currentIntensity = intensityById.get(tronIntensity);
 
   const content = (
     <div className="p-4">
@@ -248,13 +252,7 @@ export function Customizer({ isMobile = false }: CustomizerProps) {
     <div className="relative z-30 hidden h-full w-64 shrink-0 overflow-y-auto border-l border-primary/30 bg-panel xl:flex xl:flex-col"
     >
       {/* CRT scanline effect */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-        }}
-      />
+      <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
 
       <div className="relative flex-1">
         {content}

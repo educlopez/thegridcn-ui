@@ -77,9 +77,11 @@ function CodeViewer({ componentId }: { componentId: string }) {
           const sourceCode = data.files[0].content;
           setCode(sourceCode);
 
-          // Dynamically import shiki to avoid SSR issues
-          const { codeToHtml } = await import("shiki");
-          const { tronTheme } = await import("@/lib/shiki-tron-theme");
+          // Dynamically import shiki and theme in parallel
+          const [{ codeToHtml }, { tronTheme }] = await Promise.all([
+            import("shiki"),
+            import("@/lib/shiki-tron-theme"),
+          ]);
 
           const html = await codeToHtml(sourceCode, {
             lang: "tsx",
@@ -311,13 +313,7 @@ export function Preview({ component }: PreviewProps) {
             {/* Header with bg-panel and CRT effect */}
             <div className="relative shrink-0 border-b border-primary/20 bg-panel px-4 py-3">
               {/* CRT scanline effect */}
-              <div
-                className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-                }}
-              />
+              <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
               <div className="relative flex flex-wrap items-center gap-3">
                 {/* View mode tabs */}
                 <div className="flex items-center gap-1">

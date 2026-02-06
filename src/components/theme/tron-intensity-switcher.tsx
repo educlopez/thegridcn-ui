@@ -4,6 +4,10 @@ import * as React from "react"
 import { useTheme, tronIntensities, type TronIntensity } from "./theme-provider"
 import { cn } from "@/lib/utils"
 
+// Map for O(1) intensity lookups
+const intensityById = new Map(tronIntensities.map((i) => [i.id, i]))
+const intensityIndexById = new Map(tronIntensities.map((i, idx) => [i.id, idx]))
+
 const intensityIcons: Record<TronIntensity, React.ReactNode> = {
   none: (
     <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +96,7 @@ export function TronIntensitySwitcherCompact() {
 
 export function TronIntensitySwitcherSlider() {
   const { tronIntensity, setTronIntensity } = useTheme()
-  const currentIndex = tronIntensities.findIndex((i) => i.id === tronIntensity)
+  const currentIndex = intensityIndexById.get(tronIntensity) ?? 0
   const currentIntensity = tronIntensities[currentIndex]
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,12 +136,12 @@ export function TronIntensityToggle() {
   const { tronIntensity, setTronIntensity } = useTheme()
 
   const cycleIntensity = () => {
-    const currentIndex = tronIntensities.findIndex((i) => i.id === tronIntensity)
+    const currentIndex = intensityIndexById.get(tronIntensity) ?? 0
     const nextIndex = (currentIndex + 1) % tronIntensities.length
     setTronIntensity(tronIntensities[nextIndex].id)
   }
 
-  const currentIntensity = tronIntensities.find((i) => i.id === tronIntensity)
+  const currentIntensity = intensityById.get(tronIntensity)
 
   return (
     <button

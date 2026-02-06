@@ -58,10 +58,40 @@ const packageManagers = [
   { id: "bun", command: "bunx --bun" },
 ] as const;
 
+// Map for O(1) package manager lookups
+const packageManagerById = new Map(packageManagers.map((pm) => [pm.id, pm]));
+
+// Map for O(1) theme lookups
+const themeById = new Map(themes.map((t) => [t.id, t]));
+
+// Static props extracted to avoid re-creation on every render
+const RADAR_TARGETS = [
+  { x: 30, y: 35 },
+  { x: 70, y: 60 },
+];
+
+const STATUS_STRIP_FEATURES = [
+  { label: "SECTION", value: "CAPABILITIES", highlighted: true },
+  { label: "MODULES", value: "6 ACTIVE" },
+  { label: "INTEGRITY", value: "100%" },
+];
+
+const STATUS_STRIP_ARCHITECTURE = [
+  { label: "SECTION", value: "ARCHITECTURE", highlighted: true },
+  { label: "FRAMEWORKS", value: "6 INTEGRATED" },
+  { label: "BUILD", value: "OPTIMIZED" },
+];
+
+const STATUS_STRIP_FAQ = [
+  { label: "SECTION", value: "INTEL", highlighted: true },
+  { label: "QUERIES", value: "8 INDEXED" },
+  { label: "STATUS", value: "DECLASSIFIED" },
+];
+
 // Terminal install component
 function TerminalInstall() {
   const router = useRouter();
-  const [selectedPm, setSelectedPm] = React.useState<string>("pnpm");
+  const [selectedPm, setSelectedPm] = React.useState<(typeof packageManagers)[number]["id"]>("pnpm");
   const [isOpen, setIsOpen] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -71,21 +101,21 @@ function TerminalInstall() {
 
   // Close dropdown when clicking outside
   React.useEffect(() => {
+    if (!isOpen) return;
+
     const handleClickOutside = (e: MouseEvent) => {
       if (pmSelectorRef.current && !pmSelectorRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
     };
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
-    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
   const VISIBLE_ITEMS = 5;
 
-  const currentPm = packageManagers.find((pm) => pm.id === selectedPm) || packageManagers[0];
+  const currentPm = packageManagerById.get(selectedPm) || packageManagers[0];
   const command = `${currentPm.command} shadcn@latest list @thegridcn`;
 
   const copyCommand = () => {
@@ -166,13 +196,7 @@ function TerminalInstall() {
         <div className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-primary" />
 
         {/* Scanline effect */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-          }}
-        />
+        <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
 
         {/* Header - Tron Ares style */}
         <div className="relative border-b border-primary/30 bg-primary/5 px-4 py-2">
@@ -378,7 +402,7 @@ function FeatureCard({
 
 export default function Home() {
   const { theme } = useTheme();
-  const currentTheme = themes.find((t) => t.id === theme);
+  const currentTheme = themeById.get(theme);
 
   return (
     <div className="relative min-h-screen bg-background">
@@ -518,10 +542,7 @@ export default function Home() {
                 </div>
                 <Radar
                   size={140}
-                  targets={[
-                    { x: 30, y: 35 },
-                    { x: 70, y: 60 },
-                  ]}
+                  targets={RADAR_TARGETS}
                 />
               </div>
             </div>
@@ -557,11 +578,7 @@ export default function Home() {
           {/* Status bar */}
           <StatusStrip
             variant="default"
-            items={[
-              { label: "SECTION", value: "CAPABILITIES", highlighted: true },
-              { label: "MODULES", value: "6 ACTIVE" },
-              { label: "INTEGRITY", value: "100%" },
-            ]}
+            items={STATUS_STRIP_FEATURES}
           />
 
           <div className="container relative mx-auto px-4 pt-8">
@@ -702,11 +719,7 @@ export default function Home() {
           {/* Status bar */}
           <StatusStrip
             variant="default"
-            items={[
-              { label: "SECTION", value: "ARCHITECTURE", highlighted: true },
-              { label: "FRAMEWORKS", value: "6 INTEGRATED" },
-              { label: "BUILD", value: "OPTIMIZED" },
-            ]}
+            items={STATUS_STRIP_ARCHITECTURE}
           />
 
           <div className="container mx-auto px-4 pt-8">
@@ -757,11 +770,7 @@ export default function Home() {
 
           <StatusStrip
             variant="default"
-            items={[
-              { label: "SECTION", value: "INTEL", highlighted: true },
-              { label: "QUERIES", value: "8 INDEXED" },
-              { label: "STATUS", value: "DECLASSIFIED" },
-            ]}
+            items={STATUS_STRIP_FAQ}
           />
 
           <div className="container relative mx-auto px-4 pt-8">
@@ -786,11 +795,7 @@ export default function Home() {
 
               {/* Scanline effect */}
               <div
-                className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-                }}
+                className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
               />
 
               {/* Header bar */}
@@ -908,11 +913,7 @@ export default function Home() {
 
               {/* Scanline effect */}
               <div
-                className="pointer-events-none absolute inset-0 opacity-[0.03]"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-                }}
+                className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
               />
 
               {/* Header bar */}
@@ -960,13 +961,7 @@ export default function Home() {
         className="relative z-10 border-t border-primary/30 bg-panel"
       >
         {/* CRT scanline effect */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-          }}
-        />
+        <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
         {/* Footer uplink bar */}
         <UplinkHeader
           leftText="SYSTEM: THE GRIDCN v1.0.0"

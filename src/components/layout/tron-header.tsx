@@ -57,7 +57,12 @@ function GitHubStars() {
   const [stars, setStars] = React.useState<number | null>(null);
 
   React.useEffect(() => {
-    fetch("https://api.github.com/repos/educlopez/thegridcn-ui")
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+    fetch("https://api.github.com/repos/educlopez/thegridcn-ui", {
+      signal: controller.signal,
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data.stargazers_count !== undefined) {
@@ -65,8 +70,11 @@ function GitHubStars() {
         }
       })
       .catch(() => {
-        // Silently fail
-      });
+        // Silently fail on timeout or network error
+      })
+      .finally(() => clearTimeout(timeoutId));
+
+    return () => controller.abort();
   }, []);
 
   return (
@@ -127,11 +135,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
       >
         {/* CRT scanline effect */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-          }}
+          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
         />
         {/* Top accent line */}
         <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
@@ -226,11 +230,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
       >
         {/* CRT scanline effect */}
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
-          }}
+          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
         />
         {/* Menu Header - Tron terminal style */}
         <div className="relative flex h-14 items-center justify-between border-b border-primary/20 px-4">

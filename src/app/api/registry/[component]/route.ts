@@ -34,15 +34,16 @@ async function readComponentRegistry(
 
 // Generate combined CSS based on theme and intensity
 async function generateCss(theme: Theme, intensity: Intensity): Promise<string> {
-  const cssFiles = [
-    await readCssFile(`themes/base.css`),
-    await readCssFile(`themes/${theme}.css`),
+  const cssPromises = [
+    readCssFile(`themes/base.css`),
+    readCssFile(`themes/${theme}.css`),
   ]
 
   if (intensity !== "none") {
-    cssFiles.push(await readCssFile(`intensity/${intensity}.css`))
+    cssPromises.push(readCssFile(`intensity/${intensity}.css`))
   }
 
+  const cssFiles = await Promise.all(cssPromises)
   return cssFiles.filter(Boolean).join("\n\n")
 }
 
@@ -91,14 +92,15 @@ export async function GET(
     })
   }
 
-  // Read component registry
-  const registry = await readComponentRegistry(component)
+  // Start CSS generation and component registry read in parallel
+  const [registry, css] = await Promise.all([
+    readComponentRegistry(component),
+    generateCss(theme, intensity),
+  ])
+
   if (!registry) {
     return NextResponse.json({ error: "Component not found" }, { status: 404 })
   }
-
-  // Generate CSS
-  const css = await generateCss(theme, intensity)
 
   // Clone registry and add CSS file
   const files = (registry.files as Array<{ path: string; content: string; type: string }>) || []
