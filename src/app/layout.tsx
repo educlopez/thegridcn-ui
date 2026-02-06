@@ -55,6 +55,91 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "name": "The Gridcn",
+                  "url": "https://thegridcn.com",
+                  "description": "A Tron-inspired theme and component library for shadcn/ui with Greek god color schemes, 3D effects, and HUD-style UI elements.",
+                },
+                {
+                  "@type": "FAQPage",
+                  "mainEntity": [
+                    {
+                      "@type": "Question",
+                      "name": "What is The Gridcn?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The Gridcn is a Tron-inspired theme and component library built on top of shadcn/ui. It provides 50+ pre-styled components, 6 Greek god color themes, 3D effects powered by Three.js, and HUD-style UI elements — all designed to create immersive, futuristic interfaces with minimal setup."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "How do I install The Gridcn components?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "You can install components using the shadcn CLI. Run 'pnpm dlx shadcn@latest add @thegridcn/[component]' to add individual components, or use 'pnpm dlx shadcn@latest list @thegridcn' to browse all available components. Works with npm, yarn, and bun too."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "Do I need shadcn/ui already set up?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. The Gridcn extends shadcn/ui, so you need a project with shadcn/ui initialized. Run 'pnpm dlx shadcn@latest init' first if you don't have it. The Gridcn components integrate seamlessly with your existing shadcn/ui setup and Tailwind CSS configuration."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "What themes are available?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Six Greek god-inspired themes: Ares (red), Tron (cyan), Clu (orange), Athena (gold), Aphrodite (pink), and Poseidon (blue). Each theme uses oklch() color space for precise color control and includes matching glow effects, borders, and background tones."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "Can I customize the themes or create my own?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Absolutely. Themes are defined as CSS variables using the oklch() color space, applied via a data-theme attribute. You can override any variable in your own CSS or create entirely new themes by defining a new set of color tokens following the same pattern."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "Do the 3D components affect performance?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The 3D components (Grid3D, Tunnel, GodAvatar) use Three.js and are dynamically imported with ssr: false so they don't impact server-side rendering or initial bundle size. They only load on the client when needed. You can also use the intensity system to control the level of visual effects."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "Does it work with frameworks other than Next.js?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The Gridcn components work with any React framework that supports shadcn/ui — including Next.js, Vite, Remix, and Astro. Since they're installed directly into your project as source code (not a dependency), you have full control and can adapt them to your stack."
+                      }
+                    },
+                    {
+                      "@type": "Question",
+                      "name": "Is The Gridcn free to use?",
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes, The Gridcn is completely free and open source. You can use it in personal and commercial projects. Components are added to your codebase as source files, giving you full ownership and the freedom to modify anything."
+                      }
+                    }
+                  ]
+                }
+              ]
+            })
+          }}
+        />
       </head>
       <body className={`${geistMono.variable} antialiased`}>
         <ThemeProvider>

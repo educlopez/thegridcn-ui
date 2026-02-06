@@ -12,6 +12,12 @@ import {
   UplinkHeader,
 } from "@/components/thegridcn";
 import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import {
   ThemeDossierSelector,
   StatusStrip,
   DerezCountdown,
@@ -714,18 +720,13 @@ export default function Home() {
             </div>
 
             <div className="mx-auto max-w-4xl">
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
                 {[
-                  { name: "Next.js", version: "16", status: "CORE" },
-                  { name: "React", version: "19", status: "UI" },
-                  { name: "Tailwind", version: "4", status: "STYLE" },
-                  {
-                    name: "shadcn/ui",
-                    version: "Latest",
-                    status: "COMPONENTS",
-                  },
-                  { name: "Three.js", version: "R182", status: "3D" },
-                  { name: "TypeScript", version: "5", status: "TYPES" },
+                  { name: "React", status: "UI" },
+                  { name: "Tailwind", status: "STYLE" },
+                  { name: "shadcn/ui", status: "COMPONENTS" },
+                  { name: "Three.js", status: "3D" },
+                  { name: "TypeScript", status: "TYPES" },
                 ].map((tech) => (
                   <div
                     key={tech.name}
@@ -742,12 +743,151 @@ export default function Home() {
                       <div className="font-display text-sm font-bold tracking-wider text-primary">
                         {tech.name}
                       </div>
-                      <div className="font-mono text-[10px] text-foreground">
-                        v{tech.version}
-                      </div>
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="relative border-t border-primary/20 py-24">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
+
+          <StatusStrip
+            variant="default"
+            items={[
+              { label: "SECTION", value: "INTEL", highlighted: true },
+              { label: "QUERIES", value: "8 INDEXED" },
+              { label: "STATUS", value: "DECLASSIFIED" },
+            ]}
+          />
+
+          <div className="container relative mx-auto px-4 pt-8">
+            <div className="mb-16 text-center">
+              <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
+                [ KNOWLEDGE BASE ]
+              </div>
+              <h2 className="font-display text-3xl font-bold tracking-wider text-primary md:text-4xl lg:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
+                FREQUENTLY ASKED
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-foreground/80">
+                Common questions about The Gridcn component library
+              </p>
+            </div>
+
+            <div className="relative mx-auto max-w-3xl overflow-hidden border border-primary/30 bg-panel">
+              {/* Corner brackets */}
+              <div className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-primary" />
+              <div className="absolute -right-px -top-px h-4 w-4 border-r-2 border-t-2 border-primary" />
+              <div className="absolute -bottom-px -left-px h-4 w-4 border-b-2 border-l-2 border-primary" />
+              <div className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-primary" />
+
+              {/* Scanline effect */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-[0.03]"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+                }}
+              />
+
+              {/* Header bar */}
+              <div className="relative border-b border-primary/30 bg-primary/5 px-4 py-2">
+                <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-primary via-primary/50 to-transparent" />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1">
+                      <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
+                      <div className="h-1.5 w-3 bg-primary/60" />
+                    </div>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+                      FAQ-DATABASE.SYS
+                    </span>
+                  </div>
+                  <div className="font-mono text-[9px] tracking-wider">
+                    <span className="text-foreground/50">RECORDS:8</span>
+                    <span className="ml-3 text-primary">[ ONLINE ]</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* FAQ Content */}
+              <div className="relative p-4 md:p-6">
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="what-is" className="border-primary/20">
+                    <AccordionTrigger className="font-display text-sm tracking-wider text-foreground hover:text-primary hover:no-underline">
+                      What is The Gridcn?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/80">
+                      The Gridcn is a Tron-inspired theme and component library built on top of shadcn/ui. It provides 50+ pre-styled components, 6 Greek god color themes, 3D effects powered by Three.js, and HUD-style UI elements — all designed to create immersive, futuristic interfaces with minimal setup.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="install" className="border-primary/20">
+                    <AccordionTrigger className="font-display text-sm tracking-wider text-foreground hover:text-primary hover:no-underline">
+                      How do I install The Gridcn components?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/80">
+                      You can install components using the shadcn CLI. Run <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-xs text-primary">pnpm dlx shadcn@latest add @thegridcn/[component]</code> to add individual components, or use <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-xs text-primary">pnpm dlx shadcn@latest list @thegridcn</code> to browse all available components. Works with npm, yarn, and bun too.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="shadcn" className="border-primary/20">
+                    <AccordionTrigger className="font-display text-sm tracking-wider text-foreground hover:text-primary hover:no-underline">
+                      Do I need shadcn/ui already set up?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/80">
+                      Yes. The Gridcn extends shadcn/ui, so you need a project with shadcn/ui initialized. If you don&apos;t have it yet, run <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-xs text-primary">pnpm dlx shadcn@latest init</code> first. The Gridcn components will then integrate seamlessly with your existing shadcn/ui setup and Tailwind CSS configuration.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="themes" className="border-primary/20">
+                    <AccordionTrigger className="font-display text-sm tracking-wider text-foreground hover:text-primary hover:no-underline">
+                      What themes are available?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/80">
+                      Six Greek god-inspired themes: <strong className="text-foreground">Ares</strong> (red), <strong className="text-foreground">Tron</strong> (cyan), <strong className="text-foreground">Clu</strong> (orange), <strong className="text-foreground">Athena</strong> (gold), <strong className="text-foreground">Aphrodite</strong> (pink), and <strong className="text-foreground">Poseidon</strong> (blue). Each theme uses oklch() color space for precise color control and includes matching glow effects, borders, and background tones.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="customize" className="border-primary/20">
+                    <AccordionTrigger className="font-display text-sm tracking-wider text-foreground hover:text-primary hover:no-underline">
+                      Can I customize the themes or create my own?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/80">
+                      Absolutely. Themes are defined as CSS variables using the oklch() color space, applied via a <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-xs text-primary">data-theme</code> attribute. You can override any variable in your own CSS or create entirely new themes by defining a new set of color tokens following the same pattern.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="3d" className="border-primary/20">
+                    <AccordionTrigger className="font-display text-sm tracking-wider text-foreground hover:text-primary hover:no-underline">
+                      Do the 3D components affect performance?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/80">
+                      The 3D components (Grid3D, Tunnel, GodAvatar) use Three.js and are dynamically imported with <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-xs text-primary">ssr: false</code> so they don&apos;t impact server-side rendering or initial bundle size. They only load on the client when needed. You can also use the intensity system to control the level of visual effects.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="frameworks" className="border-primary/20">
+                    <AccordionTrigger className="font-display text-sm tracking-wider text-foreground hover:text-primary hover:no-underline">
+                      Does it work with frameworks other than Next.js?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/80">
+                      The Gridcn components work with any React framework that supports shadcn/ui — including Next.js, Vite, Remix, and Astro. Since they&apos;re installed directly into your project as source code (not a dependency), you have full control and can adapt them to your stack.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem value="free" className="border-primary/20">
+                    <AccordionTrigger className="font-display text-sm tracking-wider text-foreground hover:text-primary hover:no-underline">
+                      Is The Gridcn free to use?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/80">
+                      Yes, The Gridcn is completely free and open source. You can use it in personal and commercial projects. Components are added to your codebase as source files, giving you full ownership and the freedom to modify anything.
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
             </div>
           </div>
@@ -758,19 +898,44 @@ export default function Home() {
           <GridScanOverlay />
 
           <div className="container relative mx-auto px-4 text-center">
-            {/* HUD frame around CTA */}
-            <div className="relative mx-auto inline-block">
-              <div className="absolute -inset-8 border border-primary/20 md:-inset-12">
-                <div className="absolute -left-1 -top-1 h-6 w-6 border-l-2 border-t-2 border-primary/60" />
-                <div className="absolute -right-1 -top-1 h-6 w-6 border-r-2 border-t-2 border-primary/60" />
-                <div className="absolute -bottom-1 -left-1 h-6 w-6 border-b-2 border-l-2 border-primary/60" />
-                <div className="absolute -bottom-1 -right-1 h-6 w-6 border-b-2 border-r-2 border-primary/60" />
+            {/* Terminal-style CTA box */}
+            <div className="relative mx-auto max-w-2xl overflow-hidden border border-primary/30 bg-panel">
+              {/* Corner brackets - Tron style */}
+              <div className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-primary" />
+              <div className="absolute -right-px -top-px h-4 w-4 border-r-2 border-t-2 border-primary" />
+              <div className="absolute -bottom-px -left-px h-4 w-4 border-b-2 border-l-2 border-primary" />
+              <div className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-primary" />
+
+              {/* Scanline effect */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-[0.03]"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+                }}
+              />
+
+              {/* Header bar */}
+              <div className="relative border-b border-primary/30 bg-primary/5 px-4 py-2">
+                <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-primary via-primary/50 to-transparent" />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1">
+                      <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
+                      <div className="h-1.5 w-3 bg-primary/60" />
+                    </div>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+                      AWAITING USER INPUT
+                    </span>
+                  </div>
+                  <div className="font-mono text-[9px] tracking-wider">
+                    <span className="text-primary">[ READY ]</span>
+                  </div>
+                </div>
               </div>
 
+              {/* Content */}
               <div className="relative px-8 py-12 md:px-16">
-                <div className="mb-2 font-mono text-[10px] tracking-[0.3em] text-foreground/80">
-                  AWAITING USER INPUT
-                </div>
                 <h2 className="mb-6 font-display text-4xl font-bold tracking-wider text-primary md:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
                   READY TO ENTER?
                 </h2>
@@ -826,7 +991,7 @@ export default function Home() {
 
             {/* Tech stack */}
             <div className="flex flex-wrap items-center justify-center gap-3">
-              {["Next.js", "React", "Tailwind", "shadcn/ui", "Three.js"].map(
+              {["React", "Tailwind", "shadcn/ui", "Three.js"].map(
                 (tech) => (
                   <span
                     key={tech}
