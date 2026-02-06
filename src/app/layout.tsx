@@ -42,6 +42,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://thegridcn.com",
   },
+  manifest: "/manifest.json",
 }
 
 // Inline script to prevent theme flash - runs before React hydrates

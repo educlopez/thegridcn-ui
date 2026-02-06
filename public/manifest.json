@@ -1,0 +1,16 @@
+{
+  "name": "The Gridcn",
+  "short_name": "Gridcn",
+  "description": "A Tron-inspired theme and component library for shadcn/ui",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#00e5ff",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
