@@ -5,6 +5,7 @@ import * as ReactDOM from "react-dom";
 import { Copy, Check, ChevronDown, Code, Eye } from "lucide-react";
 import { type ComponentItem } from "@/lib/component-data";
 import { AnomalyBanner } from "@/components/thegridcn";
+import { useTheme } from "@/components/theme";
 import { ComponentPreview } from "./component-preview";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { cn } from "@/lib/utils";
@@ -162,11 +163,16 @@ function InstallCommand({ componentId }: { componentId: string }) {
   const [dropdownPosition, setDropdownPosition] = React.useState({ top: 0, left: 0 });
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
+  const { theme, tronIntensity } = useTheme();
 
   const registryName = getRegistryName(componentId);
-  const command = registryName
-    ? `${packageManagerCommands[packageManager]} @thegridcn/${registryName}`
-    : "";
+  const base = packageManagerCommands[packageManager];
+
+  // Build command dynamically — only append theme/intensity when different from defaults
+  const parts = registryName ? [`@thegridcn/${registryName}`] : [];
+  if (theme !== "tron") parts.push(`@thegridcn/theme-${theme}`);
+  if (tronIntensity !== "light") parts.push(`@thegridcn/intensity-${tronIntensity}`);
+  const command = registryName ? `${base} ${parts.join(" ")}` : "";
 
   const handleCopy = async () => {
     if (!command) return;

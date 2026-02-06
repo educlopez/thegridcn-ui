@@ -59,12 +59,11 @@
 }
 
 /* ============================================
-   THEME: ARES (God of War) - RED
-   Default theme - Main movie theme
-   White/bluish text with red/orange accents
+   THEME: TRON (User) - CYAN
+   Default theme - Classic Tron aesthetic
    ============================================ */
 :root,
-[data-theme="ares"] {
+[data-theme="tron"] {
   --font-orbitron: 'Orbitron', system-ui, sans-serif;
   --font-rajdhani: 'Rajdhani', system-ui, sans-serif;
   --radius: 0.5rem;
@@ -73,9 +72,9 @@
   --background: oklch(0.06 0.02 250);
   --foreground: oklch(0.95 0.02 220);
 
-  /* Ares Red - Primary accent color */
-  --primary: oklch(0.6 0.25 25);
-  --primary-foreground: oklch(0.98 0 0);
+  /* Tron Cyan - Primary accent color */
+  --primary: oklch(0.75 0.18 195);
+  --primary-foreground: oklch(0.1 0 0);
 
   /* Cards & Popovers - Dark with subtle blue tint */
   --card: oklch(0.1 0.02 250);
@@ -83,82 +82,84 @@
   --popover: oklch(0.1 0.02 250);
   --popover-foreground: oklch(0.92 0.02 220);
 
-  /* Secondary - Orange/amber for contrast */
-  --secondary: oklch(0.65 0.18 55);
-  --secondary-foreground: oklch(0.1 0 0);
+  /* Secondary */
+  --secondary: oklch(0.18 0.05 200);
+  --secondary-foreground: oklch(0.95 0 0);
 
-  /* Muted - Bluish gray for labels */
-  --muted: oklch(0.15 0.02 250);
-  --muted-foreground: oklch(0.6 0.04 220);
+  /* Muted */
+  --muted: oklch(0.15 0.03 200);
+  --muted-foreground: oklch(0.65 0 0);
 
-  /* Accent - Bright orange */
-  --accent: oklch(0.7 0.2 50);
+  /* Accent */
+  --accent: oklch(0.7 0.15 195);
   --accent-foreground: oklch(0.1 0 0);
 
   /* Destructive */
   --destructive: oklch(0.55 0.25 30);
 
-  /* Borders with red/orange glow */
-  --border: oklch(0.3 0.12 25);
-  --input: oklch(0.15 0.04 250);
-  --ring: oklch(0.6 0.25 25);
-
-  /* Glow effects - Red */
-  --glow: oklch(0.6 0.25 25);
-  --glow-muted: oklch(0.4 0.15 25);
-
-  /* Chart colors - Mix of red/orange tones */
-  --chart-1: oklch(0.6 0.25 25);
-  --chart-2: oklch(0.7 0.2 50);
-  --chart-3: oklch(0.55 0.22 35);
-  --chart-4: oklch(0.65 0.18 40);
-  --chart-5: oklch(0.75 0.15 60);
-
-  /* Sidebar */
-  --sidebar: oklch(0.08 0.02 250);
-  --sidebar-foreground: oklch(0.92 0.02 220);
-  --sidebar-primary: oklch(0.6 0.25 25);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.7 0.2 50);
-  --sidebar-accent-foreground: oklch(0.1 0 0);
-  --sidebar-border: oklch(0.3 0.12 25);
-  --sidebar-ring: oklch(0.6 0.25 25);
-}
-
-/* ============================================
-   THEME: TRON (User) - CYAN
-   Classic Tron aesthetic
-   ============================================ */
-[data-theme="tron"] {
-  --primary: oklch(0.75 0.18 195);
-  --primary-foreground: oklch(0.1 0 0);
-
-  --secondary: oklch(0.18 0.05 200);
-  --secondary-foreground: oklch(0.95 0 0);
-
-  --muted: oklch(0.15 0.03 200);
-  --muted-foreground: oklch(0.65 0 0);
-
-  --accent: oklch(0.7 0.15 195);
-  --accent-foreground: oklch(0.1 0 0);
-
+  /* Borders with cyan glow */
   --border: oklch(0.3 0.1 195);
   --input: oklch(0.2 0.06 195);
   --ring: oklch(0.75 0.18 195);
 
+  /* Glow effects - Cyan */
   --glow: oklch(0.75 0.18 195);
   --glow-muted: oklch(0.5 0.12 195);
 
+  /* Chart colors */
   --chart-1: oklch(0.75 0.18 195);
   --chart-2: oklch(0.65 0.15 210);
   --chart-3: oklch(0.7 0.12 180);
   --chart-4: oklch(0.6 0.18 200);
   --chart-5: oklch(0.8 0.1 190);
 
+  /* Sidebar */
+  --sidebar: oklch(0.08 0.02 250);
+  --sidebar-foreground: oklch(0.92 0.02 220);
   --sidebar-primary: oklch(0.75 0.18 195);
+  --sidebar-primary-foreground: oklch(0.1 0 0);
   --sidebar-accent: oklch(0.18 0.05 200);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
   --sidebar-border: oklch(0.3 0.1 195);
   --sidebar-ring: oklch(0.75 0.18 195);
+}
+
+/* ============================================
+   THEME: ARES (God of War) - RED
+   White/bluish text with red/orange accents
+   ============================================ */
+[data-theme="ares"] {
+  --primary: oklch(0.6 0.25 25);
+  --primary-foreground: oklch(0.98 0 0);
+
+  --secondary: oklch(0.65 0.18 55);
+  --secondary-foreground: oklch(0.1 0 0);
+
+  --muted: oklch(0.15 0.02 250);
+  --muted-foreground: oklch(0.6 0.04 220);
+
+  --accent: oklch(0.7 0.2 50);
+  --accent-foreground: oklch(0.1 0 0);
+
+  --border: oklch(0.3 0.12 25);
+  --input: oklch(0.15 0.04 250);
+  --ring: oklch(0.6 0.25 25);
+
+  --glow: oklch(0.6 0.25 25);
+  --glow-muted: oklch(0.4 0.15 25);
+
+  --chart-1: oklch(0.6 0.25 25);
+  --chart-2: oklch(0.7 0.2 50);
+  --chart-3: oklch(0.55 0.22 35);
+  --chart-4: oklch(0.65 0.18 40);
+  --chart-5: oklch(0.75 0.15 60);
+
+  --sidebar-primary: oklch(0.6 0.25 25);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.7 0.2 50);
+  --sidebar-accent-foreground: oklch(0.1 0 0);
+  --sidebar-border: oklch(0.3 0.12 25);
+  --sidebar-ring: oklch(0.6 0.25 25);
 }
 
 /* ============================================

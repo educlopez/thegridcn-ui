@@ -29,13 +29,13 @@ export const metadata: Metadata = {
 const themeInitScript = `
 (function() {
   try {
-    var themes = ['ares','tron','clu','athena','aphrodite','poseidon'];
+    var themes = ['tron','ares','clu','athena','aphrodite','poseidon'];
     var intensities = ['none','light','medium','heavy'];
 
     var theme = localStorage.getItem('project-ares-theme');
     var intensity = localStorage.getItem('project-ares-theme-intensity');
 
-    theme = themes.indexOf(theme) > -1 ? theme : 'ares';
+    theme = themes.indexOf(theme) > -1 ? theme : 'tron';
     intensity = intensities.indexOf(intensity) > -1 ? intensity : 'medium';
 
     document.documentElement.setAttribute('data-theme', theme);

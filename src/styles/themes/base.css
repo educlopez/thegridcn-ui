@@ -1,0 +1,50 @@
+/* ============================================
+   THE GRIDCN - BASE STYLES
+   Core styles required for all themes
+   ============================================ */
+
+/* Panel background */
+:root {
+  --panel: #0C1421;
+}
+
+/* Core Tron dark backgrounds - deep black with slight blue tint */
+:root {
+  --background: oklch(0.06 0.02 250);
+  --foreground: oklch(0.95 0.02 220);
+
+  /* Cards & Popovers - Dark with subtle blue tint */
+  --card: oklch(0.1 0.02 250);
+  --card-foreground: oklch(0.92 0.02 220);
+  --popover: oklch(0.1 0.02 250);
+  --popover-foreground: oklch(0.92 0.02 220);
+
+  /* Destructive */
+  --destructive: oklch(0.55 0.25 30);
+
+  /* Sidebar base */
+  --sidebar: oklch(0.08 0.02 250);
+  --sidebar-foreground: oklch(0.92 0.02 220);
+
+  /* Border radius */
+  --radius: 0.5rem;
+}
+
+/* Base styles */
+* {
+  border-color: var(--border);
+  outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Heading styles */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}

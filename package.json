@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "registry:update": "tsx scripts/update-registry.ts",
-    "registry:build": "shadcn build && tsx scripts/enhance-registry-files.ts"
+    "registry:build": "shadcn build && tsx scripts/enhance-registry-files.ts && tsx scripts/build-registry-styles.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

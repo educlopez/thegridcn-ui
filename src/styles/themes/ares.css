@@ -1,0 +1,46 @@
+/* ============================================
+   THEME: ARES (God of War) - RED
+   Default theme - Main movie theme
+   White/bluish text with red/orange accents
+   ============================================ */
+:root {
+  /* Ares Red - Primary accent color */
+  --primary: oklch(0.6 0.25 25);
+  --primary-foreground: oklch(0.98 0 0);
+
+  /* Secondary - Orange/amber for contrast */
+  --secondary: oklch(0.65 0.18 55);
+  --secondary-foreground: oklch(0.1 0 0);
+
+  /* Muted - Bluish gray for labels */
+  --muted: oklch(0.15 0.02 250);
+  --muted-foreground: oklch(0.6 0.04 220);
+
+  /* Accent - Bright orange */
+  --accent: oklch(0.7 0.2 50);
+  --accent-foreground: oklch(0.1 0 0);
+
+  /* Borders with red/orange glow */
+  --border: oklch(0.3 0.12 25);
+  --input: oklch(0.15 0.04 250);
+  --ring: oklch(0.6 0.25 25);
+
+  /* Glow effects - Red */
+  --glow: oklch(0.6 0.25 25);
+  --glow-muted: oklch(0.4 0.15 25);
+
+  /* Chart colors - Mix of red/orange tones */
+  --chart-1: oklch(0.6 0.25 25);
+  --chart-2: oklch(0.7 0.2 50);
+  --chart-3: oklch(0.55 0.22 35);
+  --chart-4: oklch(0.65 0.18 40);
+  --chart-5: oklch(0.75 0.15 60);
+
+  /* Sidebar */
+  --sidebar-primary: oklch(0.6 0.25 25);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.7 0.2 50);
+  --sidebar-accent-foreground: oklch(0.1 0 0);
+  --sidebar-border: oklch(0.3 0.12 25);
+  --sidebar-ring: oklch(0.6 0.25 25);
+}

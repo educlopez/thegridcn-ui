@@ -53,6 +53,41 @@ function TronDataRow({ label, value }: { label: string; value: string }) {
   );
 }
 
+// Info notice about install defaults
+function InstallNotice({ theme, intensity }: { theme: string; intensity: string }) {
+  const isDefaultTheme = theme === "tron";
+  const isDefaultIntensity = intensity === "light";
+  const isDefault = isDefaultTheme && isDefaultIntensity;
+
+  return (
+    <div className="mb-6">
+      <TronSectionHeader
+        code="INF-001.X"
+        title="INSTALL"
+        highlight="INFO"
+      />
+
+      <div className="rounded border border-foreground/10 bg-foreground/5 p-2.5 space-y-1.5">
+        <p className="font-mono text-[8px] leading-relaxed text-foreground/70">
+          DEFAULT: <span className="text-primary">TRON</span> + <span className="text-primary">LIGHT</span>. The install command updates automatically when you change settings.
+        </p>
+        {!isDefault && (
+          <p className="font-mono text-[8px] leading-relaxed text-foreground">
+            ACTIVE:{" "}
+            <span className={cn(isDefaultTheme ? "text-foreground/50" : "text-primary")}>
+              {theme.toUpperCase()}
+            </span>
+            {" + "}
+            <span className={cn(isDefaultIntensity ? "text-foreground/50" : "text-primary")}>
+              {intensity.toUpperCase()}
+            </span>
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
 interface CustomizerProps {
   isMobile?: boolean;
 }
@@ -84,6 +119,9 @@ export function Customizer({ isMobile = false }: CustomizerProps) {
           </div>
         </div>
       )}
+
+      {/* Install Info */}
+      <InstallNotice theme={theme} intensity={tronIntensity} />
 
       {/* System Status Panel */}
       <div className="relative mb-6 rounded border border-foreground/15 bg-foreground/5 p-3">

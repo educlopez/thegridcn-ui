@@ -1,0 +1,73 @@
+/* ============================================
+   GLOW INTENSITY: LIGHT
+   Subtle glows, enhanced borders
+   ============================================ */
+
+:root {
+  /* Glow spread sizes */
+  --tron-glow-spread-sm: 4px;
+  --tron-glow-spread-md: 10px;
+  --tron-glow-spread-lg: 20px;
+  --tron-glow-spread-xl: 40px;
+
+  /* Corner bracket dimensions */
+  --tron-corner-size: 12px;
+  --tron-corner-thickness: 2px;
+
+  /* Border settings */
+  --tron-border-width: 1px;
+
+  /* Animation durations */
+  --tron-transition: 0.25s ease-out;
+  --tron-pulse-duration: 2.5s;
+
+  /* Scanline settings */
+  --tron-scanline-opacity: 0.04;
+  --tron-scanline-gap: 3px;
+
+  /* Grid pattern settings */
+  --tron-grid-size: 20px;
+  --tron-grid-opacity: 0.03;
+
+  /* Dot matrix settings */
+  --tron-dot-size: 1px;
+  --tron-dot-gap: 8px;
+
+  /* Typography */
+  --tron-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --tron-letter-spacing: 0.1em;
+  --tron-letter-spacing-wide: 0.2em;
+
+  /* Light intensity values */
+  --tron-glow-intensity: 0.4;
+  --tron-border-glow: 0 0 var(--tron-glow-spread-sm) color-mix(in oklch, var(--glow) 40%, transparent);
+  --tron-hover-glow: 0 0 var(--tron-glow-spread-md) color-mix(in oklch, var(--glow) 60%, transparent);
+}
+
+/* Button glow effects */
+[data-slot="button"] {
+  box-shadow: var(--tron-border-glow);
+  transition: box-shadow var(--tron-transition);
+}
+
+[data-slot="button"]:hover:not(:disabled) {
+  box-shadow: var(--tron-hover-glow);
+}
+
+/* Card glow effects */
+[data-slot="card"],
+[data-slot="tron-data-card"] {
+  box-shadow: var(--tron-border-glow);
+  transition: box-shadow var(--tron-transition);
+}
+
+[data-slot="card"]:hover,
+[data-slot="tron-data-card"]:hover {
+  box-shadow: var(--tron-hover-glow);
+}
+
+/* Input glow effects */
+[data-slot="input"]:focus,
+[data-slot="textarea"]:focus {
+  box-shadow: var(--tron-hover-glow);
+}

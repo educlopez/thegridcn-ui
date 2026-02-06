@@ -1,0 +1,37 @@
+/* ============================================
+   THEME: CLU (Program) - ORANGE
+   Antagonist theme
+   ============================================ */
+:root {
+  --primary: oklch(0.75 0.2 55);
+  --primary-foreground: oklch(0.1 0 0);
+
+  --secondary: oklch(0.18 0.06 50);
+  --secondary-foreground: oklch(0.95 0 0);
+
+  --muted: oklch(0.15 0.04 50);
+  --muted-foreground: oklch(0.65 0 0);
+
+  --accent: oklch(0.7 0.18 55);
+  --accent-foreground: oklch(0.1 0 0);
+
+  --border: oklch(0.3 0.1 55);
+  --input: oklch(0.2 0.06 55);
+  --ring: oklch(0.75 0.2 55);
+
+  --glow: oklch(0.75 0.2 55);
+  --glow-muted: oklch(0.5 0.12 55);
+
+  --chart-1: oklch(0.75 0.2 55);
+  --chart-2: oklch(0.7 0.18 45);
+  --chart-3: oklch(0.65 0.15 65);
+  --chart-4: oklch(0.8 0.15 50);
+  --chart-5: oklch(0.6 0.2 60);
+
+  --sidebar-primary: oklch(0.75 0.2 55);
+  --sidebar-primary-foreground: oklch(0.1 0 0);
+  --sidebar-accent: oklch(0.18 0.06 50);
+  --sidebar-accent-foreground: oklch(0.95 0 0);
+  --sidebar-border: oklch(0.3 0.1 55);
+  --sidebar-ring: oklch(0.75 0.2 55);
+}

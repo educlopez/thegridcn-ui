@@ -10,8 +10,8 @@ const INTENSITY_KEY = "project-ares-theme-intensity"
 
 // Theme data is static, so we define it outside the component to avoid recreation
 export const themes: { id: Theme; name: string; god: string; color: string }[] = [
-  { id: "ares", name: "Ares", god: "God of War", color: "#ff3333" },
   { id: "tron", name: "Tron", god: "User", color: "#00d4ff" },
+  { id: "ares", name: "Ares", god: "God of War", color: "#ff3333" },
   { id: "clu", name: "Clu", god: "Program", color: "#ff6600" },
   { id: "athena", name: "Athena", god: "Goddess of Wisdom", color: "#ffd700" },
   { id: "aphrodite", name: "Aphrodite", god: "Goddess of Love", color: "#ff1493" },
@@ -41,7 +41,7 @@ const ThemeProviderContext = React.createContext<ThemeProviderState | undefined>
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Start with defaults (matches server render to avoid hydration mismatch)
   // The inline script in layout.tsx already sets the correct data-theme attribute
-  const [theme, setThemeState] = React.useState<Theme>("ares")
+  const [theme, setThemeState] = React.useState<Theme>("tron")
   const [tronIntensity, setIntensityState] = React.useState<TronIntensity>("medium")
 
   // Sync React state from localStorage after hydration completes

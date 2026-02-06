@@ -268,7 +268,7 @@ export function Grid3D({
   cameraAnimation = true,
 }: Grid3DProps) {
   const { theme } = useTheme()
-  const color = themeColors[theme] || themeColors.ares
+  const color = themeColors[theme] || themeColors.tron
 
   return (
     <div className={className}>

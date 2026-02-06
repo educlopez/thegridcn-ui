@@ -1,0 +1,127 @@
+/* ============================================
+   GLOW INTENSITY: HEAVY
+   Full HUD aesthetic with scanlines, animations, dot matrix
+   ============================================ */
+
+:root {
+  /* Glow spread sizes */
+  --tron-glow-spread-sm: 4px;
+  --tron-glow-spread-md: 10px;
+  --tron-glow-spread-lg: 20px;
+  --tron-glow-spread-xl: 40px;
+
+  /* Corner bracket dimensions */
+  --tron-corner-size: 20px;
+  --tron-corner-thickness: 2px;
+
+  /* Border settings */
+  --tron-border-width: 1px;
+
+  /* Animation durations */
+  --tron-transition: 0.25s ease-out;
+  --tron-pulse-duration: 2.5s;
+
+  /* Scanline settings */
+  --tron-scanline-opacity: 0.05;
+  --tron-scanline-gap: 3px;
+
+  /* Grid pattern settings */
+  --tron-grid-size: 20px;
+  --tron-grid-opacity: 0.04;
+
+  /* Dot matrix settings */
+  --tron-dot-size: 1px;
+  --tron-dot-gap: 8px;
+
+  /* Typography */
+  --tron-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --tron-letter-spacing: 0.1em;
+  --tron-letter-spacing-wide: 0.2em;
+
+  /* Heavy intensity values */
+  --tron-glow-intensity: 1;
+  --tron-border-glow:
+    0 0 var(--tron-glow-spread-sm) var(--glow),
+    0 0 var(--tron-glow-spread-md) var(--glow),
+    0 0 var(--tron-glow-spread-lg) color-mix(in oklch, var(--glow-muted) 40%, transparent);
+  --tron-hover-glow:
+    0 0 var(--tron-glow-spread-md) var(--glow),
+    0 0 var(--tron-glow-spread-lg) var(--glow),
+    0 0 var(--tron-glow-spread-xl) color-mix(in oklch, var(--glow-muted) 50%, transparent);
+}
+
+/* Glow pulse animation */
+@keyframes tron-glow-pulse {
+  0%, 100% {
+    box-shadow: var(--tron-border-glow);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: var(--tron-hover-glow);
+    opacity: 0.9;
+  }
+}
+
+/* Button glow effects */
+[data-slot="button"] {
+  box-shadow: var(--tron-border-glow);
+  transition: box-shadow var(--tron-transition);
+}
+
+[data-slot="button"]:hover:not(:disabled) {
+  box-shadow: var(--tron-hover-glow);
+  animation: tron-glow-pulse var(--tron-pulse-duration) ease-in-out infinite;
+}
+
+/* Card glow effects */
+[data-slot="card"],
+[data-slot="tron-data-card"] {
+  box-shadow: var(--tron-border-glow);
+  transition: box-shadow var(--tron-transition);
+}
+
+[data-slot="card"]:hover,
+[data-slot="tron-data-card"]:hover {
+  box-shadow: var(--tron-hover-glow);
+}
+
+/* Input glow effects */
+[data-slot="input"]:focus,
+[data-slot="textarea"]:focus {
+  box-shadow: var(--tron-hover-glow);
+}
+
+/* Alert glow effects */
+[data-slot="alert"],
+[data-slot="tron-alert"] {
+  box-shadow: var(--tron-border-glow);
+  animation: tron-glow-pulse var(--tron-pulse-duration) ease-in-out infinite;
+}
+
+/* Dialog glow effects */
+[data-slot="dialog-content"],
+[data-slot="sheet-content"] {
+  box-shadow: var(--tron-hover-glow);
+}
+
+/* Timer glow effects */
+[data-slot="tron-timer-value"] {
+  text-shadow:
+    0 0 var(--tron-glow-spread-sm) var(--glow),
+    0 0 var(--tron-glow-spread-md) var(--glow);
+}
+
+/* HUD components glow */
+[data-slot="tron-hud"],
+[data-slot="tron-floating-panel"],
+[data-slot="tron-status-bar"] {
+  box-shadow: var(--tron-border-glow);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
