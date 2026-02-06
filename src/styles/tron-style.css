@@ -164,6 +164,7 @@
 [data-tron-intensity] [data-slot="button"] {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
   font-family: var(--tron-font);
   letter-spacing: var(--tron-letter-spacing);
   font-weight: 600;
@@ -181,16 +182,10 @@
   content: '';
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -1;
   background-color: var(--primary);
   transform: translateY(100%);
   transition: transform var(--tron-transition);
-}
-
-/* Ensure button content stays above fill */
-[data-tron-intensity] [data-slot="button"] > * {
-  position: relative;
-  z-index: 1;
 }
 
 /* Default variant - Primary CTA (like "ENTER THE GRID") */
@@ -306,6 +301,31 @@
   border-width: 1px;
   background-color: color-mix(in oklch, var(--primary) 8%, transparent);
 }
+
+/* ==========================================
+   CALENDAR OVERRIDES
+   ========================================== */
+
+/* Selected day - ensure text contrast over primary bg */
+[data-tron-intensity] [data-slot="calendar"] [data-slot="button"][data-selected-single="true"] {
+  background-color: var(--primary) !important;
+  color: var(--background) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 var(--tron-glow-spread-lg) var(--glow);
+}
+
+[data-tron-intensity] [data-slot="calendar"] [data-slot="button"][data-selected-single="true"]:hover {
+  color: var(--background) !important;
+}
+
+/* Range start/end */
+[data-tron-intensity] [data-slot="calendar"] [data-slot="button"][data-range-start="true"],
+[data-tron-intensity] [data-slot="calendar"] [data-slot="button"][data-range-end="true"] {
+  background-color: var(--primary) !important;
+  color: var(--background) !important;
+  border-color: var(--primary) !important;
+}
+
 
 /* ==========================================
    CARD STYLES - DOSSIER/DATA CARD PATTERN
@@ -442,8 +462,8 @@
 }
 
 /* Input focus - Glowing data field */
-[data-tron-intensity] [data-slot="input"]:focus,
-[data-tron-intensity] [data-slot="textarea"]:focus {
+[data-tron-intensity] [data-slot="input"]:not([data-slot="input-group"] *):focus,
+[data-tron-intensity] [data-slot="textarea"]:not([data-slot="input-group"] *):focus {
   border-color: var(--primary);
   background-color: color-mix(in oklch, var(--primary) 5%, var(--background));
   box-shadow:
@@ -453,25 +473,41 @@
 }
 
 /* Input hover */
-[data-tron-intensity] [data-slot="input"]:hover:not(:focus):not(:disabled),
-[data-tron-intensity] [data-slot="textarea"]:hover:not(:focus):not(:disabled) {
+[data-tron-intensity] [data-slot="input"]:not([data-slot="input-group"] *):hover:not(:focus):not(:disabled),
+[data-tron-intensity] [data-slot="textarea"]:not([data-slot="input-group"] *):hover:not(:focus):not(:disabled) {
   border-color: color-mix(in oklch, var(--primary) 60%, var(--border));
 }
 
 /* Placeholder styling */
-[data-tron-intensity] [data-slot="input"]::placeholder,
-[data-tron-intensity] [data-slot="textarea"]::placeholder {
+[data-tron-intensity] [data-slot="input"]:not([data-slot="input-group"] *)::placeholder,
+[data-tron-intensity] [data-slot="textarea"]:not([data-slot="input-group"] *)::placeholder {
   text-transform: uppercase;
   letter-spacing: var(--tron-letter-spacing);
   font-size: 0.85em;
 }
 
 /* Heavy: enhanced input effects */
-[data-tron-intensity="heavy"] [data-slot="input"]:focus,
-[data-tron-intensity="heavy"] [data-slot="textarea"]:focus {
+[data-tron-intensity="heavy"] [data-slot="input"]:not([data-slot="input-group"] *):focus,
+[data-tron-intensity="heavy"] [data-slot="textarea"]:not([data-slot="input-group"] *):focus {
   box-shadow:
     var(--tron-hover-glow),
     inset 0 0 var(--tron-glow-spread-md) color-mix(in oklch, var(--glow) 15%, transparent);
+}
+
+/* Input Group - Tron styled container */
+[data-tron-intensity] [data-slot="input-group"] {
+  border-radius: 0;
+  border-color: color-mix(in oklch, var(--primary) 30%, var(--border));
+  font-family: var(--tron-font);
+  letter-spacing: 0.05em;
+  transition:
+    box-shadow var(--tron-transition),
+    border-color var(--tron-transition);
+}
+
+[data-tron-intensity] [data-slot="input-group"]:has([data-slot="input-group-control"]:focus-visible) {
+  border-color: var(--primary);
+  box-shadow: var(--tron-border-glow);
 }
 
 /* ==========================================
@@ -606,12 +642,12 @@
 /* Dialog overlay - Dark with blur */
 [data-tron-intensity] [data-slot="dialog-overlay"] {
   backdrop-filter: blur(4px);
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 [data-tron-intensity="heavy"] [data-slot="dialog-overlay"] {
   backdrop-filter: blur(8px);
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 /* Dialog content - Main HUD panel */
@@ -619,9 +655,7 @@
   border-radius: 0;
   border: 1px solid var(--primary);
   box-shadow: var(--tron-hover-glow);
-  backdrop-filter: blur(16px);
-  background-color: color-mix(in oklch, var(--card) 95%, transparent);
-  position: relative;
+  background-color: var(--card);
   overflow: visible;
 }
 

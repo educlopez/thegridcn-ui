@@ -124,6 +124,7 @@ import {
 } from "@/components/ui/hover-card";
 import {
   InputGroup,
+  InputGroupAddon,
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group";
@@ -700,9 +701,13 @@ export const InputExamplePreview = React.memo(function InputExamplePreview() {
 export const InputGroupExamplePreview = React.memo(function InputGroupExamplePreview() {
   return (
     <InputGroup className="max-w-md">
-      <InputGroupText>$</InputGroupText>
+      <InputGroupAddon align="inline-start">
+        <InputGroupText>$</InputGroupText>
+      </InputGroupAddon>
       <InputGroupInput placeholder="Amount" />
-      <InputGroupText>.00</InputGroupText>
+      <InputGroupAddon align="inline-end">
+        <InputGroupText>.00</InputGroupText>
+      </InputGroupAddon>
     </InputGroup>
   );
 });
