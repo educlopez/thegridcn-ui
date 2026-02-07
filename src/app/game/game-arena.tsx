@@ -3,7 +3,8 @@
 import * as React from "react"
 import dynamic from "next/dynamic"
 import { LightCycleGame } from "@/components/thegridcn/light-cycle-game"
-import { HUDFrame, UplinkHeader, AnomalyBanner } from "@/components/thegridcn"
+import { HUDFrame, UplinkHeader, AnomalyBanner, Leaderboard, AliasInput } from "@/components/thegridcn"
+import { toast } from "sonner"
 import { themes, useTheme } from "@/components/theme"
 import type { GamePhase } from "@/components/thegridcn/light-cycle-engine"
 import { cn } from "@/lib/utils"
@@ -35,7 +36,11 @@ export function GameArena() {
   const [derezzed, setDerezzed] = React.useState(false)
   const [difficulty, setDifficulty] = React.useState(DIFFICULTIES[1])
   const [gameKey, setGameKey] = React.useState(0)
+  const [showAliasInput, setShowAliasInput] = React.useState(false)
+  const [leaderboardKey, setLeaderboardKey] = React.useState(0)
+  const [submitting, setSubmitting] = React.useState(false)
   const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
+  const elapsedRef = React.useRef(0)
 
   const { theme, setTheme } = useTheme()
 
@@ -46,6 +51,7 @@ export function GameArena() {
     (winner: "player" | "ai" | "draw") => {
       if (winner === "player") {
         setWins((w) => w + 1)
+        setShowAliasInput(true)
       } else if (winner === "ai") {
         setDerezzed(true)
       }
@@ -62,15 +68,19 @@ export function GameArena() {
     if (newPhase === "playing") {
       setDerezzed(false)
       setElapsed(0)
+      elapsedRef.current = 0
       if (timerRef.current) clearInterval(timerRef.current)
       const start = Date.now()
       timerRef.current = setInterval(() => {
-        setElapsed(Math.floor((Date.now() - start) / 1000))
+        const t = Math.floor((Date.now() - start) / 1000)
+        elapsedRef.current = t
+        setElapsed(t)
       }, 1000)
     }
     if (newPhase === "ready" || newPhase === "countdown") {
       setDerezzed(false)
       setElapsed(0)
+      elapsedRef.current = 0
       if (timerRef.current) {
         clearInterval(timerRef.current)
         timerRef.current = null
@@ -80,7 +90,45 @@ export function GameArena() {
 
   const handleRestart = React.useCallback(() => {
     setDerezzed(false)
+    setShowAliasInput(false)
     setGameKey((k) => k + 1)
+  }, [])
+
+  const handleAliasSubmit = React.useCallback(
+    async (alias: string) => {
+      setSubmitting(true)
+      try {
+        const res = await fetch("/api/leaderboard", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            alias,
+            time: elapsedRef.current,
+            difficulty: difficulty.id,
+          }),
+        })
+
+        if (res.ok) {
+          const data = await res.json()
+          const rankMsg = data.rank ? ` Rank #${data.rank}!` : ""
+          toast.success(`Score submitted!${rankMsg}`)
+          setLeaderboardKey((k) => k + 1)
+        } else {
+          const data = await res.json()
+          toast.error(data.error ?? "Failed to submit score")
+        }
+      } catch {
+        toast.error("Failed to submit score")
+      } finally {
+        setSubmitting(false)
+        setShowAliasInput(false)
+      }
+    },
+    [difficulty.id]
+  )
+
+  const handleAliasCancel = React.useCallback(() => {
+    setShowAliasInput(false)
   }, [])
 
   // Listen for Enter key on overlays (ready + derezzed)
@@ -166,13 +214,66 @@ export function GameArena() {
           />
         </HUDFrame>
 
-        {/* READY overlay with AnomalyBanner */}
+        {/* READY overlay with AnomalyBanner + Character selector */}
         {showReadyOverlay && (
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-6 p-8">
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 overflow-y-auto p-6">
             <AnomalyBanner
               title="LIGHT CYCLE"
               subtitle="ENTER THE GRID"
             />
+
+            {/* Character selector */}
+            <div className="w-full max-w-[400px]">
+              <div className="mb-1.5 text-center font-mono text-[9px] tracking-[0.2em] text-muted-foreground/60">
+                SELECT IDENTITY
+              </div>
+              <div className="grid grid-cols-6 gap-1.5">
+                {themes.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setTheme(t.id)}
+                    className={cn(
+                      "group relative flex flex-col items-center rounded border p-1.5 transition-all",
+                      theme === t.id
+                        ? "border-primary bg-primary/10"
+                        : "border-primary/20 bg-card/20 hover:border-primary/50 hover:bg-card/40"
+                    )}
+                  >
+                    {theme === t.id && (
+                      <>
+                        <span className="absolute left-0 top-0 h-2 w-2 border-l border-t border-primary" />
+                        <span className="absolute right-0 top-0 h-2 w-2 border-r border-t border-primary" />
+                        <span className="absolute bottom-0 left-0 h-2 w-2 border-b border-l border-primary" />
+                        <span className="absolute bottom-0 right-0 h-2 w-2 border-b border-r border-primary" />
+                      </>
+                    )}
+                    <div
+                      className={cn(
+                        "relative mb-1 overflow-hidden rounded",
+                        theme === t.id ? "ring-1 ring-primary/50" : ""
+                      )}
+                      style={{ backgroundColor: `${t.color}10` }}
+                    >
+                      <GodAvatar3D themeId={t.id} color={t.color} size={40} />
+                    </div>
+                    <span
+                      className={cn(
+                        "font-mono text-[7px] tracking-wider",
+                        theme === t.id ? "text-primary" : "text-foreground"
+                      )}
+                    >
+                      {t.name.toUpperCase()}
+                    </span>
+                    {theme === t.id && (
+                      <span className="absolute -top-1 right-0.5 font-mono text-[7px] text-primary">
+                        ●
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <span className="font-mono text-[9px] tracking-widest text-amber-500/40">
               PRESS ENTER TO START
             </span>
@@ -197,6 +298,26 @@ export function GameArena() {
             </span>
           </div>
         )}
+
+        {/* WIN alias input overlay */}
+        {showAliasInput && (
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-black/70 p-8">
+            <AnomalyBanner
+              title="VICTORY"
+              subtitle={`SURVIVED ${formatTime(elapsed)}`}
+            />
+            {submitting ? (
+              <span className="font-mono text-[10px] tracking-widest text-primary/60">
+                TRANSMITTING...
+              </span>
+            ) : (
+              <AliasInput
+                onSubmit={handleAliasSubmit}
+                onCancel={handleAliasCancel}
+              />
+            )}
+          </div>
+        )}
       </div>
 
       {/* Controls hint */}
@@ -206,59 +327,11 @@ export function GameArena() {
         <span>ENTER TO START</span>
       </div>
 
-      {/* Character selector with God Avatars */}
-      <div className="mt-2 w-full max-w-[632px]">
-        <div className="mb-2 font-mono text-[9px] tracking-[0.2em] text-muted-foreground/60">
-          SELECT IDENTITY
-        </div>
-        <div className="grid grid-cols-6 gap-2">
-          {themes.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTheme(t.id)}
-              className={cn(
-                "group relative flex flex-col items-center rounded border p-2 transition-all",
-                theme === t.id
-                  ? "border-primary bg-primary/10"
-                  : "border-primary/20 bg-card/20 hover:border-primary/50 hover:bg-card/40"
-              )}
-            >
-              {/* Corner accents for selected */}
-              {theme === t.id && (
-                <>
-                  <span className="absolute left-0 top-0 h-2 w-2 border-l border-t border-primary" />
-                  <span className="absolute right-0 top-0 h-2 w-2 border-r border-t border-primary" />
-                  <span className="absolute bottom-0 left-0 h-2 w-2 border-b border-l border-primary" />
-                  <span className="absolute bottom-0 right-0 h-2 w-2 border-b border-r border-primary" />
-                </>
-              )}
-
-              <div
-                className={cn(
-                  "relative mb-1.5 overflow-hidden rounded",
-                  theme === t.id ? "ring-1 ring-primary/50" : ""
-                )}
-                style={{ backgroundColor: `${t.color}10` }}
-              >
-                <GodAvatar3D themeId={t.id} color={t.color} size={52} />
-              </div>
-              <span
-                className={cn(
-                  "font-mono text-[8px] tracking-wider",
-                  theme === t.id ? "text-primary" : "text-foreground"
-                )}
-              >
-                {t.name.toUpperCase()}
-              </span>
-              {theme === t.id && (
-                <span className="absolute -top-1 right-1 font-mono text-[7px] text-primary">
-                  ●
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
+      {/* Leaderboard */}
+      <div className="w-full max-w-[632px]">
+        <Leaderboard refreshKey={leaderboardKey} />
       </div>
+
     </main>
   )
 }

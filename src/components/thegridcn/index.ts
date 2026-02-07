@@ -39,3 +39,5 @@ export { TimelineBar } from "./timeline-bar"
 
 // Game
 export { LightCycleGame } from "./light-cycle-game"
+export { Leaderboard } from "./leaderboard"
+export { AliasInput } from "./alias-input"
