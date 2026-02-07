@@ -3,7 +3,10 @@ import { Ratelimit } from "@upstash/ratelimit"
 import { redis } from "@/lib/redis"
 import {
   LEADERBOARD_KEY,
+  SESSION_PREFIX,
+  MIN_TIMES,
   scoreSubmissionSchema,
+  verifySessionToken,
   type LeaderboardEntry,
 } from "@/lib/leaderboard"
 
@@ -74,7 +77,63 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const { alias, time, difficulty, character } = parsed.data
+  const { alias, time, difficulty, character, token } = parsed.data
+
+  // --- Session validation ---
+  const sessionId = verifySessionToken(token)
+  if (!sessionId) {
+    return NextResponse.json(
+      { error: "Invalid session" },
+      { status: 403 }
+    )
+  }
+
+  const sessionKey = `${SESSION_PREFIX}${sessionId}`
+  // Atomic fetch + delete (one-time use)
+  const sessionRaw = await redis.get<string>(sessionKey)
+  if (!sessionRaw) {
+    return NextResponse.json(
+      { error: "Invalid session" },
+      { status: 403 }
+    )
+  }
+  await redis.del(sessionKey)
+
+  const session =
+    typeof sessionRaw === "string" ? JSON.parse(sessionRaw) : sessionRaw
+  const { difficulty: sessionDifficulty, startTime } = session as {
+    difficulty: string
+    startTime: number
+  }
+
+  // Difficulty must match
+  if (sessionDifficulty !== difficulty) {
+    return NextResponse.json(
+      { error: "Invalid session" },
+      { status: 403 }
+    )
+  }
+
+  // Time must be at least the minimum for the difficulty
+  const minTime = MIN_TIMES[difficulty] ?? 3
+  if (time < minTime) {
+    return NextResponse.json(
+      { error: "Invalid session" },
+      { status: 403 }
+    )
+  }
+
+  // Wall-clock elapsed must be >= submitted time (with 2s tolerance for latency)
+  const wallElapsedMs = Date.now() - startTime
+  const submittedMs = time * 1000
+  if (wallElapsedMs + 2000 < submittedMs) {
+    return NextResponse.json(
+      { error: "Invalid session" },
+      { status: 403 }
+    )
+  }
+  // --- End session validation ---
+
   const member = JSON.stringify({
     alias,
     difficulty,
