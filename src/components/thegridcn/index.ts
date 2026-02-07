@@ -36,3 +36,6 @@ export { UplinkHeader } from "./uplink-header"
 export { ArrivalPanel } from "./arrival-panel"
 export { BeamMarker } from "./beam-marker"
 export { TimelineBar } from "./timeline-bar"
+
+// Game
+export { LightCycleGame } from "./light-cycle-game"

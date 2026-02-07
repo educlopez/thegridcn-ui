@@ -106,6 +106,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
   const defaultNavItems: NavItem[] = [
     { href: "/", label: "HOME" },
     { href: "/components", label: "COMPONENTS" },
+    { href: "/game", label: "GAME" },
   ];
 
   const items = navItems || defaultNavItems;

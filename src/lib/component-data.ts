@@ -274,6 +274,14 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // Game
+      {
+        id: "light-cycle-game",
+        name: "light-cycle-game",
+        title: "Light Cycle Game",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
     ],
   },
 };

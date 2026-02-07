@@ -538,6 +538,31 @@ export const TimelineBarPreview = React.memo(function TimelineBarPreview() {
   );
 });
 
+export const LightCycleGamePreview = React.memo(function LightCycleGamePreview() {
+  const LightCycleGame = React.lazy(() =>
+    import("@/components/thegridcn/light-cycle-game").then((mod) => ({
+      default: mod.LightCycleGame,
+    }))
+  );
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <React.Suspense
+        fallback={
+          <div className="flex h-[400px] w-[400px] items-center justify-center border border-primary/20 bg-background font-mono text-xs text-primary/50">
+            LOADING ARENA...
+          </div>
+        }
+      >
+        <LightCycleGame autoPlay width={400} height={400} />
+      </React.Suspense>
+      <span className="font-mono text-[10px] tracking-widest text-muted-foreground">
+        AI VS AI DEMO
+      </span>
+    </div>
+  );
+});
+
 export const tronMoviePreviews: Record<string, React.ComponentType> = {
   // Data Display
   "data-card": DataCardPreview,
@@ -575,4 +600,6 @@ export const tronMoviePreviews: Record<string, React.ComponentType> = {
   "arrival-panel": ArrivalPanelPreview,
   "beam-marker": BeamMarkerPreview,
   "timeline-bar": TimelineBarPreview,
+  // Game
+  "light-cycle-game": LightCycleGamePreview,
 };
