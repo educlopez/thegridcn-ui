@@ -105,6 +105,7 @@ export function GameArena() {
             alias,
             time: elapsedRef.current,
             difficulty: difficulty.id,
+            character: theme,
           }),
         })
 
@@ -208,6 +209,7 @@ export function GameArena() {
             height={600}
             rivals={difficulty.rivals}
             tickRate={difficulty.tickRate}
+            aiLevel={DIFFICULTIES.indexOf(difficulty)}
             onGameEnd={handleGameEnd}
             onPhaseChange={handlePhaseChange}
             className="max-w-full"

@@ -17,7 +17,7 @@ export async function GET() {
   // @upstash/redis returns [member, score, member, score, ...] with auto-deserialized members
   const entries: LeaderboardEntry[] = []
   for (let i = 0; i < raw.length; i += 2) {
-    const data = raw[i] as unknown as { alias: string; difficulty: string; date: string }
+    const data = raw[i] as unknown as { alias: string; difficulty: string; date: string; character?: string }
     const score = raw[i + 1] as unknown as number
     if (data && typeof data === "object" && "alias" in data) {
       entries.push({
@@ -25,6 +25,7 @@ export async function GET() {
         time: score,
         difficulty: data.difficulty,
         date: data.date,
+        ...(data.character && { character: data.character }),
       })
     }
   }
@@ -69,11 +70,12 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const { alias, time, difficulty } = parsed.data
+  const { alias, time, difficulty, character } = parsed.data
   const member = JSON.stringify({
     alias,
     difficulty,
     date: new Date().toISOString(),
+    ...(character && { character }),
   })
 
   await redis.zadd(LEADERBOARD_KEY, { score: time, member })

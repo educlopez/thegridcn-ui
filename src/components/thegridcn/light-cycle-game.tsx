@@ -20,6 +20,7 @@ export interface LightCycleGameProps {
   height?: number
   rivals?: number // 1-4 AI opponents
   tickRate?: number // ticks per second (speed)
+  aiLevel?: number // 0=Easy, 1=Medium, 2=Hard, 3=Insane
   onGameEnd?: (winner: "player" | "ai" | "draw") => void
   onPhaseChange?: (phase: GamePhase) => void
 }
@@ -52,7 +53,7 @@ function getThemeColors(currentThemeId: string, rivalCount: number) {
   return { playerColor, aiColors }
 }
 
-function createEngine(playerColor: string, aiColors: string[]) {
+function createEngine(playerColor: string, aiColors: string[], aiLevel: number = 1) {
   const configs: BikeConfig[] = [
     { x: 40, y: 65, direction: "up", color: playerColor },
     ...aiColors.map((color, i) => ({
@@ -60,7 +61,7 @@ function createEngine(playerColor: string, aiColors: string[]) {
       color,
     })),
   ]
-  return new LightCycleEngine(GRID_SIZE, configs)
+  return new LightCycleEngine(GRID_SIZE, configs, aiLevel)
 }
 
 export const LightCycleGame = React.memo(function LightCycleGame({
@@ -70,6 +71,7 @@ export const LightCycleGame = React.memo(function LightCycleGame({
   height = 600,
   rivals = 2,
   tickRate = 10,
+  aiLevel = 1,
   onGameEnd,
   onPhaseChange,
 }: LightCycleGameProps) {
@@ -83,18 +85,20 @@ export const LightCycleGame = React.memo(function LightCycleGame({
   const autoRestartTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
   const prevPhaseRef = React.useRef<GamePhase>("ready")
 
-  // Keep rivals/tickRate in refs so the game loop always reads the latest values
+  // Keep rivals/tickRate/aiLevel in refs so the game loop always reads the latest values
   const rivalsRef = React.useRef(rivals)
   const tickRateRef = React.useRef(tickRate)
+  const aiLevelRef = React.useRef(aiLevel)
   rivalsRef.current = rivals
   tickRateRef.current = tickRate
+  aiLevelRef.current = aiLevel
 
   const { theme } = useTheme()
 
   // Initialize engine
   React.useEffect(() => {
     const { playerColor, aiColors } = getThemeColors(theme, rivalsRef.current)
-    engineRef.current = createEngine(playerColor, aiColors)
+    engineRef.current = createEngine(playerColor, aiColors, aiLevelRef.current)
 
     if (autoPlay) {
       startCountdown()
@@ -107,16 +111,16 @@ export const LightCycleGame = React.memo(function LightCycleGame({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Rebuild engine when rivals change (only between games)
+  // Rebuild engine when rivals/aiLevel change (only between games)
   React.useEffect(() => {
     const engine = engineRef.current
     if (!engine) return
     // Only rebuild if we're in ready state (not mid-game)
     if (engine.phase !== "ready" && engine.phase !== "gameover") return
     const { playerColor, aiColors } = getThemeColors(theme, rivals)
-    engineRef.current = createEngine(playerColor, aiColors)
+    engineRef.current = createEngine(playerColor, aiColors, aiLevel)
     particlesRef.current = []
-  }, [rivals, theme])
+  }, [rivals, aiLevel, theme])
 
   // Update player color on theme change
   React.useEffect(() => {
@@ -145,7 +149,7 @@ export const LightCycleGame = React.memo(function LightCycleGame({
 
   function resetGame() {
     const { playerColor, aiColors } = getThemeColors(theme, rivalsRef.current)
-    engineRef.current = createEngine(playerColor, aiColors)
+    engineRef.current = createEngine(playerColor, aiColors, aiLevelRef.current)
     particlesRef.current = []
     if (autoRestartTimerRef.current) {
       clearTimeout(autoRestartTimerRef.current)

@@ -52,10 +52,12 @@ export class LightCycleEngine {
   phase: GamePhase
   winner: number | null
   private occupied: Set<string>
+  private aiLevel: number // 0=Easy, 1=Medium, 2=Hard, 3=Insane
 
-  constructor(gridSize: number, configs: BikeConfig[]) {
+  constructor(gridSize: number, configs: BikeConfig[], aiLevel: number = 1) {
     this.gridSize = gridSize
     this.initialConfigs = configs
+    this.aiLevel = aiLevel
     this.bikes = []
     this.phase = "ready"
     this.winner = null
@@ -190,30 +192,96 @@ export class LightCycleEngine {
     const bike = this.bikes[bikeIndex]
     const currentDir = bike.direction
 
-    // Check if current direction is safe
-    const currentSafe = this.isDirectionSafe(bike, currentDir)
+    // Difficulty-based flood-fill limits
+    const floodLimits = [40, 80, 120, 150]
+    const floodLimit = floodLimits[this.aiLevel] ?? 80
 
-    // If safe, small chance to proactively turn toward open space
-    if (currentSafe && Math.random() > 0.15) return
+    // Easy mode: 30% chance to skip evaluation and just go straight
+    if (this.aiLevel < 1 && Math.random() < 0.3) {
+      if (this.isDirectionSafe(bike, currentDir)) return
+    }
 
-    // Find all safe directions (excluding opposite of current)
+    // Find all safe directions (not opposite, next cell safe, has at least one exit)
     const safeDirs = ALL_DIRECTIONS.filter(
       (d) => d !== OPPOSITE[currentDir] && this.isDirectionSafe(bike, d)
     )
 
-    if (safeDirs.length === 0) {
-      // No safe moves - bike will die next tick
-      return
+    if (safeDirs.length === 0) return // no safe moves
+
+    // Score each safe direction
+    const player = this.bikes[0]
+    const playerDist = Math.abs(bike.x - player.x) + Math.abs(bike.y - player.y)
+
+    let bestDir = safeDirs[0]
+    let bestScore = -1
+
+    for (const d of safeDirs) {
+      const delta = DELTA[d]
+      const nx = bike.x + delta.dx
+      const ny = bike.y + delta.dy
+
+      // Base score: reachable cells via flood-fill
+      let score = this.countReachable(nx, ny, floodLimit)
+
+      // Continuity bonus: prefer going straight (reduces jitter)
+      if (d === currentDir) {
+        score *= 1.15
+      }
+
+      // Player targeting (Medium+): bias toward cutting off player
+      if (this.aiLevel >= 2 && player.alive && playerDist <= 20) {
+        const playerDelta = DELTA[player.direction]
+        // Target where the player is heading
+        const targetX = player.x + playerDelta.dx * 5
+        const targetY = player.y + playerDelta.dy * 5
+        const distBefore = Math.abs(bike.x - targetX) + Math.abs(bike.y - targetY)
+        const distAfter = Math.abs(nx - targetX) + Math.abs(ny - targetY)
+        if (distAfter < distBefore) {
+          const strength = this.aiLevel >= 3 ? 1.25 : 1.12
+          score *= strength
+        }
+      }
+
+      // Wall-hugging bonus (Hard+): prefer directions with a wall/trail on one side
+      if (this.aiLevel >= 2) {
+        const perpDirs = d === "up" || d === "down"
+          ? ["left", "right"] as Direction[]
+          : ["up", "down"] as Direction[]
+        let hasAdjacentWall = false
+        for (const pd of perpDirs) {
+          const pdelta = DELTA[pd]
+          const ax = nx + pdelta.dx
+          const ay = ny + pdelta.dy
+          if (
+            ax < 0 || ax >= this.gridSize || ay < 0 || ay >= this.gridSize ||
+            this.occupied.has(cellKey(ax, ay))
+          ) {
+            hasAdjacentWall = true
+            break
+          }
+        }
+        if (hasAdjacentWall) {
+          score *= 1.08
+        }
+      }
+
+      if (score > bestScore) {
+        bestScore = score
+        bestDir = d
+      }
     }
 
-    // Pick the direction with the most open space ahead
-    let bestDir = safeDirs[0]
-    let bestSpace = -1
-    for (const d of safeDirs) {
-      const space = this.countOpenSpace(bike, d)
-      if (space > bestSpace) {
-        bestSpace = space
-        bestDir = d
+    // Only change direction if current is unsafe OR the best option is significantly better
+    if (safeDirs.includes(currentDir)) {
+      const currentDelta = DELTA[currentDir]
+      const cnx = bike.x + currentDelta.dx
+      const cny = bike.y + currentDelta.dy
+      let currentScore = this.countReachable(cnx, cny, floodLimit)
+      currentScore *= 1.15 // same continuity bonus
+
+      // Stay on current direction if it's within 70% of the best
+      if (currentScore >= bestScore * 0.7) {
+        return
       }
     }
 
@@ -231,22 +299,45 @@ export class LightCycleEngine {
     for (const other of this.bikes) {
       if (other !== bike && other.alive && other.x === nx && other.y === ny) return false
     }
-    return true
+    // Verify at least one exit exists from the next cell (avoid 1-cell dead ends)
+    let hasExit = false
+    for (const d of ALL_DIRECTIONS) {
+      if (d === OPPOSITE[dir]) continue // don't count going back
+      const dd = DELTA[d]
+      const ex = nx + dd.dx
+      const ey = ny + dd.dy
+      if (ex < 0 || ex >= this.gridSize || ey < 0 || ey >= this.gridSize) continue
+      if (this.occupied.has(cellKey(ex, ey))) continue
+      hasExit = true
+      break
+    }
+    return hasExit
   }
 
-  private countOpenSpace(bike: Bike, dir: Direction): number {
-    const delta = DELTA[dir]
-    let x = bike.x
-    let y = bike.y
-    let count = 0
-    for (let i = 0; i < 15; i++) {
-      x += delta.dx
-      y += delta.dy
-      if (x < 0 || x >= this.gridSize || y < 0 || y >= this.gridSize) break
-      if (this.occupied.has(cellKey(x, y))) break
-      count++
+  private countReachable(startX: number, startY: number, limit: number): number {
+    const visited = new Set<string>()
+    const queue: [number, number][] = [[startX, startY]]
+    const startKey = cellKey(startX, startY)
+    // Don't count start if it's occupied (shouldn't be, but guard)
+    if (this.occupied.has(startKey)) return 0
+    visited.add(startKey)
+
+    while (queue.length > 0 && visited.size < limit) {
+      const [cx, cy] = queue.shift()!
+      for (const d of ALL_DIRECTIONS) {
+        const delta = DELTA[d]
+        const nx = cx + delta.dx
+        const ny = cy + delta.dy
+        if (nx < 0 || nx >= this.gridSize || ny < 0 || ny >= this.gridSize) continue
+        const key = cellKey(nx, ny)
+        if (visited.has(key) || this.occupied.has(key)) continue
+        visited.add(key)
+        if (visited.size >= limit) break
+        queue.push([nx, ny])
+      }
     }
-    return count
+
+    return visited.size
   }
 
   getState(): EngineState {

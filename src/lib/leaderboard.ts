@@ -25,6 +25,7 @@ export const scoreSubmissionSchema = z.object({
     .refine((val) => !BLOCKED_ALIASES.has(val), "That alias is not allowed"),
   time: z.number().min(1).max(9999),
   difficulty: z.string(),
+  character: z.string().max(30).optional(),
 })
 
 export type ScoreSubmission = z.infer<typeof scoreSubmissionSchema>
@@ -34,4 +35,5 @@ export interface LeaderboardEntry {
   time: number
   difficulty: string
   date: string
+  character?: string
 }
