@@ -40,7 +40,7 @@ function getThemeColors(currentThemeId: string, rivalCount: number) {
   const current = themes.find((t) => t.id === currentThemeId)
   const playerColor = current?.color ?? "#00d4ff"
 
-  const others = themes.filter((t) => t.id !== currentThemeId)
+  const others = themes.filter((t) => t.id !== currentThemeId && t.id !== "creator")
   const shuffled = others.sort(() => Math.random() - 0.5)
   const aiColors = shuffled.slice(0, rivalCount).map((t) => t.color)
 

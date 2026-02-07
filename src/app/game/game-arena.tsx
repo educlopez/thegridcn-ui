@@ -5,7 +5,7 @@ import dynamic from "next/dynamic"
 import { LightCycleGame } from "@/components/thegridcn/light-cycle-game"
 import { HUDFrame, UplinkHeader, AnomalyBanner, Leaderboard, AliasInput } from "@/components/thegridcn"
 import { toast } from "sonner"
-import { themes, useTheme } from "@/components/theme"
+import { selectableThemes, useTheme } from "@/components/theme"
 import type { GamePhase } from "@/components/thegridcn/light-cycle-engine"
 import { cn } from "@/lib/utils"
 
@@ -255,7 +255,7 @@ export function GameArena() {
                 SELECT IDENTITY
               </div>
               <div className="grid grid-cols-6 gap-1.5">
-                {themes.map((t) => (
+                {selectableThemes.map((t) => (
                   <button
                     key={t.id}
                     onClick={() => setTheme(t.id)}

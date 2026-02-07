@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import dynamic from "next/dynamic";
-import { themes, tronIntensities, useTheme, type Theme } from "@/components/theme";
+import { themes, selectableThemes, tronIntensities, useTheme, type Theme } from "@/components/theme";
 import { TronIntensitySwitcherCompact } from "@/components/theme/tron-intensity-switcher";
 import { cn } from "@/lib/utils";
 
@@ -152,7 +152,7 @@ export function Customizer({ isMobile = false }: CustomizerProps) {
         />
 
         <div className="grid grid-cols-3 gap-2">
-          {themes.map((t) => (
+          {selectableThemes.map((t) => (
             <button
               key={t.id}
               onClick={() => setTheme(t.id)}

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-export type Theme = "ares" | "tron" | "clu" | "athena" | "aphrodite" | "poseidon"
+export type Theme = "ares" | "tron" | "clu" | "athena" | "aphrodite" | "poseidon" | "creator"
 export type TronIntensity = "none" | "light" | "medium" | "heavy"
 
 const STORAGE_KEY = "project-ares-theme"
@@ -16,7 +16,11 @@ export const themes: { id: Theme; name: string; god: string; color: string }[] =
   { id: "athena", name: "Athena", god: "Goddess of Wisdom", color: "#ffd700" },
   { id: "aphrodite", name: "Aphrodite", god: "Goddess of Love", color: "#ff1493" },
   { id: "poseidon", name: "Poseidon", god: "God of Sea", color: "#0066ff" },
+  { id: "creator", name: "Creator", god: "Architect", color: "#ffffff" },
 ]
+
+// Selectable themes — excludes hidden themes like "creator"
+export const selectableThemes = themes.filter((t) => t.id !== "creator")
 
 // Set for O(1) theme lookups (js-set-map-lookups pattern)
 const themeIds = new Set(themes.map((t) => t.id))

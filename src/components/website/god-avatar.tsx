@@ -468,6 +468,58 @@ function PoseidonAvatar({ color }: { color: string }) {
   )
 }
 
+// Creator - Architect (Identity Disc with "C" Monogram)
+function CreatorAvatar({ color }: { color: string }) {
+  const groupRef = React.useRef<THREE.Group>(null)
+
+  useFrame((state) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
+    }
+  })
+
+  return (
+    <group ref={groupRef}>
+      {/* Outer disc ring */}
+      <mesh position={[0, 0, 0]}>
+        <torusGeometry args={[0.4, 0.045, 16, 48]} />
+        <HologramMaterial color={color} />
+      </mesh>
+      {/* Inner disc face */}
+      <mesh position={[0, 0, 0]}>
+        <circleGeometry args={[0.35, 48]} />
+        <HologramMaterial color={color} />
+      </mesh>
+      {/* Circuit cross — horizontal bar */}
+      <mesh position={[0, 0, 0.01]}>
+        <boxGeometry args={[0.6, 0.02, 0.01]} />
+        <HologramMaterial color={color} />
+      </mesh>
+      {/* Circuit cross — vertical bar */}
+      <mesh position={[0, 0, 0.01]}>
+        <boxGeometry args={[0.02, 0.6, 0.01]} />
+        <HologramMaterial color={color} />
+      </mesh>
+      {/* Central "C" monogram — arc */}
+      <mesh position={[0, 0, 0.02]}>
+        <torusGeometry args={[0.15, 0.025, 16, 32, Math.PI * 1.5]} />
+        <HologramMaterial color={color} />
+      </mesh>
+      {/* Central "C" monogram — small bar for the opening */}
+      <mesh position={[0.1, 0.08, 0.02]}>
+        <boxGeometry args={[0.06, 0.025, 0.01]} />
+        <HologramMaterial color={color} />
+      </mesh>
+      {/* Inner ring detail */}
+      <mesh position={[0, 0, 0.01]}>
+        <torusGeometry args={[0.28, 0.012, 16, 48]} />
+        <HologramMaterial color={color} />
+      </mesh>
+      <AvatarParticles color={color} count={40} />
+    </group>
+  )
+}
+
 // Avatar selector based on theme
 function GodAvatar({ themeId, color }: { themeId: string; color: string }) {
   const avatars: Record<string, React.ReactNode> = {
@@ -477,6 +529,7 @@ function GodAvatar({ themeId, color }: { themeId: string; color: string }) {
     athena: <AthenaAvatar color={color} />,
     aphrodite: <AphroditeAvatar color={color} />,
     poseidon: <PoseidonAvatar color={color} />,
+    creator: <CreatorAvatar color={color} />,
   }
 
   return avatars[themeId] || <TronAvatar color={color} />

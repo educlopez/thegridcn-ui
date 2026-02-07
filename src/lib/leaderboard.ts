@@ -44,6 +44,7 @@ export function verifySessionToken(token: string): string | null {
 }
 
 const BLOCKED_ALIASES = new Set([
+  "EDU",
   "ASS", "FUK", "FUC", "FCK", "FAG", "FAT", "FKU",
   "CUM", "CUN", "COK", "COC", "CNT",
   "DIK", "DIE", "DIC",

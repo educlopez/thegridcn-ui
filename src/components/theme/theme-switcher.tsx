@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useTheme, themes, type Theme } from "./theme-provider";
+import { useTheme, selectableThemes, themes, type Theme } from "./theme-provider";
 import { cn } from "@/lib/utils";
 
 // Memoized theme button component to prevent unnecessary re-renders
@@ -43,7 +43,7 @@ export function ThemeSwitcher() {
   // Memoize the theme buttons to avoid recreation on every render
   const themeButtons = React.useMemo(
     () =>
-      themes.map((t) => (
+      selectableThemes.map((t) => (
         <ThemeButton
           key={t.id}
           themeData={t}
@@ -100,7 +100,7 @@ export function ThemeSwitcherCompact() {
   // Memoize the compact buttons
   const compactButtons = React.useMemo(
     () =>
-      themes.map((t) => (
+      selectableThemes.map((t) => (
         <CompactThemeButton
           key={t.id}
           themeData={t}
@@ -163,7 +163,7 @@ export function ThemeSwitcherDropdown() {
   // Memoize dropdown items
   const dropdownItems = React.useMemo(
     () =>
-      themes.map((t) => (
+      selectableThemes.map((t) => (
         <DropdownThemeItem
           key={t.id}
           themeData={t}

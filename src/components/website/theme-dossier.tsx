@@ -3,7 +3,7 @@
 import * as React from "react"
 import dynamic from "next/dynamic"
 import { cn } from "@/lib/utils"
-import { themes, useTheme } from "@/components/theme"
+import { selectableThemes, useTheme } from "@/components/theme"
 
 // Dynamic import for 3D component to avoid SSR issues
 const GodAvatar3D = dynamic(
@@ -219,7 +219,7 @@ export function ThemeDossierSelector() {
   // Memoize the theme cards to avoid recreation
   const themeCards = React.useMemo(
     () =>
-      themes.map((t) => (
+      selectableThemes.map((t) => (
         <ThemeDossierCard
           key={t.id}
           themeId={t.id}
@@ -277,7 +277,7 @@ export function ThemeDossierSelector() {
             </span>
           </div>
           <div className="font-mono text-xs text-foreground/80">
-            {themes.length} THEMES AVAILABLE
+            {selectableThemes.length} THEMES AVAILABLE
           </div>
         </div>
       </div>
