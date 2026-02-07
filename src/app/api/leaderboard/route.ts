@@ -12,12 +12,12 @@ export async function GET() {
     return NextResponse.json({ entries: [] })
   }
 
-  const raw = await redis.zrange<Record<string, string>>(LEADERBOARD_KEY, 0, 9, { rev: true, withScores: true })
+  const raw = await redis.zrange(LEADERBOARD_KEY, 0, 9, { rev: true, withScores: true })
 
   // @upstash/redis returns [member, score, member, score, ...] with auto-deserialized members
   const entries: LeaderboardEntry[] = []
   for (let i = 0; i < raw.length; i += 2) {
-    const data = raw[i]
+    const data = raw[i] as unknown as { alias: string; difficulty: string; date: string }
     const score = raw[i + 1] as unknown as number
     if (data && typeof data === "object" && "alias" in data) {
       entries.push({
