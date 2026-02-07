@@ -1,11 +1,17 @@
 "use client"
 
 import * as React from "react"
+import dynamic from "next/dynamic"
 import { LightCycleGame } from "@/components/thegridcn/light-cycle-game"
 import { HUDFrame, UplinkHeader, AnomalyBanner } from "@/components/thegridcn"
-import { ThemeSwitcher } from "@/components/theme"
+import { themes, useTheme } from "@/components/theme"
 import type { GamePhase } from "@/components/thegridcn/light-cycle-engine"
 import { cn } from "@/lib/utils"
+
+const GodAvatar3D = dynamic(
+  () => import("@/components/website/god-avatar").then((mod) => mod.GodAvatar3D),
+  { ssr: false }
+)
 
 interface Difficulty {
   id: string
@@ -30,6 +36,8 @@ export function GameArena() {
   const [difficulty, setDifficulty] = React.useState(DIFFICULTIES[1])
   const [gameKey, setGameKey] = React.useState(0)
   const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const { theme, setTheme } = useTheme()
 
   const showReadyOverlay = phase === "ready" && !derezzed
   const playing = phase === "playing"
@@ -84,7 +92,6 @@ export function GameArena() {
         if (derezzed) {
           handleRestart()
         }
-        // For ready state, the game component itself handles Enter → countdown
       }
     }
     window.addEventListener("keydown", handleKeyDown)
@@ -199,9 +206,58 @@ export function GameArena() {
         <span>ENTER TO START</span>
       </div>
 
-      {/* Theme switcher */}
-      <div className="mt-2">
-        <ThemeSwitcher />
+      {/* Character selector with God Avatars */}
+      <div className="mt-2 w-full max-w-[632px]">
+        <div className="mb-2 font-mono text-[9px] tracking-[0.2em] text-muted-foreground/60">
+          SELECT IDENTITY
+        </div>
+        <div className="grid grid-cols-6 gap-2">
+          {themes.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTheme(t.id)}
+              className={cn(
+                "group relative flex flex-col items-center rounded border p-2 transition-all",
+                theme === t.id
+                  ? "border-primary bg-primary/10"
+                  : "border-primary/20 bg-card/20 hover:border-primary/50 hover:bg-card/40"
+              )}
+            >
+              {/* Corner accents for selected */}
+              {theme === t.id && (
+                <>
+                  <span className="absolute left-0 top-0 h-2 w-2 border-l border-t border-primary" />
+                  <span className="absolute right-0 top-0 h-2 w-2 border-r border-t border-primary" />
+                  <span className="absolute bottom-0 left-0 h-2 w-2 border-b border-l border-primary" />
+                  <span className="absolute bottom-0 right-0 h-2 w-2 border-b border-r border-primary" />
+                </>
+              )}
+
+              <div
+                className={cn(
+                  "relative mb-1.5 overflow-hidden rounded",
+                  theme === t.id ? "ring-1 ring-primary/50" : ""
+                )}
+                style={{ backgroundColor: `${t.color}10` }}
+              >
+                <GodAvatar3D themeId={t.id} color={t.color} size={52} />
+              </div>
+              <span
+                className={cn(
+                  "font-mono text-[8px] tracking-wider",
+                  theme === t.id ? "text-primary" : "text-foreground"
+                )}
+              >
+                {t.name.toUpperCase()}
+              </span>
+              {theme === t.id && (
+                <span className="absolute -top-1 right-1 font-mono text-[7px] text-primary">
+                  ●
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
       </div>
     </main>
   )
