@@ -32,6 +32,13 @@ function CharacterAvatar({ character }: { character?: string }) {
   )
 }
 
+const FILTERS = [
+  { id: "easy", label: "EASY" },
+  { id: "medium", label: "MEDIUM" },
+  { id: "hard", label: "HARD" },
+  { id: "insane", label: "INSANE" },
+]
+
 interface LeaderboardProps {
   refreshKey?: number
 }
@@ -39,12 +46,13 @@ interface LeaderboardProps {
 export function Leaderboard({ refreshKey = 0 }: LeaderboardProps) {
   const [entries, setEntries] = React.useState<LeaderboardEntry[]>([])
   const [loading, setLoading] = React.useState(true)
+  const [filter, setFilter] = React.useState("medium")
 
   React.useEffect(() => {
     let cancelled = false
     setLoading(true)
 
-    fetch("/api/leaderboard")
+    fetch(`/api/leaderboard?difficulty=${filter}`)
       .then((res) => res.json())
       .then((data) => {
         if (!cancelled) {
@@ -59,7 +67,7 @@ export function Leaderboard({ refreshKey = 0 }: LeaderboardProps) {
     return () => {
       cancelled = true
     }
-  }, [refreshKey])
+  }, [refreshKey, filter])
 
   const formatTime = (s: number) => {
     const m = Math.floor(s / 60)
@@ -69,16 +77,36 @@ export function Leaderboard({ refreshKey = 0 }: LeaderboardProps) {
 
   return (
     <div className="w-full">
-      <UplinkHeader leftText="LEADERBOARD" rightText="TOP 10" />
+      <UplinkHeader leftText="LEADERBOARD" rightText="FASTEST WINS" />
+
+      {/* Difficulty filter tabs */}
+      <div className="flex border-x border-b border-primary/20 bg-card/20">
+        {FILTERS.map((f) => (
+          <button
+            key={f.id}
+            onClick={() => setFilter(f.id)}
+            className={cn(
+              "flex-1 py-1.5 font-mono text-[9px] tracking-widest transition-all",
+              filter === f.id
+                ? "bg-primary/15 text-primary"
+                : "text-muted-foreground/50 hover:bg-primary/5 hover:text-muted-foreground/80"
+            )}
+          >
+            {f.label}
+            {filter === f.id && (
+              <span className="ml-1 inline-block h-1 w-1 rounded-full bg-primary" />
+            )}
+          </button>
+        ))}
+      </div>
 
       <div className="border-x border-b border-primary/20 bg-card/30">
         {/* Table header */}
-        <div className="grid grid-cols-[3rem_2rem_1fr_5rem_5rem] gap-2 border-b border-primary/10 px-3 py-1.5 font-mono text-[9px] tracking-widest text-muted-foreground/60">
+        <div className="grid grid-cols-[3rem_2rem_1fr_5rem] gap-2 border-b border-primary/10 px-3 py-1.5 font-mono text-[9px] tracking-widest text-muted-foreground/60">
           <span>RANK</span>
           <span></span>
           <span>ALIAS</span>
           <span className="text-right">TIME</span>
-          <span className="text-right">MODE</span>
         </div>
 
         {loading ? (
@@ -94,7 +122,7 @@ export function Leaderboard({ refreshKey = 0 }: LeaderboardProps) {
             <div
               key={`${entry.alias}-${entry.time}-${i}`}
               className={cn(
-                "grid grid-cols-[3rem_2rem_1fr_5rem_5rem] items-center gap-2 px-3 py-1.5 font-mono text-[11px] tracking-wider transition-colors",
+                "grid grid-cols-[3rem_2rem_1fr_5rem] items-center gap-2 px-3 py-1.5 font-mono text-[11px] tracking-wider transition-colors",
                 i === 0
                   ? "bg-primary/10 text-primary"
                   : i < 3
@@ -109,9 +137,6 @@ export function Leaderboard({ refreshKey = 0 }: LeaderboardProps) {
               <CharacterAvatar character={entry.character} />
               <span className="font-bold">{entry.alias}</span>
               <span className="text-right">{formatTime(entry.time)}</span>
-              <span className="text-right text-[9px] uppercase text-muted-foreground/60">
-                {entry.difficulty}
-              </span>
             </div>
           ))
         )}

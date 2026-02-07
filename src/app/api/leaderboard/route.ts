@@ -7,19 +7,22 @@ import {
   type LeaderboardEntry,
 } from "@/lib/leaderboard"
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   if (!redis) {
     return NextResponse.json({ entries: [] })
   }
 
-  const raw = await redis.zrange(LEADERBOARD_KEY, 0, 9, { rev: true, withScores: true })
+  const difficulty = request.nextUrl.searchParams.get("difficulty") ?? "medium"
 
-  // @upstash/redis returns [member, score, member, score, ...] with auto-deserialized members
+  // Fetch up to 100 entries ascending (fastest time first), then filter by difficulty
+  const raw = await redis.zrange(LEADERBOARD_KEY, 0, 99, { withScores: true })
+
   const entries: LeaderboardEntry[] = []
   for (let i = 0; i < raw.length; i += 2) {
     const data = raw[i] as unknown as { alias: string; difficulty: string; date: string; character?: string }
     const score = raw[i + 1] as unknown as number
     if (data && typeof data === "object" && "alias" in data) {
+      if (data.difficulty !== difficulty) continue
       entries.push({
         alias: data.alias,
         time: score,
@@ -27,6 +30,7 @@ export async function GET() {
         date: data.date,
         ...(data.character && { character: data.character }),
       })
+      if (entries.length >= 10) break
     }
   }
 
@@ -80,14 +84,14 @@ export async function POST(request: NextRequest) {
 
   await redis.zadd(LEADERBOARD_KEY, { score: time, member })
 
-  // Trim to top 100
+  // Trim to 100 fastest — remove slowest entries (highest scores)
   const count = await redis.zcard(LEADERBOARD_KEY)
   if (count > 100) {
-    await redis.zremrangebyrank(LEADERBOARD_KEY, 0, count - 101)
+    await redis.zremrangebyrank(LEADERBOARD_KEY, 100, -1)
   }
 
-  // Get rank (0-indexed from top)
-  const rank = await redis.zrevrank(LEADERBOARD_KEY, member)
+  // Get rank ascending (lowest time = rank 1 = fastest win)
+  const rank = await redis.zrank(LEADERBOARD_KEY, member)
 
   return NextResponse.json({
     success: true,
