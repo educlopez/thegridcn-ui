@@ -28,12 +28,12 @@ export interface LightCycleGameProps {
 const GRID_SIZE = 80
 const COUNTDOWN_SECONDS = 3
 
-// AI bike starting positions spread across the arena
+// AI bike starting positions spread across the arena (clockwise pattern to avoid head-on collisions)
 const AI_SPAWNS: { x: number; y: number; direction: Direction }[] = [
-  { x: 15, y: 15, direction: "down" },
+  { x: 15, y: 15, direction: "right" },
   { x: 65, y: 15, direction: "down" },
+  { x: 65, y: 65, direction: "left" },
   { x: 15, y: 65, direction: "up" },
-  { x: 65, y: 65, direction: "up" },
 ]
 
 function getThemeColors(currentThemeId: string, rivalCount: number) {

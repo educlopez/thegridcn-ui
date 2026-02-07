@@ -91,6 +91,7 @@ export function GameArena() {
   const handleRestart = React.useCallback(() => {
     setDerezzed(false)
     setShowAliasInput(false)
+    setPhase("ready")
     setGameKey((k) => k + 1)
   }, [])
 
