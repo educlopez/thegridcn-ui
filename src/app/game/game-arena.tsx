@@ -42,6 +42,7 @@ export function GameArena() {
   const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null)
   const elapsedRef = React.useRef(0)
   const sessionTokenRef = React.useRef<string | null>(null)
+  const sessionPromiseRef = React.useRef<Promise<string | null> | null>(null)
 
   const { theme, setTheme } = useTheme()
 
@@ -80,17 +81,19 @@ export function GameArena() {
 
       // Request session token for anti-cheat validation
       sessionTokenRef.current = null
-      fetch("/api/leaderboard/session", {
+      sessionPromiseRef.current = fetch("/api/leaderboard/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ difficulty: difficulty.id }),
       })
         .then((res) => (res.ok ? res.json() : null))
         .then((data) => {
-          if (data?.token) sessionTokenRef.current = data.token
+          const token = data?.token ?? null
+          sessionTokenRef.current = token
+          return token
         })
         .catch(() => {
-          // Silently fail — score just won't submit
+          return null
         })
     }
     if (newPhase === "ready" || newPhase === "countdown") {
@@ -115,6 +118,11 @@ export function GameArena() {
     async (alias: string) => {
       setSubmitting(true)
       try {
+        // Wait for session token if it hasn't arrived yet
+        if (!sessionTokenRef.current && sessionPromiseRef.current) {
+          await sessionPromiseRef.current
+        }
+
         if (!sessionTokenRef.current) {
           toast.error("Session expired. Score not submitted.")
           setSubmitting(false)
