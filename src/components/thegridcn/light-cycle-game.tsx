@@ -416,25 +416,11 @@ export const LightCycleGame = React.memo(function LightCycleGame({
       }
       ctx.restore()
 
-      // Draw bike heads (brighter, larger glow)
+      // Draw bike heads as mini light-cycle silhouettes
       ctx.save()
       for (const bike of bikes) {
         if (!bike.alive) continue
-        ctx.shadowColor = bike.color
-        ctx.shadowBlur = 18
-        ctx.fillStyle = "#ffffff"
-        const headSize = cellW * 1.5
-        const offset = (headSize - cellW) / 2
-        ctx.fillRect(
-          bike.x * cellW - offset,
-          bike.y * cellH - offset,
-          headSize,
-          headSize
-        )
-        // Inner color
-        ctx.shadowBlur = 12
-        ctx.fillStyle = bike.color
-        ctx.fillRect(bike.x * cellW, bike.y * cellH, cellW, cellH)
+        drawBikeSprite(ctx, bike.x, bike.y, bike.direction, bike.color, cellW, cellH)
       }
       ctx.restore()
 
@@ -560,6 +546,71 @@ function drawOverlayWithSub(
   ctx.font = `${Math.floor(w / 30)}px Orbitron, monospace`
   ctx.fillStyle = hexToRgba(color, 0.7)
   ctx.fillText(sub, w / 2, h / 2 + 30)
+  ctx.restore()
+}
+
+// Mini light-cycle pixel sprite (facing RIGHT as base orientation)
+// 9x7 pixel grid — Tron-style bike silhouette
+// 0 = transparent, 1 = body (bike color), 2 = bright (white), 3 = accent (dimmed color)
+const BIKE_SPRITE = [
+  [0, 0, 0, 0, 0, 0, 2, 0, 0],
+  [0, 0, 0, 1, 1, 2, 2, 2, 0],
+  [0, 3, 1, 1, 1, 1, 1, 1, 2],
+  [3, 1, 1, 2, 1, 1, 1, 1, 1],
+  [0, 3, 1, 1, 1, 1, 1, 1, 2],
+  [0, 0, 0, 1, 1, 2, 2, 2, 0],
+  [0, 0, 0, 0, 0, 0, 2, 0, 0],
+]
+
+const DIR_ANGLE: Record<string, number> = {
+  right: 0,
+  down: Math.PI / 2,
+  left: Math.PI,
+  up: -Math.PI / 2,
+}
+
+function drawBikeSprite(
+  ctx: CanvasRenderingContext2D,
+  gx: number,
+  gy: number,
+  direction: string,
+  color: string,
+  cellW: number,
+  cellH: number
+) {
+  const spriteW = BIKE_SPRITE[0].length // 9
+  const spriteH = BIKE_SPRITE.length // 7
+  const scale = (cellW * 2.4) / spriteW // fit ~2.4 cells wide
+  const cx = gx * cellW + cellW / 2
+  const cy = gy * cellH + cellH / 2
+
+  ctx.save()
+  ctx.translate(cx, cy)
+  ctx.rotate(DIR_ANGLE[direction] ?? 0)
+
+  // Outer glow
+  ctx.shadowColor = color
+  ctx.shadowBlur = 16
+
+  const ox = -(spriteW * scale) / 2
+  const oy = -(spriteH * scale) / 2
+
+  for (let row = 0; row < spriteH; row++) {
+    for (let col = 0; col < spriteW; col++) {
+      const v = BIKE_SPRITE[row][col]
+      if (v === 0) continue
+      if (v === 1) ctx.fillStyle = color
+      else if (v === 2) ctx.fillStyle = "#ffffff"
+      else ctx.fillStyle = hexToRgba(color, 0.5)
+      ctx.fillRect(
+        ox + col * scale,
+        oy + row * scale,
+        scale + 0.5, // slight overlap to avoid sub-pixel gaps
+        scale + 0.5
+      )
+    }
+  }
+
   ctx.restore()
 }
 
