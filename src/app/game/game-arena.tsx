@@ -202,37 +202,6 @@ export function GameArena() {
         />
       </div>
 
-      {/* Difficulty selector */}
-      <div className="flex items-center gap-1">
-        {DIFFICULTIES.map((d) => (
-          <button
-            key={d.id}
-            onClick={() => {
-              if (!playing) setDifficulty(d)
-            }}
-            disabled={playing}
-            className={cn(
-              "relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all",
-              "border",
-              difficulty.id === d.id
-                ? "border-primary bg-primary/15 text-primary"
-                : "border-primary/20 text-muted-foreground hover:border-primary/40 hover:text-primary/70",
-              playing && "cursor-not-allowed opacity-50"
-            )}
-          >
-            {d.label}
-            {difficulty.id === d.id && (
-              <span className="absolute -bottom-px left-1/2 h-px w-3/4 -translate-x-1/2 bg-primary" />
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Difficulty description */}
-      <div className="font-mono text-[9px] tracking-[0.2em] text-muted-foreground/60">
-        {difficulty.description}
-      </div>
-
       {/* Game canvas in HUD frame */}
       <div className="relative inline-block">
         <HUDFrame label="GAME GRID">
@@ -256,6 +225,36 @@ export function GameArena() {
               title="LIGHT CYCLE"
               subtitle="ENTER THE GRID"
             />
+
+            {/* Difficulty selector */}
+            <div className="w-full max-w-[400px]">
+              <div className="mb-1.5 text-center font-mono text-[9px] tracking-[0.2em] text-muted-foreground/60">
+                SELECT DIFFICULTY
+              </div>
+              <div className="flex items-center justify-center gap-1">
+                {DIFFICULTIES.map((d) => (
+                  <button
+                    key={d.id}
+                    onClick={() => setDifficulty(d)}
+                    className={cn(
+                      "relative px-3 py-1.5 font-mono text-[10px] tracking-widest transition-all",
+                      "border",
+                      difficulty.id === d.id
+                        ? "border-primary bg-primary/15 text-primary"
+                        : "border-primary/20 text-muted-foreground hover:border-primary/40 hover:text-primary/70"
+                    )}
+                  >
+                    {d.label}
+                    {difficulty.id === d.id && (
+                      <span className="absolute -bottom-px left-1/2 h-px w-3/4 -translate-x-1/2 bg-primary" />
+                    )}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-1 text-center font-mono text-[9px] tracking-[0.2em] text-muted-foreground/60">
+                {difficulty.description}
+              </div>
+            </div>
 
             {/* Character selector */}
             <div className="w-full max-w-[400px]">
