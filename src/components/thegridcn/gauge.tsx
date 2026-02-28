@@ -52,26 +52,31 @@ export function Gauge({
 }: GaugeProps) {
   const filterId = React.useId()
   const config = sizeConfig[size]
-  const center = config.dim / 2
-  const radius = center - config.stroke - 4
+  const padding = config.stroke + 8
+  const svgDim = config.dim + padding * 2
+  const center = svgDim / 2
+  const radius = config.dim / 2 - config.stroke
 
   const pct = Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100))
   const resolvedVariant = variant ?? autoVariant(pct)
   const color = variantColor[resolvedVariant]
 
-  // Arc from -225deg to +45deg (270 degree sweep)
-  const startAngle = -225
-  const sweepAngle = 270
-  const arcLength = (sweepAngle / 360) * 2 * Math.PI * radius
+  // 270-degree arc: starts at 135° (bottom-left), ends at 45° (bottom-right)
+  const startAngleDeg = 135
+  const sweepAngleDeg = 270
+  const arcLength = (sweepAngleDeg / 360) * 2 * Math.PI * radius
+  const fullCirc = 2 * Math.PI * radius
+  const gapLength = fullCirc - arcLength
+
+  // Arc start offset: rotate so the dasharray starts at 135°
+  // strokeDashoffset shifts the dash start backwards along the path
+  // Default circle path starts at 3 o'clock (0°). We want it to start at 135°.
+  // Rotation of the circle element handles this instead.
   const filledLength = (pct / 100) * arcLength
-  const emptyLength = arcLength - filledLength
 
-  // Needle angle
-  const needleAngle = startAngle + (pct / 100) * sweepAngle
-
-  // Animated value
+  // Animated value + needle
   const [displayValue, setDisplayValue] = React.useState(0)
-  const [needleDeg, setNeedleDeg] = React.useState(startAngle)
+  const [animatedPct, setAnimatedPct] = React.useState(0)
 
   React.useEffect(() => {
     const duration = 800
@@ -80,21 +85,33 @@ export function Gauge({
       const progress = Math.min((now - start) / duration, 1)
       const eased = 1 - Math.pow(1 - progress, 3)
       setDisplayValue(Math.round(min + (value - min) * eased))
-      setNeedleDeg(startAngle + (pct * eased / 100) * sweepAngle)
+      setAnimatedPct(pct * eased)
       if (progress < 1) requestAnimationFrame(tick)
     }
     requestAnimationFrame(tick)
-  }, [value, min, pct, startAngle, sweepAngle])
+  }, [value, min, pct])
+
+  const needleAngleDeg = startAngleDeg + (animatedPct / 100) * sweepAngleDeg
+  const needleRad = (needleAngleDeg * Math.PI) / 180
 
   // Tick marks
   const tickCount = 9
   const ticks = Array.from({ length: tickCount }, (_, i) => {
-    const angle = startAngle + (i / (tickCount - 1)) * sweepAngle
+    const angle = startAngleDeg + (i / (tickCount - 1)) * sweepAngleDeg
     const rad = (angle * Math.PI) / 180
     const inner = radius - config.stroke - 2
-    const outer = radius - 2
-    return { angle, rad, inner, outer, major: i % 2 === 0 }
+    const outer = radius - 1
+    return { rad, major: i % 2 === 0, inner, outer }
   })
+
+  // viewBox crops to just show the gauge (top portion + value text area)
+  // The 270° arc goes from bottom-left through top to bottom-right
+  // Bottom gap is 90° centered at 270° (bottom), so bottom of arc is at ~radius*sin(45°) below center
+  const bottomCrop = radius * Math.sin(Math.PI / 4) * 0.35
+  const vbX = 0
+  const vbY = 0
+  const vbW = svgDim
+  const vbH = svgDim - bottomCrop
 
   return (
     <div
@@ -102,7 +119,11 @@ export function Gauge({
       className={cn("inline-flex flex-col items-center gap-1", className)}
       {...props}
     >
-      <svg width={config.dim} height={config.dim * 0.7}>
+      <svg
+        width={config.dim}
+        height={config.dim * 0.82}
+        viewBox={`${vbX} ${vbY} ${vbW} ${vbH}`}
+      >
         <defs>
           <filter id={filterId}>
             <feGaussianBlur stdDeviation="3" result="blur" />
@@ -113,101 +134,95 @@ export function Gauge({
           </filter>
         </defs>
 
-        <g transform={`translate(0, ${-config.dim * 0.15})`}>
-          {/* Background track */}
-          <circle
-            cx={center}
-            cy={center}
-            r={radius}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={config.stroke}
-            strokeLinecap="round"
-            strokeDasharray={`${arcLength} ${2 * Math.PI * radius - arcLength}`}
-            strokeDashoffset={-((2 * Math.PI * radius - arcLength) / 2 + arcLength)}
-            className="text-foreground/10"
-            transform={`rotate(${startAngle + sweepAngle} ${center} ${center})`}
-          />
+        {/* Background track */}
+        <circle
+          cx={center}
+          cy={center}
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={config.stroke}
+          strokeLinecap="round"
+          strokeDasharray={`${arcLength} ${gapLength}`}
+          className="text-foreground/10"
+          transform={`rotate(${startAngleDeg} ${center} ${center})`}
+        />
 
-          {/* Filled arc */}
-          <circle
-            cx={center}
-            cy={center}
-            r={radius}
-            fill="none"
-            stroke={color}
-            strokeWidth={config.stroke}
-            strokeLinecap="round"
-            strokeDasharray={`${filledLength} ${2 * Math.PI * radius - filledLength}`}
-            strokeDashoffset={-((2 * Math.PI * radius - arcLength) / 2 + arcLength)}
-            transform={`rotate(${startAngle + sweepAngle} ${center} ${center})`}
-            filter={`url(#${CSS.escape(filterId)})`}
-            className="transition-all duration-700 ease-out"
-          />
+        {/* Filled arc */}
+        <circle
+          cx={center}
+          cy={center}
+          r={radius}
+          fill="none"
+          stroke={color}
+          strokeWidth={config.stroke}
+          strokeLinecap="round"
+          strokeDasharray={`${filledLength} ${fullCirc - filledLength}`}
+          transform={`rotate(${startAngleDeg} ${center} ${center})`}
+          filter={`url(#${CSS.escape(filterId)})`}
+        />
 
-          {/* Glow arc */}
-          <circle
-            cx={center}
-            cy={center}
-            r={radius}
-            fill="none"
-            stroke={color}
-            strokeWidth={config.stroke * 3}
-            strokeLinecap="round"
-            strokeDasharray={`${filledLength} ${2 * Math.PI * radius - filledLength}`}
-            strokeDashoffset={-((2 * Math.PI * radius - arcLength) / 2 + arcLength)}
-            transform={`rotate(${startAngle + sweepAngle} ${center} ${center})`}
-            className="animate-pulse"
-            opacity={0.08}
-          />
+        {/* Glow arc */}
+        <circle
+          cx={center}
+          cy={center}
+          r={radius}
+          fill="none"
+          stroke={color}
+          strokeWidth={config.stroke * 3}
+          strokeLinecap="round"
+          strokeDasharray={`${filledLength} ${fullCirc - filledLength}`}
+          transform={`rotate(${startAngleDeg} ${center} ${center})`}
+          className="animate-pulse"
+          opacity={0.08}
+        />
 
-          {/* Tick marks */}
-          {ticks.map((t, i) => (
-            <line
-              key={i}
-              x1={center + t.inner * Math.cos(t.rad)}
-              y1={center + t.inner * Math.sin(t.rad)}
-              x2={center + t.outer * Math.cos(t.rad)}
-              y2={center + t.outer * Math.sin(t.rad)}
-              stroke={color}
-              strokeWidth={t.major ? 1.5 : 0.5}
-              opacity={t.major ? 0.6 : 0.25}
-            />
-          ))}
-
-          {/* Needle */}
+        {/* Tick marks */}
+        {ticks.map((t, i) => (
           <line
-            x1={center}
-            y1={center}
-            x2={center + config.needle * Math.cos((needleDeg * Math.PI) / 180)}
-            y2={center + config.needle * Math.sin((needleDeg * Math.PI) / 180)}
+            key={i}
+            x1={center + t.inner * Math.cos(t.rad)}
+            y1={center + t.inner * Math.sin(t.rad)}
+            x2={center + t.outer * Math.cos(t.rad)}
+            y2={center + t.outer * Math.sin(t.rad)}
             stroke={color}
-            strokeWidth={2}
-            strokeLinecap="round"
-            filter={`url(#${CSS.escape(filterId)})`}
+            strokeWidth={t.major ? 1.5 : 0.5}
+            opacity={t.major ? 0.6 : 0.25}
           />
+        ))}
 
-          {/* Center dot */}
-          <circle cx={center} cy={center} r={3} fill={color} />
+        {/* Needle */}
+        <line
+          x1={center}
+          y1={center}
+          x2={center + config.needle * Math.cos(needleRad)}
+          y2={center + config.needle * Math.sin(needleRad)}
+          stroke={color}
+          strokeWidth={2}
+          strokeLinecap="round"
+          filter={`url(#${CSS.escape(filterId)})`}
+        />
 
-          {/* Value text */}
-          <text
-            x={center}
-            y={center + config.needle * 0.45}
-            textAnchor="middle"
-            dominantBaseline="central"
-            className={cn("font-mono font-bold", variantText[resolvedVariant])}
-            fill="currentColor"
-            fontSize={config.fontSize}
-          >
-            {displayValue}
-            {unit && (
-              <tspan fontSize={config.fontSize * 0.5} opacity={0.7}>
-                {" "}{unit}
-              </tspan>
-            )}
-          </text>
-        </g>
+        {/* Center dot */}
+        <circle cx={center} cy={center} r={3} fill={color} />
+
+        {/* Value text */}
+        <text
+          x={center}
+          y={center + config.needle * 0.5}
+          textAnchor="middle"
+          dominantBaseline="central"
+          className={cn("font-mono font-bold", variantText[resolvedVariant])}
+          fill="currentColor"
+          fontSize={config.fontSize}
+        >
+          {displayValue}
+          {unit && (
+            <tspan fontSize={config.fontSize * 0.5} opacity={0.7}>
+              {" "}{unit}
+            </tspan>
+          )}
+        </text>
       </svg>
 
       {label && (

@@ -39,28 +39,30 @@ export function DataStream({
   ...props
 }: DataStreamProps) {
   const scrollRef = React.useRef<HTMLDivElement>(null)
-  const [visibleEntries, setVisibleEntries] = React.useState<DataStreamEntry[]>([])
+  const [visibleCount, setVisibleCount] = React.useState(0)
+  const entriesRef = React.useRef(entries)
+  entriesRef.current = entries
 
-  // Staggered entry reveal
+  // Staggered entry reveal using count instead of copying array
   React.useEffect(() => {
-    setVisibleEntries([])
-    let idx = 0
+    setVisibleCount(0)
+    let count = 0
     const interval = setInterval(() => {
-      if (idx >= entries.length) {
+      count++
+      if (count > entriesRef.current.length) {
         clearInterval(interval)
         return
       }
-      setVisibleEntries((prev) => [...prev, entries[idx]])
-      idx++
+      setVisibleCount(count)
     }, 300)
     return () => clearInterval(interval)
-  }, [entries])
+  }, [entries.length])
 
   React.useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
-  }, [visibleEntries])
+  }, [visibleCount])
 
   return (
     <div
@@ -83,25 +85,23 @@ export function DataStream({
           {title}
         </span>
         <span className="ml-auto font-mono text-[10px] text-foreground/40">
-          {visibleEntries.length}/{entries.length}
+          {visibleCount}/{entries.length}
         </span>
       </div>
 
       {/* Entries */}
       <div
         ref={scrollRef}
-        className="space-y-0 overflow-y-auto font-mono text-xs"
+        className="overflow-y-auto font-mono text-xs"
         style={{ maxHeight: maxVisible * 28 }}
       >
-        {visibleEntries.map((entry, i) => {
+        {entries.slice(0, visibleCount).map((entry, i) => {
           const type = entry.type ?? "info"
           return (
             <div
               key={i}
-              className={cn(
-                "flex items-start gap-2 border-b border-border/20 px-4 py-1.5",
-                "animate-[fadeSlideIn_0.3s_ease-out]"
-              )}
+              className="flex items-start gap-2 border-b border-border/20 px-4 py-1.5"
+              style={{ animation: "dataStreamFadeIn 0.3s ease-out" }}
             >
               <div className={cn("mt-1.5 h-1 w-1 shrink-0 rounded-full", typeDot[type])} />
               {entry.timestamp && (
@@ -114,7 +114,7 @@ export function DataStream({
       </div>
 
       <style jsx>{`
-        @keyframes fadeSlideIn {
+        @keyframes dataStreamFadeIn {
           from { opacity: 0; transform: translateY(-4px); }
           to { opacity: 1; transform: translateY(0); }
         }

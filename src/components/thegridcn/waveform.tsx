@@ -9,6 +9,7 @@ interface WaveformProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "success" | "warning" | "danger"
   label?: string
   intensity?: "low" | "medium" | "high"
+  audioSrc?: string
 }
 
 const variantColor: Record<string, string> = {
@@ -26,10 +27,12 @@ const variantGlow: Record<string, string> = {
 }
 
 const intensityRange = {
-  low: { min: 15, max: 50 },
-  medium: { min: 20, max: 80 },
-  high: { min: 30, max: 100 },
+  low: { min: 8, max: 28 },
+  medium: { min: 10, max: 40 },
+  high: { min: 14, max: 48 },
 }
+
+const CONTAINER_HEIGHT = 52
 
 export function Waveform({
   bars = 24,
@@ -37,41 +40,55 @@ export function Waveform({
   variant = "default",
   label,
   intensity = "medium",
+  audioSrc,
   className,
   ...props
 }: WaveformProps) {
   const [heights, setHeights] = React.useState<number[]>(() =>
-    Array.from({ length: bars }, () => 20)
+    Array.from({ length: bars }, () => 4)
   )
   const rafRef = React.useRef<number>(0)
+  const frameRef = React.useRef(0)
+  const audioRef = React.useRef<HTMLAudioElement | null>(null)
   const range = intensityRange[intensity]
 
   React.useEffect(() => {
     if (!playing) {
-      // Settle to low bars
-      setHeights(Array.from({ length: bars }, () => 8))
+      setHeights(Array.from({ length: bars }, () => 4))
+      cancelAnimationFrame(rafRef.current)
+      if (audioRef.current) {
+        audioRef.current.pause()
+      }
       return
     }
 
-    let frame = 0
+    if (audioSrc && audioRef.current) {
+      audioRef.current.play().catch(() => {})
+    }
+
     function animate() {
-      frame++
-      setHeights((prev) =>
-        prev.map((h, i) => {
-          // Create wave pattern using sin with offset per bar
-          const wave = Math.sin(frame * 0.08 + i * 0.4) * 0.5 + 0.5
-          const noise = Math.random() * 0.3
-          const target = range.min + (range.max - range.min) * (wave + noise) / 1.3
-          // Smooth interpolation
-          return h + (target - h) * 0.15
+      frameRef.current++
+      const f = frameRef.current
+      setHeights(
+        Array.from({ length: bars }, (_, i) => {
+          const wave1 = Math.sin(f * 0.06 + i * 0.5) * 0.5 + 0.5
+          const wave2 = Math.sin(f * 0.1 + i * 0.3 + 2) * 0.3 + 0.3
+          const noise = Math.random() * 0.2
+          const combined = (wave1 + wave2 + noise) / 1.5
+          return range.min + (range.max - range.min) * combined
         })
       )
       rafRef.current = requestAnimationFrame(animate)
     }
 
     rafRef.current = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [playing, bars, range.min, range.max])
+    return () => {
+      cancelAnimationFrame(rafRef.current)
+      if (audioRef.current) {
+        audioRef.current.pause()
+      }
+    }
+  }, [playing, bars, range.min, range.max, audioSrc])
 
   return (
     <div
@@ -90,28 +107,35 @@ export function Waveform({
           <span className="text-[10px] uppercase tracking-widest text-foreground/80">
             {label}
           </span>
-          <span className={cn("text-[9px] uppercase tracking-widest", playing ? "text-green-500" : "text-foreground/40")}>
+          <span className={cn("text-[9px] uppercase tracking-widest", playing ? "text-green-500 animate-pulse" : "text-foreground/40")}>
             {playing ? "LIVE" : "IDLE"}
           </span>
         </div>
       )}
 
-      <div className="flex items-end justify-center gap-[2px]" style={{ height: 48 }}>
+      <div
+        className="flex items-end justify-center gap-[2px]"
+        style={{ height: CONTAINER_HEIGHT }}
+      >
         {heights.map((h, i) => (
           <div
             key={i}
             className={cn(
-              "w-1 rounded-t-sm transition-[height] duration-75",
+              "w-1.5 rounded-t-sm",
               variantColor[variant],
               playing && variantGlow[variant]
             )}
             style={{
-              height: `${Math.max(4, h)}%`,
-              opacity: playing ? 0.6 + (h / 100) * 0.4 : 0.3,
+              height: Math.max(2, h),
+              opacity: playing ? 0.5 + (h / CONTAINER_HEIGHT) * 0.5 : 0.2,
             }}
           />
         ))}
       </div>
+
+      {audioSrc && (
+        <audio ref={audioRef} src={audioSrc} loop preload="auto" />
+      )}
 
       {/* Corner decorations */}
       <div className="pointer-events-none absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-primary/50" />

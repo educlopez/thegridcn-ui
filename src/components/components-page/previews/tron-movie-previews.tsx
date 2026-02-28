@@ -668,9 +668,72 @@ export const GaugePreview = React.memo(function GaugePreview() {
 });
 
 export const WaveformPreview = React.memo(function WaveformPreview() {
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const audioCtxRef = React.useRef<AudioContext | null>(null);
+  const oscillatorsRef = React.useRef<OscillatorNode[]>([]);
+
+  function toggleAudio() {
+    if (isPlaying) {
+      oscillatorsRef.current.forEach((o) => { try { o.stop() } catch {} });
+      oscillatorsRef.current = [];
+      audioCtxRef.current?.close();
+      audioCtxRef.current = null;
+      setIsPlaying(false);
+      return;
+    }
+
+    const ctx = new AudioContext();
+    audioCtxRef.current = ctx;
+
+    // Tron-like synth: layered detuned saws + filter
+    const masterGain = ctx.createGain();
+    masterGain.gain.value = 0.08;
+    const filter = ctx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.value = 600;
+    filter.Q.value = 8;
+    masterGain.connect(filter).connect(ctx.destination);
+
+    // LFO on filter
+    const lfo = ctx.createOscillator();
+    const lfoGain = ctx.createGain();
+    lfo.frequency.value = 0.3;
+    lfoGain.gain.value = 400;
+    lfo.connect(lfoGain).connect(filter.frequency);
+    lfo.start();
+
+    const freqs = [55, 55.5, 110, 82.41];
+    const oscs = freqs.map((f) => {
+      const osc = ctx.createOscillator();
+      osc.type = "sawtooth";
+      osc.frequency.value = f;
+      osc.connect(masterGain);
+      osc.start();
+      return osc;
+    });
+
+    oscillatorsRef.current = [...oscs, lfo];
+    setIsPlaying(true);
+  }
+
+  React.useEffect(() => {
+    return () => {
+      oscillatorsRef.current.forEach((o) => { try { o.stop() } catch {} });
+      audioCtxRef.current?.close();
+    };
+  }, []);
+
   return (
     <div className="space-y-4">
-      <Waveform label="AUDIO FEED" bars={32} playing intensity="high" />
+      <Waveform label="AUDIO FEED" bars={32} playing={isPlaying} intensity="high" />
+      <div className="flex items-center justify-center gap-4">
+        <button
+          onClick={toggleAudio}
+          className="rounded border border-primary/50 bg-primary/10 px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest text-primary transition-colors hover:bg-primary/20"
+        >
+          {isPlaying ? "■ STOP" : "▶ PLAY SYNTH"}
+        </button>
+      </div>
       <Waveform label="SIGNAL MONITOR" bars={24} playing variant="warning" intensity="low" />
     </div>
   );
