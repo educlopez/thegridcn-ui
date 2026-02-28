@@ -310,6 +310,63 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // Dashboard & Monitoring
+      {
+        id: "gauge",
+        name: "gauge",
+        title: "Gauge",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "waveform",
+        name: "waveform",
+        title: "Waveform",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "data-stream",
+        name: "data-stream",
+        title: "Data Stream",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "boot-sequence",
+        name: "boot-sequence",
+        title: "Boot Sequence",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "signal-indicator",
+        name: "signal-indicator",
+        title: "Signal Indicator",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "notification",
+        name: "notification",
+        title: "Notification",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "stepper",
+        name: "stepper",
+        title: "Stepper",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "tag",
+        name: "tag",
+        title: "Tag",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
       // Game
       {
         id: "light-cycle-game",

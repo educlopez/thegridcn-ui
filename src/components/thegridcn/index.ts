@@ -44,6 +44,16 @@ export { ProgressRing } from "./progress-ring"
 export { DiagnosticsPanel } from "./diagnostics-panel"
 export { IdentityDisc } from "./identity-disc"
 
+// Dashboard & Monitoring
+export { Gauge } from "./gauge"
+export { Waveform } from "./waveform"
+export { DataStream } from "./data-stream"
+export { BootSequence } from "./boot-sequence"
+export { SignalIndicator } from "./signal-indicator"
+export { Notification } from "./notification"
+export { Stepper } from "./stepper"
+export { Tag } from "./tag"
+
 // Game
 export { LightCycleGame } from "./light-cycle-game"
 export { Leaderboard } from "./leaderboard"

@@ -28,6 +28,14 @@ import {
   ProgressRing,
   DiagnosticsPanel,
   IdentityDisc,
+  Gauge,
+  Waveform,
+  DataStream,
+  BootSequence,
+  SignalIndicator,
+  Notification,
+  Stepper,
+  Tag,
 } from "@/components/thegridcn"
 
 export function TronMovieSection() {
@@ -326,6 +334,85 @@ export function TronMovieSection() {
             accessLevel="user"
             status="derezzed"
           />
+        </div>
+      </ComponentCard>
+
+      {/* Gauges & Signals */}
+      <ComponentCard title="Gauges & Signal Indicators">
+        <div className="space-y-6">
+          <div className="flex flex-wrap items-end justify-center gap-6">
+            <Gauge value={72} label="SPEED" unit="KM/H" size="md" />
+            <Gauge value={45} label="TEMP" unit="°C" size="md" variant="warning" />
+            <Gauge value={92} label="LOAD" unit="%" size="md" variant="danger" />
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <SignalIndicator strength={90} label="UPLINK" showValue />
+            <SignalIndicator strength={45} label="RELAY" showValue />
+            <SignalIndicator strength={10} label="BEACON" showValue />
+          </div>
+        </div>
+      </ComponentCard>
+
+      {/* Waveform & Data Stream */}
+      <ComponentCard title="Audio Waveform & Live Data">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Waveform label="AUDIO FEED" bars={32} playing intensity="high" />
+          <DataStream
+            title="EVENT LOG"
+            entries={[
+              { timestamp: "12:00:01", text: "Connection established", type: "success" },
+              { timestamp: "12:00:03", text: "Scanning sector 7G...", type: "info" },
+              { timestamp: "12:00:05", text: "Anomaly detected", type: "warning" },
+              { timestamp: "12:00:07", text: "Breach attempt blocked", type: "error" },
+              { timestamp: "12:00:09", text: "Diagnostic complete", type: "success" },
+            ]}
+          />
+        </div>
+      </ComponentCard>
+
+      {/* Boot Sequence & Stepper */}
+      <ComponentCard title="Boot Sequence & Process Steps">
+        <div className="grid gap-4 md:grid-cols-2">
+          <BootSequence
+            title="GRID INITIALIZATION"
+            steps={[
+              { label: "Loading kernel modules", duration: 500 },
+              { label: "Initializing network", duration: 700 },
+              { label: "Mounting filesystem", duration: 400 },
+              { label: "Security protocols", duration: 600 },
+              { label: "System ready", duration: 300 },
+            ]}
+          />
+          <Stepper
+            currentStep={2}
+            orientation="vertical"
+            steps={[
+              { label: "Initialize", description: "Boot core systems" },
+              { label: "Authenticate", description: "Verify identity disc" },
+              { label: "Connect", description: "Establish grid link" },
+              { label: "Deploy", description: "Launch program" },
+            ]}
+          />
+        </div>
+      </ComponentCard>
+
+      {/* Notifications & Tags */}
+      <ComponentCard title="Notifications & Tags">
+        <div className="space-y-4">
+          <div className="grid gap-3 md:grid-cols-2">
+            <Notification title="System Update" description="Grid firmware v2.7.1 available." variant="info" timestamp="12:34" />
+            <Notification title="Scan Complete" description="All sectors clear." variant="success" timestamp="12:35" />
+            <Notification title="High Energy" description="Power core at 89%." variant="warning" timestamp="12:36" />
+            <Notification title="Connection Lost" description="Relay node 7G unreachable." variant="error" timestamp="12:37" />
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <Tag variant="default" glow>PROGRAM</Tag>
+            <Tag variant="success" glow>ACTIVE</Tag>
+            <Tag variant="warning">STANDBY</Tag>
+            <Tag variant="danger" glow>DEREZZED</Tag>
+            <Tag variant="outline">ARCHIVED</Tag>
+            <Tag variant="default" size="md" glow>SECTOR 7G</Tag>
+          </div>
         </div>
       </ComponentCard>
 
