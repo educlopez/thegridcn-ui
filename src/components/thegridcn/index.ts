@@ -54,6 +54,16 @@ export { Notification } from "./notification"
 export { Stepper } from "./stepper"
 export { Tag } from "./tag"
 
+// Landing Page & Dashboard
+export { StatCard } from "./stat-card"
+export { Sparkline } from "./sparkline"
+export { FeatureCard } from "./feature-card"
+export { PricingCard } from "./pricing-card"
+export { TestimonialCard } from "./testimonial-card"
+export { StatsCounter } from "./stats-counter"
+export { CTABanner } from "./cta-banner"
+export { Heatmap } from "./heatmap"
+
 // Game
 export { LightCycleGame } from "./light-cycle-game"
 export { Leaderboard } from "./leaderboard"

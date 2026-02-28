@@ -36,6 +36,14 @@ import {
   Notification,
   Stepper,
   Tag,
+  StatCard,
+  Sparkline,
+  FeatureCard,
+  PricingCard,
+  TestimonialCard,
+  StatsCounter,
+  CTABanner,
+  Heatmap,
 } from "@/components/thegridcn"
 
 export function TronMovieSection() {
@@ -414,6 +422,128 @@ export function TronMovieSection() {
             <Tag variant="default" size="md" glow>SECTOR 7G</Tag>
           </div>
         </div>
+      </ComponentCard>
+
+      {/* Dashboard KPI Cards */}
+      <ComponentCard title="Dashboard Stat Cards & Sparklines">
+        <div className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-3">
+            <StatCard
+              title="ACTIVE PROGRAMS"
+              value={12847}
+              trend="up"
+              trendValue="+12.5%"
+              sparkline={[20, 35, 28, 45, 42, 55, 60, 58, 72]}
+            />
+            <StatCard
+              title="RESPONSE TIME"
+              value={42}
+              unit="ms"
+              trend="down"
+              trendValue="-8.3%"
+              sparkline={[80, 72, 65, 58, 50, 45, 48, 42]}
+            />
+            <StatCard
+              title="GRID UPTIME"
+              value="99.97"
+              unit="%"
+              trend="neutral"
+              trendValue="STABLE"
+            />
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-8">
+            <div className="flex flex-col items-center gap-1">
+              <Sparkline data={[10, 25, 18, 35, 28, 42, 55, 48, 62]} variant="success" />
+              <span className="text-[9px] uppercase tracking-widest text-foreground/40">GROWTH</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <Sparkline data={[60, 55, 48, 52, 45, 38, 42, 35, 30]} variant="danger" />
+              <span className="text-[9px] uppercase tracking-widest text-foreground/40">LATENCY</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <Sparkline data={[30, 35, 32, 38, 34, 36, 33, 37, 35]} width={150} />
+              <span className="text-[9px] uppercase tracking-widest text-foreground/40">STABLE</span>
+            </div>
+          </div>
+        </div>
+      </ComponentCard>
+
+      {/* Landing Page Components */}
+      <ComponentCard title="Landing Page: Features & Pricing">
+        <div className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-3">
+            <FeatureCard
+              icon={<span className="text-lg">◈</span>}
+              title="Grid Architecture"
+              description="Distributed processing across all sectors with real-time sync."
+            />
+            <FeatureCard
+              icon={<span className="text-lg">⬡</span>}
+              title="Identity Protocols"
+              description="Disc-based authentication with multi-layer encryption."
+              variant="highlight"
+            />
+            <FeatureCard
+              icon={<span className="text-lg">△</span>}
+              title="Derez Protection"
+              description="Automated threat response with sub-millisecond intervention."
+            />
+          </div>
+          <StatsCounter
+            columns={4}
+            items={[
+              { value: 12847, label: "ACTIVE USERS" },
+              { value: 99, suffix: "%", label: "UPTIME" },
+              { value: 42, suffix: "ms", label: "AVG LATENCY" },
+              { value: 847, label: "GRID SECTORS" },
+            ]}
+          />
+        </div>
+      </ComponentCard>
+
+      {/* Testimonials & CTA */}
+      <ComponentCard title="Testimonials & Call to Action">
+        <div className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-2">
+            <TestimonialCard
+              quote="The Grid architecture transformed our infrastructure. Response times dropped by 60%."
+              author="Ajay Singh"
+              role="CTO, ENCOM"
+              rating={5}
+            />
+            <TestimonialCard
+              quote="Identity disc protocols are the most secure authentication we've deployed."
+              author="Eve Kim"
+              role="Security Lead"
+              rating={4}
+            />
+          </div>
+          <CTABanner
+            title="ENTER THE GRID"
+            description="Join thousands of programs running on the most advanced distributed architecture."
+            primaryAction={{ label: "GET STARTED" }}
+            secondaryAction={{ label: "VIEW DOCS" }}
+            variant="highlight"
+          />
+        </div>
+      </ComponentCard>
+
+      {/* Heatmap */}
+      <ComponentCard title="Grid Activity Heatmap">
+        <Heatmap
+          label="SECTOR ACTIVITY (7 DAYS)"
+          rowLabels={["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]}
+          columnLabels={["00", "04", "08", "12", "16", "20"]}
+          data={[
+            [2, 0, 5, 8, 7, 3],
+            [1, 0, 6, 10, 9, 4],
+            [3, 1, 7, 12, 8, 5],
+            [0, 0, 4, 9, 10, 6],
+            [2, 1, 8, 11, 7, 2],
+            [5, 3, 4, 6, 3, 1],
+            [4, 2, 3, 5, 2, 0],
+          ]}
+        />
       </ComponentCard>
 
       {/* Complete HUD Demo */}

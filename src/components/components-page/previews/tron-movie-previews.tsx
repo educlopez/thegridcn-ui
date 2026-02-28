@@ -42,6 +42,14 @@ import {
   Notification,
   Stepper,
   Tag,
+  StatCard,
+  Sparkline,
+  FeatureCard,
+  PricingCard,
+  TestimonialCard,
+  StatsCounter,
+  CTABanner,
+  Heatmap,
 } from "@/components/thegridcn";
 
 // Dynamic 3D components
@@ -845,6 +853,193 @@ export const TagPreview = React.memo(function TagPreview() {
   );
 });
 
+// Landing Page & Dashboard Previews
+
+export const StatCardPreview = React.memo(function StatCardPreview() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <StatCard
+        title="TOTAL USERS"
+        value={12847}
+        trend="up"
+        trendValue="+12.5%"
+        sparkline={[20, 35, 28, 45, 42, 55, 60, 58, 72]}
+      />
+      <StatCard
+        title="RESPONSE TIME"
+        value={42}
+        unit="ms"
+        trend="down"
+        trendValue="-8.3%"
+        sparkline={[80, 72, 65, 58, 50, 45, 48, 42]}
+      />
+      <StatCard
+        title="UPTIME"
+        value="99.97"
+        unit="%"
+        trend="neutral"
+        trendValue="STABLE"
+      />
+    </div>
+  );
+});
+
+export const SparklinePreview = React.memo(function SparklinePreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-8">
+      <div className="flex flex-col items-center gap-1">
+        <Sparkline data={[10, 25, 18, 35, 28, 42, 55, 48, 62]} variant="success" />
+        <span className="text-[9px] uppercase tracking-widest text-foreground/40">GROWTH</span>
+      </div>
+      <div className="flex flex-col items-center gap-1">
+        <Sparkline data={[60, 55, 48, 52, 45, 38, 42, 35, 30]} variant="danger" />
+        <span className="text-[9px] uppercase tracking-widest text-foreground/40">LATENCY</span>
+      </div>
+      <div className="flex flex-col items-center gap-1">
+        <Sparkline data={[30, 35, 32, 38, 34, 36, 33, 37, 35]} width={150} />
+        <span className="text-[9px] uppercase tracking-widest text-foreground/40">STABLE</span>
+      </div>
+    </div>
+  );
+});
+
+export const FeatureCardPreview = React.memo(function FeatureCardPreview() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <FeatureCard
+        icon={<span className="text-lg">◈</span>}
+        title="Grid Architecture"
+        description="Distributed processing across all sectors with real-time synchronization."
+      />
+      <FeatureCard
+        icon={<span className="text-lg">⬡</span>}
+        title="Identity Protocols"
+        description="Disc-based authentication with multi-layer encryption."
+        variant="highlight"
+      />
+      <FeatureCard
+        icon={<span className="text-lg">△</span>}
+        title="Derez Protection"
+        description="Automated threat response with sub-millisecond intervention."
+      />
+    </div>
+  );
+});
+
+export const PricingCardPreview = React.memo(function PricingCardPreview() {
+  return (
+    <div className="grid gap-4 md:grid-cols-3">
+      <PricingCard
+        title="BASIC"
+        price="$0"
+        period="/mo"
+        description="For individual programs"
+        features={[
+          { text: "5 Grid sectors", included: true },
+          { text: "Basic diagnostics", included: true },
+          { text: "Community support", included: true },
+          { text: "Priority relay", included: false },
+          { text: "Custom protocols", included: false },
+        ]}
+      />
+      <PricingCard
+        title="PRO"
+        price="$29"
+        period="/mo"
+        description="For advanced operations"
+        highlighted
+        badge="POPULAR"
+        features={[
+          { text: "Unlimited sectors", included: true },
+          { text: "Full diagnostics", included: true },
+          { text: "Priority support", included: true },
+          { text: "Priority relay", included: true },
+          { text: "Custom protocols", included: false },
+        ]}
+      />
+      <PricingCard
+        title="SYSTEM"
+        price="$99"
+        period="/mo"
+        description="Full grid access"
+        features={[
+          { text: "Unlimited sectors", included: true },
+          { text: "Full diagnostics", included: true },
+          { text: "Dedicated support", included: true },
+          { text: "Priority relay", included: true },
+          { text: "Custom protocols", included: true },
+        ]}
+      />
+    </div>
+  );
+});
+
+export const TestimonialCardPreview = React.memo(function TestimonialCardPreview() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <TestimonialCard
+        quote="The Grid architecture transformed our entire infrastructure. Response times dropped by 60% across all sectors."
+        author="Ajay Singh"
+        role="CTO, ENCOM"
+        rating={5}
+      />
+      <TestimonialCard
+        quote="Identity disc protocols are the most secure authentication we've deployed. Zero breaches since implementation."
+        author="Eve Kim"
+        role="Security Lead"
+        rating={4}
+      />
+    </div>
+  );
+});
+
+export const StatsCounterPreview = React.memo(function StatsCounterPreview() {
+  return (
+    <StatsCounter
+      columns={4}
+      items={[
+        { value: 12847, label: "ACTIVE USERS" },
+        { value: 99, suffix: "%", label: "UPTIME" },
+        { value: 42, suffix: "ms", label: "AVG LATENCY" },
+        { value: 847, prefix: "", label: "GRID SECTORS" },
+      ]}
+    />
+  );
+});
+
+export const CTABannerPreview = React.memo(function CTABannerPreview() {
+  return (
+    <div className="space-y-4">
+      <CTABanner
+        title="ENTER THE GRID"
+        description="Join thousands of programs already running on the most advanced distributed architecture."
+        primaryAction={{ label: "GET STARTED" }}
+        secondaryAction={{ label: "VIEW DOCS" }}
+        variant="highlight"
+      />
+    </div>
+  );
+});
+
+export const HeatmapPreview = React.memo(function HeatmapPreview() {
+  return (
+    <Heatmap
+      label="GRID ACTIVITY (7 DAYS)"
+      rowLabels={["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]}
+      columnLabels={["00", "04", "08", "12", "16", "20"]}
+      data={[
+        [2, 0, 5, 8, 7, 3],
+        [1, 0, 6, 10, 9, 4],
+        [3, 1, 7, 12, 8, 5],
+        [0, 0, 4, 9, 10, 6],
+        [2, 1, 8, 11, 7, 2],
+        [5, 3, 4, 6, 3, 1],
+        [4, 2, 3, 5, 2, 0],
+      ]}
+    />
+  );
+});
+
 export const tronMoviePreviews: Record<string, React.ComponentType> = {
   // Data Display
   "data-card": DataCardPreview,
@@ -897,6 +1092,15 @@ export const tronMoviePreviews: Record<string, React.ComponentType> = {
   "notification": NotificationPreview,
   "stepper": StepperPreview,
   "tag": TagPreview,
+  // Landing Page & Dashboard
+  "stat-card": StatCardPreview,
+  "sparkline": SparklinePreview,
+  "feature-card": FeatureCardPreview,
+  "pricing-card": PricingCardPreview,
+  "testimonial-card": TestimonialCardPreview,
+  "stats-counter": StatsCounterPreview,
+  "cta-banner": CTABannerPreview,
+  "heatmap": HeatmapPreview,
   // Game
   "light-cycle-game": LightCycleGamePreview,
 };

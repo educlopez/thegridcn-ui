@@ -367,6 +367,63 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // Landing Page & Dashboard
+      {
+        id: "stat-card",
+        name: "stat-card",
+        title: "Stat Card",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "sparkline",
+        name: "sparkline",
+        title: "Sparkline",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "feature-card",
+        name: "feature-card",
+        title: "Feature Card",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "pricing-card",
+        name: "pricing-card",
+        title: "Pricing Card",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "testimonial-card",
+        name: "testimonial-card",
+        title: "Testimonial Card",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "stats-counter",
+        name: "stats-counter",
+        title: "Stats Counter",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "cta-banner",
+        name: "cta-banner",
+        title: "CTA Banner",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "heatmap",
+        name: "heatmap",
+        title: "Heatmap",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
       // Game
       {
         id: "light-cycle-game",
