@@ -44,6 +44,14 @@ import {
   StatsCounter,
   CTABanner,
   Heatmap,
+  LogoCloud,
+  ComparisonTable,
+  Changelog,
+  ProgressBar,
+  AvatarGroup,
+  BentoGrid,
+  Marquee,
+  Divider,
 } from "@/components/thegridcn"
 
 export function TronMovieSection() {
@@ -542,6 +550,85 @@ export function TronMovieSection() {
             [2, 1, 8, 11, 7, 2],
             [5, 3, 4, 6, 3, 1],
             [4, 2, 3, 5, 2, 0],
+          ]}
+        />
+      </ComponentCard>
+
+      {/* Logo Cloud & Marquee */}
+      <ComponentCard title="Logo Cloud & Scrolling Marquee">
+        <div className="space-y-4">
+          <LogoCloud
+            label="TRUSTED BY LEADING PROGRAMS"
+            logos={[
+              { name: "ENCOM", icon: <span>◈</span> },
+              { name: "GRID SYSTEMS", icon: <span>⬡</span> },
+              { name: "FLYNN LABS", icon: <span>△</span> },
+              { name: "DISC CORP", icon: <span>◇</span> },
+              { name: "SECTOR 7G", icon: <span>⬢</span> },
+            ]}
+          />
+          <Marquee speed="normal">
+            {["SYSTEM ONLINE", "ALL SECTORS CLEAR", "GRID STABLE", "UPLINK ACTIVE"].map((t, i) => (
+              <span key={i} className="shrink-0 font-mono text-xs uppercase tracking-widest text-primary/70">
+                ◆ {t}
+              </span>
+            ))}
+          </Marquee>
+        </div>
+      </ComponentCard>
+
+      {/* Comparison Table & Changelog */}
+      <ComponentCard title="Feature Comparison & Changelog">
+        <div className="space-y-4">
+          <ComparisonTable
+            columns={[{ name: "Basic" }, { name: "Pro", highlighted: true }, { name: "System" }]}
+            features={[
+              { name: "Grid Sectors", values: ["5", "Unlimited", "Unlimited"] },
+              { name: "Priority Relay", values: [false, true, true] },
+              { name: "Custom Protocols", values: [false, false, true] },
+            ]}
+          />
+          <Changelog
+            entries={[
+              { version: "2.7.1", date: "2026-02-28", title: "Performance Boost", type: "improvement" },
+              { version: "2.7.0", date: "2026-02-20", title: "Identity Disc 2FA", type: "feature" },
+              { version: "2.6.4", date: "2026-02-15", title: "Fixed Relay Timeout", type: "fix" },
+            ]}
+          />
+        </div>
+      </ComponentCard>
+
+      {/* Progress Bars & Avatars & Dividers */}
+      <ComponentCard title="Progress Bars, Avatars & Dividers">
+        <div className="space-y-5">
+          <ProgressBar value={78} label="UPLOAD" showValue />
+          <ProgressBar value={45} label="SCAN" showValue variant="warning" striped />
+          <ProgressBar value={92} label="SYNC" showValue variant="success" size="lg" />
+          <Divider variant="glow" label="TEAM" />
+          <AvatarGroup
+            size="lg"
+            users={[
+              { name: "Ares", status: "online" },
+              { name: "Eve Kim", status: "online" },
+              { name: "Ajay Singh", status: "away" },
+              { name: "Tron", status: "online" },
+              { name: "Clu", status: "offline" },
+              { name: "Quorra" },
+            ]}
+            max={5}
+          />
+        </div>
+      </ComponentCard>
+
+      {/* Bento Grid */}
+      <ComponentCard title="Bento Grid Layout">
+        <BentoGrid
+          columns={3}
+          items={[
+            { title: "Grid Architecture", description: "Distributed processing across all sectors.", icon: <span>◈</span>, span: "2x1", variant: "highlight" },
+            { title: "Identity Disc", description: "Biometric auth layer.", icon: <span>⬡</span> },
+            { title: "Derez Shield", description: "Threat response.", icon: <span>△</span> },
+            { title: "Sector Monitor", description: "Real-time grid activity dashboard.", icon: <span>◇</span>, span: "2x1" },
           ]}
         />
       </ComponentCard>

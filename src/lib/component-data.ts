@@ -424,6 +424,63 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // Marketing & Product
+      {
+        id: "logo-cloud",
+        name: "logo-cloud",
+        title: "Logo Cloud",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "comparison-table",
+        name: "comparison-table",
+        title: "Comparison Table",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "changelog",
+        name: "changelog",
+        title: "Changelog",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "progress-bar",
+        name: "progress-bar",
+        title: "Progress Bar",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "avatar-group",
+        name: "avatar-group",
+        title: "Avatar Group",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "bento-grid",
+        name: "bento-grid",
+        title: "Bento Grid",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "marquee",
+        name: "marquee",
+        title: "Marquee",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "divider",
+        name: "divider",
+        title: "Divider",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
       // Game
       {
         id: "light-cycle-game",

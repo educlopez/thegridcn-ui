@@ -64,6 +64,16 @@ export { StatsCounter } from "./stats-counter"
 export { CTABanner } from "./cta-banner"
 export { Heatmap } from "./heatmap"
 
+// Marketing & Product
+export { LogoCloud } from "./logo-cloud"
+export { ComparisonTable } from "./comparison-table"
+export { Changelog } from "./changelog"
+export { ProgressBar } from "./progress-bar"
+export { AvatarGroup } from "./avatar-group"
+export { BentoGrid } from "./bento-grid"
+export { Marquee } from "./marquee"
+export { Divider } from "./divider"
+
 // Game
 export { LightCycleGame } from "./light-cycle-game"
 export { Leaderboard } from "./leaderboard"

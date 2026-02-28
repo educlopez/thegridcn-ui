@@ -50,6 +50,14 @@ import {
   StatsCounter,
   CTABanner,
   Heatmap,
+  LogoCloud,
+  ComparisonTable,
+  Changelog,
+  ProgressBar,
+  AvatarGroup,
+  BentoGrid,
+  Marquee,
+  Divider,
 } from "@/components/thegridcn";
 
 // Dynamic 3D components
@@ -1040,6 +1048,187 @@ export const HeatmapPreview = React.memo(function HeatmapPreview() {
   );
 });
 
+// Marketing & Product Previews
+
+export const LogoCloudPreview = React.memo(function LogoCloudPreview() {
+  return (
+    <LogoCloud
+      label="TRUSTED BY LEADING PROGRAMS"
+      logos={[
+        { name: "ENCOM", icon: <span>◈</span> },
+        { name: "GRID SYSTEMS", icon: <span>⬡</span> },
+        { name: "FLYNN LABS", icon: <span>△</span> },
+        { name: "DISC CORP", icon: <span>◇</span> },
+        { name: "SECTOR 7G", icon: <span>⬢</span> },
+        { name: "TRON LEGACY", icon: <span>◆</span> },
+      ]}
+    />
+  );
+});
+
+export const ComparisonTablePreview = React.memo(function ComparisonTablePreview() {
+  return (
+    <ComparisonTable
+      label="FEATURE COMPARISON"
+      columns={[
+        { name: "Basic" },
+        { name: "Pro", highlighted: true },
+        { name: "System" },
+      ]}
+      features={[
+        { name: "Grid Sectors", values: ["5", "Unlimited", "Unlimited"] },
+        { name: "Diagnostics", values: [true, true, true] },
+        { name: "Priority Relay", values: [false, true, true] },
+        { name: "Custom Protocols", values: [false, false, true] },
+        { name: "Dedicated Support", values: [false, false, true] },
+        { name: "API Access", values: ["100/day", "10K/day", "Unlimited"] },
+      ]}
+    />
+  );
+});
+
+export const ChangelogPreview = React.memo(function ChangelogPreview() {
+  return (
+    <Changelog
+      label="RELEASE HISTORY"
+      entries={[
+        {
+          version: "2.7.1",
+          date: "2026-02-28",
+          title: "Grid Scan Performance Boost",
+          description: "Optimized sector scanning to reduce latency by 40%.",
+          type: "improvement",
+        },
+        {
+          version: "2.7.0",
+          date: "2026-02-20",
+          title: "Identity Disc 2FA",
+          description: "Two-factor authentication via disc biometrics.",
+          type: "feature",
+        },
+        {
+          version: "2.6.4",
+          date: "2026-02-15",
+          title: "Fixed Relay Node Timeout",
+          description: "Resolved intermittent connection drops on node 7G.",
+          type: "fix",
+        },
+        {
+          version: "2.6.0",
+          date: "2026-02-01",
+          title: "API v2 Migration",
+          description: "v1 endpoints deprecated. Migration guide available.",
+          type: "breaking",
+        },
+      ]}
+    />
+  );
+});
+
+export const ProgressBarPreview = React.memo(function ProgressBarPreview() {
+  return (
+    <div className="space-y-5">
+      <ProgressBar value={78} label="UPLOAD" showValue variant="default" />
+      <ProgressBar value={45} label="SCAN" showValue variant="warning" striped />
+      <ProgressBar value={92} label="SYNC" showValue variant="success" size="lg" />
+      <ProgressBar value={23} label="SHIELD" showValue variant="danger" size="sm" />
+    </div>
+  );
+});
+
+export const AvatarGroupPreview = React.memo(function AvatarGroupPreview() {
+  return (
+    <div className="flex flex-col items-center gap-6">
+      <AvatarGroup
+        size="lg"
+        users={[
+          { name: "Ares", status: "online" },
+          { name: "Eve Kim", status: "online" },
+          { name: "Ajay Singh", status: "away" },
+          { name: "Tron", status: "online" },
+          { name: "Clu", status: "offline" },
+          { name: "Quorra", status: "online" },
+          { name: "Flynn", status: "away" },
+        ]}
+        max={5}
+      />
+      <AvatarGroup
+        size="sm"
+        users={[
+          { name: "Alpha", status: "online" },
+          { name: "Beta", status: "online" },
+          { name: "Gamma", status: "offline" },
+        ]}
+      />
+    </div>
+  );
+});
+
+export const BentoGridPreview = React.memo(function BentoGridPreview() {
+  return (
+    <BentoGrid
+      columns={3}
+      items={[
+        {
+          title: "Grid Architecture",
+          description: "Distributed processing across all sectors with real-time sync.",
+          icon: <span>◈</span>,
+          span: "2x1",
+          variant: "highlight",
+        },
+        {
+          title: "Identity Disc",
+          description: "Biometric authentication layer.",
+          icon: <span>⬡</span>,
+        },
+        {
+          title: "Derez Shield",
+          description: "Automated threat response.",
+          icon: <span>△</span>,
+        },
+        {
+          title: "Sector Monitor",
+          description: "Real-time grid activity dashboard with alerting.",
+          icon: <span>◇</span>,
+          span: "2x1",
+        },
+      ]}
+    />
+  );
+});
+
+export const MarqueePreview = React.memo(function MarqueePreview() {
+  return (
+    <div className="space-y-4">
+      <Marquee speed="normal">
+        {["SYSTEM ONLINE", "ALL SECTORS CLEAR", "GRID STABLE", "UPLINK ACTIVE", "DIAGNOSTICS PASSED"].map((text, i) => (
+          <span key={i} className="shrink-0 font-mono text-xs uppercase tracking-widest text-primary/70">
+            ◆ {text}
+          </span>
+        ))}
+      </Marquee>
+      <Marquee speed="slow" direction="right" variant="subtle">
+        {["ENCOM", "GRID SYSTEMS", "FLYNN LABS", "SECTOR 7G", "DISC CORP"].map((text, i) => (
+          <span key={i} className="shrink-0 rounded border border-primary/20 bg-primary/5 px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+            {text}
+          </span>
+        ))}
+      </Marquee>
+    </div>
+  );
+});
+
+export const DividerPreview = React.memo(function DividerPreview() {
+  return (
+    <div className="space-y-6">
+      <Divider variant="default" />
+      <Divider variant="glow" label="SECTION" />
+      <Divider variant="dashed" label="OR" />
+      <Divider variant="circuit" label="CONNECTED" />
+    </div>
+  );
+});
+
 export const tronMoviePreviews: Record<string, React.ComponentType> = {
   // Data Display
   "data-card": DataCardPreview,
@@ -1101,6 +1290,15 @@ export const tronMoviePreviews: Record<string, React.ComponentType> = {
   "stats-counter": StatsCounterPreview,
   "cta-banner": CTABannerPreview,
   "heatmap": HeatmapPreview,
+  // Marketing & Product
+  "logo-cloud": LogoCloudPreview,
+  "comparison-table": ComparisonTablePreview,
+  "changelog": ChangelogPreview,
+  "progress-bar": ProgressBarPreview,
+  "avatar-group": AvatarGroupPreview,
+  "bento-grid": BentoGridPreview,
+  "marquee": MarqueePreview,
+  "divider": DividerPreview,
   // Game
   "light-cycle-game": LightCycleGamePreview,
 };
