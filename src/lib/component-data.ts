@@ -274,6 +274,42 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // Interactive UI
+      {
+        id: "terminal",
+        name: "terminal",
+        title: "Terminal",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "energy-meter",
+        name: "energy-meter",
+        title: "Energy Meter",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "progress-ring",
+        name: "progress-ring",
+        title: "Progress Ring",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "diagnostics-panel",
+        name: "diagnostics-panel",
+        title: "Diagnostics Panel",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "identity-disc",
+        name: "identity-disc",
+        title: "Identity Disc",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
       // Game
       {
         id: "light-cycle-game",

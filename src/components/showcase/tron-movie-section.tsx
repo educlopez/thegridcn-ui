@@ -23,6 +23,11 @@ import {
   MapMarker,
   CoordinateDisplay,
   Radar,
+  Terminal,
+  EnergyMeter,
+  ProgressRing,
+  DiagnosticsPanel,
+  IdentityDisc,
 } from "@/components/thegridcn"
 
 export function TronMovieSection() {
@@ -252,6 +257,75 @@ export function TronMovieSection() {
               label="SAT ALPHA 23.384"
             />
           </div>
+        </div>
+      </ComponentCard>
+
+      {/* Terminal & Diagnostics */}
+      <ComponentCard title="Terminal & System Monitoring">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Terminal
+            title="GRID CONSOLE"
+            lines={[
+              { text: "BOOT SEQUENCE INITIATED", type: "system" },
+              { text: "grid --status", type: "input" },
+              { text: "All sectors operational", type: "output" },
+              { text: "ANOMALY DETECTED IN SECTOR 7G", type: "error" },
+            ]}
+          />
+          <DiagnosticsPanel
+            title="SYSTEM HEALTH"
+            status="online"
+            metrics={[
+              { label: "CPU", value: 67 },
+              { label: "MEMORY", value: 82, status: "warning" },
+              { label: "DISK I/O", value: 34 },
+              { label: "NETWORK", value: 91, status: "critical" },
+            ]}
+          />
+        </div>
+      </ComponentCard>
+
+      {/* Energy & Progress */}
+      <ComponentCard title="Energy Meters & Progress Rings">
+        <div className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-3">
+            <EnergyMeter value={85} label="POWER CORE" showValue />
+            <EnergyMeter value={45} label="SHIELD MATRIX" showValue />
+            <EnergyMeter value={15} label="FUEL RESERVES" showValue />
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            <ProgressRing value={78} size="md" label="UPLOAD" />
+            <ProgressRing value={45} size="md" label="SCAN" variant="warning" />
+            <ProgressRing value={92} size="md" label="SYNC" variant="success" />
+            <ProgressRing value={23} size="md" label="SHIELD" variant="danger" />
+          </div>
+        </div>
+      </ComponentCard>
+
+      {/* Identity Discs */}
+      <ComponentCard title="Identity Discs">
+        <div className="flex flex-wrap items-start justify-center gap-8">
+          <IdentityDisc
+            name="ARES"
+            designation="COMBAT PROGRAM"
+            id="PRG-0042"
+            accessLevel="system"
+            status="active"
+          />
+          <IdentityDisc
+            name="EVE KIM"
+            designation="ANALYST"
+            id="USR-1138"
+            accessLevel="admin"
+            status="active"
+          />
+          <IdentityDisc
+            name="UNKNOWN"
+            designation="DEREZZED"
+            id="ERR-0000"
+            accessLevel="user"
+            status="derezzed"
+          />
         </div>
       </ComponentCard>
 

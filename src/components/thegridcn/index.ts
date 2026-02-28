@@ -37,6 +37,13 @@ export { ArrivalPanel } from "./arrival-panel"
 export { BeamMarker } from "./beam-marker"
 export { TimelineBar } from "./timeline-bar"
 
+// Interactive UI
+export { Terminal } from "./terminal"
+export { EnergyMeter } from "./energy-meter"
+export { ProgressRing } from "./progress-ring"
+export { DiagnosticsPanel } from "./diagnostics-panel"
+export { IdentityDisc } from "./identity-disc"
+
 // Game
 export { LightCycleGame } from "./light-cycle-game"
 export { Leaderboard } from "./leaderboard"

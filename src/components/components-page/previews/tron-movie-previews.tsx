@@ -29,6 +29,11 @@ import {
   CircuitBackground,
   GlowContainer,
   CRTEffect,
+  Terminal,
+  EnergyMeter,
+  ProgressRing,
+  DiagnosticsPanel,
+  IdentityDisc,
 } from "@/components/thegridcn";
 
 // Dynamic 3D components
@@ -563,6 +568,85 @@ export const LightCycleGamePreview = React.memo(function LightCycleGamePreview()
   );
 });
 
+// Interactive UI Previews
+
+export const TerminalPreview = React.memo(function TerminalPreview() {
+  return (
+    <div className="space-y-4">
+      <Terminal
+        title="SYSTEM CONSOLE"
+        lines={[
+          { text: "INITIALIZING GRID SYSTEM...", type: "system" },
+          { text: "grid --status", type: "input" },
+          { text: "All sectors operational", type: "output" },
+          { text: "scan --sector 7G", type: "input" },
+          { text: "ANOMALY DETECTED IN SECTOR 7G", type: "error" },
+          { text: "ALERT: Dispatching security protocol", type: "system" },
+        ]}
+      />
+    </div>
+  );
+});
+
+export const EnergyMeterPreview = React.memo(function EnergyMeterPreview() {
+  return (
+    <div className="space-y-4">
+      <EnergyMeter value={85} label="POWER CORE" showValue />
+      <EnergyMeter value={45} label="SHIELD MATRIX" showValue />
+      <EnergyMeter value={15} label="FUEL RESERVES" showValue />
+    </div>
+  );
+});
+
+export const ProgressRingPreview = React.memo(function ProgressRingPreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-6">
+      <ProgressRing value={78} size="md" label="UPLOAD" />
+      <ProgressRing value={45} size="md" label="SCAN" variant="warning" />
+      <ProgressRing value={92} size="md" label="SYNC" variant="success" />
+      <ProgressRing value={23} size="md" label="SHIELD" variant="danger" />
+    </div>
+  );
+});
+
+export const DiagnosticsPanelPreview = React.memo(function DiagnosticsPanelPreview() {
+  return (
+    <div className="space-y-4">
+      <DiagnosticsPanel
+        title="SYSTEM HEALTH"
+        status="online"
+        metrics={[
+          { label: "CPU", value: 67 },
+          { label: "MEMORY", value: 82, status: "warning" },
+          { label: "DISK I/O", value: 34 },
+          { label: "NETWORK", value: 91, status: "critical" },
+        ]}
+      />
+    </div>
+  );
+});
+
+export const IdentityDiscPreview = React.memo(function IdentityDiscPreview() {
+  return (
+    <div className="flex flex-wrap items-start justify-center gap-8">
+      <IdentityDisc
+        name="ARES"
+        designation="COMBAT PROGRAM"
+        id="PRG-0042"
+        accessLevel="system"
+        status="active"
+      />
+      <IdentityDisc
+        name="EVE KIM"
+        designation="ANALYST"
+        id="USR-1138"
+        accessLevel="admin"
+        status="active"
+      />
+    </div>
+  );
+});
+
 export const tronMoviePreviews: Record<string, React.ComponentType> = {
   // Data Display
   "data-card": DataCardPreview,
@@ -600,6 +684,12 @@ export const tronMoviePreviews: Record<string, React.ComponentType> = {
   "arrival-panel": ArrivalPanelPreview,
   "beam-marker": BeamMarkerPreview,
   "timeline-bar": TimelineBarPreview,
+  // Interactive UI
+  "terminal": TerminalPreview,
+  "energy-meter": EnergyMeterPreview,
+  "progress-ring": ProgressRingPreview,
+  "diagnostics-panel": DiagnosticsPanelPreview,
+  "identity-disc": IdentityDiscPreview,
   // Game
   "light-cycle-game": LightCycleGamePreview,
 };
