@@ -9,6 +9,15 @@ import { useTheme } from "@/components/theme";
 import { ComponentPreview } from "./component-preview";
 import { ComponentErrorBoundary } from "./error-boundary";
 import { cn } from "@/lib/utils";
+import {
+  CodeBlock,
+  CodeBlockHeader,
+  CodeBlockIcon,
+  CodeBlockGroup,
+  CodeBlockContent,
+} from "@/components/code-block/code-block";
+import { CopyButton } from "@/components/code-block/copy-button";
+import { CodeBlockShiki } from "@/components/code-block/shiki";
 
 type ViewMode = "preview" | "code";
 
@@ -54,19 +63,28 @@ const packageManagerCommands: Record<PackageManager, string> = {
   bun: "bunx --bun shadcn@latest add",
 };
 
-// Code viewer component with Shiki syntax highlighting
+/** Resolve file path from registry data into a short display name */
+function getFileName(registryData: { files?: { path?: string }[] }): string {
+  const raw = registryData?.files?.[0]?.path ?? "";
+  return raw.split("/").pop() || "component.tsx";
+}
+
+/** Derive the language extension from a filename (e.g. "modal.tsx" → "tsx") */
+function getLanguageFromFileName(name: string): string {
+  const ext = name.split(".").pop();
+  return ext || "tsx";
+}
+
+// Code viewer using pheralb/code-blocks compound components + CodeBlockShiki
 function CodeViewer({ componentId }: { componentId: string }) {
   const [code, setCode] = React.useState<string | null>(null);
-  const [highlightedCode, setHighlightedCode] = React.useState<string | null>(null);
+  const [fileName, setFileName] = React.useState("component.tsx");
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
-  const [copied, setCopied] = React.useState(false);
 
   const registryName = getRegistryName(componentId);
 
-  // Fetch code and highlight it
   React.useEffect(() => {
-    // Handle components without registry files
     if (!registryName) {
       setLoading(false);
       setError("Source code not available for this component");
@@ -75,30 +93,17 @@ function CodeViewer({ componentId }: { componentId: string }) {
 
     setLoading(true);
     setError(null);
-    setHighlightedCode(null);
+    setCode(null);
 
     fetch(`/r/${registryName}.json`)
       .then((res) => {
         if (!res.ok) throw new Error("Component not found");
         return res.json();
       })
-      .then(async (data) => {
+      .then((data) => {
         if (data.files && data.files[0]?.content) {
-          const sourceCode = data.files[0].content;
-          setCode(sourceCode);
-
-          // Dynamically import shiki and theme in parallel
-          const [{ codeToHtml }, { tronTheme }] = await Promise.all([
-            import("shiki"),
-            import("@/lib/shiki-tron-theme"),
-          ]);
-
-          const html = await codeToHtml(sourceCode, {
-            lang: "tsx",
-            theme: tronTheme,
-          });
-
-          setHighlightedCode(html);
+          setCode(data.files[0].content);
+          setFileName(getFileName(data));
         } else {
           setError("No source code available");
         }
@@ -112,59 +117,48 @@ function CodeViewer({ componentId }: { componentId: string }) {
       });
   }, [registryName]);
 
-  const handleCopy = async () => {
-    if (code) {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex h-full items-center justify-center bg-black">
-        <div className="flex items-center gap-2 font-mono text-xs text-foreground/60">
-          <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
-          Loading source code...
+        <div className="flex items-center gap-2 font-mono text-xs text-foreground/40">
+          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+          LOADING SOURCE...
         </div>
       </div>
     );
   }
 
-  if (error) {
+  if (error || !code) {
     return (
       <div className="flex h-full items-center justify-center bg-black">
-        <div className="font-mono text-xs text-foreground/60">{error}</div>
+        <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/30">
+          {error || "No source code available"}
+        </div>
       </div>
     );
   }
 
-  return (
-    <div className="relative flex h-full flex-col bg-black">
-      {/* Copy button */}
-      <button
-        onClick={handleCopy}
-        className="absolute right-4 top-4 z-10 flex items-center gap-1.5 rounded border border-primary/30 bg-black/80 px-2 py-1 font-mono text-[10px] text-primary transition-all hover:bg-primary/20"
-      >
-        {copied ? (
-          <>
-            <Check className="h-3 w-3" />
-            COPIED
-          </>
-        ) : (
-          <>
-            <Copy className="h-3 w-3" />
-            COPY
-          </>
-        )}
-      </button>
+  const lineCount = code.split("\n").length;
+  const language = getLanguageFromFileName(fileName);
 
-      {/* Code display with Shiki highlighting */}
-      <div
-        className="shiki-code h-full overflow-auto p-4 text-sm leading-relaxed [&_pre]:!bg-transparent [&_code]:!bg-transparent"
-        dangerouslySetInnerHTML={{ __html: highlightedCode || "" }}
-      />
-    </div>
+  return (
+    <CodeBlock className="h-full">
+      <CodeBlockHeader>
+        <CodeBlockGroup>
+          <CodeBlockIcon language={language} />
+          <span className="font-mono text-[11px]">{fileName}</span>
+        </CodeBlockGroup>
+        <CodeBlockGroup>
+          <span className="font-mono text-[9px] uppercase tracking-widest text-foreground/20">
+            {lineCount} lines
+          </span>
+          <CopyButton content={code} />
+        </CodeBlockGroup>
+      </CodeBlockHeader>
+      <CodeBlockContent className="flex-1 text-[13px] leading-[1.7]">
+        <CodeBlockShiki code={code} language={language} lineNumbers />
+      </CodeBlockContent>
+    </CodeBlock>
   );
 }
 

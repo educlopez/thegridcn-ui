@@ -479,3 +479,25 @@
     0 0 3px var(--glow),
     0 0 6px var(--glow-muted);
 }
+
+/* ============================================
+   SHIKI CODE BLOCK - LINE NUMBERS
+   pheralb/code-blocks CSS counter approach
+   ============================================ */
+pre.shiki-line-numbers code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+pre.shiki-line-numbers code .line::before {
+  counter-increment: step;
+  content: counter(step);
+  display: inline-block;
+  width: 3ch;
+  margin-right: 1.5ch;
+  text-align: right;
+  color: var(--foreground, #a1a1aa);
+  opacity: 0.15;
+  user-select: none;
+  -webkit-user-select: none;
+}
