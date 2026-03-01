@@ -481,6 +481,14 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // Avatar
+      {
+        id: "agent-avatar",
+        name: "agent-avatar",
+        title: "Agent Avatar",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
       // Game
       {
         id: "light-cycle-game",

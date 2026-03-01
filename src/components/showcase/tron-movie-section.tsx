@@ -52,6 +52,7 @@ import {
   BentoGrid,
   Marquee,
   Divider,
+  AgentAvatar,
 } from "@/components/thegridcn"
 
 export function TronMovieSection() {
@@ -481,18 +482,18 @@ export function TronMovieSection() {
         <div className="space-y-6">
           <div className="grid gap-4 md:grid-cols-3">
             <FeatureCard
-              icon={<span className="text-lg">◈</span>}
+              icon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 4h16v12H2z" stroke="currentColor" strokeWidth="1.5"/><path d="M2 10h16M7 4v12M13 4v12" stroke="currentColor" strokeWidth="0.75" opacity="0.5"/><circle cx="10" cy="10" r="2" fill="currentColor" opacity="0.6"/></svg>}
               title="Grid Architecture"
               description="Distributed processing across all sectors with real-time sync."
             />
             <FeatureCard
-              icon={<span className="text-lg">⬡</span>}
+              icon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5"/><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1"/><path d="M10 3v2M10 15v2M3 10h2M15 10h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>}
               title="Identity Protocols"
               description="Disc-based authentication with multi-layer encryption."
               variant="highlight"
             />
             <FeatureCard
-              icon={<span className="text-lg">△</span>}
+              icon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l8 14H2L10 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M10 8v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="10" cy="14" r="0.8" fill="currentColor"/></svg>}
               title="Derez Protection"
               description="Automated threat response with sub-millisecond intervention."
             />
@@ -560,11 +561,11 @@ export function TronMovieSection() {
           <LogoCloud
             label="TRUSTED BY LEADING PROGRAMS"
             logos={[
-              { name: "ENCOM", icon: <span>◈</span> },
-              { name: "GRID SYSTEMS", icon: <span>⬡</span> },
-              { name: "FLYNN LABS", icon: <span>△</span> },
-              { name: "DISC CORP", icon: <span>◇</span> },
-              { name: "SECTOR 7G", icon: <span>⬢</span> },
+              { name: "ENCOM", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M5 8h6M8 5v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg> },
+              { name: "GRID SYSTEMS", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l6 3.5v7L8 15l-6-3.5v-7L8 1z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg> },
+              { name: "FLYNN LABS", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l5.5 3v6L8 14 2.5 11V5L8 2z" stroke="currentColor" strokeWidth="1.5"/><path d="M8 5v6M5.5 6.5L8 8l2.5-1.5" stroke="currentColor" strokeWidth="1"/></svg> },
+              { name: "DISC CORP", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1"/><circle cx="8" cy="8" r="0.8" fill="currentColor"/></svg> },
+              { name: "SECTOR 7G", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2h12v12H2z" stroke="currentColor" strokeWidth="1.5"/><path d="M2 8h12M8 2v12" stroke="currentColor" strokeWidth="0.75" strokeDasharray="2 2"/><circle cx="5" cy="5" r="1" fill="currentColor"/><circle cx="11" cy="11" r="1" fill="currentColor"/></svg> },
             ]}
           />
           <Marquee speed="normal">
@@ -608,12 +609,12 @@ export function TronMovieSection() {
           <AvatarGroup
             size="lg"
             users={[
-              { name: "Ares", status: "online" },
-              { name: "Eve Kim", status: "online" },
-              { name: "Ajay Singh", status: "away" },
-              { name: "Tron", status: "online" },
-              { name: "Clu", status: "offline" },
-              { name: "Quorra" },
+              { name: "Ares", avatar: <AgentAvatar seed="Ares" size={44} hue={200} />, status: "online" },
+              { name: "Eve Kim", avatar: <AgentAvatar seed="Eve Kim" size={44} hue={30} />, status: "online" },
+              { name: "Ajay Singh", avatar: <AgentAvatar seed="Ajay Singh" size={44} hue={185} />, status: "away" },
+              { name: "Tron", avatar: <AgentAvatar seed="Tron" size={44} hue={200} />, status: "online" },
+              { name: "Clu", avatar: <AgentAvatar seed="Clu" size={44} hue={30} />, status: "offline" },
+              { name: "Quorra", avatar: <AgentAvatar seed="Quorra" size={44} hue={200} /> },
             ]}
             max={5}
           />
@@ -625,10 +626,10 @@ export function TronMovieSection() {
         <BentoGrid
           columns={3}
           items={[
-            { title: "Grid Architecture", description: "Distributed processing across all sectors.", icon: <span>◈</span>, span: "2x1", variant: "highlight" },
-            { title: "Identity Disc", description: "Biometric auth layer.", icon: <span>⬡</span> },
-            { title: "Derez Shield", description: "Threat response.", icon: <span>△</span> },
-            { title: "Sector Monitor", description: "Real-time grid activity dashboard.", icon: <span>◇</span>, span: "2x1" },
+            { title: "Grid Architecture", description: "Distributed processing across all sectors.", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v8H2z" stroke="currentColor" strokeWidth="1.5"/><path d="M2 8h12M6 4v8M10 4v8" stroke="currentColor" strokeWidth="0.75" opacity="0.5"/></svg>, span: "2x1", variant: "highlight" },
+            { title: "Identity Disc", description: "Biometric auth layer.", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1"/><circle cx="8" cy="8" r="0.8" fill="currentColor"/></svg> },
+            { title: "Derez Shield", description: "Threat response.", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l5 3v4.5c0 2.5-2.2 4.2-5 5.5-2.8-1.3-5-3-5-5.5V5l5-3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M6 8l1.5 1.5L11 6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg> },
+            { title: "Sector Monitor", description: "Real-time grid activity dashboard.", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1" stroke="currentColor" strokeWidth="1.5"/><path d="M3 9l2.5-3 2 2L11 5l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>, span: "2x1" },
           ]}
         />
       </ComponentCard>

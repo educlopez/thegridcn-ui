@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 interface AvatarGroupUser {
   name: string
-  avatar?: string
+  avatar?: string | React.ReactNode
   status?: "online" | "offline" | "away"
 }
 
@@ -74,11 +74,17 @@ export function AvatarGroup({
           title={user.name}
         >
           {user.avatar ? (
-            <img
-              src={user.avatar}
-              alt={user.name}
-              className="h-full w-full rounded-full border border-primary/30 object-cover"
-            />
+            typeof user.avatar === "string" ? (
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="h-full w-full rounded-full border border-primary/30 object-cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-full border border-primary/30">
+                {user.avatar}
+              </div>
+            )
           ) : (
             <div className={cn(
               "flex h-full w-full items-center justify-center rounded-full border border-primary/30 bg-primary/10 font-mono font-medium text-primary/80",

@@ -74,6 +74,9 @@ export { BentoGrid } from "./bento-grid"
 export { Marquee } from "./marquee"
 export { Divider } from "./divider"
 
+// Avatar
+export { AgentAvatar } from "./agent-avatar"
+
 // Game
 export { LightCycleGame } from "./light-cycle-game"
 export { Leaderboard } from "./leaderboard"
