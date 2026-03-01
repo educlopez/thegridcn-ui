@@ -59,6 +59,14 @@ import {
   Marquee,
   Divider,
   AgentAvatar,
+  FAQ,
+  Timeline,
+  AnnouncementBar,
+  DataTable,
+  Rating,
+  Skeleton,
+  BreadcrumbNav,
+  CommandMenu,
 } from "@/components/thegridcn";
 
 // Dynamic 3D components
@@ -1230,6 +1238,170 @@ export const DividerPreview = React.memo(function DividerPreview() {
   );
 });
 
+// Essential UI Previews
+
+export const FAQPreview = React.memo(function FAQPreview() {
+  return (
+    <FAQ
+      label="FREQUENTLY ASKED QUESTIONS"
+      items={[
+        { question: "What is the Grid?", answer: "The Grid is a distributed digital architecture that enables real-time processing across all connected sectors. It provides the backbone for identity management, resource allocation, and program execution." },
+        { question: "How do identity discs work?", answer: "Each program is assigned a unique identity disc that stores authentication credentials, access permissions, and activity history. The disc uses biometric encryption for secure verification." },
+        { question: "What happens during deresolution?", answer: "Deresolution is the process of removing a program from the Grid. All associated resources are reclaimed and the identity disc is archived. This action is irreversible." },
+        { question: "How can I upgrade my sector access?", answer: "Contact your Grid administrator to request elevated sector permissions. Upgrades require identity verification and a minimum trust score of 85%." },
+      ]}
+    />
+  );
+});
+
+export const TimelinePreview = React.memo(function TimelinePreview() {
+  return (
+    <Timeline
+      label="PRODUCT ROADMAP"
+      items={[
+        { title: "Grid Architecture v1.0", description: "Core infrastructure and identity disc system.", date: "Q1 2025", status: "completed" },
+        { title: "Sector Monitoring", description: "Real-time diagnostics and anomaly detection.", date: "Q2 2025", status: "completed" },
+        { title: "Multi-Region Relay", description: "Cross-sector communication with priority routing.", date: "Q3 2025", status: "active" },
+        { title: "Custom Protocols", description: "User-defined communication and encryption protocols.", date: "Q4 2025", status: "upcoming" },
+        { title: "Grid AI Integration", description: "Autonomous threat response and optimization.", date: "Q1 2026", status: "upcoming" },
+      ]}
+    />
+  );
+});
+
+export const AnnouncementBarPreview = React.memo(function AnnouncementBarPreview() {
+  return (
+    <div className="space-y-3">
+      <AnnouncementBar
+        text="Grid v2.7.1 is now available with 40% faster sector scanning."
+        action={{ label: "UPDATE NOW" }}
+        variant="highlight"
+      />
+      <AnnouncementBar
+        text="Scheduled maintenance on Sector 7G — March 15, 02:00 UTC."
+        variant="warning"
+      />
+      <AnnouncementBar
+        text="Welcome to the Grid. Identity disc verification is required."
+        variant="default"
+        dismissible={false}
+      />
+    </div>
+  );
+});
+
+export const DataTablePreview = React.memo(function DataTablePreview() {
+  type Row = { id: string; name: string; sector: string; status: string; latency: number };
+  const columns = [
+    { key: "id" as const, label: "ID", sortable: true },
+    { key: "name" as const, label: "Program", sortable: true },
+    { key: "sector" as const, label: "Sector" },
+    { key: "status" as const, label: "Status", render: (val: unknown) => (
+      <span className={val === "Active" ? "text-green-500" : val === "Standby" ? "text-amber-500" : "text-foreground/30"}>
+        {String(val)}
+      </span>
+    )},
+    { key: "latency" as const, label: "Latency", sortable: true, align: "right" as const, render: (val: unknown) => `${val}ms` },
+  ];
+  const data: Row[] = [
+    { id: "PRG-001", name: "Ares", sector: "7G", status: "Active", latency: 12 },
+    { id: "PRG-002", name: "Tron", sector: "4B", status: "Active", latency: 8 },
+    { id: "PRG-003", name: "Clu", sector: "1A", status: "Standby", latency: 45 },
+    { id: "PRG-004", name: "Quorra", sector: "7G", status: "Active", latency: 15 },
+    { id: "PRG-005", name: "Flynn", sector: "9C", status: "Offline", latency: 0 },
+  ];
+  return <DataTable label="PROGRAM REGISTRY" columns={columns} data={data} />;
+});
+
+export const RatingPreview = React.memo(function RatingPreview() {
+  return (
+    <div className="flex flex-col items-start gap-4">
+      <Rating value={5} max={5} label="SECURITY" size="lg" showValue />
+      <Rating value={4} max={5} label="SPEED" size="md" showValue variant="success" />
+      <Rating value={3} max={5} label="UPTIME" size="md" showValue variant="warning" />
+      <Rating value={1} max={5} label="RISK" size="sm" showValue variant="danger" />
+    </div>
+  );
+});
+
+export const SkeletonPreview = React.memo(function SkeletonPreview() {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-3">
+        <Skeleton variant="circular" width={40} />
+        <div className="flex-1">
+          <Skeleton variant="text" lines={2} />
+        </div>
+      </div>
+      <Skeleton variant="rectangular" height={100} />
+      <Skeleton variant="card" />
+    </div>
+  );
+});
+
+export const BreadcrumbNavPreview = React.memo(function BreadcrumbNavPreview() {
+  return (
+    <div className="space-y-4">
+      <BreadcrumbNav
+        items={[
+          { label: "Grid" },
+          { label: "Sector 7G" },
+          { label: "Programs", active: true },
+        ]}
+      />
+      <BreadcrumbNav
+        separator="slash"
+        items={[
+          { label: "Dashboard" },
+          { label: "Diagnostics" },
+          { label: "CPU", active: true },
+        ]}
+      />
+      <BreadcrumbNav
+        separator="dot"
+        items={[
+          { label: "Home" },
+          { label: "Products" },
+          { label: "Grid Pro" },
+          { label: "Pricing", active: true },
+        ]}
+      />
+    </div>
+  );
+});
+
+export const CommandMenuPreview = React.memo(function CommandMenuPreview() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <button
+        onClick={() => setOpen(true)}
+        className="inline-flex items-center gap-2 rounded border border-primary/30 bg-primary/5 px-4 py-2 font-mono text-xs text-foreground/60 transition-colors hover:border-primary/50 hover:text-primary"
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.2" />
+          <path d="M9.5 9.5L12.5 12.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+        </svg>
+        Search commands...
+        <kbd className="rounded border border-primary/20 bg-primary/5 px-1.5 py-0.5 text-[9px] text-foreground/30">⌘K</kbd>
+      </button>
+      <CommandMenu
+        open={open}
+        onOpenChange={setOpen}
+        label="GRID COMMAND CENTER"
+        items={[
+          { label: "Run Diagnostics", description: "Full system health check", group: "Actions", icon: <span>⚡</span>, shortcut: "⌘D" },
+          { label: "Scan Sector", description: "Anomaly detection scan", group: "Actions", icon: <span>◎</span>, shortcut: "⌘S" },
+          { label: "Deploy Program", description: "Launch new program instance", group: "Actions", icon: <span>▶</span> },
+          { label: "Sector 7G", description: "Navigate to sector", group: "Navigation", icon: <span>→</span> },
+          { label: "Identity Discs", description: "Manage user identities", group: "Navigation", icon: <span>◇</span> },
+          { label: "System Logs", description: "View recent activity", group: "Navigation", icon: <span>≡</span> },
+        ]}
+      />
+    </div>
+  );
+});
+
 export const AgentAvatarPreview = React.memo(function AgentAvatarPreview() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-6">
@@ -1329,6 +1501,15 @@ export const tronMoviePreviews: Record<string, React.ComponentType> = {
   "divider": DividerPreview,
   // Avatar
   "agent-avatar": AgentAvatarPreview,
+  // Essential UI
+  "faq": FAQPreview,
+  "timeline": TimelinePreview,
+  "announcement-bar": AnnouncementBarPreview,
+  "data-table": DataTablePreview,
+  "rating": RatingPreview,
+  "skeleton": SkeletonPreview,
+  "breadcrumb-nav": BreadcrumbNavPreview,
+  "command-menu": CommandMenuPreview,
   // Game
   "light-cycle-game": LightCycleGamePreview,
 };

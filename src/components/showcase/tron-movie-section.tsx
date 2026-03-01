@@ -53,6 +53,14 @@ import {
   Marquee,
   Divider,
   AgentAvatar,
+  FAQ,
+  Timeline,
+  AnnouncementBar,
+  DataTable,
+  Rating,
+  Skeleton,
+  BreadcrumbNav,
+  CommandMenu,
 } from "@/components/thegridcn"
 
 export function TronMovieSection() {
@@ -632,6 +640,82 @@ export function TronMovieSection() {
             { title: "Sector Monitor", description: "Real-time grid activity dashboard.", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1" stroke="currentColor" strokeWidth="1.5"/><path d="M3 9l2.5-3 2 2L11 5l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>, span: "2x1" },
           ]}
         />
+      </ComponentCard>
+
+      {/* FAQ & Timeline */}
+      <ComponentCard title="FAQ & Product Timeline">
+        <div className="grid gap-4 md:grid-cols-2">
+          <FAQ
+            items={[
+              { question: "What is The Grid?", answer: "A distributed computing architecture that connects all sectors through encrypted relay channels." },
+              { question: "How do Identity Discs work?", answer: "Each program is assigned a unique disc that stores their identity, permissions, and combat data." },
+              { question: "What happens during deresolution?", answer: "The program is permanently deleted from the system. All data is lost." },
+            ]}
+          />
+          <Timeline
+            items={[
+              { title: "Grid v1.0", description: "Initial system launch", status: "completed", date: "2024 Q1" },
+              { title: "Identity Protocols", description: "Disc-based auth system", status: "completed", date: "2024 Q3" },
+              { title: "Sector Expansion", description: "Scale to 1000+ sectors", status: "active", date: "2025 Q1" },
+              { title: "Neural Uplink", description: "Direct consciousness transfer", status: "upcoming", date: "2025 Q4" },
+            ]}
+          />
+        </div>
+      </ComponentCard>
+
+      {/* Announcement, Breadcrumb, Rating */}
+      <ComponentCard title="Announcement, Navigation & Ratings">
+        <div className="space-y-4">
+          <AnnouncementBar
+            text="Grid v2.7.1 is now live — improved relay speed by 40%"
+            variant="highlight"
+            action={{ label: "VIEW CHANGELOG" }}
+          />
+          <BreadcrumbNav
+            items={[
+              { label: "Grid", href: "#" },
+              { label: "Sector 7G", href: "#" },
+              { label: "Terminal 42", active: true },
+            ]}
+          />
+          <div className="flex flex-wrap items-center gap-6">
+            <div className="flex flex-col items-center gap-1">
+              <Rating value={5} size="md" />
+              <span className="text-[9px] uppercase tracking-widest text-foreground/40">EXCELLENT</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <Rating value={3} size="md" />
+              <span className="text-[9px] uppercase tracking-widest text-foreground/40">MODERATE</span>
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <Rating value={1} size="md" />
+              <span className="text-[9px] uppercase tracking-widest text-foreground/40">CRITICAL</span>
+            </div>
+          </div>
+        </div>
+      </ComponentCard>
+
+      {/* Data Table & Skeleton */}
+      <ComponentCard title="Data Tables & Loading States">
+        <div className="grid gap-4 md:grid-cols-2">
+          <DataTable
+            columns={[
+              { key: "sector", label: "SECTOR", sortable: true },
+              { key: "status", label: "STATUS" },
+              { key: "load", label: "LOAD %", sortable: true },
+            ]}
+            data={[
+              { sector: "7G", status: "ONLINE", load: 87 },
+              { sector: "12A", status: "DEGRADED", load: 94 },
+              { sector: "3F", status: "ONLINE", load: 42 },
+              { sector: "9B", status: "OFFLINE", load: 0 },
+            ]}
+          />
+          <div className="space-y-4">
+            <Skeleton variant="card" />
+            <Skeleton variant="text" lines={3} />
+          </div>
+        </div>
       </ComponentCard>
 
       {/* Complete HUD Demo */}

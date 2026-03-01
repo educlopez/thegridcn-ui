@@ -481,6 +481,63 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // Essential UI
+      {
+        id: "faq",
+        name: "faq",
+        title: "FAQ",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "timeline",
+        name: "timeline",
+        title: "Timeline",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "announcement-bar",
+        name: "announcement-bar",
+        title: "Announcement Bar",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "data-table",
+        name: "data-table",
+        title: "Data Table",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "rating",
+        name: "rating",
+        title: "Rating",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "skeleton",
+        name: "skeleton",
+        title: "Skeleton",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "breadcrumb-nav",
+        name: "breadcrumb-nav",
+        title: "Breadcrumb",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "command-menu",
+        name: "command-menu",
+        title: "Command Menu",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
       // Avatar
       {
         id: "agent-avatar",

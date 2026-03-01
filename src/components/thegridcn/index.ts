@@ -74,6 +74,16 @@ export { BentoGrid } from "./bento-grid"
 export { Marquee } from "./marquee"
 export { Divider } from "./divider"
 
+// Essential UI
+export { FAQ } from "./faq"
+export { Timeline } from "./timeline"
+export { AnnouncementBar } from "./announcement-bar"
+export { DataTable } from "./data-table"
+export { Rating } from "./rating"
+export { Skeleton } from "./skeleton"
+export { BreadcrumbNav } from "./breadcrumb-nav"
+export { CommandMenu } from "./command-menu"
+
 // Avatar
 export { AgentAvatar } from "./agent-avatar"
 
