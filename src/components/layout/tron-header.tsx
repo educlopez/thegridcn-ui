@@ -197,13 +197,13 @@ export function TronHeader({ navItems }: TronHeaderProps) {
               {/* Mobile menu button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="flex items-center justify-center rounded border border-primary/50 p-2 font-mono text-xs tracking-wider text-primary transition-colors hover:bg-primary/10 lg:hidden"
+                className="flex items-center rounded border border-primary/30 bg-primary/5 px-2.5 py-1.5 text-primary transition-colors hover:border-primary/50 hover:bg-primary/10 lg:hidden"
                 aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 {mobileMenuOpen ? (
-                  <CloseIcon className="h-5 w-5" />
+                  <CloseIcon className="h-4 w-4" />
                 ) : (
-                  <MenuIcon className="h-5 w-5" />
+                  <MenuIcon className="h-4 w-4" />
                 )}
               </button>
             </div>
