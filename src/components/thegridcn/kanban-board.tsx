@@ -22,14 +22,24 @@ interface KanbanColumn {
 interface KanbanBoardProps extends React.HTMLAttributes<HTMLDivElement> {
   columns: KanbanColumn[]
   title?: string
+  onCardMove?: (cardId: string, fromColumn: string, toColumn: string, toIndex: number) => void
 }
 
 export function KanbanBoard({
-  columns,
+  columns: externalColumns,
   title,
+  onCardMove,
   className,
   ...props
 }: KanbanBoardProps) {
+  const [columns, setColumns] = React.useState(externalColumns)
+  React.useEffect(() => setColumns(externalColumns), [externalColumns])
+
+  // Drag state
+  const [dragging, setDragging] = React.useState<{ cardId: string; columnId: string } | null>(null)
+  const [overColumn, setOverColumn] = React.useState<string | null>(null)
+  const [overCard, setOverCard] = React.useState<string | null>(null)
+
   const tagColors: Record<string, string> = {
     default: "border-primary/30 bg-primary/10 text-primary",
     success: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
@@ -37,11 +47,80 @@ export function KanbanBoard({
     danger: "border-red-500/30 bg-red-500/10 text-red-400",
   }
 
+  function handleDragStart(e: React.DragEvent, cardId: string, columnId: string) {
+    setDragging({ cardId, columnId })
+    e.dataTransfer.effectAllowed = "move"
+    // Make the drag image slightly transparent
+    if (e.currentTarget instanceof HTMLElement) {
+      e.dataTransfer.setDragImage(e.currentTarget, 0, 0)
+    }
+  }
+
+  function handleDragEnd() {
+    setDragging(null)
+    setOverColumn(null)
+    setOverCard(null)
+  }
+
+  function handleColumnDragOver(e: React.DragEvent, columnId: string) {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = "move"
+    setOverColumn(columnId)
+  }
+
+  function handleCardDragOver(e: React.DragEvent, cardId: string) {
+    e.preventDefault()
+    e.stopPropagation()
+    setOverCard(cardId)
+  }
+
+  function handleDrop(e: React.DragEvent, targetColumnId: string) {
+    e.preventDefault()
+    if (!dragging) return
+
+    const { cardId, columnId: sourceColumnId } = dragging
+
+    if (sourceColumnId === targetColumnId && !overCard) {
+      handleDragEnd()
+      return
+    }
+
+    setColumns((prev) => {
+      const next = prev.map((col) => ({ ...col, cards: [...col.cards] }))
+      const sourceCol = next.find((c) => c.id === sourceColumnId)
+      const targetCol = next.find((c) => c.id === targetColumnId)
+      if (!sourceCol || !targetCol) return prev
+
+      const cardIndex = sourceCol.cards.findIndex((c) => c.id === cardId)
+      if (cardIndex === -1) return prev
+
+      const [card] = sourceCol.cards.splice(cardIndex, 1)
+
+      // Find insertion index
+      let insertIndex = targetCol.cards.length
+      if (overCard) {
+        const overIdx = targetCol.cards.findIndex((c) => c.id === overCard)
+        if (overIdx !== -1) insertIndex = overIdx
+      }
+
+      targetCol.cards.splice(insertIndex, 0, card)
+      return next
+    })
+
+    const targetCol = columns.find((c) => c.id === targetColumnId)
+    const insertIndex = overCard
+      ? targetCol?.cards.findIndex((c) => c.id === overCard) ?? targetCol?.cards.length ?? 0
+      : targetCol?.cards.length ?? 0
+
+    onCardMove?.(cardId, sourceColumnId, targetColumnId, insertIndex)
+    handleDragEnd()
+  }
+
   return (
     <div
       data-slot="tron-kanban-board"
       className={cn(
-        "overflow-hidden rounded border border-primary/20 bg-card/60 backdrop-blur-sm",
+        "relative overflow-hidden rounded border border-primary/20 bg-card/60 backdrop-blur-sm",
         className
       )}
       {...props}
@@ -63,7 +142,15 @@ export function KanbanBoard({
         {columns.map((column) => (
           <div
             key={column.id}
-            className="flex min-w-[200px] flex-1 flex-col rounded bg-background/40"
+            className={cn(
+              "flex min-w-[200px] flex-1 flex-col rounded transition-colors",
+              overColumn === column.id && dragging?.columnId !== column.id
+                ? "bg-primary/5"
+                : "bg-background/40"
+            )}
+            onDragOver={(e) => handleColumnDragOver(e, column.id)}
+            onDragLeave={() => { if (overColumn === column.id) setOverColumn(null) }}
+            onDrop={(e) => handleDrop(e, column.id)}
           >
             {/* Column header */}
             <div className="flex items-center gap-2 px-3 py-2.5">
@@ -80,12 +167,32 @@ export function KanbanBoard({
             </div>
 
             {/* Cards */}
-            <div className="flex flex-col gap-2 px-2 pb-2">
+            <div className={cn(
+              "flex min-h-[60px] flex-col gap-2 px-2 pb-2",
+              overColumn === column.id && column.cards.length === 0 && "rounded border border-dashed border-primary/20"
+            )}>
               {column.cards.map((card) => (
                 <div
                   key={card.id}
-                  className="group relative rounded border border-primary/15 bg-card/80 p-3 transition-all hover:border-primary/30 hover:shadow-[0_0_8px_rgba(var(--primary-rgb,0,180,255),0.06)]"
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, card.id, column.id)}
+                  onDragEnd={handleDragEnd}
+                  onDragOver={(e) => handleCardDragOver(e, card.id)}
+                  onDragLeave={() => { if (overCard === card.id) setOverCard(null) }}
+                  className={cn(
+                    "group relative cursor-grab rounded border border-primary/15 bg-card/80 p-3 transition-all active:cursor-grabbing",
+                    "hover:border-primary/30 hover:shadow-[0_0_8px_rgba(var(--primary-rgb,0,180,255),0.06)]",
+                    dragging?.cardId === card.id && "opacity-40 scale-95",
+                    overCard === card.id && dragging?.cardId !== card.id && "border-t-2 border-t-primary/50"
+                  )}
                 >
+                  {/* Drag handle */}
+                  <div className="absolute left-1 top-1/2 -translate-y-1/2 flex flex-col gap-[2px] opacity-0 transition-opacity group-hover:opacity-100">
+                    <span className="h-[2px] w-[2px] rounded-full bg-foreground/20" />
+                    <span className="h-[2px] w-[2px] rounded-full bg-foreground/20" />
+                    <span className="h-[2px] w-[2px] rounded-full bg-foreground/20" />
+                  </div>
+
                   <h4 className="font-mono text-[10px] uppercase tracking-wider text-foreground/70 group-hover:text-foreground/90">
                     {card.title}
                   </h4>

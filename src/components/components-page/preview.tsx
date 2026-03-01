@@ -19,8 +19,18 @@ interface PreviewProps {
 // Map component IDs to their registry names
 function getRegistryName(componentId: string): string | null {
   // Special cases where registry name differs from component ID
+  // (prefixed to avoid clashing with shadcn base components)
   const specialMappings: Record<string, string> = {
     "alert-banner": "thegridcn-alert",
+    "skeleton": "thegridcn-skeleton",
+    "tabs": "thegridcn-tabs",
+    "tooltip": "thegridcn-tooltip",
+    "toggle": "thegridcn-toggle",
+    "pagination": "thegridcn-pagination",
+    "badge": "thegridcn-badge",
+    "slider": "thegridcn-slider",
+    "select": "thegridcn-select",
+    "timeline": "thegridcn-timeline",
   };
 
   if (specialMappings[componentId]) {

@@ -1051,6 +1051,721 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "terminal",
+      "type": "registry:component",
+      "title": "Terminal",
+      "files": [
+        {
+          "path": "src/components/thegridcn/terminal.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "energy-meter",
+      "type": "registry:component",
+      "title": "Energy Meter",
+      "files": [
+        {
+          "path": "src/components/thegridcn/energy-meter.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "progress-ring",
+      "type": "registry:component",
+      "title": "Progress Ring",
+      "files": [
+        {
+          "path": "src/components/thegridcn/progress-ring.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "diagnostics-panel",
+      "type": "registry:component",
+      "title": "Diagnostics Panel",
+      "files": [
+        {
+          "path": "src/components/thegridcn/diagnostics-panel.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "identity-disc",
+      "type": "registry:component",
+      "title": "Identity Disc",
+      "files": [
+        {
+          "path": "src/components/thegridcn/identity-disc.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "gauge",
+      "type": "registry:component",
+      "title": "Gauge",
+      "files": [
+        {
+          "path": "src/components/thegridcn/gauge.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "waveform",
+      "type": "registry:component",
+      "title": "Waveform",
+      "files": [
+        {
+          "path": "src/components/thegridcn/waveform.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "data-stream",
+      "type": "registry:component",
+      "title": "Data Stream",
+      "files": [
+        {
+          "path": "src/components/thegridcn/data-stream.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "boot-sequence",
+      "type": "registry:component",
+      "title": "Boot Sequence",
+      "files": [
+        {
+          "path": "src/components/thegridcn/boot-sequence.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "signal-indicator",
+      "type": "registry:component",
+      "title": "Signal Indicator",
+      "files": [
+        {
+          "path": "src/components/thegridcn/signal-indicator.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "notification",
+      "type": "registry:component",
+      "title": "Notification",
+      "files": [
+        {
+          "path": "src/components/thegridcn/notification.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "type": "registry:component",
+      "title": "Stepper",
+      "files": [
+        {
+          "path": "src/components/thegridcn/stepper.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "tag",
+      "type": "registry:component",
+      "title": "Tag",
+      "files": [
+        {
+          "path": "src/components/thegridcn/tag.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "stat-card",
+      "type": "registry:component",
+      "title": "Stat Card",
+      "files": [
+        {
+          "path": "src/components/thegridcn/stat-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "sparkline",
+      "type": "registry:component",
+      "title": "Sparkline",
+      "files": [
+        {
+          "path": "src/components/thegridcn/sparkline.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "feature-card",
+      "type": "registry:component",
+      "title": "Feature Card",
+      "files": [
+        {
+          "path": "src/components/thegridcn/feature-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "pricing-card",
+      "type": "registry:component",
+      "title": "Pricing Card",
+      "files": [
+        {
+          "path": "src/components/thegridcn/pricing-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "testimonial-card",
+      "type": "registry:component",
+      "title": "Testimonial Card",
+      "files": [
+        {
+          "path": "src/components/thegridcn/testimonial-card.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "stats-counter",
+      "type": "registry:component",
+      "title": "Stats Counter",
+      "files": [
+        {
+          "path": "src/components/thegridcn/stats-counter.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "cta-banner",
+      "type": "registry:component",
+      "title": "CTA Banner",
+      "files": [
+        {
+          "path": "src/components/thegridcn/cta-banner.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "heatmap",
+      "type": "registry:component",
+      "title": "Heatmap",
+      "files": [
+        {
+          "path": "src/components/thegridcn/heatmap.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "logo-cloud",
+      "type": "registry:component",
+      "title": "Logo Cloud",
+      "files": [
+        {
+          "path": "src/components/thegridcn/logo-cloud.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "comparison-table",
+      "type": "registry:component",
+      "title": "Comparison Table",
+      "files": [
+        {
+          "path": "src/components/thegridcn/comparison-table.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "changelog",
+      "type": "registry:component",
+      "title": "Changelog",
+      "files": [
+        {
+          "path": "src/components/thegridcn/changelog.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "progress-bar",
+      "type": "registry:component",
+      "title": "Progress Bar",
+      "files": [
+        {
+          "path": "src/components/thegridcn/progress-bar.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "avatar-group",
+      "type": "registry:component",
+      "title": "Avatar Group",
+      "files": [
+        {
+          "path": "src/components/thegridcn/avatar-group.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "bento-grid",
+      "type": "registry:component",
+      "title": "Bento Grid",
+      "files": [
+        {
+          "path": "src/components/thegridcn/bento-grid.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "marquee",
+      "type": "registry:component",
+      "title": "Marquee",
+      "files": [
+        {
+          "path": "src/components/thegridcn/marquee.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "divider",
+      "type": "registry:component",
+      "title": "Divider",
+      "files": [
+        {
+          "path": "src/components/thegridcn/divider.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "agent-avatar",
+      "type": "registry:component",
+      "title": "Agent Avatar",
+      "files": [
+        {
+          "path": "src/components/thegridcn/agent-avatar.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "faq",
+      "type": "registry:component",
+      "title": "FAQ",
+      "files": [
+        {
+          "path": "src/components/thegridcn/faq.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-timeline",
+      "type": "registry:component",
+      "title": "Timeline",
+      "files": [
+        {
+          "path": "src/components/thegridcn/timeline.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "announcement-bar",
+      "type": "registry:component",
+      "title": "Announcement Bar",
+      "files": [
+        {
+          "path": "src/components/thegridcn/announcement-bar.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:component",
+      "title": "Data Table",
+      "files": [
+        {
+          "path": "src/components/thegridcn/data-table.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "rating",
+      "type": "registry:component",
+      "title": "Rating",
+      "files": [
+        {
+          "path": "src/components/thegridcn/rating.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-skeleton",
+      "type": "registry:component",
+      "title": "Skeleton",
+      "files": [
+        {
+          "path": "src/components/thegridcn/skeleton.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb-nav",
+      "type": "registry:component",
+      "title": "Breadcrumb Nav",
+      "files": [
+        {
+          "path": "src/components/thegridcn/breadcrumb-nav.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "command-menu",
+      "type": "registry:component",
+      "title": "Command Menu",
+      "files": [
+        {
+          "path": "src/components/thegridcn/command-menu.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-tabs",
+      "type": "registry:component",
+      "title": "Tabs",
+      "files": [
+        {
+          "path": "src/components/thegridcn/tabs.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-tooltip",
+      "type": "registry:component",
+      "title": "Tooltip",
+      "files": [
+        {
+          "path": "src/components/thegridcn/tooltip.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "modal",
+      "type": "registry:component",
+      "title": "Modal",
+      "files": [
+        {
+          "path": "src/components/thegridcn/modal.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "dropdown",
+      "type": "registry:component",
+      "title": "Dropdown",
+      "files": [
+        {
+          "path": "src/components/thegridcn/dropdown.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-toggle",
+      "type": "registry:component",
+      "title": "Toggle",
+      "files": [
+        {
+          "path": "src/components/thegridcn/toggle.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-pagination",
+      "type": "registry:component",
+      "title": "Pagination",
+      "files": [
+        {
+          "path": "src/components/thegridcn/pagination.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "file-upload",
+      "type": "registry:component",
+      "title": "File Upload",
+      "files": [
+        {
+          "path": "src/components/thegridcn/file-upload.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "kanban-board",
+      "type": "registry:component",
+      "title": "Kanban Board",
+      "files": [
+        {
+          "path": "src/components/thegridcn/kanban-board.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:component",
+      "title": "Empty State",
+      "files": [
+        {
+          "path": "src/components/thegridcn/empty-state.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-badge",
+      "type": "registry:component",
+      "title": "Badge",
+      "files": [
+        {
+          "path": "src/components/thegridcn/badge.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:component",
+      "title": "Toast",
+      "files": [
+        {
+          "path": "src/components/thegridcn/toast.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-slider",
+      "type": "registry:component",
+      "title": "Slider",
+      "files": [
+        {
+          "path": "src/components/thegridcn/slider.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-select",
+      "type": "registry:component",
+      "title": "Select",
+      "files": [
+        {
+          "path": "src/components/thegridcn/select.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "text-input",
+      "type": "registry:component",
+      "title": "Text Input",
+      "files": [
+        {
+          "path": "src/components/thegridcn/text-input.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:component",
+      "title": "Number Input",
+      "files": [
+        {
+          "path": "src/components/thegridcn/number-input.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "chip",
+      "type": "registry:component",
+      "title": "Chip",
+      "files": [
+        {
+          "path": "src/components/thegridcn/chip.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "coordinate-display",
+      "type": "registry:component",
+      "title": "Coordinate Display",
+      "files": [
+        {
+          "path": "src/components/thegridcn/coordinate-display.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "countdown",
+      "type": "registry:component",
+      "title": "Countdown",
+      "files": [
+        {
+          "path": "src/components/thegridcn/countdown.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "derez-timer",
+      "type": "registry:component",
+      "title": "Derez Timer",
+      "files": [
+        {
+          "path": "src/components/thegridcn/derez-timer.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "hud-frame",
+      "type": "registry:component",
+      "title": "HUD Frame",
+      "files": [
+        {
+          "path": "src/components/thegridcn/hud-frame.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "map-marker",
+      "type": "registry:component",
+      "title": "Map Marker",
+      "files": [
+        {
+          "path": "src/components/thegridcn/map-marker.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "radar",
+      "type": "registry:component",
+      "title": "Radar",
+      "files": [
+        {
+          "path": "src/components/thegridcn/radar.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "regen-indicator",
+      "type": "registry:component",
+      "title": "Regen Indicator",
+      "files": [
+        {
+          "path": "src/components/thegridcn/regen-indicator.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "reticle",
+      "type": "registry:component",
+      "title": "Reticle",
+      "files": [
+        {
+          "path": "src/components/thegridcn/reticle.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "speed-indicator",
+      "type": "registry:component",
+      "title": "Speed Indicator",
+      "files": [
+        {
+          "path": "src/components/thegridcn/speed-indicator.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "stat",
+      "type": "registry:component",
+      "title": "Stat",
+      "files": [
+        {
+          "path": "src/components/thegridcn/stat.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "thegridcn-alert",
+      "type": "registry:component",
+      "title": "Tron Alert",
+      "files": [
+        {
+          "path": "src/components/thegridcn/alert.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
