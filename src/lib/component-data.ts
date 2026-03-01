@@ -603,6 +603,63 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // Form & Input
+      {
+        id: "empty-state",
+        name: "empty-state",
+        title: "Empty State",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "badge",
+        name: "badge",
+        title: "Badge",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "toast",
+        name: "toast",
+        title: "Toast",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "slider",
+        name: "slider",
+        title: "Slider",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "select",
+        name: "select",
+        title: "Select",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "text-input",
+        name: "text-input",
+        title: "Text Input",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "number-input",
+        name: "number-input",
+        title: "Number Input",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "chip",
+        name: "chip",
+        title: "Chip",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
       // Game
       {
         id: "light-cycle-game",

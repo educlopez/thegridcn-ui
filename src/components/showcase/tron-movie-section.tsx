@@ -66,6 +66,14 @@ import {
   Toggle,
   Pagination,
   KanbanBoard,
+  EmptyState,
+  Badge,
+  ToastDemo,
+  Slider,
+  Select,
+  TextInput,
+  NumberInput,
+  Chip,
 } from "@/components/thegridcn"
 
 export function TronMovieSection() {
@@ -790,6 +798,56 @@ export function TronMovieSection() {
               ],
             },
           ]}
+        />
+      </ComponentCard>
+
+      {/* Badges & Toasts */}
+      <ComponentCard title="Badges & Toast Notifications">
+        <div className="space-y-6">
+          <div className="flex flex-wrap items-center gap-3">
+            <Badge variant="default" dot pulse>ACTIVE</Badge>
+            <Badge variant="success" dot>ONLINE</Badge>
+            <Badge variant="warning" dot>STANDBY</Badge>
+            <Badge variant="danger" dot pulse>CRITICAL</Badge>
+            <Badge variant="outline">ARCHIVED</Badge>
+          </div>
+          <ToastDemo />
+        </div>
+      </ComponentCard>
+
+      {/* Form Inputs */}
+      <ComponentCard title="Form Inputs & Controls">
+        <div className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-2">
+            <TextInput label="DESIGNATION" placeholder="Enter program name..." />
+            <Select
+              label="SECTOR"
+              placeholder="Select sector..."
+              options={[
+                { label: "Sector 7G", value: "7g" },
+                { label: "Sector 12A", value: "12a" },
+                { label: "Sector 3F", value: "3f" },
+              ]}
+            />
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Slider defaultValue={72} label="POWER LEVEL" showValue />
+            <NumberInput label="SECTORS" defaultValue={7} min={1} max={100} />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Chip selected size="md">SECTOR 7G</Chip>
+            <Chip selected size="md" variant="warning">PRIORITY: HIGH</Chip>
+            <Chip size="md">STANDBY</Chip>
+          </div>
+        </div>
+      </ComponentCard>
+
+      {/* Empty State */}
+      <ComponentCard title="Empty State">
+        <EmptyState
+          title="NO DATA FOUND"
+          description="This sector has no recorded activity. Start a scan to populate data."
+          action={{ label: "START SCAN" }}
         />
       </ComponentCard>
 

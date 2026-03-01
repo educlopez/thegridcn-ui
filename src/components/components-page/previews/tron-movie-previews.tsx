@@ -76,6 +76,14 @@ import {
   Pagination,
   FileUpload,
   KanbanBoard,
+  EmptyState,
+  Badge,
+  ToastDemo,
+  Slider,
+  Select,
+  TextInput,
+  NumberInput,
+  Chip,
 } from "@/components/thegridcn";
 
 // Dynamic 3D components
@@ -1578,6 +1586,143 @@ export const KanbanBoardPreview = React.memo(function KanbanBoardPreview() {
   );
 });
 
+export const EmptyStatePreview = React.memo(function EmptyStatePreview() {
+  return (
+    <EmptyState
+      title="NO DATA FOUND"
+      description="This sector has no recorded activity. Start a scan to populate data."
+      action={{ label: "START SCAN" }}
+    />
+  );
+});
+
+export const BadgePreview = React.memo(function BadgePreview() {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Badge variant="default" dot pulse>ACTIVE</Badge>
+      <Badge variant="success" dot>ONLINE</Badge>
+      <Badge variant="warning" dot>STANDBY</Badge>
+      <Badge variant="danger" dot pulse>CRITICAL</Badge>
+      <Badge variant="outline">ARCHIVED</Badge>
+      <Badge variant="default" size="md" dot>SECTOR 7G</Badge>
+    </div>
+  );
+});
+
+export const ToastPreview = React.memo(function ToastPreview() {
+  return <ToastDemo />;
+});
+
+export const SliderPreview = React.memo(function SliderPreview() {
+  return (
+    <div className="space-y-4">
+      <Slider defaultValue={72} label="POWER LEVEL" showValue />
+      <Slider defaultValue={45} label="SHIELD STRENGTH" showValue />
+      <Slider defaultValue={15} min={0} max={100} label="SIGNAL BOOST" showValue />
+    </div>
+  );
+});
+
+export const SelectPreview = React.memo(function SelectPreview() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <Select
+        label="SECTOR"
+        placeholder="Select sector..."
+        options={[
+          { label: "Sector 7G", value: "7g" },
+          { label: "Sector 12A", value: "12a" },
+          { label: "Sector 3F", value: "3f" },
+          { label: "Sector 9B", value: "9b", disabled: true },
+        ]}
+        defaultValue="7g"
+      />
+      <Select
+        label="PRIORITY"
+        placeholder="Select priority..."
+        options={[
+          { label: "Urgent", value: "urgent" },
+          { label: "High", value: "high" },
+          { label: "Normal", value: "normal" },
+          { label: "Low", value: "low" },
+        ]}
+      />
+    </div>
+  );
+});
+
+export const TextInputPreview = React.memo(function TextInputPreview() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <TextInput
+        label="DESIGNATION"
+        placeholder="Enter program name..."
+      />
+      <TextInput
+        label="ACCESS CODE"
+        placeholder="Enter code..."
+        error="Invalid authorization code"
+      />
+      <TextInput
+        label="SEARCH"
+        placeholder="Search sectors..."
+        icon={
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <circle cx="5" cy="5" r="3.5" stroke="currentColor" strokeWidth="1.2" />
+            <path d="M8 8l2.5 2.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          </svg>
+        }
+      />
+      <TextInput
+        label="DISABLED"
+        placeholder="Locked..."
+        disabled
+      />
+    </div>
+  );
+});
+
+export const NumberInputPreview = React.memo(function NumberInputPreview() {
+  return (
+    <div className="flex flex-wrap items-end gap-6">
+      <NumberInput label="SECTORS" defaultValue={7} min={1} max={100} />
+      <NumberInput label="POWER LEVEL" defaultValue={50} min={0} max={100} step={10} />
+      <NumberInput label="DISABLED" defaultValue={42} disabled />
+    </div>
+  );
+});
+
+export const ChipPreview = React.memo(function ChipPreview() {
+  const [selected, setSelected] = React.useState<Set<string>>(new Set(["active", "online"]));
+  const chips = ["active", "online", "standby", "offline", "derezzed"];
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-wrap gap-2">
+        {chips.map((c) => (
+          <Chip
+            key={c}
+            selected={selected.has(c)}
+            onClick={() => {
+              const next = new Set(selected);
+              next.has(c) ? next.delete(c) : next.add(c);
+              setSelected(next);
+            }}
+            variant={c === "derezzed" ? "danger" : c === "standby" ? "warning" : c === "online" ? "success" : "default"}
+            size="md"
+          >
+            {c}
+          </Chip>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <Chip selected onRemove={() => {}} size="md">SECTOR 7G</Chip>
+        <Chip selected onRemove={() => {}} size="md" variant="warning">PRIORITY: HIGH</Chip>
+        <Chip selected onRemove={() => {}} size="md" variant="danger">ANOMALY</Chip>
+      </div>
+    </div>
+  );
+});
+
 export const AgentAvatarPreview = React.memo(function AgentAvatarPreview() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-6">
@@ -1695,6 +1840,15 @@ export const tronMoviePreviews: Record<string, React.ComponentType> = {
   "pagination": PaginationPreview,
   "file-upload": FileUploadPreview,
   "kanban-board": KanbanBoardPreview,
+  // Form & Input
+  "empty-state": EmptyStatePreview,
+  "badge": BadgePreview,
+  "toast": ToastPreview,
+  "slider": SliderPreview,
+  "select": SelectPreview,
+  "text-input": TextInputPreview,
+  "number-input": NumberInputPreview,
+  "chip": ChipPreview,
   // Game
   "light-cycle-game": LightCycleGamePreview,
 };
