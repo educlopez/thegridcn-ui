@@ -84,6 +84,16 @@ export { Skeleton } from "./skeleton"
 export { BreadcrumbNav } from "./breadcrumb-nav"
 export { CommandMenu } from "./command-menu"
 
+// Application UI
+export { Tabs, TabPanel } from "./tabs"
+export { Tooltip } from "./tooltip"
+export { Modal, ModalButton } from "./modal"
+export { Dropdown } from "./dropdown"
+export { Toggle } from "./toggle"
+export { Pagination } from "./pagination"
+export { FileUpload } from "./file-upload"
+export { KanbanBoard } from "./kanban-board"
+
 // Avatar
 export { AgentAvatar } from "./agent-avatar"
 

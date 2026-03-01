@@ -546,6 +546,63 @@ export const componentSections: Partial<
         type: "tron-movie",
         section: "tron-movie",
       },
+      // Application UI
+      {
+        id: "tabs",
+        name: "tabs",
+        title: "Tabs",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "tooltip",
+        name: "tooltip",
+        title: "Tooltip",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "modal",
+        name: "modal",
+        title: "Modal",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "dropdown",
+        name: "dropdown",
+        title: "Dropdown",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "toggle",
+        name: "toggle",
+        title: "Toggle",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "pagination",
+        name: "pagination",
+        title: "Pagination",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "file-upload",
+        name: "file-upload",
+        title: "File Upload",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
+      {
+        id: "kanban-board",
+        name: "kanban-board",
+        title: "Kanban Board",
+        type: "tron-movie",
+        section: "tron-movie",
+      },
       // Game
       {
         id: "light-cycle-game",

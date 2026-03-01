@@ -67,6 +67,15 @@ import {
   Skeleton,
   BreadcrumbNav,
   CommandMenu,
+  Tabs,
+  Tooltip,
+  Modal,
+  ModalButton,
+  Dropdown,
+  Toggle,
+  Pagination,
+  FileUpload,
+  KanbanBoard,
 } from "@/components/thegridcn";
 
 // Dynamic 3D components
@@ -1402,6 +1411,173 @@ export const CommandMenuPreview = React.memo(function CommandMenuPreview() {
   );
 });
 
+export const TabsPreview = React.memo(function TabsPreview() {
+  const [tab, setTab] = React.useState("overview");
+  return (
+    <Tabs
+      tabs={[
+        { label: "Overview", value: "overview" },
+        { label: "Metrics", value: "metrics" },
+        { label: "Logs", value: "logs" },
+        { label: "Settings", value: "settings", disabled: true },
+      ]}
+      value={tab}
+      onChange={setTab}
+    >
+      <div className="rounded border border-primary/15 bg-card/60 p-4">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+          {tab === "overview" && "System overview with real-time sector monitoring."}
+          {tab === "metrics" && "Performance metrics across all grid sectors."}
+          {tab === "logs" && "Recent activity logs and event history."}
+        </p>
+      </div>
+    </Tabs>
+  );
+});
+
+export const TooltipPreview = React.memo(function TooltipPreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-6 py-4">
+      <Tooltip content="SYSTEM STATUS: ONLINE" side="top">
+        <button className="rounded border border-primary/30 bg-primary/5 px-3 py-1.5 font-mono text-[10px] text-foreground/60 hover:text-primary">
+          Hover top
+        </button>
+      </Tooltip>
+      <Tooltip content="SECTOR 7G ACTIVE" side="bottom">
+        <button className="rounded border border-primary/30 bg-primary/5 px-3 py-1.5 font-mono text-[10px] text-foreground/60 hover:text-primary">
+          Hover bottom
+        </button>
+      </Tooltip>
+      <Tooltip content="ENCRYPTED CHANNEL" side="right">
+        <button className="rounded border border-primary/30 bg-primary/5 px-3 py-1.5 font-mono text-[10px] text-foreground/60 hover:text-primary">
+          Hover right
+        </button>
+      </Tooltip>
+    </div>
+  );
+});
+
+export const ModalPreview = React.memo(function ModalPreview() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="flex justify-center">
+      <button
+        onClick={() => setOpen(true)}
+        className="rounded border border-primary/30 bg-primary/10 px-4 py-2 font-mono text-xs text-primary transition-colors hover:bg-primary/20"
+      >
+        OPEN MODAL
+      </button>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        title="CONFIRM ACTION"
+        description="This operation requires authorization"
+        footer={
+          <>
+            <ModalButton onClick={() => setOpen(false)}>CANCEL</ModalButton>
+            <ModalButton variant="primary" onClick={() => setOpen(false)}>CONFIRM</ModalButton>
+          </>
+        }
+      >
+        <p className="font-mono text-xs text-foreground/60">
+          You are about to initiate a full sector scan. This process cannot be interrupted once started.
+        </p>
+      </Modal>
+    </div>
+  );
+});
+
+export const DropdownPreview = React.memo(function DropdownPreview() {
+  return (
+    <div className="flex justify-center py-4">
+      <Dropdown
+        items={[
+          { label: "View Profile", shortcut: "⌘P" },
+          { label: "Settings", shortcut: "⌘," },
+          { label: "System Logs" },
+          { separator: true, label: "" },
+          { label: "Disconnect", variant: "danger" },
+        ]}
+      >
+        <button className="inline-flex items-center gap-2 rounded border border-primary/30 bg-primary/5 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-foreground/60 hover:text-primary">
+          Actions
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M2 3l2 2 2-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>
+        </button>
+      </Dropdown>
+    </div>
+  );
+});
+
+export const TogglePreview = React.memo(function TogglePreview() {
+  const [a, setA] = React.useState(true);
+  const [b, setB] = React.useState(false);
+  const [c, setC] = React.useState(true);
+  return (
+    <div className="flex flex-col items-start gap-4">
+      <Toggle checked={a} onChange={setA} label="GRID UPLINK" size="md" />
+      <Toggle checked={b} onChange={setB} label="STEALTH MODE" size="md" />
+      <Toggle checked={c} onChange={setC} label="AUTO-SCAN" size="sm" />
+      <Toggle label="DISABLED" size="md" disabled defaultChecked />
+    </div>
+  );
+});
+
+export const PaginationPreview = React.memo(function PaginationPreview() {
+  const [page, setPage] = React.useState(3);
+  return (
+    <div className="flex justify-center">
+      <Pagination currentPage={page} totalPages={12} onPageChange={setPage} />
+    </div>
+  );
+});
+
+export const FileUploadPreview = React.memo(function FileUploadPreview() {
+  return (
+    <FileUpload
+      accept=".json,.csv,.txt"
+      multiple
+      maxSize={5 * 1024 * 1024}
+      label="DROP DATA FILES HERE"
+      description="JSON, CSV, or TXT — max 5MB"
+    />
+  );
+});
+
+export const KanbanBoardPreview = React.memo(function KanbanBoardPreview() {
+  return (
+    <KanbanBoard
+      title="GRID OPERATIONS"
+      columns={[
+        {
+          id: "queue",
+          title: "Queued",
+          color: "hsl(var(--primary))",
+          cards: [
+            { id: "1", title: "Deploy relay node", description: "Sector 12A needs coverage", tag: "INFRA", tagVariant: "default" },
+            { id: "2", title: "Update firmware", tag: "MAINT", tagVariant: "warning" },
+          ],
+        },
+        {
+          id: "active",
+          title: "In Progress",
+          color: "#22c55e",
+          cards: [
+            { id: "3", title: "Anomaly investigation", description: "Sector 7G readings", tag: "URGENT", tagVariant: "danger", assignee: "Ares" },
+          ],
+        },
+        {
+          id: "done",
+          title: "Complete",
+          color: "#6b7280",
+          cards: [
+            { id: "4", title: "Perimeter scan", tag: "DONE", tagVariant: "success", assignee: "Eve" },
+          ],
+        },
+      ]}
+    />
+  );
+});
+
 export const AgentAvatarPreview = React.memo(function AgentAvatarPreview() {
   return (
     <div className="flex flex-wrap items-center justify-center gap-6">
@@ -1510,6 +1686,15 @@ export const tronMoviePreviews: Record<string, React.ComponentType> = {
   "skeleton": SkeletonPreview,
   "breadcrumb-nav": BreadcrumbNavPreview,
   "command-menu": CommandMenuPreview,
+  // Application UI
+  "tabs": TabsPreview,
+  "tooltip": TooltipPreview,
+  "modal": ModalPreview,
+  "dropdown": DropdownPreview,
+  "toggle": TogglePreview,
+  "pagination": PaginationPreview,
+  "file-upload": FileUploadPreview,
+  "kanban-board": KanbanBoardPreview,
   // Game
   "light-cycle-game": LightCycleGamePreview,
 };

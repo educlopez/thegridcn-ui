@@ -61,6 +61,11 @@ import {
   Skeleton,
   BreadcrumbNav,
   CommandMenu,
+  Tabs,
+  Tooltip,
+  Toggle,
+  Pagination,
+  KanbanBoard,
 } from "@/components/thegridcn"
 
 export function TronMovieSection() {
@@ -716,6 +721,76 @@ export function TronMovieSection() {
             <Skeleton variant="text" lines={3} />
           </div>
         </div>
+      </ComponentCard>
+
+      {/* Tabs, Toggles & Tooltips */}
+      <ComponentCard title="Tabs, Toggles & Tooltips">
+        <div className="space-y-6">
+          <Tabs
+            tabs={[
+              { label: "Overview", value: "overview" },
+              { label: "Metrics", value: "metrics" },
+              { label: "Logs", value: "logs" },
+            ]}
+            defaultValue="overview"
+          >
+            <div className="rounded border border-primary/15 bg-card/60 p-4 font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+              Tab content area — switch tabs to navigate sections
+            </div>
+          </Tabs>
+          <div className="flex flex-wrap items-center gap-6">
+            <Toggle defaultChecked label="GRID UPLINK" />
+            <Toggle label="STEALTH MODE" />
+            <Toggle defaultChecked label="AUTO-SCAN" size="sm" />
+          </div>
+          <div className="flex flex-wrap items-center gap-4">
+            <Tooltip content="SYSTEM: ONLINE" side="top">
+              <span className="rounded border border-primary/20 px-3 py-1 font-mono text-[10px] text-foreground/50 hover:text-primary">
+                Hover me
+              </span>
+            </Tooltip>
+            <Tooltip content="ENCRYPTED RELAY" side="bottom">
+              <span className="rounded border border-primary/20 px-3 py-1 font-mono text-[10px] text-foreground/50 hover:text-primary">
+                Hover me too
+              </span>
+            </Tooltip>
+          </div>
+        </div>
+      </ComponentCard>
+
+      {/* Pagination */}
+      <ComponentCard title="Pagination">
+        <div className="flex justify-center">
+          <Pagination currentPage={3} totalPages={12} onPageChange={() => {}} />
+        </div>
+      </ComponentCard>
+
+      {/* Kanban Board */}
+      <ComponentCard title="Kanban Task Board">
+        <KanbanBoard
+          title="GRID OPERATIONS"
+          columns={[
+            {
+              id: "queue", title: "Queued", color: "hsl(var(--primary))",
+              cards: [
+                { id: "1", title: "Deploy relay node", description: "Sector 12A coverage", tag: "INFRA" },
+                { id: "2", title: "Update firmware", tag: "MAINT", tagVariant: "warning" },
+              ],
+            },
+            {
+              id: "active", title: "In Progress", color: "#22c55e",
+              cards: [
+                { id: "3", title: "Anomaly investigation", description: "Sector 7G", tag: "URGENT", tagVariant: "danger", assignee: "Ares" },
+              ],
+            },
+            {
+              id: "done", title: "Complete", color: "#6b7280",
+              cards: [
+                { id: "4", title: "Perimeter scan", tag: "DONE", tagVariant: "success", assignee: "Eve" },
+              ],
+            },
+          ]}
+        />
       </ComponentCard>
 
       {/* Complete HUD Demo */}
