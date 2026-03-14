@@ -898,6 +898,117 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Templates Section */}
+        <section className="relative border-t border-primary/20 py-24">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
+
+          <StatusStrip
+            variant="default"
+            items={[
+              { label: "TEMPLATES", value: "2 AVAILABLE" },
+              { label: "STATUS", value: "PRODUCTION READY" },
+              { label: "TYPE", value: "FULL-PAGE LAYOUTS" },
+            ]}
+          />
+
+          <div className="container relative mx-auto px-4 pt-8">
+            <div className="mb-16 text-center">
+              <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
+                [ DEPLOYMENT BLUEPRINTS ]
+              </div>
+              <h2 className="font-display text-3xl font-bold tracking-wider text-primary md:text-4xl lg:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
+                TEMPLATES
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-foreground/80">
+                Full-page layouts showing how The Gridcn components work together in real-world applications
+              </p>
+            </div>
+
+            <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2">
+              {/* Dashboard Template Card */}
+              <Link
+                href="/templates/dashboard"
+                className="group relative overflow-hidden border border-primary/30 bg-card/30 p-6 backdrop-blur-sm transition-all hover:border-primary/60 hover:bg-card/50 hover:shadow-[0_0_30px_rgba(var(--primary-rgb,0,180,255),0.08)]"
+              >
+                {/* Corner decorations */}
+                <div className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-primary/40 transition-colors group-hover:border-primary" />
+                <div className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-primary/40 transition-colors group-hover:border-primary" />
+
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex items-center gap-1">
+                    <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
+                    <div className="h-1.5 w-3 bg-primary/60" />
+                  </div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+                    TEMPLATE-01
+                  </span>
+                </div>
+
+                <h3 className="mb-2 font-display text-xl font-bold tracking-wider text-foreground transition-colors group-hover:text-primary">
+                  DASHBOARD
+                </h3>
+                <p className="mb-4 text-sm text-foreground/60">
+                  Analytics dashboard with data cards, charts, metrics, sidebar navigation, and real-time status indicators.
+                </p>
+
+                <div className="flex items-center gap-2 font-mono text-[10px] tracking-widest text-primary/70 transition-colors group-hover:text-primary">
+                  <span>LAUNCH TEMPLATE</span>
+                  <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </Link>
+
+              {/* Landing Page Template Card */}
+              <Link
+                href="/templates/landing"
+                className="group relative overflow-hidden border border-primary/30 bg-card/30 p-6 backdrop-blur-sm transition-all hover:border-primary/60 hover:bg-card/50 hover:shadow-[0_0_30px_rgba(var(--primary-rgb,0,180,255),0.08)]"
+              >
+                {/* Corner decorations */}
+                <div className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-primary/40 transition-colors group-hover:border-primary" />
+                <div className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-primary/40 transition-colors group-hover:border-primary" />
+
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex items-center gap-1">
+                    <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
+                    <div className="h-1.5 w-3 bg-primary/60" />
+                  </div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+                    TEMPLATE-02
+                  </span>
+                </div>
+
+                <h3 className="mb-2 font-display text-xl font-bold tracking-wider text-foreground transition-colors group-hover:text-primary">
+                  LANDING PAGE
+                </h3>
+                <p className="mb-4 text-sm text-foreground/60">
+                  Marketing landing page with hero section, feature grid, testimonials, pricing cards, and call-to-action blocks.
+                </p>
+
+                <div className="flex items-center gap-2 font-mono text-[10px] tracking-widest text-primary/70 transition-colors group-hover:text-primary">
+                  <span>LAUNCH TEMPLATE</span>
+                  <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </Link>
+            </div>
+
+            {/* Browse all link */}
+            <div className="mt-10 text-center">
+              <Link
+                href="/templates"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded border border-primary/40 bg-primary/10 px-8 py-3 font-mono text-xs uppercase tracking-widest text-primary transition-all hover:bg-primary/20 hover:shadow-[0_0_20px_rgba(var(--primary-rgb,0,180,255),0.15)]"
+              >
+                Browse All Templates
+                <svg className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Final CTA */}
         <section className="relative border-t border-primary/20 py-24">
           <GridScanOverlay />

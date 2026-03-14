@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import dynamic from "next/dynamic";
-import { List, Settings, X } from "lucide-react";
+import Link from "next/link";
+import { List, Settings, X, ArrowRight } from "lucide-react";
 import { TronHeader, TheGridcnLogo } from "@/components/layout";
 import { UplinkHeader } from "@/components/thegridcn";
 import {
@@ -92,6 +93,27 @@ export default function ComponentsPage() {
           leftText="UPLINK: COMPONENT DATABASE CHANNEL 01"
           rightText="REGISTRY ACCESS: FULL - 50+ MODULES LOADED"
         />
+      </div>
+
+      {/* Templates CTA Banner */}
+      <div className="relative z-10 border-b border-primary/20 bg-card/60 backdrop-blur-sm">
+        <div className="container mx-auto flex flex-col items-center justify-between gap-3 px-4 py-3 sm:flex-row">
+          <div className="flex items-center gap-3">
+            <div className="hidden h-1.5 w-1.5 animate-pulse bg-primary sm:block" />
+            <p className="text-center font-mono text-[11px] tracking-wider text-foreground/80 sm:text-left">
+              <span className="text-primary">NEW:</span> See these components in action with our{" "}
+              <span className="text-foreground">Dashboard</span> and{" "}
+              <span className="text-foreground">Landing Page</span> templates
+            </p>
+          </div>
+          <Link
+            href="/templates"
+            className="group flex shrink-0 items-center gap-2 rounded border border-primary/50 bg-primary/10 px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest text-primary transition-all hover:bg-primary/20 hover:shadow-[0_0_12px_rgba(var(--primary-rgb,0,180,255),0.15)]"
+          >
+            View Templates
+            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
       </div>
 
       {/* Mobile floating buttons */}

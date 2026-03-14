@@ -144,3 +144,6 @@ export { DatePicker } from "./date-picker"
 // Utilities
 export { InstallCommand } from "./install-command"
 
+// Templates
+export * from "./templates"
+

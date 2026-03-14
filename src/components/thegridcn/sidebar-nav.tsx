@@ -15,12 +15,14 @@ interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: SidebarNavItem[]
   collapsed?: boolean
   onToggle?: () => void
+  logo?: React.ReactNode
 }
 
 export function SidebarNav({
   items,
   collapsed = false,
   onToggle,
+  logo,
   className,
   ...props
 }: SidebarNavProps) {
@@ -51,34 +53,44 @@ export function SidebarNav({
       {/* Scanline overlay */}
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
-      {/* Collapse toggle */}
-      {onToggle && (
-        <div className="relative border-b border-primary/20 p-2">
-          <button
-            type="button"
-            onClick={onToggle}
-            className="flex w-full items-center justify-center rounded p-1.5 transition-colors hover:bg-primary/10"
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
+      {/* Logo + Collapse toggle */}
+      {(onToggle || logo) && (
+        <div className="relative flex items-center border-b border-primary/20 p-2">
+          {logo && !collapsed && (
+            <div className="flex-1 pl-1">
+              {logo}
+            </div>
+          )}
+          {onToggle && (
+            <button
+              type="button"
+              onClick={onToggle}
               className={cn(
-                "text-primary/60 transition-transform duration-300",
-                collapsed && "rotate-180"
+                "flex items-center justify-center rounded p-1.5 transition-colors hover:bg-primary/10",
+                (!logo || collapsed) && "w-full"
               )}
+              aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
-              <path
-                d="M10 3L5 8l5 5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                className={cn(
+                  "text-primary/60 transition-transform duration-300",
+                  collapsed && "rotate-180"
+                )}
+              >
+                <path
+                  d="M10 3L5 8l5 5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          )}
         </div>
       )}
 
