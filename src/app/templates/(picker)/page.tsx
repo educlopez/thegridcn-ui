@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { LayoutDashboard, Globe } from "lucide-react"
+import { LayoutDashboard, Globe, FileText, LogIn, BarChart3 } from "lucide-react"
 import { GlowContainer } from "@/components/thegridcn"
 import { UplinkHeader } from "@/components/thegridcn"
 
@@ -20,6 +20,27 @@ const TEMPLATES = [
     href: "/templates/landing",
     icon: Globe,
   },
+  {
+    name: "Blog",
+    description:
+      "Full blog article page with two-column layout, table of contents sidebar, code blocks, author bio, newsletter CTA, and related articles. Perfect for content-driven sites.",
+    href: "/templates/blog",
+    icon: FileText,
+  },
+  {
+    name: "Login",
+    description:
+      "Split-panel authentication page with decorative branding panel, email/password form, social login buttons, and circuit background effects. Clean and secure feeling.",
+    href: "/templates/login",
+    icon: LogIn,
+  },
+  {
+    name: "Analytics",
+    description:
+      "Data-rich analytics dashboard with tab navigation, KPI cards, area/bar/pie charts, heatmap, data tables, and real-time metrics. No sidebar — full-width chart-focused layout.",
+    href: "/templates/analytics",
+    icon: BarChart3,
+  },
 ]
 
 export default function TemplatesPickerPage() {
@@ -29,7 +50,7 @@ export default function TemplatesPickerPage() {
       <div className="relative z-10">
         <UplinkHeader
           leftText="UPLINK: TEMPLATE GALLERY CHANNEL 02"
-          rightText="COMPOSITIONS: 2 LOADED"
+          rightText="COMPOSITIONS: 5 LOADED"
         />
       </div>
 
@@ -47,7 +68,7 @@ export default function TemplatesPickerPage() {
         </div>
 
         {/* Template cards grid */}
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {TEMPLATES.map((template) => (
             <Link key={template.href} href={template.href} className="group">
               <GlowContainer
