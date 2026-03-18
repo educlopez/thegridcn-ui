@@ -3,12 +3,14 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Components | The Gridcn",
   description:
-    "Browse 55+ Tron-inspired UI components for shadcn/ui. Data cards, HUD elements, 3D grids, radar displays, and more — all with Greek god color themes and glow effects.",
+    "Browse 55+ Tron-inspired UI components for shadcn/ui. Data cards, HUD elements, 3D grids, and radar displays.",
   openGraph: {
+    type: "website",
     title: "Components | The Gridcn",
     description:
       "Browse 55+ Tron-inspired UI components for shadcn/ui. Data cards, HUD elements, 3D grids, radar displays, and more.",
     url: "https://thegridcn.com/components",
+    siteName: "The Gridcn",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {

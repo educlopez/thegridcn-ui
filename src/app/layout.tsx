@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://thegridcn.com"),
   title: "The Gridcn | Tron-Inspired shadcn/ui Theme",
   description:
-    "A Tron: Ares inspired theme and component library for shadcn/ui. 55+ components, 6 Greek god color themes, 3D effects, and HUD-style UI elements for futuristic React interfaces.",
+    "Tron-inspired shadcn/ui theme with 55+ components, 6 Greek god color schemes, 3D effects, and HUD-style elements.",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     apple: "/favicon.svg",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     url: "https://thegridcn.com",
     title: "The Gridcn | Tron-Inspired shadcn/ui Theme",
     description:
-      "A Tron: Ares inspired theme and component library for shadcn/ui. 55+ components, 6 Greek god color themes, 3D effects, and HUD-style UI elements for futuristic React interfaces.",
+      "Tron-inspired shadcn/ui theme with 55+ components, 6 Greek god color schemes, 3D effects, and HUD-style elements.",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     siteName: "The Gridcn",
   },
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "The Gridcn | Tron-Inspired shadcn/ui Theme",
     description:
-      "A Tron: Ares inspired theme and component library for shadcn/ui. 55+ components, 6 Greek god color themes, 3D effects, and HUD-style UI elements.",
+      "Tron-inspired shadcn/ui theme with 55+ components, 6 Greek god color schemes, 3D effects, and HUD-style elements.",
     images: ["/og-image.png"],
   },
   alternates: {

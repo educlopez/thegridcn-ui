@@ -6,10 +6,12 @@ export const metadata: Metadata = {
   description:
     "Full-page template examples built with Tron-inspired shadcn/ui components. Dashboard layouts, landing pages, and more — all with Greek god color themes.",
   openGraph: {
+    type: "website",
     title: "Templates | The Gridcn",
     description:
       "Full-page template examples built with Tron-inspired shadcn/ui components. Dashboard layouts, landing pages, and more.",
     url: "https://thegridcn.com/templates",
+    siteName: "The Gridcn",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {

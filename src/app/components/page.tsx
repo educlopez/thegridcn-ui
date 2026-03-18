@@ -231,6 +231,7 @@ export default function ComponentsPage() {
 
       {/* Main content */}
       <main className="relative z-10 overflow-x-hidden">
+        <h1 className="sr-only">Tron-Inspired UI Components for shadcn/ui</h1>
         <div className="flex h-[calc(100vh-88px)]">
           {/* Left Sidebar - Component Explorer (Desktop) */}
           <ItemExplorer
