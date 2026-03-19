@@ -7,7 +7,7 @@ settings:
 overrides:
   minimatch: '>=3.1.3'
   flatted: '>=3.3.4'
-  ajv: '>=6.12.3'
+  ajv: '>=6.14.0'
   '@isaacs/brace-expansion': '>=2.0.0'
   qs: '>=6.14.0'
 
@@ -2074,13 +2074,10 @@ packages:
   ajv-formats@3.0.1:
     resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
     peerDependencies:
-      ajv: '>=6.12.3'
+      ajv: '>=6.14.0'
     peerDependenciesMeta:
       ajv:
         optional: true
-
-  ajv@6.12.6:
-    resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
 
   ajv@8.18.0:
     resolution: {integrity: sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A==}
@@ -2805,9 +2802,6 @@ packages:
     resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
     engines: {node: '>=8.6.0'}
 
-  fast-json-stable-stringify@2.1.0:
-    resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
-
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
@@ -3320,9 +3314,6 @@ packages:
   json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
 
-  json-schema-traverse@0.4.1:
-    resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
-
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
 
@@ -3831,10 +3822,6 @@ packages:
   proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
     engines: {node: '>= 0.10'}
-
-  punycode@2.3.1:
-    resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
-    engines: {node: '>=6'}
 
   qs@6.15.0:
     resolution: {integrity: sha512-mAZTtNCeetKMH+pSjrb76NAM8V9a05I9aBZOHztWy/UqcJdQYNsf59vrRKWnojAT9Y+GbIvoTBC++CPHqpDBhQ==}
@@ -4428,9 +4415,6 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
-  uri-js@4.4.1:
-    resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
-
   use-callback-ref@1.3.3:
     resolution: {integrity: sha512-jQL3lRnocaFtu3V00JToYz/4QkNWswxijDaCVNZRiRTO3HQDLsdu1ZtmIUvV4yPp+rvWm5j0y0TG/S61cuijTg==}
     engines: {node: '>=10'}
@@ -4987,7 +4971,7 @@ snapshots:
 
   '@eslint/eslintrc@3.3.3':
     dependencies:
-      ajv: 6.12.6
+      ajv: 8.18.0
       debug: 4.4.3
       espree: 10.4.0
       globals: 14.0.0
@@ -6429,13 +6413,6 @@ snapshots:
     optionalDependencies:
       ajv: 8.18.0
 
-  ajv@6.12.6:
-    dependencies:
-      fast-deep-equal: 3.1.3
-      fast-json-stable-stringify: 2.1.0
-      json-schema-traverse: 0.4.1
-      uri-js: 4.4.1
-
   ajv@8.18.0:
     dependencies:
       fast-deep-equal: 3.1.3
@@ -7209,7 +7186,7 @@ snapshots:
       '@humanwhocodes/module-importer': 1.0.1
       '@humanwhocodes/retry': 0.4.3
       '@types/estree': 1.0.8
-      ajv: 6.12.6
+      ajv: 8.18.0
       chalk: 4.1.2
       cross-spawn: 7.0.6
       debug: 4.4.3
@@ -7350,8 +7327,6 @@ snapshots:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.8
-
-  fast-json-stable-stringify@2.1.0: {}
 
   fast-levenshtein@2.0.6: {}
 
@@ -7821,8 +7796,6 @@ snapshots:
   json-buffer@3.0.1: {}
 
   json-parse-even-better-errors@2.3.1: {}
-
-  json-schema-traverse@0.4.1: {}
 
   json-schema-traverse@1.0.0: {}
 
@@ -8327,8 +8300,6 @@ snapshots:
     dependencies:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
-
-  punycode@2.3.1: {}
 
   qs@6.15.0:
     dependencies:
@@ -9099,10 +9070,6 @@ snapshots:
       browserslist: 4.28.1
       escalade: 3.2.0
       picocolors: 1.1.1
-
-  uri-js@4.4.1:
-    dependencies:
-      punycode: 2.3.1
 
   use-callback-ref@1.3.3(@types/react@19.2.8)(react@19.2.3):
     dependencies:
