@@ -481,6 +481,160 @@
 }
 
 /* ============================================
+   GRIDCN PROSE - Markdown rendering (docs, contributing)
+   ============================================ */
+.gridcn-prose {
+  color: var(--foreground);
+  font-family: var(--font-rajdhani), system-ui, sans-serif;
+  line-height: 1.7;
+  font-size: 0.975rem;
+}
+
+.gridcn-prose > * + * {
+  margin-top: 1.25rem;
+}
+
+.gridcn-prose h1,
+.gridcn-prose h2,
+.gridcn-prose h3,
+.gridcn-prose h4 {
+  font-family: var(--font-orbitron), system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--foreground);
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.25;
+}
+
+.gridcn-prose h1 { font-size: 1.75rem; }
+.gridcn-prose h2 {
+  font-size: 1.35rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid color-mix(in oklch, var(--border) 70%, transparent);
+}
+.gridcn-prose h3 { font-size: 1.1rem; color: var(--primary); }
+.gridcn-prose h4 { font-size: 0.95rem; color: var(--primary); }
+
+.gridcn-prose p {
+  color: color-mix(in oklch, var(--foreground) 85%, transparent);
+}
+
+.gridcn-prose a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--primary) 40%, transparent);
+  text-underline-offset: 3px;
+  transition: text-shadow 200ms ease, text-decoration-color 200ms ease;
+}
+
+.gridcn-prose a:hover {
+  text-decoration-color: var(--primary);
+  text-shadow: 0 0 8px var(--primary);
+}
+
+.gridcn-prose strong { color: var(--foreground); font-weight: 600; }
+
+.gridcn-prose ul,
+.gridcn-prose ol {
+  padding-left: 1.5rem;
+}
+
+.gridcn-prose ul { list-style: none; }
+.gridcn-prose ul > li { position: relative; padding-left: 0.25rem; }
+.gridcn-prose ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: 0.7em;
+  width: 0.35rem;
+  height: 1px;
+  background: var(--primary);
+}
+
+.gridcn-prose ol { list-style: decimal; }
+.gridcn-prose ol > li::marker {
+  color: var(--primary);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.85em;
+}
+
+.gridcn-prose li + li { margin-top: 0.4rem; }
+
+.gridcn-prose code {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.85em;
+  color: var(--primary);
+  background: color-mix(in oklch, var(--primary) 8%, transparent);
+  border: 1px solid color-mix(in oklch, var(--primary) 20%, transparent);
+  padding: 0.1rem 0.35rem;
+}
+
+.gridcn-prose pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: 0.85rem;
+}
+
+.gridcn-prose .gridcn-shiki {
+  border: 1px solid color-mix(in oklch, var(--primary) 25%, transparent);
+  background: #000;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+}
+
+.gridcn-prose .gridcn-shiki pre {
+  padding: 1rem 1.25rem;
+  background: transparent !important;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.825rem;
+  line-height: 1.6;
+}
+
+.gridcn-prose hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklch, var(--primary) 50%, transparent),
+    transparent
+  );
+  margin: 2rem 0;
+}
+
+.gridcn-prose blockquote {
+  border-left: 2px solid var(--primary);
+  padding: 0.25rem 0 0.25rem 1rem;
+  color: color-mix(in oklch, var(--foreground) 75%, transparent);
+  background: color-mix(in oklch, var(--primary) 5%, transparent);
+}
+
+.gridcn-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.gridcn-prose th,
+.gridcn-prose td {
+  border: 1px solid color-mix(in oklch, var(--border) 60%, transparent);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.gridcn-prose th {
+  background: color-mix(in oklch, var(--primary) 8%, transparent);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--primary);
+}
+
+/* ============================================
    SHIKI CODE BLOCK - LINE NUMBERS
    pheralb/code-blocks CSS counter approach
    ============================================ */
