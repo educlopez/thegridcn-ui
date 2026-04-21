@@ -44,20 +44,28 @@ Browse every component with live switching across the six themes at [thegridcn.c
 
 ### 3. Install via the registry (recommended)
 
-The site exposes a shadcn-compatible registry at `/r/<name>.json`.
+The site exposes a shadcn-compatible registry. Register the namespace once in your `components.json`:
 
-```bash
-# single component
-npx shadcn@latest add https://thegridcn.com/r/button.json
-
-# tron-flavored component
-npx shadcn@latest add https://thegridcn.com/r/data-card.json
-
-# a full theme (CSS variables only)
-npx shadcn@latest add https://thegridcn.com/r/theme-ares.json
+```json
+{
+  "registries": {
+    "@thegridcn": "https://thegridcn.com/r/{name}.json"
+  }
+}
 ```
 
-See the full walkthrough in [`docs/install.md`](./docs/install.md).
+Then install anything by short name:
+
+```bash
+npx shadcn@latest add @thegridcn/button
+npx shadcn@latest add @thegridcn/data-card
+npx shadcn@latest add @thegridcn/theme-ares
+
+# or several at once
+npx shadcn@latest add @thegridcn/button @thegridcn/hud @thegridcn/radar
+```
+
+See the full walkthrough (namespace vs full URL, theming, tokens, troubleshooting) in [`docs/install.md`](./docs/install.md).
 
 ## Theme usage
 

@@ -1,6 +1,6 @@
 # Install guide · shadcn CLI
 
-The GridCN ships a [shadcn/ui](https://ui.shadcn.com/)-compatible registry at `https://thegridcn.com/r/<name>.json`. That means every component is a single `npx shadcn add` away.
+The GridCN ships a [shadcn/ui](https://ui.shadcn.com/)-compatible registry. Every component is a single `npx shadcn add` away, either by namespace (`@thegridcn/button`) or by full URL.
 
 ---
 
@@ -20,21 +20,53 @@ Answer the prompts for style, base color (pick `neutral`), and CSS variables (sa
 
 ---
 
-## Install a component
+## Register the namespace (recommended)
 
-Pass the full URL of any registry item:
+Add `@thegridcn` once to your `components.json` and skip typing URLs:
+
+```json
+{
+  "registries": {
+    "@thegridcn": "https://thegridcn.com/r/{name}.json"
+  }
+}
+```
+
+From then on, every item is a short name away:
 
 ```bash
-# base shadcn component (our version, re-exported through the registry)
-npx shadcn@latest add https://thegridcn.com/r/button.json
+# base shadcn component (our version, re-exported)
+npx shadcn@latest add @thegridcn/button
 
 # tron-flavored component
-npx shadcn@latest add https://thegridcn.com/r/data-card.json
-npx shadcn@latest add https://thegridcn.com/r/radar.json
-npx shadcn@latest add https://thegridcn.com/r/hud.json
+npx shadcn@latest add @thegridcn/data-card
+npx shadcn@latest add @thegridcn/radar
+npx shadcn@latest add @thegridcn/hud
+
+# install several at once
+npx shadcn@latest add @thegridcn/button @thegridcn/data-card @thegridcn/hud
 
 # 3D component (pulls in three + @react-three/fiber)
-npx shadcn@latest add https://thegridcn.com/r/grid.json
+npx shadcn@latest add @thegridcn/grid
+```
+
+You can also search and list the registry:
+
+```bash
+npx shadcn@latest search @thegridcn
+npx shadcn@latest search @thegridcn --query "hud"
+npx shadcn@latest list   @thegridcn
+```
+
+---
+
+## Install by full URL (no setup)
+
+If you'd rather not edit `components.json`, pass the full URL:
+
+```bash
+npx shadcn@latest add https://thegridcn.com/r/button.json
+npx shadcn@latest add https://thegridcn.com/r/data-card.json
 ```
 
 The CLI will:
@@ -51,12 +83,12 @@ The CLI will:
 Themes ship as `registry:style` items that write a single CSS file with the `oklch()` variables baked in:
 
 ```bash
-npx shadcn@latest add https://thegridcn.com/r/theme-ares.json
-npx shadcn@latest add https://thegridcn.com/r/theme-tron.json
-npx shadcn@latest add https://thegridcn.com/r/theme-clu.json
-npx shadcn@latest add https://thegridcn.com/r/theme-athena.json
-npx shadcn@latest add https://thegridcn.com/r/theme-aphrodite.json
-npx shadcn@latest add https://thegridcn.com/r/theme-poseidon.json
+npx shadcn@latest add @thegridcn/theme-ares
+npx shadcn@latest add @thegridcn/theme-tron
+npx shadcn@latest add @thegridcn/theme-clu
+npx shadcn@latest add @thegridcn/theme-athena
+npx shadcn@latest add @thegridcn/theme-aphrodite
+npx shadcn@latest add @thegridcn/theme-poseidon
 ```
 
 Each writes to `src/styles/thegridcn-theme.css`. Import it from your global CSS:
@@ -96,12 +128,11 @@ Install a button, a Tron data card, the Ares theme, then render it.
 # 1. init shadcn if you haven't
 npx shadcn@latest init
 
-# 2. install the Ares theme
-npx shadcn@latest add https://thegridcn.com/r/theme-ares.json
+# 2. register the namespace in components.json
+#    "registries": { "@thegridcn": "https://thegridcn.com/r/{name}.json" }
 
-# 3. install components
-npx shadcn@latest add https://thegridcn.com/r/button.json
-npx shadcn@latest add https://thegridcn.com/r/data-card.json
+# 3. install everything in one shot
+npx shadcn@latest add @thegridcn/theme-ares @thegridcn/button @thegridcn/data-card
 ```
 
 ```tsx
