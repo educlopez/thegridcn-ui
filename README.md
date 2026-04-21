@@ -1,168 +1,75 @@
 # The GridCN
 
-<div align="center">
+[![License: MIT](https://img.shields.io/badge/License-MIT-black?style=flat-square)](./LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-0af?style=flat-square&logo=react)](https://react.dev/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
+[![shadcn compatible](https://img.shields.io/badge/shadcn-compatible-111?style=flat-square)](https://ui.shadcn.com/)
 
-<img width="1280" height="640" alt="image" src="https://github.com/user-attachments/assets/4efc27a3-768d-4c6a-88ab-6af3a8452d61" />
+![hero](docs/images/hero.png)
 
-
----
-
-**An authentic Tron: Ares inspired theme system for shadcn/ui**
-
-[![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.2-blue?style=flat-square&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
-
-**🌐 [Live Demo](https://thegridcn.com)**
-
-_Enter the Grid. Build immersive digital experiences._
-
-</div>
+> A Tron: Ares inspired theme system for shadcn/ui. Grid-native components, six Greek-god color schemes, three.js effects, and a copy-paste registry that plugs into the shadcn CLI.
 
 ---
 
-## 🌟 Overview
+## What is this
 
-**The GridCN** is a comprehensive design system that brings the iconic visual language of _Tron: Ares_ to modern web development. Built on top of [shadcn/ui](https://ui.shadcn.com/), it provides 50+ fully-styled components, 6 Greek god-inspired themes, movie-accurate UI elements, and immersive 3D effects powered by Three.js.
+The GridCN turns plain shadcn/ui into a neon, glass-HUD design system modeled after _Tron: Ares_. It ships 55+ base components, 90+ Tron-flavored components (HUDs, radars, timers, maps, 3D grids), and six themes built on `oklch()` CSS variables — all installable one-by-one through `npx shadcn add`.
 
-🌐 **Visit the live site:** [thegridcn.com](https://thegridcn.com) | [Components Showcase](https://thegridcn.com/components)
+Nothing is locked behind a package. Every component is raw TSX you own, just like shadcn/ui itself. The site at [thegridcn.com](https://thegridcn.com) is both the showcase and the registry.
 
-### Key Features
+## Features
 
-- 🎨 **6 Unique Themes** - Greek god-inspired color schemes (Ares, Tron, Clu, Athena, Aphrodite, Poseidon)
-- 🧩 **50+ Components** - Complete shadcn/ui library with authentic Tron styling
-- 🎬 **Movie UI Elements** - Data cards, HUD components, timers, alerts, and radar displays
-- ✨ **3D Effects** - Immersive Three.js grid, particles, and light beams
-- 🎯 **Glow Utilities** - CSS utilities for neon glows, scanlines, and pulsing animations
-- 🔒 **TypeScript** - Full type safety with comprehensive TypeScript definitions
-- 🎭 **Theme Switching** - Dynamic theme system with persistent storage
+- Six themes · Ares, Tron, Clu, Athena, Aphrodite, Poseidon
+- 145+ components · base UI + Tron-specific HUD/3D/effects
+- shadcn CLI native · install any component with `npx shadcn add`
+- Token export · `pnpm tokens:build` emits per-theme CSS + JSON under `public/tokens/`
+- Three.js integration · Grid3D, Tunnel, GridFloor, always SSR-safe
+- Copy-paste friendly · full source visible in the showcase with one-click copy
 
-## 🚀 Quick Start
+## Quick start
 
-### Prerequisites
+Three ways to use The GridCN, from lightest touch to full clone.
 
-- Node.js 18+
-- pnpm (recommended) or npm/yarn
+### 1. Live preview
 
-### Installation
+Browse every component with live switching across the six themes at [thegridcn.com/components](https://thegridcn.com/components). Each card shows the rendered component, its variants, and the source.
 
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/project-ares.git
-cd project-ares
+### 2. Copy a single component
 
-# Install dependencies
-pnpm install
+1. Open the component at [thegridcn.com/components](https://thegridcn.com/components).
+2. Switch to any theme to preview the styling.
+3. Click the copy button on the source block.
+4. Paste into your own `components/` directory. Install listed peer deps if any.
 
-# Run the development server
-pnpm dev
-```
+### 3. Install via the registry (recommended)
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
-
-### Build for Production
+The site exposes a shadcn-compatible registry at `/r/<name>.json`.
 
 ```bash
-pnpm build
-pnpm start
+# single component
+npx shadcn@latest add https://thegridcn.com/r/button.json
+
+# tron-flavored component
+npx shadcn@latest add https://thegridcn.com/r/data-card.json
+
+# a full theme (CSS variables only)
+npx shadcn@latest add https://thegridcn.com/r/theme-ares.json
 ```
 
-## 📦 Project Structure
+See the full walkthrough in [`docs/install.md`](./docs/install.md).
 
-```
-project-ares/
-├── src/
-│   ├── app/                 # Next.js app directory
-│   │   ├── components/      # Components showcase page (/components)
-│   │   │   └── page.tsx     # Components page
-│   │   ├── page.tsx         # Homepage (/)
-│   │   └── globals.css      # Global styles & theme definitions
-│   ├── components/
-│   │   ├── ui/              # shadcn/ui base components (55+)
-│   │   ├── thegridcn/       # Tron-inspired UI, 3D, effects, and movie components
-│   │   ├── theme/           # Theme provider & switcher
-│   │   ├── showcase/        # Component showcase sections
-│   │   └── layout/          # Layout components
-│   ├── hooks/               # Custom React hooks
-│   ├── lib/                 # Utility functions
-│   └── registry/            # Component registry config
-├── public/                  # Static assets
-└── components.json          # shadcn/ui configuration
-```
+## Theme usage
 
-### Pages
-
-The project consists of two main pages:
-
-- **Home** (`/`) - Landing page with theme selector, features, and project overview
-- **Components** (`/components`) - Interactive showcase of all available components
-
-## 🎨 Themes
-
-The GridCN includes 6 unique themes inspired by Greek mythology and Tron characters:
-
-| Theme         | Color            | Inspiration                   |
-| ------------- | ---------------- | ----------------------------- |
-| **Ares**      | Red (#ff3333)    | God of War - Main movie theme |
-| **Tron**      | Cyan (#00d4ff)   | User - Classic Tron aesthetic |
-| **Clu**       | Orange (#ff6600) | Program - Antagonist theme    |
-| **Athena**    | Gold (#ffd700)   | Goddess of Wisdom             |
-| **Aphrodite** | Pink (#ff1493)   | Goddess of Love               |
-| **Poseidon**  | Blue (#0066ff)   | God of Sea                    |
-
-Each theme includes:
-
-- Custom color palettes with OKLCH color space
-- Glow effects matching the theme color
-- Chart color schemes
-- Sidebar styling
-- Border and accent colors
-
-## 🧩 Components
-
-### Standard UI Components
-
-All shadcn/ui components are available with Tron styling:
-
-- **Layout**: Card, Separator, Sidebar, Sheet, Drawer
-- **Forms**: Input, Textarea, Select, Checkbox, Radio, Switch, Slider
-- **Navigation**: Button, Navigation Menu, Menubar, Breadcrumb, Pagination
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton, Spinner
-- **Overlays**: Dialog, Popover, Tooltip, Hover Card, Context Menu
-- **Data Display**: Table, Chart, Avatar, Badge, Calendar
-- **And more...**
-
-### Tron-Specific Components
-
-- `TronReticle` - Scanning reticle overlay
-- `TronDossierCard` - Movie-accurate data card
-- `TronStatusStrip` - HUD status bar
-- `TronUplinkHeader` - Header bar with system info
-- `TronRadar` - Proximity radar display
-- `TronDerezCountdown` - De-resolution timer
-- `TronGridMap` - Grid map overlay
-- `TronGridScanOverlay` - Scanning grid effect
-- `TronThemeDossierSelector` - Theme selector with dossier cards
-
-### 3D Components
-
-- `TronGrid3D` - Interactive 3D grid with particles and light beams
-- `TronTunnel` - 3D tunnel effect
-- `TronGrid` - 3D grid floor
-
-## 🎯 Usage
-
-### Theme Provider
-
-Wrap your app with the `ThemeProvider`:
+Wrap your app once, then switch themes anywhere.
 
 ```tsx
+// app/layout.tsx
 import { ThemeProvider } from "@/components/theme";
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider defaultTheme="ares">{children}</ThemeProvider>
       </body>
@@ -171,134 +78,99 @@ export default function RootLayout({ children }) {
 }
 ```
 
-### Using Themes
-
 ```tsx
+// any client component
+"use client";
 import { useTheme } from "@/components/theme";
 
-function MyComponent() {
+export function Toggle() {
   const { theme, setTheme } = useTheme();
-
-  return <button onClick={() => setTheme("tron")}>Switch to Tron theme</button>;
-}
-```
-
-### Using Components
-
-```tsx
-import { Button } from "@/components/ui/button";
-import { DataCard } from "@/components/thegridcn";
-
-export function MyPage() {
   return (
-    <div>
-      <Button>Enter the Grid</Button>
-      <DataCard
-        subtitle="PROGRAM"
-        title="FLYNN"
-        status="active"
-        fields={[
-          { label: "STATUS", value: "ACTIVE" },
-          { label: "TYPE", value: "USER" },
-        ]}
-      />
-    </div>
+    <button onClick={() => setTheme(theme === "ares" ? "tron" : "ares")}>
+      {theme}
+    </button>
   );
 }
 ```
 
-## ⚙️ Configuration
+Themes are `data-theme` attributes on `<html>`, so any CSS-variable-based component reacts automatically.
 
-### Customization
+## Token export
 
-The theme system uses CSS custom properties (CSS variables) defined in `src/app/globals.css`. You can customize:
+Run `pnpm tokens:build` to regenerate `public/tokens/`:
 
-- Color schemes by modifying the theme CSS variables
-- Border radius by adjusting `--radius` values
-- Font families via `--font-orbitron` and `--font-rajdhani`
-- Glow effects through `--glow` and `--glow-muted` variables
+```
+public/tokens/
+  index.json         · manifest of all themes
+  tron.css           · copy-paste CSS block
+  tron.json          · flat vars object { "--primary": "oklch(...)", ... }
+  ares.{css,json}
+  clu.{css,json}
+  athena.{css,json}
+  aphrodite.{css,json}
+  poseidon.{css,json}
+```
 
-## 🛠️ Tech Stack
+Drop a CSS file into any project:
 
-- **[Next.js 16.1](https://nextjs.org/)** - React framework with App Router
-- **[React 19.2](https://react.dev/)** - UI library
-- **[TypeScript 5](https://www.typescriptlang.org/)** - Type safety
-- **[Tailwind CSS 4](https://tailwindcss.com/)** - Utility-first CSS
-- **[shadcn/ui](https://ui.shadcn.com/)** - Component library
-- **[Three.js](https://threejs.org/)** - 3D graphics library
-- **[Radix UI](https://www.radix-ui.com/)** - Unstyled, accessible components
-- **[next-themes](https://github.com/pacocoursey/next-themes)** - Theme management
+```css
+/* your-app/app/globals.css */
+@import "https://thegridcn.com/tokens/ares.css";
+```
 
-## 📚 Usage Guide
+Or import the JSON into your Tailwind config:
 
-### Viewing Components
+```ts
+// tailwind.config.ts
+import ares from "./tokens/ares.json" with { type: "json" };
 
-The project includes two pages:
+export default {
+  theme: {
+    extend: {
+      colors: {
+        primary: ares.vars["--primary"],
+        // ... map the rest
+      },
+    },
+  },
+};
+```
 
-- **Home Page** ([thegridcn.com](https://thegridcn.com)) - Features the theme system, project overview, and key information
-- **Components Page** ([thegridcn.com/components](https://thegridcn.com/components)) - Interactive showcase of all 50+ components with live examples
+## Development
 
-### Theme System
+```bash
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm build        # production build (runs registry:build first)
+pnpm lint         # eslint
+pnpm tokens:build # regenerate public/tokens/
+```
 
-Themes are defined using CSS custom properties in `src/app/globals.css`. Each theme uses the `[data-theme="theme-name"]` selector to apply its color scheme.
+Package manager is **pnpm**. Node 18+.
 
-### Styling Guide
+Project layout:
 
-- Use Tailwind utility classes for layout and spacing
-- Leverage CSS variables for theme-aware colors
-- Apply glow effects using the `glow-text` utility class
-- Use border utilities with `border-primary` for Tron-style borders
+```
+src/
+  app/                · Next.js App Router
+  components/ui/      · 55+ shadcn base components
+  components/thegridcn/  · Tron-flavored components + 3D + effects
+  components/theme/   · ThemeProvider + useTheme
+  lib/                · cn(), registry helpers
+scripts/              · registry + tokens build scripts
+public/r/             · generated registry JSON (one per component)
+public/tokens/        · generated theme tokens
+docs/install.md       · shadcn CLI install guide
+```
 
-## 🚢 Deployment
+## Contributing
 
-### Deploy on Vercel
+PRs are welcome — especially new Tron-flavored components, theme polish, and registry improvements. Open an issue first for anything larger than a tweak so we can align on direction.
 
-The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new):
+## License
 
-1. Push your code to GitHub
-2. Import your repository in Vercel
-3. Deploy!
-
-The project is optimized for Vercel's platform and will work out of the box.
-
-### Other Platforms
-
-This is a standard Next.js application and can be deployed to any platform that supports Next.js:
-
-- [Netlify](https://www.netlify.com/)
-- [Railway](https://railway.app/)
-- [AWS Amplify](https://aws.amazon.com/amplify/)
-- Any Node.js hosting service
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🙏 Acknowledgments
-
-- [shadcn/ui](https://ui.shadcn.com/) for the amazing component library
-- [Tron: Ares](https://www.imdb.com/title/tt11040010/) for visual inspiration
-- [Radix UI](https://www.radix-ui.com/) for accessible primitives
-- [Three.js](https://threejs.org/) for 3D capabilities
-
-## 📞 Support
-
-If you have any questions or need help, please:
-
-- Open an issue on GitHub
-- Visit the [live site](https://thegridcn.com) to see components in action
-- Check the [Usage Guide](#-usage-guide) section above
+[MIT](./LICENSE)
 
 ---
 
-<div align="center">
-
-**Built with ❤️ for the Grid**
-
-_End of Line_
-
-</div>
+_End of line._
