@@ -100,6 +100,27 @@ export default function RootLayout({
                   "name": "The Gridcn",
                   "url": "https://thegridcn.com",
                   "description": "A Tron-inspired theme and component library for shadcn/ui with Greek god color schemes, 3D effects, and HUD-style UI elements.",
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                      "@type": "EntryPoint",
+                      "urlTemplate": "https://thegridcn.com/components#{search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                  }
+                },
+                {
+                  "@type": "SoftwareApplication",
+                  "name": "thegridcn",
+                  "url": "https://thegridcn.com",
+                  "applicationCategory": "DeveloperApplication",
+                  "operatingSystem": "Web",
+                  "description": "A Tron-inspired theme and component library for shadcn/ui with 100+ components, 6 Greek god color themes, Three.js 3D effects, and HUD-style UI elements.",
+                  "offers": {
+                    "@type": "Offer",
+                    "price": 0,
+                    "priceCurrency": "USD"
+                  }
                 },
                 {
                   "@type": "FAQPage",
