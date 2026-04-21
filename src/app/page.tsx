@@ -25,6 +25,7 @@ import {
   GridMap,
 } from "@/components/website";
 import { TronHeader, TheGridcnLogo } from "@/components/layout";
+import { ThemeShowcaseSection } from "@/components/showcase";
 
 // Dynamic import for Three.js components (client-side only)
 const Grid3D = dynamic(
@@ -565,6 +566,9 @@ export default function Home() {
         <div id="themes">
           <ThemeDossierSelector />
         </div>
+
+        {/* Theme Showcase grid */}
+        <ThemeShowcaseSection />
 
         {/* Features Section */}
         <section
