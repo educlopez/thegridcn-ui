@@ -501,3 +501,50 @@ pre.shiki-line-numbers code .line::before {
   user-select: none;
   -webkit-user-select: none;
 }
+
+/* ============================================
+   SCROLLBAR - Tron-style, theme-aware
+   Re-colors per data-theme via --primary
+   ============================================ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklch, var(--primary) 55%, transparent) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: color-mix(in oklch, var(--background) 92%, var(--primary) 8%);
+  border-left: 1px solid color-mix(in oklch, var(--border) 60%, transparent);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in oklch, var(--primary) 55%, transparent);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: inset 0 0 6px color-mix(in oklch, var(--primary) 40%, transparent);
+  transition: background-color 150ms ease, box-shadow 150ms ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+  background-clip: padding-box;
+  box-shadow:
+    inset 0 0 8px color-mix(in oklch, var(--primary) 80%, transparent),
+    0 0 8px color-mix(in oklch, var(--primary) 50%, transparent);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: var(--primary);
+  background-clip: padding-box;
+  box-shadow:
+    inset 0 0 10px var(--primary),
+    0 0 12px color-mix(in oklch, var(--primary) 70%, transparent);
+}
+
+*::-webkit-scrollbar-corner {
+  background: var(--background);
+}
