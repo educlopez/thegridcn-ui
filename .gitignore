@@ -43,6 +43,10 @@ next-env.d.ts
 # registry testing
 /__registry-test__/
 
+# tsx / node runtime caches
+/node-compile-cache/
+/tsx-*/
+
 references
 
 public/r
