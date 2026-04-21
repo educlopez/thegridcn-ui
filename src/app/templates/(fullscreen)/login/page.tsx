@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     description:
       "Tron-inspired login template built with shadcn/ui components. Futuristic authentication forms with glow effects.",
     url: "https://thegridcn.com/templates/login",
+    images: [{ url: "/api/og/poseidon", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/api/og/poseidon"],
   },
   alternates: {
     canonical: "https://thegridcn.com/templates/login",

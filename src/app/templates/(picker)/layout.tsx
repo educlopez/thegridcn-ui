@@ -12,14 +12,14 @@ export const metadata: Metadata = {
       "Full-page template examples built with Tron-inspired shadcn/ui components. Dashboard layouts, landing pages, and more.",
     url: "https://thegridcn.com/templates",
     siteName: "The Gridcn",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    images: [{ url: "/api/og/ares", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Templates | The Gridcn",
     description:
       "Full-page template examples built with Tron-inspired shadcn/ui components. Dashboard layouts, landing pages, and more.",
-    images: ["/og-image.png"],
+    images: ["/api/og/ares"],
   },
   alternates: {
     canonical: "https://thegridcn.com/templates",

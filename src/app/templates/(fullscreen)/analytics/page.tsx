@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     description:
       "Tron-inspired analytics template built with shadcn/ui components. Real-time charts, metric cards, and data visualization.",
     url: "https://thegridcn.com/templates/analytics",
+    images: [{ url: "/api/og/clu", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/api/og/clu"],
   },
   alternates: {
     canonical: "https://thegridcn.com/templates/analytics",

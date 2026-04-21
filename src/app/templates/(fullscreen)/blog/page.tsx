@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     description:
       "Tron-inspired blog template built with shadcn/ui components. Futuristic article layouts, post grids, and reading views.",
     url: "https://thegridcn.com/templates/blog",
+    images: [{ url: "/api/og/athena", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/api/og/athena"],
   },
   alternates: {
     canonical: "https://thegridcn.com/templates/blog",
