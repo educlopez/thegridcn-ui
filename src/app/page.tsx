@@ -24,7 +24,7 @@ import {
   DossierCard,
   GridMap,
 } from "@/components/website";
-import { TronHeader, TheGridcnLogo } from "@/components/layout";
+import { TronHeader, SiteFooter } from "@/components/layout";
 import { ThemeShowcaseSection } from "@/components/showcase";
 
 // Dynamic import for Three.js components (client-side only)
@@ -1071,59 +1071,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer
-        className="relative z-10 border-t border-primary/30 bg-panel"
-      >
-        {/* CRT scanline effect */}
-        <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
-        {/* Footer uplink bar */}
-        <UplinkHeader
-          leftText="SYSTEM: THE GRIDCN v1.0.0"
-          rightText="UPTIME: 99.9% - END OF LINE"
-        />
-
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-            {/* Logo section */}
-            <div className="flex items-center gap-4">
-              <TheGridcnLogo size="lg" />
-              <div className="h-8 w-px bg-primary/40" />
-              <div className="font-mono text-[10px]">
-                <div className="tracking-widest text-foreground">
-                  TRON-INSPIRED
-                </div>
-                <div className="tracking-wider text-primary">
-                  THEME SYSTEM
-                </div>
-              </div>
-            </div>
-
-            {/* Tech stack */}
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              {["React", "Tailwind", "shadcn/ui", "Three.js"].map(
-                (tech) => (
-                  <span
-                    key={tech}
-                    className="border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[9px] tracking-wider text-foreground"
-                  >
-                    {tech}
-                  </span>
-                )
-              )}
-            </div>
-          </div>
-
-          {/* Bottom copyright line */}
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/30" />
-            <span className="font-mono text-[9px] tracking-widest text-foreground">
-              GRID YEAR {new Date().getFullYear()} • ALL PROGRAMS RESERVED
-            </span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/30" />
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
