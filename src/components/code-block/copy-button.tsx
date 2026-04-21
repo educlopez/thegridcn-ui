@@ -3,17 +3,19 @@
 import { useEffect, useState, type ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
-import { CheckIcon, CopyIcon } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 
 interface CopyButtonProps extends ComponentProps<"button"> {
   content: string;
   iconSize?: number;
+  label?: string;
 }
 
 const CopyButton = ({
   content,
   iconSize = 14,
   className,
+  label,
   ...props
 }: CopyButtonProps) => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
@@ -28,34 +30,49 @@ const CopyButton = ({
   }, [isCopied]);
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(content);
-    setIsCopied(true);
+    try {
+      await navigator.clipboard.writeText(content);
+      setIsCopied(true);
+    } catch (err) {
+      console.error("Failed to copy to clipboard:", err);
+    }
   };
 
   return (
     <button
-      title="Copy to clipboard"
+      type="button"
+      title={isCopied ? "Copied!" : "Copy to clipboard"}
+      aria-label={isCopied ? "Copied to clipboard" : "Copy to clipboard"}
+      aria-live="polite"
+      data-copied={isCopied}
       className={cn(
-        "cursor-pointer",
-        "transition-colors duration-200 ease-in-out",
-        "text-foreground/30",
-        "hover:text-primary",
+        "inline-flex items-center gap-1.5 rounded-sm px-1.5 py-1",
+        "cursor-pointer font-mono text-[10px] uppercase tracking-widest",
+        "text-foreground/40 hover:text-primary",
+        "transition-all duration-200 ease-in-out",
+        "hover:bg-primary/5",
+        "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/60",
+        "data-[copied=true]:text-primary",
+        "data-[copied=true]:shadow-[0_0_10px_var(--primary)]",
         className,
       )}
       onClick={handleCopy}
       {...props}
     >
       {isCopied ? (
-        <CheckIcon
-          size={iconSize}
-          className="animate-in zoom-in-50 text-emerald-400 duration-200"
-        />
-      ) : (
-        <CopyIcon
+        <Check
           size={iconSize}
           className="animate-in zoom-in-50 duration-200"
+          aria-hidden="true"
+        />
+      ) : (
+        <Copy
+          size={iconSize}
+          className="animate-in zoom-in-50 duration-200"
+          aria-hidden="true"
         />
       )}
+      {label ? <span>{isCopied ? "Copied" : label}</span> : null}
     </button>
   );
 };
