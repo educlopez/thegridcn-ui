@@ -12,6 +12,9 @@ export const metadata: Metadata = {
       "Enter the Grid. Race your light cycle against AI opponents in this Tron-inspired mini-game.",
     url: "https://thegridcn.com/game",
   },
+  alternates: {
+    canonical: "https://thegridcn.com/game",
+  },
 }
 
 export default function GamePage() {
