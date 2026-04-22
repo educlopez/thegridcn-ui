@@ -105,17 +105,17 @@ If you want multiple themes side-by-side with `data-theme` switching, use the ra
 
 ## Listing available components
 
-Every registry entry is mirrored under `public/r/` and served at `/r/<name>.json`. The canonical list lives in [`registry.json`](../registry.json) at the project root. To enumerate names locally:
+Every registry entry is mirrored under `public/r/` and served at `/r/<name>.json`. The canonical list lives in [`registry.json`](https://github.com/educlopez/thegridcn-ui/blob/main/registry.json) at the project root. To enumerate names locally:
 
 ```bash
 # from a clone of thegridcn-ui
 jq -r '.items[].name' registry.json | sort -u
 ```
 
-To enumerate names from the live site:
+To enumerate names from the repo on GitHub:
 
 ```bash
-curl -s https://thegridcn.com/registry.json | jq -r '.items[].name' | sort -u
+curl -sL https://raw.githubusercontent.com/educlopez/thegridcn-ui/main/registry.json | jq -r '.items[].name' | sort -u
 ```
 
 ---
