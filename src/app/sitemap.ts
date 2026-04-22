@@ -1,5 +1,5 @@
+// TODO: add per-component routes at /components/[id] then include them here for deep SEO
 import type { MetadataRoute } from "next"
-import { getAllComponents } from "@/lib/component-data"
 
 const BASE_URL = "https://thegridcn.com"
 
@@ -66,18 +66,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  const seenIds = new Set<string>()
-  const componentRoutes: MetadataRoute.Sitemap = []
-  for (const item of getAllComponents()) {
-    if (seenIds.has(item.id)) continue
-    seenIds.add(item.id)
-    componentRoutes.push({
-      url: `${BASE_URL}/components#${item.id}`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    })
-  }
-
-  return [...staticRoutes, ...templateRoutes, ...componentRoutes]
+  return [...staticRoutes, ...templateRoutes]
 }
