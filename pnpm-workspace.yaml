@@ -1,5 +1,9 @@
 packages:
   - .
-ignoredBuiltDependencies:
+
+onlyBuiltDependencies:
+  - esbuild
   - sharp
+  - msw
   - unrs-resolver
+  - "@tailwindcss/oxide"
