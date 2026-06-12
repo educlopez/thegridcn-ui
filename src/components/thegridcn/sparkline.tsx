@@ -31,6 +31,20 @@ export function Sparkline({
 }: SparklineProps) {
   const filterId = React.useId()
   const stroke = variantStroke[variant]
+  const pathRef = React.useRef<SVGPathElement>(null)
+
+  React.useEffect(() => {
+    if (!animated || !pathRef.current) return
+    const path = pathRef.current
+    const length = path.getTotalLength()
+    path.style.strokeDasharray = `${length}`
+    path.style.strokeDashoffset = `${length}`
+    // Trigger animation
+    requestAnimationFrame(() => {
+      path.style.transition = "stroke-dashoffset 1s ease-out"
+      path.style.strokeDashoffset = "0"
+    })
+  }, [animated, data])
 
   if (data.length < 2) return null
 
@@ -46,22 +60,6 @@ export function Sparkline({
 
   const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ")
   const areaPath = linePath + ` L${width - pad},${height} L${pad},${height} Z`
-
-  // Animate: draw the line from left to right
-  const pathRef = React.useRef<SVGPathElement>(null)
-
-  React.useEffect(() => {
-    if (!animated || !pathRef.current) return
-    const path = pathRef.current
-    const length = path.getTotalLength()
-    path.style.strokeDasharray = `${length}`
-    path.style.strokeDashoffset = `${length}`
-    // Trigger animation
-    requestAnimationFrame(() => {
-      path.style.transition = "stroke-dashoffset 1s ease-out"
-      path.style.strokeDashoffset = "0"
-    })
-  }, [animated, data])
 
   return (
     <div

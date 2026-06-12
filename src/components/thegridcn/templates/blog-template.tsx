@@ -229,7 +229,7 @@ export function BlogTemplate() {
                 {/* Center label */}
                 <div className="flex h-full items-center justify-center">
                   <span className="font-mono text-[10px] uppercase tracking-widest text-primary/40">
-                    // Hero Image — Grid Interface Render
+                    {"// Hero Image — Grid Interface Render"}
                   </span>
                 </div>
               </div>
@@ -405,7 +405,7 @@ export function BlogTemplate() {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(var(--primary-rgb,0,180,255),0.08),transparent_70%)]" />
                     <div className="flex h-full items-center justify-center">
                       <span className="font-mono text-[10px] uppercase tracking-widest text-primary/40">
-                        // Diagram — Grid Visual Layer Hierarchy
+                        {"// Diagram — Grid Visual Layer Hierarchy"}
                       </span>
                     </div>
                   </div>
