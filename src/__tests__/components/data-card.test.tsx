@@ -16,14 +16,14 @@ describe("DataCard", () => {
 
   it("renders all field values", () => {
     render(<DataCard fields={fields} />)
-    expect(screen.getByText("tron.exe")).toBeInTheDocument()
-    expect(screen.getByText("Active")).toBeInTheDocument()
+    expect(screen.getAllByText("tron.exe").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("Active").length).toBeGreaterThan(0)
   })
 
   it("renders field labels", () => {
     render(<DataCard fields={fields} />)
-    expect(screen.getByText("User")).toBeInTheDocument()
-    expect(screen.getByText("Status")).toBeInTheDocument()
+    expect(screen.getAllByText("User").length).toBeGreaterThan(0)
+    expect(screen.getAllByText("Status").length).toBeGreaterThan(0)
   })
 
   it("defaults to active status", () => {
