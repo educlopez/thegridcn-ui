@@ -69,7 +69,7 @@ function TronCard({
 // TronCardHeader
 // ---------------------------------------------------------------------------
 
-interface TronCardHeaderProps extends React.ComponentProps<"div"> {}
+type TronCardHeaderProps = React.ComponentProps<"div">
 
 function TronCardHeader({ className, ...props }: TronCardHeaderProps) {
   return (
@@ -85,7 +85,7 @@ function TronCardHeader({ className, ...props }: TronCardHeaderProps) {
 // TronCardTitle
 // ---------------------------------------------------------------------------
 
-interface TronCardTitleProps extends React.ComponentProps<"div"> {}
+type TronCardTitleProps = React.ComponentProps<"div">
 
 function TronCardTitle({ className, ...props }: TronCardTitleProps) {
   return (
@@ -104,7 +104,7 @@ function TronCardTitle({ className, ...props }: TronCardTitleProps) {
 // TronCardDescription
 // ---------------------------------------------------------------------------
 
-interface TronCardDescriptionProps extends React.ComponentProps<"div"> {}
+type TronCardDescriptionProps = React.ComponentProps<"div">
 
 function TronCardDescription({
   className,
@@ -126,7 +126,7 @@ function TronCardDescription({
 // TronCardContent
 // ---------------------------------------------------------------------------
 
-interface TronCardContentProps extends React.ComponentProps<"div"> {}
+type TronCardContentProps = React.ComponentProps<"div">
 
 function TronCardContent({ className, ...props }: TronCardContentProps) {
   return (
@@ -142,7 +142,7 @@ function TronCardContent({ className, ...props }: TronCardContentProps) {
 // TronCardFooter
 // ---------------------------------------------------------------------------
 
-interface TronCardFooterProps extends React.ComponentProps<"div"> {}
+type TronCardFooterProps = React.ComponentProps<"div">
 
 function TronCardFooter({ className, ...props }: TronCardFooterProps) {
   return (

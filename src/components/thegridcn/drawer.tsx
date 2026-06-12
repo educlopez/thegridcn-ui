@@ -27,8 +27,7 @@ function TronDrawer({ ...props }: TronDrawerProps) {
 /*  TronDrawerTrigger                                                  */
 /* ------------------------------------------------------------------ */
 
-interface TronDrawerTriggerProps
-  extends React.ComponentProps<typeof DrawerPrimitiveTrigger> {}
+type TronDrawerTriggerProps = React.ComponentProps<typeof DrawerPrimitiveTrigger>
 
 function TronDrawerTrigger({ className, ...props }: TronDrawerTriggerProps) {
   return (
@@ -47,8 +46,7 @@ function TronDrawerTrigger({ className, ...props }: TronDrawerTriggerProps) {
 /*  TronDrawerContent                                                  */
 /* ------------------------------------------------------------------ */
 
-interface TronDrawerContentProps
-  extends React.ComponentProps<typeof DrawerPrimitiveContent> {}
+type TronDrawerContentProps = React.ComponentProps<typeof DrawerPrimitiveContent>
 
 function TronDrawerContent({
   className,
@@ -85,8 +83,7 @@ function TronDrawerContent({
 /*  TronDrawerHeader                                                   */
 /* ------------------------------------------------------------------ */
 
-interface TronDrawerHeaderProps
-  extends React.ComponentProps<typeof DrawerPrimitiveHeader> {}
+type TronDrawerHeaderProps = React.ComponentProps<typeof DrawerPrimitiveHeader>
 
 function TronDrawerHeader({ className, ...props }: TronDrawerHeaderProps) {
   return (
@@ -102,8 +99,7 @@ function TronDrawerHeader({ className, ...props }: TronDrawerHeaderProps) {
 /*  TronDrawerFooter                                                   */
 /* ------------------------------------------------------------------ */
 
-interface TronDrawerFooterProps
-  extends React.ComponentProps<typeof DrawerPrimitiveFooter> {}
+type TronDrawerFooterProps = React.ComponentProps<typeof DrawerPrimitiveFooter>
 
 function TronDrawerFooter({ className, ...props }: TronDrawerFooterProps) {
   return (
@@ -122,8 +118,7 @@ function TronDrawerFooter({ className, ...props }: TronDrawerFooterProps) {
 /*  TronDrawerTitle                                                    */
 /* ------------------------------------------------------------------ */
 
-interface TronDrawerTitleProps
-  extends React.ComponentProps<typeof DrawerPrimitiveTitle> {}
+type TronDrawerTitleProps = React.ComponentProps<typeof DrawerPrimitiveTitle>
 
 function TronDrawerTitle({ className, ...props }: TronDrawerTitleProps) {
   return (
@@ -142,8 +137,7 @@ function TronDrawerTitle({ className, ...props }: TronDrawerTitleProps) {
 /*  TronDrawerDescription                                              */
 /* ------------------------------------------------------------------ */
 
-interface TronDrawerDescriptionProps
-  extends React.ComponentProps<typeof DrawerPrimitiveDescription> {}
+type TronDrawerDescriptionProps = React.ComponentProps<typeof DrawerPrimitiveDescription>
 
 function TronDrawerDescription({
   className,
@@ -165,8 +159,7 @@ function TronDrawerDescription({
 /*  TronDrawerClose                                                    */
 /* ------------------------------------------------------------------ */
 
-interface TronDrawerCloseProps
-  extends React.ComponentProps<typeof DrawerPrimitiveClose> {}
+type TronDrawerCloseProps = React.ComponentProps<typeof DrawerPrimitiveClose>
 
 function TronDrawerClose({ className, ...props }: TronDrawerCloseProps) {
   return (

@@ -40,7 +40,7 @@ export function TestimonialCard({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {/* Quote mark */}
-      <div className="mb-3 font-display text-2xl leading-none text-primary/30">"</div>
+      <div className="mb-3 font-display text-2xl leading-none text-primary/30">&ldquo;</div>
 
       {/* Quote text */}
       <p className="text-sm leading-relaxed text-foreground/80">{quote}</p>

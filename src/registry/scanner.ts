@@ -362,7 +362,7 @@ export async function generateShadcnRegistry(
     const description = extractDescription(fileContent)
 
     // All items in shadcn registry format use "registry:component" type
-    const itemType: "registry:component" = "registry:component"
+    const itemType = "registry:component" as const
     
     items.push({
       name: entry.name,
