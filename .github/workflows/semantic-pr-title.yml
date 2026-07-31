@@ -1,0 +1,15 @@
+# Calls the shared gates in educlopez/github-actions-workflows.
+# Update the workflow there and every repo picks it up on the next run.
+
+name: Semantic PR Title
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize, ready_for_review]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  title:
+    uses: educlopez/github-actions-workflows/.github/workflows/semantic-pr-title.yaml@v1

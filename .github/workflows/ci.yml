@@ -1,39 +1,34 @@
+# Calls the shared gates in educlopez/github-actions-workflows.
+# Update the workflow there and every repo picks it up on the next run.
+
 name: CI
 
 on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+
 
 jobs:
-  ci:
-    name: Lint, Typecheck & Test
-    runs-on: ubuntu-latest
+  lint:
+    uses: educlopez/github-actions-workflows/.github/workflows/lint.yaml@v1
+    with:
+      package-manager: pnpm
+      node-version: '24'
+      install-command: 'pnpm install --frozen-lockfile && pnpm exec tsx scripts/generate-component-dates.ts'
 
-    steps:
-      - uses: actions/checkout@v4
+  typecheck:
+    uses: educlopez/github-actions-workflows/.github/workflows/typecheck.yaml@v1
+    with:
+      package-manager: pnpm
+      node-version: '24'
+      install-command: 'pnpm install --frozen-lockfile && pnpm exec tsx scripts/generate-component-dates.ts'
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 11.1.2
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Generate component dates
-        run: pnpm exec tsx scripts/generate-component-dates.ts
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Test
-        run: pnpm test:run
+  tests:
+    uses: educlopez/github-actions-workflows/.github/workflows/tests.yaml@v1
+    with:
+      package-manager: pnpm
+      node-version: '24'
+      test-command: 'pnpm test:run'
+      install-command: 'pnpm install --frozen-lockfile && pnpm exec tsx scripts/generate-component-dates.ts'
