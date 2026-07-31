@@ -1,5 +1,8 @@
-# Calls the shared gates in educlopez/github-actions-workflows.
-# Update the workflow there and every repo picks it up on the next run.
+# Mirrors the shared gates in educlopez/github-actions-workflows.
+#
+# This repo is public and that one is private, and GitHub does not let a public
+# repo call a reusable workflow from a private repo — the run fails before any
+# job starts. So the steps live here. Keep them in sync with the shared repo.
 
 name: CI
 
@@ -9,26 +12,81 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
 
 jobs:
   lint:
-    uses: educlopez/github-actions-workflows/.github/workflows/lint.yaml@v1
-    with:
-      package-manager: pnpm
-      node-version: '24'
-      install-command: 'pnpm install --frozen-lockfile && pnpm exec tsx scripts/generate-component-dates.ts'
+    name: Lint & format
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Enable Corepack
+        run: corepack enable
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: 📦 Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm exec tsx scripts/generate-component-dates.ts
+
+      - name: 🧹 Run lint
+        run: pnpm lint
 
   typecheck:
-    uses: educlopez/github-actions-workflows/.github/workflows/typecheck.yaml@v1
-    with:
-      package-manager: pnpm
-      node-version: '24'
-      install-command: 'pnpm install --frozen-lockfile && pnpm exec tsx scripts/generate-component-dates.ts'
+    name: Type check
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Enable Corepack
+        run: corepack enable
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: 📦 Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm exec tsx scripts/generate-component-dates.ts
+
+      - name: 🔎 Run type check
+        run: pnpm typecheck
 
   tests:
-    uses: educlopez/github-actions-workflows/.github/workflows/tests.yaml@v1
-    with:
-      package-manager: pnpm
-      node-version: '24'
-      test-command: 'pnpm test:run'
-      install-command: 'pnpm install --frozen-lockfile && pnpm exec tsx scripts/generate-component-dates.ts'
+    name: Test suite
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Enable Corepack
+        run: corepack enable
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: 📦 Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm exec tsx scripts/generate-component-dates.ts
+
+      - name: 🧪 Run tests
+        run: pnpm test:run
