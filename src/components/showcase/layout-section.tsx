@@ -1,31 +1,31 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import { ChevronsUpDown } from "lucide-react";
+import * as React from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import { Separator } from "@/components/ui/separator"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Button } from "@/components/ui/button"
-import { SectionWrapper, ComponentCard } from "./section-wrapper"
-import { ChevronsUpDown } from "lucide-react"
+} from "@/components/ui/collapsible";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { ComponentCard, SectionWrapper } from "./section-wrapper";
 
 export function LayoutSection() {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const scrollItems = Array.from({ length: 50 }, (_, i) => ({
     id: `PRG-${String(i + 1).padStart(3, "0")}`,
     name: `Program ${i + 1}`,
-  }))
+  }));
 
   return (
     <SectionWrapper
@@ -62,9 +62,13 @@ export function LayoutSection() {
       </ComponentCard>
 
       <ComponentCard title="Collapsible">
-        <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full space-y-2">
+        <Collapsible
+          open={isOpen}
+          onOpenChange={setIsOpen}
+          className="w-full space-y-2"
+        >
           <div className="flex items-center justify-between space-x-4 rounded-md border border-border px-4 py-2">
-            <h4 className="text-sm font-semibold">System Logs</h4>
+            <h4 className="font-semibold text-sm">System Logs</h4>
             <CollapsibleTrigger asChild>
               <Button variant="ghost" size="sm">
                 <ChevronsUpDown className="h-4 w-4" />
@@ -92,8 +96,8 @@ export function LayoutSection() {
       <ComponentCard title="Separator">
         <div className="space-y-4">
           <div>
-            <h4 className="text-sm font-semibold">Grid System</h4>
-            <p className="text-sm text-muted-foreground">
+            <h4 className="font-semibold text-sm">Grid System</h4>
+            <p className="text-muted-foreground text-sm">
               Digital frontier simulation environment
             </p>
           </div>
@@ -108,7 +112,7 @@ export function LayoutSection() {
             <div>Settings</div>
           </div>
           <Separator />
-          <div className="text-sm text-muted-foreground">
+          <div className="text-muted-foreground text-sm">
             System Version: 2.0 | Last Update: Cycle 2847
           </div>
         </div>
@@ -117,7 +121,7 @@ export function LayoutSection() {
       <ComponentCard title="Scroll Area">
         <ScrollArea className="h-72 w-full rounded-md border border-border p-4">
           <div className="space-y-2">
-            <h4 className="mb-4 text-sm font-semibold leading-none">
+            <h4 className="mb-4 font-semibold text-sm leading-none">
               Active Programs
             </h4>
             {scrollItems.map((item) => (
@@ -125,7 +129,7 @@ export function LayoutSection() {
                 key={item.id}
                 className="flex items-center justify-between rounded-md border border-border/50 bg-muted/30 px-3 py-2 text-sm transition-colors hover:bg-muted"
               >
-                <span className="font-mono text-xs text-muted-foreground">
+                <span className="font-mono text-muted-foreground text-xs">
                   {item.id}
                 </span>
                 <span>{item.name}</span>
@@ -138,31 +142,44 @@ export function LayoutSection() {
       <ComponentCard title="Aspect Ratio">
         <div className="grid gap-4 md:grid-cols-3">
           <div className="space-y-2">
-            <AspectRatio ratio={16 / 9} className="overflow-hidden rounded-lg border border-border bg-muted">
+            <AspectRatio
+              ratio={16 / 9}
+              className="overflow-hidden rounded-lg border border-border bg-muted"
+            >
               <div className="flex h-full items-center justify-center">
-                <span className="text-sm text-muted-foreground">16:9</span>
+                <span className="text-muted-foreground text-sm">16:9</span>
               </div>
             </AspectRatio>
-            <p className="text-center text-xs text-muted-foreground">Widescreen</p>
+            <p className="text-center text-muted-foreground text-xs">
+              Widescreen
+            </p>
           </div>
           <div className="space-y-2">
-            <AspectRatio ratio={4 / 3} className="overflow-hidden rounded-lg border border-border bg-muted">
+            <AspectRatio
+              ratio={4 / 3}
+              className="overflow-hidden rounded-lg border border-border bg-muted"
+            >
               <div className="flex h-full items-center justify-center">
-                <span className="text-sm text-muted-foreground">4:3</span>
+                <span className="text-muted-foreground text-sm">4:3</span>
               </div>
             </AspectRatio>
-            <p className="text-center text-xs text-muted-foreground">Standard</p>
+            <p className="text-center text-muted-foreground text-xs">
+              Standard
+            </p>
           </div>
           <div className="space-y-2">
-            <AspectRatio ratio={1} className="overflow-hidden rounded-lg border border-border bg-muted">
+            <AspectRatio
+              ratio={1}
+              className="overflow-hidden rounded-lg border border-border bg-muted"
+            >
               <div className="flex h-full items-center justify-center">
-                <span className="text-sm text-muted-foreground">1:1</span>
+                <span className="text-muted-foreground text-sm">1:1</span>
               </div>
             </AspectRatio>
-            <p className="text-center text-xs text-muted-foreground">Square</p>
+            <p className="text-center text-muted-foreground text-xs">Square</p>
           </div>
         </div>
       </ComponentCard>
     </SectionWrapper>
-  )
+  );
 }

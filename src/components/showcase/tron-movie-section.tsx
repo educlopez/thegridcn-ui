@@ -1,83 +1,83 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { SectionWrapper, ComponentCard } from "./section-wrapper"
+import * as React from "react";
 import {
-  DataCard,
+  AgentAvatar,
   Alert,
   AlertBanner,
-  Timer,
-  Countdown,
-  DerezTimer,
-  Reticle,
-  HUDFrame,
-  Stat,
-  SpeedIndicator,
-  RegenIndicator,
-  VideoPlayer,
-  FastForwardOverlay,
-  StatusBar,
-  InfoPanel,
-  UplinkBar,
-  ProgressTimeline,
-  MapMarker,
-  CoordinateDisplay,
-  Radar,
-  Terminal,
-  EnergyMeter,
-  ProgressRing,
-  DiagnosticsPanel,
-  IdentityDisc,
-  Gauge,
-  Waveform,
-  DataStream,
-  BootSequence,
-  SignalIndicator,
-  Notification,
-  Stepper,
-  Tag,
-  StatCard,
-  Sparkline,
-  FeatureCard,
-  PricingCard,
-  TestimonialCard,
-  StatsCounter,
-  CTABanner,
-  Heatmap,
-  LogoCloud,
-  ComparisonTable,
-  Changelog,
-  ProgressBar,
-  AvatarGroup,
-  BentoGrid,
-  Marquee,
-  Divider,
-  AgentAvatar,
-  FAQ,
-  Timeline,
   AnnouncementBar,
-  DataTable,
-  Rating,
-  Skeleton,
-  BreadcrumbNav,
-  CommandMenu,
-  Tabs,
-  Tooltip,
-  Toggle,
-  Pagination,
-  KanbanBoard,
-  EmptyState,
+  AvatarGroup,
   Badge,
-  ToastDemo,
-  Slider,
-  Select,
-  TextInput,
-  NumberInput,
+  BentoGrid,
+  BootSequence,
+  BreadcrumbNav,
+  Changelog,
   Chip,
-} from "@/components/thegridcn"
+  ComparisonTable,
+  CoordinateDisplay,
+  Countdown,
+  CTABanner,
+  DataCard,
+  DataStream,
+  DataTable,
+  DerezTimer,
+  DiagnosticsPanel,
+  Divider,
+  EmptyState,
+  EnergyMeter,
+  FAQ,
+  FastForwardOverlay,
+  FeatureCard,
+  Gauge,
+  Heatmap,
+  HUDFrame,
+  IdentityDisc,
+  InfoPanel,
+  KanbanBoard,
+  LogoCloud,
+  MapMarker,
+  Marquee,
+  Notification,
+  NumberInput,
+  Pagination,
+  ProgressBar,
+  ProgressRing,
+  ProgressTimeline,
+  Radar,
+  Rating,
+  RegenIndicator,
+  Reticle,
+  Select,
+  SignalIndicator,
+  Skeleton,
+  Slider,
+  Sparkline,
+  SpeedIndicator,
+  Stat,
+  StatCard,
+  StatsCounter,
+  StatusBar,
+  Stepper,
+  Tabs,
+  Tag,
+  Terminal,
+  TestimonialCard,
+  TextInput,
+  Timeline,
+  Timer,
+  ToastDemo,
+  Toggle,
+  Tooltip,
+  UplinkBar,
+  VideoPlayer,
+  Waveform,
+} from "@/components/thegridcn";
+import { ComponentCard, SectionWrapper } from "./section-wrapper";
 
 export function TronMovieSection() {
-  const [videoStatus, setVideoStatus] = React.useState<"playing" | "paused">("paused")
+  const [videoStatus, setVideoStatus] = React.useState<"playing" | "paused">(
+    "paused"
+  );
 
   return (
     <SectionWrapper
@@ -92,10 +92,17 @@ export function TronMovieSection() {
             title="AJAY SINGH"
             status="active"
             fields={[
-              { label: "DOB", value: "02 MAY 1985 [DAVIS, CA, USA]", highlight: true },
+              {
+                highlight: true,
+                label: "DOB",
+                value: "02 MAY 1985 [DAVIS, CA, USA]",
+              },
               { label: "EMPLOYER", value: "ENCOM" },
-              { label: "POSITION", value: "CHIEF TECHNOLOGY OFFICER [2020 - PRESENT]" },
-              { label: "NET WORTH", value: "5.7 BILLION US", highlight: true },
+              {
+                label: "POSITION",
+                value: "CHIEF TECHNOLOGY OFFICER [2020 - PRESENT]",
+              },
+              { highlight: true, label: "NET WORTH", value: "5.7 BILLION US" },
               { label: "SPOUSE", value: "CLASSIFIED" },
             ]}
           />
@@ -106,7 +113,7 @@ export function TronMovieSection() {
             status="alert"
             fields={[
               { label: "DESIGNATION", value: "COMBAT PROGRAM" },
-              { label: "STATUS", value: "ACTIVE", highlight: true },
+              { highlight: true, label: "STATUS", value: "ACTIVE" },
               { label: "THREAT LEVEL", value: "MAXIMUM" },
               { label: "ORIGIN", value: "SECTOR 7" },
             ]}
@@ -121,7 +128,9 @@ export function TronMovieSection() {
             <Alert variant="warning">ANOMALY FOUND</Alert>
             <Alert variant="danger">THREAT DETECTED</Alert>
             <Alert variant="info">SYSTEM ONLINE</Alert>
-            <Alert variant="success" animated={false}>SCAN COMPLETE</Alert>
+            <Alert variant="success" animated={false}>
+              SCAN COMPLETE
+            </Alert>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -152,7 +161,11 @@ export function TronMovieSection() {
           />
 
           <div className="flex flex-wrap items-center gap-6">
-            <Countdown value="00:38 MINUTES" label="EVE KIM ARRIVAL" variant="danger" />
+            <Countdown
+              value="00:38 MINUTES"
+              label="EVE KIM ARRIVAL"
+              variant="danger"
+            />
             <DerezTimer minutes={16} seconds={48} milliseconds={50} />
           </div>
 
@@ -208,7 +221,10 @@ export function TronMovieSection() {
           </VideoPlayer>
 
           <div className="flex items-center justify-center rounded border border-primary/30 bg-card">
-            <FastForwardOverlay direction="forward" className="h-full w-full py-8" />
+            <FastForwardOverlay
+              direction="forward"
+              className="h-full w-full py-8"
+            />
           </div>
         </div>
       </ComponentCard>
@@ -223,9 +239,7 @@ export function TronMovieSection() {
           />
 
           <StatusBar
-            leftContent={
-              <span>SYSTEM: ACTIVE</span>
-            }
+            leftContent={<span>SYSTEM: ACTIVE</span>}
             rightContent={
               <>
                 <span>LAT: 59.90753° N</span>
@@ -241,7 +255,11 @@ export function TronMovieSection() {
               status="pending"
               timestamp="12:58:18:07"
             >
-              <Countdown value="00:38 MINUTES" label="EVE KIM ARRIVAL" variant="danger" />
+              <Countdown
+                value="00:38 MINUTES"
+                label="EVE KIM ARRIVAL"
+                variant="danger"
+              />
             </InfoPanel>
 
             <InfoPanel
@@ -265,10 +283,10 @@ export function TronMovieSection() {
           <ProgressTimeline
             progress={35}
             markers={[
-              { position: 10, active: true },
-              { position: 25, active: true },
-              { position: 50, active: false },
-              { position: 75, active: false },
+              { active: true, position: 10 },
+              { active: true, position: 25 },
+              { active: false, position: 50 },
+              { active: false, position: 75 },
             ]}
             currentLabel="ANOMALY DETECTED"
           />
@@ -323,9 +341,9 @@ export function TronMovieSection() {
             status="online"
             metrics={[
               { label: "CPU", value: 67 },
-              { label: "MEMORY", value: 82, status: "warning" },
+              { label: "MEMORY", status: "warning", value: 82 },
               { label: "DISK I/O", value: 34 },
-              { label: "NETWORK", value: 91, status: "critical" },
+              { label: "NETWORK", status: "critical", value: 91 },
             ]}
           />
         </div>
@@ -343,7 +361,12 @@ export function TronMovieSection() {
             <ProgressRing value={78} size="md" label="UPLOAD" />
             <ProgressRing value={45} size="md" label="SCAN" variant="warning" />
             <ProgressRing value={92} size="md" label="SYNC" variant="success" />
-            <ProgressRing value={23} size="md" label="SHIELD" variant="danger" />
+            <ProgressRing
+              value={23}
+              size="md"
+              label="SHIELD"
+              variant="danger"
+            />
           </div>
         </div>
       </ComponentCard>
@@ -380,8 +403,20 @@ export function TronMovieSection() {
         <div className="space-y-6">
           <div className="flex flex-wrap items-end justify-center gap-6">
             <Gauge value={72} label="SPEED" unit="KM/H" size="md" />
-            <Gauge value={45} label="TEMP" unit="°C" size="md" variant="warning" />
-            <Gauge value={92} label="LOAD" unit="%" size="md" variant="danger" />
+            <Gauge
+              value={45}
+              label="TEMP"
+              unit="°C"
+              size="md"
+              variant="warning"
+            />
+            <Gauge
+              value={92}
+              label="LOAD"
+              unit="%"
+              size="md"
+              variant="danger"
+            />
           </div>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <SignalIndicator strength={90} label="UPLINK" showValue />
@@ -398,11 +433,31 @@ export function TronMovieSection() {
           <DataStream
             title="EVENT LOG"
             entries={[
-              { timestamp: "12:00:01", text: "Connection established", type: "success" },
-              { timestamp: "12:00:03", text: "Scanning sector 7G...", type: "info" },
-              { timestamp: "12:00:05", text: "Anomaly detected", type: "warning" },
-              { timestamp: "12:00:07", text: "Breach attempt blocked", type: "error" },
-              { timestamp: "12:00:09", text: "Diagnostic complete", type: "success" },
+              {
+                text: "Connection established",
+                timestamp: "12:00:01",
+                type: "success",
+              },
+              {
+                text: "Scanning sector 7G...",
+                timestamp: "12:00:03",
+                type: "info",
+              },
+              {
+                text: "Anomaly detected",
+                timestamp: "12:00:05",
+                type: "warning",
+              },
+              {
+                text: "Breach attempt blocked",
+                timestamp: "12:00:07",
+                type: "error",
+              },
+              {
+                text: "Diagnostic complete",
+                timestamp: "12:00:09",
+                type: "success",
+              },
             ]}
           />
         </div>
@@ -414,21 +469,21 @@ export function TronMovieSection() {
           <BootSequence
             title="GRID INITIALIZATION"
             steps={[
-              { label: "Loading kernel modules", duration: 500 },
-              { label: "Initializing network", duration: 700 },
-              { label: "Mounting filesystem", duration: 400 },
-              { label: "Security protocols", duration: 600 },
-              { label: "System ready", duration: 300 },
+              { duration: 500, label: "Loading kernel modules" },
+              { duration: 700, label: "Initializing network" },
+              { duration: 400, label: "Mounting filesystem" },
+              { duration: 600, label: "Security protocols" },
+              { duration: 300, label: "System ready" },
             ]}
           />
           <Stepper
             currentStep={2}
             orientation="vertical"
             steps={[
-              { label: "Initialize", description: "Boot core systems" },
-              { label: "Authenticate", description: "Verify identity disc" },
-              { label: "Connect", description: "Establish grid link" },
-              { label: "Deploy", description: "Launch program" },
+              { description: "Boot core systems", label: "Initialize" },
+              { description: "Verify identity disc", label: "Authenticate" },
+              { description: "Establish grid link", label: "Connect" },
+              { description: "Launch program", label: "Deploy" },
             ]}
           />
         </div>
@@ -438,18 +493,46 @@ export function TronMovieSection() {
       <ComponentCard title="Notifications & Tags">
         <div className="space-y-4">
           <div className="grid gap-3 md:grid-cols-2">
-            <Notification title="System Update" description="Grid firmware v2.7.1 available." variant="info" timestamp="12:34" />
-            <Notification title="Scan Complete" description="All sectors clear." variant="success" timestamp="12:35" />
-            <Notification title="High Energy" description="Power core at 89%." variant="warning" timestamp="12:36" />
-            <Notification title="Connection Lost" description="Relay node 7G unreachable." variant="error" timestamp="12:37" />
+            <Notification
+              title="System Update"
+              description="Grid firmware v2.7.1 available."
+              variant="info"
+              timestamp="12:34"
+            />
+            <Notification
+              title="Scan Complete"
+              description="All sectors clear."
+              variant="success"
+              timestamp="12:35"
+            />
+            <Notification
+              title="High Energy"
+              description="Power core at 89%."
+              variant="warning"
+              timestamp="12:36"
+            />
+            <Notification
+              title="Connection Lost"
+              description="Relay node 7G unreachable."
+              variant="error"
+              timestamp="12:37"
+            />
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <Tag variant="default" glow>PROGRAM</Tag>
-            <Tag variant="success" glow>ACTIVE</Tag>
+            <Tag variant="default" glow>
+              PROGRAM
+            </Tag>
+            <Tag variant="success" glow>
+              ACTIVE
+            </Tag>
             <Tag variant="warning">STANDBY</Tag>
-            <Tag variant="danger" glow>DEREZZED</Tag>
+            <Tag variant="danger" glow>
+              DEREZZED
+            </Tag>
             <Tag variant="outline">ARCHIVED</Tag>
-            <Tag variant="default" size="md" glow>SECTOR 7G</Tag>
+            <Tag variant="default" size="md" glow>
+              SECTOR 7G
+            </Tag>
           </div>
         </div>
       </ComponentCard>
@@ -460,7 +543,7 @@ export function TronMovieSection() {
           <div className="grid gap-4 md:grid-cols-3">
             <StatCard
               title="ACTIVE PROGRAMS"
-              value={12847}
+              value={12_847}
               trend="up"
               trendValue="+12.5%"
               sparkline={[20, 35, 28, 45, 42, 55, 60, 58, 72]}
@@ -483,16 +566,31 @@ export function TronMovieSection() {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-8">
             <div className="flex flex-col items-center gap-1">
-              <Sparkline data={[10, 25, 18, 35, 28, 42, 55, 48, 62]} variant="success" />
-              <span className="text-[9px] uppercase tracking-widest text-foreground/40">GROWTH</span>
+              <Sparkline
+                data={[10, 25, 18, 35, 28, 42, 55, 48, 62]}
+                variant="success"
+              />
+              <span className="text-[9px] text-foreground/40 uppercase tracking-widest">
+                GROWTH
+              </span>
             </div>
             <div className="flex flex-col items-center gap-1">
-              <Sparkline data={[60, 55, 48, 52, 45, 38, 42, 35, 30]} variant="danger" />
-              <span className="text-[9px] uppercase tracking-widest text-foreground/40">LATENCY</span>
+              <Sparkline
+                data={[60, 55, 48, 52, 45, 38, 42, 35, 30]}
+                variant="danger"
+              />
+              <span className="text-[9px] text-foreground/40 uppercase tracking-widest">
+                LATENCY
+              </span>
             </div>
             <div className="flex flex-col items-center gap-1">
-              <Sparkline data={[30, 35, 32, 38, 34, 36, 33, 37, 35]} width={150} />
-              <span className="text-[9px] uppercase tracking-widest text-foreground/40">STABLE</span>
+              <Sparkline
+                data={[30, 35, 32, 38, 34, 36, 33, 37, 35]}
+                width={150}
+              />
+              <span className="text-[9px] text-foreground/40 uppercase tracking-widest">
+                STABLE
+              </span>
             </div>
           </div>
         </div>
@@ -503,18 +601,96 @@ export function TronMovieSection() {
         <div className="space-y-6">
           <div className="grid gap-4 md:grid-cols-3">
             <FeatureCard
-              icon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 4h16v12H2z" stroke="currentColor" strokeWidth="1.5"/><path d="M2 10h16M7 4v12M13 4v12" stroke="currentColor" strokeWidth="0.75" opacity="0.5"/><circle cx="10" cy="10" r="2" fill="currentColor" opacity="0.6"/></svg>}
+              icon={
+                <svg
+                  aria-hidden="true"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M2 4h16v12H2z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M2 10h16M7 4v12M13 4v12"
+                    stroke="currentColor"
+                    strokeWidth="0.75"
+                    opacity="0.5"
+                  />
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="2"
+                    fill="currentColor"
+                    opacity="0.6"
+                  />
+                </svg>
+              }
               title="Grid Architecture"
               description="Distributed processing across all sectors with real-time sync."
             />
             <FeatureCard
-              icon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5"/><circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1"/><path d="M10 3v2M10 15v2M3 10h2M15 10h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>}
+              icon={
+                <svg
+                  aria-hidden="true"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="7"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="3"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                  />
+                  <path
+                    d="M10 3v2M10 15v2M3 10h2M15 10h2"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              }
               title="Identity Protocols"
               description="Disc-based authentication with multi-layer encryption."
               variant="highlight"
             />
             <FeatureCard
-              icon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l8 14H2L10 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M10 8v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><circle cx="10" cy="14" r="0.8" fill="currentColor"/></svg>}
+              icon={
+                <svg
+                  aria-hidden="true"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M10 2l8 14H2L10 2z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M10 8v4"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <circle cx="10" cy="14" r="0.8" fill="currentColor" />
+                </svg>
+              }
               title="Derez Protection"
               description="Automated threat response with sub-millisecond intervention."
             />
@@ -522,10 +698,10 @@ export function TronMovieSection() {
           <StatsCounter
             columns={4}
             items={[
-              { value: 12847, label: "ACTIVE USERS" },
-              { value: 99, suffix: "%", label: "UPTIME" },
-              { value: 42, suffix: "ms", label: "AVG LATENCY" },
-              { value: 847, label: "GRID SECTORS" },
+              { label: "ACTIVE USERS", value: 12_847 },
+              { label: "UPTIME", suffix: "%", value: 99 },
+              { label: "AVG LATENCY", suffix: "ms", value: 42 },
+              { label: "GRID SECTORS", value: 847 },
             ]}
           />
         </div>
@@ -538,13 +714,11 @@ export function TronMovieSection() {
             <TestimonialCard
               quote="The Grid architecture transformed our infrastructure. Response times dropped by 60%."
               author="Ajay Singh"
-              role="CTO, ENCOM"
               rating={5}
             />
             <TestimonialCard
               quote="Identity disc protocols are the most secure authentication we've deployed."
               author="Eve Kim"
-              role="Security Lead"
               rating={4}
             />
           </div>
@@ -582,16 +756,144 @@ export function TronMovieSection() {
           <LogoCloud
             label="TRUSTED BY LEADING PROGRAMS"
             logos={[
-              { name: "ENCOM", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M5 8h6M8 5v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg> },
-              { name: "GRID SYSTEMS", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l6 3.5v7L8 15l-6-3.5v-7L8 1z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg> },
-              { name: "FLYNN LABS", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l5.5 3v6L8 14 2.5 11V5L8 2z" stroke="currentColor" strokeWidth="1.5"/><path d="M8 5v6M5.5 6.5L8 8l2.5-1.5" stroke="currentColor" strokeWidth="1"/></svg> },
-              { name: "DISC CORP", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1"/><circle cx="8" cy="8" r="0.8" fill="currentColor"/></svg> },
-              { name: "SECTOR 7G", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2h12v12H2z" stroke="currentColor" strokeWidth="1.5"/><path d="M2 8h12M8 2v12" stroke="currentColor" strokeWidth="0.75" strokeDasharray="2 2"/><circle cx="5" cy="5" r="1" fill="currentColor"/><circle cx="11" cy="11" r="1" fill="currentColor"/></svg> },
+              {
+                icon: (
+                  <svg
+                    aria-hidden="true"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <rect
+                      x="2"
+                      y="2"
+                      width="12"
+                      height="12"
+                      rx="2"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
+                    <path
+                      d="M5 8h6M8 5v6"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                ),
+                name: "ENCOM",
+              },
+              {
+                icon: (
+                  <svg
+                    aria-hidden="true"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M8 1l6 3.5v7L8 15l-6-3.5v-7L8 1z"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinejoin="round"
+                    />
+                    <circle cx="8" cy="8" r="2" fill="currentColor" />
+                  </svg>
+                ),
+                name: "GRID SYSTEMS",
+              },
+              {
+                icon: (
+                  <svg
+                    aria-hidden="true"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M8 2l5.5 3v6L8 14 2.5 11V5L8 2z"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
+                    <path
+                      d="M8 5v6M5.5 6.5L8 8l2.5-1.5"
+                      stroke="currentColor"
+                      strokeWidth="1"
+                    />
+                  </svg>
+                ),
+                name: "FLYNN LABS",
+              },
+              {
+                icon: (
+                  <svg
+                    aria-hidden="true"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <circle
+                      cx="8"
+                      cy="8"
+                      r="6"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
+                    <circle
+                      cx="8"
+                      cy="8"
+                      r="2.5"
+                      stroke="currentColor"
+                      strokeWidth="1"
+                    />
+                    <circle cx="8" cy="8" r="0.8" fill="currentColor" />
+                  </svg>
+                ),
+                name: "DISC CORP",
+              },
+              {
+                icon: (
+                  <svg
+                    aria-hidden="true"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M2 2h12v12H2z"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
+                    <path
+                      d="M2 8h12M8 2v12"
+                      stroke="currentColor"
+                      strokeWidth="0.75"
+                      strokeDasharray="2 2"
+                    />
+                    <circle cx="5" cy="5" r="1" fill="currentColor" />
+                    <circle cx="11" cy="11" r="1" fill="currentColor" />
+                  </svg>
+                ),
+                name: "SECTOR 7G",
+              },
             ]}
           />
           <Marquee speed="normal">
-            {["SYSTEM ONLINE", "ALL SECTORS CLEAR", "GRID STABLE", "UPLINK ACTIVE"].map((t, i) => (
-              <span key={i} className="shrink-0 font-mono text-xs uppercase tracking-widest text-primary/70">
+            {[
+              "SYSTEM ONLINE",
+              "ALL SECTORS CLEAR",
+              "GRID STABLE",
+              "UPLINK ACTIVE",
+            ].map((t, i) => (
+              <span
+                key={i}
+                className="shrink-0 font-mono text-primary/70 text-xs uppercase tracking-widest"
+              >
                 ◆ {t}
               </span>
             ))}
@@ -603,7 +905,11 @@ export function TronMovieSection() {
       <ComponentCard title="Feature Comparison & Changelog">
         <div className="space-y-4">
           <ComparisonTable
-            columns={[{ name: "Basic" }, { name: "Pro", highlighted: true }, { name: "System" }]}
+            columns={[
+              { name: "Basic" },
+              { highlighted: true, name: "Pro" },
+              { name: "System" },
+            ]}
             features={[
               { name: "Grid Sectors", values: ["5", "Unlimited", "Unlimited"] },
               { name: "Priority Relay", values: [false, true, true] },
@@ -612,9 +918,24 @@ export function TronMovieSection() {
           />
           <Changelog
             entries={[
-              { version: "2.7.1", date: "2026-02-28", title: "Performance Boost", type: "improvement" },
-              { version: "2.7.0", date: "2026-02-20", title: "Identity Disc 2FA", type: "feature" },
-              { version: "2.6.4", date: "2026-02-15", title: "Fixed Relay Timeout", type: "fix" },
+              {
+                date: "2026-02-28",
+                title: "Performance Boost",
+                type: "improvement",
+                version: "2.7.1",
+              },
+              {
+                date: "2026-02-20",
+                title: "Identity Disc 2FA",
+                type: "feature",
+                version: "2.7.0",
+              },
+              {
+                date: "2026-02-15",
+                title: "Fixed Relay Timeout",
+                type: "fix",
+                version: "2.6.4",
+              },
             ]}
           />
         </div>
@@ -624,18 +945,53 @@ export function TronMovieSection() {
       <ComponentCard title="Progress Bars, Avatars & Dividers">
         <div className="space-y-5">
           <ProgressBar value={78} label="UPLOAD" showValue />
-          <ProgressBar value={45} label="SCAN" showValue variant="warning" striped />
-          <ProgressBar value={92} label="SYNC" showValue variant="success" size="lg" />
+          <ProgressBar
+            value={45}
+            label="SCAN"
+            showValue
+            variant="warning"
+            striped
+          />
+          <ProgressBar
+            value={92}
+            label="SYNC"
+            showValue
+            variant="success"
+            size="lg"
+          />
           <Divider variant="glow" label="TEAM" />
           <AvatarGroup
             size="lg"
             users={[
-              { name: "Ares", avatar: <AgentAvatar seed="Ares" size={44} hue={200} />, status: "online" },
-              { name: "Eve Kim", avatar: <AgentAvatar seed="Eve Kim" size={44} hue={30} />, status: "online" },
-              { name: "Ajay Singh", avatar: <AgentAvatar seed="Ajay Singh" size={44} hue={185} />, status: "away" },
-              { name: "Tron", avatar: <AgentAvatar seed="Tron" size={44} hue={200} />, status: "online" },
-              { name: "Clu", avatar: <AgentAvatar seed="Clu" size={44} hue={30} />, status: "offline" },
-              { name: "Quorra", avatar: <AgentAvatar seed="Quorra" size={44} hue={200} /> },
+              {
+                avatar: <AgentAvatar seed="Ares" size={44} hue={200} />,
+                name: "Ares",
+                status: "online",
+              },
+              {
+                avatar: <AgentAvatar seed="Eve Kim" size={44} hue={30} />,
+                name: "Eve Kim",
+                status: "online",
+              },
+              {
+                avatar: <AgentAvatar seed="Ajay Singh" size={44} hue={185} />,
+                name: "Ajay Singh",
+                status: "away",
+              },
+              {
+                avatar: <AgentAvatar seed="Tron" size={44} hue={200} />,
+                name: "Tron",
+                status: "online",
+              },
+              {
+                avatar: <AgentAvatar seed="Clu" size={44} hue={30} />,
+                name: "Clu",
+                status: "offline",
+              },
+              {
+                avatar: <AgentAvatar seed="Quorra" size={44} hue={200} />,
+                name: "Quorra",
+              },
             ]}
             max={5}
           />
@@ -647,10 +1003,120 @@ export function TronMovieSection() {
         <BentoGrid
           columns={3}
           items={[
-            { title: "Grid Architecture", description: "Distributed processing across all sectors.", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12v8H2z" stroke="currentColor" strokeWidth="1.5"/><path d="M2 8h12M6 4v8M10 4v8" stroke="currentColor" strokeWidth="0.75" opacity="0.5"/></svg>, span: "2x1", variant: "highlight" },
-            { title: "Identity Disc", description: "Biometric auth layer.", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1"/><circle cx="8" cy="8" r="0.8" fill="currentColor"/></svg> },
-            { title: "Derez Shield", description: "Threat response.", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l5 3v4.5c0 2.5-2.2 4.2-5 5.5-2.8-1.3-5-3-5-5.5V5l5-3z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M6 8l1.5 1.5L11 6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg> },
-            { title: "Sector Monitor", description: "Real-time grid activity dashboard.", icon: <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1" stroke="currentColor" strokeWidth="1.5"/><path d="M3 9l2.5-3 2 2L11 5l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>, span: "2x1" },
+            {
+              description: "Distributed processing across all sectors.",
+              icon: (
+                <svg
+                  aria-hidden="true"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <path
+                    d="M2 4h12v8H2z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M2 8h12M6 4v8M10 4v8"
+                    stroke="currentColor"
+                    strokeWidth="0.75"
+                    opacity="0.5"
+                  />
+                </svg>
+              ),
+              span: "2x1",
+              title: "Grid Architecture",
+              variant: "highlight",
+            },
+            {
+              description: "Biometric auth layer.",
+              icon: (
+                <svg
+                  aria-hidden="true"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="6"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="2.5"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                  />
+                  <circle cx="8" cy="8" r="0.8" fill="currentColor" />
+                </svg>
+              ),
+              title: "Identity Disc",
+            },
+            {
+              description: "Threat response.",
+              icon: (
+                <svg
+                  aria-hidden="true"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <path
+                    d="M8 2l5 3v4.5c0 2.5-2.2 4.2-5 5.5-2.8-1.3-5-3-5-5.5V5l5-3z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M6 8l1.5 1.5L11 6"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ),
+              title: "Derez Shield",
+            },
+            {
+              description: "Real-time grid activity dashboard.",
+              icon: (
+                <svg
+                  aria-hidden="true"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <rect
+                    x="1"
+                    y="3"
+                    width="14"
+                    height="10"
+                    rx="1"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M3 9l2.5-3 2 2L11 5l2 2"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ),
+              span: "2x1",
+              title: "Sector Monitor",
+            },
           ]}
         />
       </ComponentCard>
@@ -660,17 +1126,49 @@ export function TronMovieSection() {
         <div className="grid gap-4 md:grid-cols-2">
           <FAQ
             items={[
-              { question: "What is The Grid?", answer: "A distributed computing architecture that connects all sectors through encrypted relay channels." },
-              { question: "How do Identity Discs work?", answer: "Each program is assigned a unique disc that stores their identity, permissions, and combat data." },
-              { question: "What happens during deresolution?", answer: "The program is permanently deleted from the system. All data is lost." },
+              {
+                answer:
+                  "A distributed computing architecture that connects all sectors through encrypted relay channels.",
+                question: "What is The Grid?",
+              },
+              {
+                answer:
+                  "Each program is assigned a unique disc that stores their identity, permissions, and combat data.",
+                question: "How do Identity Discs work?",
+              },
+              {
+                answer:
+                  "The program is permanently deleted from the system. All data is lost.",
+                question: "What happens during deresolution?",
+              },
             ]}
           />
           <Timeline
             items={[
-              { title: "Grid v1.0", description: "Initial system launch", status: "completed", date: "2024 Q1" },
-              { title: "Identity Protocols", description: "Disc-based auth system", status: "completed", date: "2024 Q3" },
-              { title: "Sector Expansion", description: "Scale to 1000+ sectors", status: "active", date: "2025 Q1" },
-              { title: "Neural Uplink", description: "Direct consciousness transfer", status: "upcoming", date: "2025 Q4" },
+              {
+                date: "2024 Q1",
+                description: "Initial system launch",
+                status: "completed",
+                title: "Grid v1.0",
+              },
+              {
+                date: "2024 Q3",
+                description: "Disc-based auth system",
+                status: "completed",
+                title: "Identity Protocols",
+              },
+              {
+                date: "2025 Q1",
+                description: "Scale to 1000+ sectors",
+                status: "active",
+                title: "Sector Expansion",
+              },
+              {
+                date: "2025 Q4",
+                description: "Direct consciousness transfer",
+                status: "upcoming",
+                title: "Neural Uplink",
+              },
             ]}
           />
         </div>
@@ -686,23 +1184,29 @@ export function TronMovieSection() {
           />
           <BreadcrumbNav
             items={[
-              { label: "Grid", href: "#" },
-              { label: "Sector 7G", href: "#" },
-              { label: "Terminal 42", active: true },
+              { href: "#", label: "Grid" },
+              { href: "#", label: "Sector 7G" },
+              { active: true, label: "Terminal 42" },
             ]}
           />
           <div className="flex flex-wrap items-center gap-6">
             <div className="flex flex-col items-center gap-1">
               <Rating value={5} size="md" />
-              <span className="text-[9px] uppercase tracking-widest text-foreground/40">EXCELLENT</span>
+              <span className="text-[9px] text-foreground/40 uppercase tracking-widest">
+                EXCELLENT
+              </span>
             </div>
             <div className="flex flex-col items-center gap-1">
               <Rating value={3} size="md" />
-              <span className="text-[9px] uppercase tracking-widest text-foreground/40">MODERATE</span>
+              <span className="text-[9px] text-foreground/40 uppercase tracking-widest">
+                MODERATE
+              </span>
             </div>
             <div className="flex flex-col items-center gap-1">
               <Rating value={1} size="md" />
-              <span className="text-[9px] uppercase tracking-widest text-foreground/40">CRITICAL</span>
+              <span className="text-[9px] text-foreground/40 uppercase tracking-widest">
+                CRITICAL
+              </span>
             </div>
           </div>
         </div>
@@ -718,10 +1222,10 @@ export function TronMovieSection() {
               { key: "load", label: "LOAD %", sortable: true },
             ]}
             data={[
-              { sector: "7G", status: "ONLINE", load: 87 },
-              { sector: "12A", status: "DEGRADED", load: 94 },
-              { sector: "3F", status: "ONLINE", load: 42 },
-              { sector: "9B", status: "OFFLINE", load: 0 },
+              { load: 87, sector: "7G", status: "ONLINE" },
+              { load: 94, sector: "12A", status: "DEGRADED" },
+              { load: 42, sector: "3F", status: "ONLINE" },
+              { load: 0, sector: "9B", status: "OFFLINE" },
             ]}
           />
           <div className="space-y-4">
@@ -742,7 +1246,7 @@ export function TronMovieSection() {
             ]}
             defaultValue="overview"
           >
-            <div className="rounded border border-primary/15 bg-card/60 p-4 font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+            <div className="rounded border border-primary/15 bg-card/60 p-4 font-mono text-[10px] text-foreground/40 uppercase tracking-widest">
               Tab content area — switch tabs to navigate sections
             </div>
           </Tabs>
@@ -779,23 +1283,52 @@ export function TronMovieSection() {
           title="GRID OPERATIONS"
           columns={[
             {
-              id: "queue", title: "Queued", color: "hsl(var(--primary))",
               cards: [
-                { id: "1", title: "Deploy relay node", description: "Sector 12A coverage", tag: "INFRA" },
-                { id: "2", title: "Update firmware", tag: "MAINT", tagVariant: "warning" },
+                {
+                  description: "Sector 12A coverage",
+                  id: "1",
+                  tag: "INFRA",
+                  title: "Deploy relay node",
+                },
+                {
+                  id: "2",
+                  tag: "MAINT",
+                  tagVariant: "warning",
+                  title: "Update firmware",
+                },
               ],
+              color: "hsl(var(--primary))",
+              id: "queue",
+              title: "Queued",
             },
             {
-              id: "active", title: "In Progress", color: "#22c55e",
               cards: [
-                { id: "3", title: "Anomaly investigation", description: "Sector 7G", tag: "URGENT", tagVariant: "danger", assignee: "Ares" },
+                {
+                  assignee: "Ares",
+                  description: "Sector 7G",
+                  id: "3",
+                  tag: "URGENT",
+                  tagVariant: "danger",
+                  title: "Anomaly investigation",
+                },
               ],
+              color: "#22c55e",
+              id: "active",
+              title: "In Progress",
             },
             {
-              id: "done", title: "Complete", color: "#6b7280",
               cards: [
-                { id: "4", title: "Perimeter scan", tag: "DONE", tagVariant: "success", assignee: "Eve" },
+                {
+                  assignee: "Eve",
+                  id: "4",
+                  tag: "DONE",
+                  tagVariant: "success",
+                  title: "Perimeter scan",
+                },
               ],
+              color: "#6b7280",
+              id: "done",
+              title: "Complete",
             },
           ]}
         />
@@ -805,10 +1338,18 @@ export function TronMovieSection() {
       <ComponentCard title="Badges & Toast Notifications">
         <div className="space-y-6">
           <div className="flex flex-wrap items-center gap-3">
-            <Badge variant="default" dot pulse>ACTIVE</Badge>
-            <Badge variant="success" dot>ONLINE</Badge>
-            <Badge variant="warning" dot>STANDBY</Badge>
-            <Badge variant="danger" dot pulse>CRITICAL</Badge>
+            <Badge variant="default" dot pulse>
+              ACTIVE
+            </Badge>
+            <Badge variant="success" dot>
+              ONLINE
+            </Badge>
+            <Badge variant="warning" dot>
+              STANDBY
+            </Badge>
+            <Badge variant="danger" dot pulse>
+              CRITICAL
+            </Badge>
             <Badge variant="outline">ARCHIVED</Badge>
           </div>
           <ToastDemo />
@@ -819,7 +1360,10 @@ export function TronMovieSection() {
       <ComponentCard title="Form Inputs & Controls">
         <div className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2">
-            <TextInput label="DESIGNATION" placeholder="Enter program name..." />
+            <TextInput
+              label="DESIGNATION"
+              placeholder="Enter program name..."
+            />
             <Select
               label="SECTOR"
               placeholder="Select sector..."
@@ -835,8 +1379,12 @@ export function TronMovieSection() {
             <NumberInput label="SECTORS" defaultValue={7} min={1} max={100} />
           </div>
           <div className="flex flex-wrap gap-2">
-            <Chip selected size="md">SECTOR 7G</Chip>
-            <Chip selected size="md" variant="warning">PRIORITY: HIGH</Chip>
+            <Chip selected size="md">
+              SECTOR 7G
+            </Chip>
+            <Chip selected size="md" variant="warning">
+              PRIORITY: HIGH
+            </Chip>
             <Chip size="md">STANDBY</Chip>
           </div>
         </div>
@@ -865,7 +1413,7 @@ export function TronMovieSection() {
           />
 
           {/* Top bar */}
-          <div className="absolute left-0 right-0 top-0">
+          <div className="absolute top-0 right-0 left-0">
             <UplinkBar
               channel="ORBITAL RELAY CHANNEL 27A"
               status="ACTIVE"
@@ -874,25 +1422,25 @@ export function TronMovieSection() {
           </div>
 
           {/* Left panel */}
-          <div className="absolute left-4 top-16 w-48">
+          <div className="absolute top-16 left-4 w-48">
             <DataCard
               subtitle="TARGET"
               title="EVE KIM"
               status="active"
               fields={[
                 { label: "STATUS", value: "INBOUND" },
-                { label: "ETA", value: "38 MIN", highlight: true },
+                { highlight: true, label: "ETA", value: "38 MIN" },
               ]}
             />
           </div>
 
           {/* Center reticle */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
             <Reticle size={150} variant="scanning" />
           </div>
 
           {/* Right panel */}
-          <div className="absolute right-4 top-16">
+          <div className="absolute top-16 right-4">
             <DerezTimer minutes={16} seconds={48} milliseconds={50} />
             <div className="mt-4">
               <SpeedIndicator speed={160} />
@@ -900,20 +1448,22 @@ export function TronMovieSection() {
           </div>
 
           {/* Bottom bar */}
-          <div className="absolute bottom-4 left-4 right-4">
+          <div className="absolute right-4 bottom-4 left-4">
             <ProgressTimeline
               progress={42}
-              markers={[{ position: 42, active: true }]}
+              markers={[{ active: true, position: 42 }]}
               currentLabel="TRACKING"
             />
           </div>
 
           {/* Alert */}
-          <div className="absolute left-1/2 top-24 -translate-x-1/2">
-            <Alert variant="warning" animated>ANOMALY FOUND</Alert>
+          <div className="absolute top-24 left-1/2 -translate-x-1/2">
+            <Alert variant="warning" animated>
+              ANOMALY FOUND
+            </Alert>
           </div>
         </div>
       </ComponentCard>
     </SectionWrapper>
-  )
+  );
 }

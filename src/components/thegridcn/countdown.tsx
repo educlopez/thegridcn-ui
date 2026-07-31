@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface CountdownProps extends React.HTMLAttributes<HTMLDivElement> {
-  value: string
-  label: string
-  variant?: "default" | "danger" | "warning"
+  label: string;
+  value: string;
+  variant?: "default" | "danger" | "warning";
 }
 
 export function Countdown({
@@ -17,38 +17,38 @@ export function Countdown({
   ...props
 }: CountdownProps) {
   const variantStyles = {
-    default: {
-      bg: "bg-primary/20",
-      text: "text-primary",
-      border: "border-primary/50",
-    },
     danger: {
       bg: "bg-red-500/20",
-      text: "text-red-500",
       border: "border-red-500/50",
+      text: "text-red-500",
+    },
+    default: {
+      bg: "bg-primary/20",
+      border: "border-primary/50",
+      text: "text-primary",
     },
     warning: {
       bg: "bg-amber-500/20",
-      text: "text-amber-500",
       border: "border-amber-500/50",
+      text: "text-amber-500",
     },
-  }
+  };
 
-  const styles = variantStyles[variant]
+  const styles = variantStyles[variant];
 
   return (
     <div
       className={cn("flex items-center gap-3 font-mono", className)}
       {...props}
     >
-      <span className="text-sm uppercase tracking-widest text-foreground/80">
+      <span className="text-foreground/80 text-sm uppercase tracking-widest">
         {label}:
       </span>
       <span
         data-slot="tron-countdown-value"
         data-variant={variant}
         className={cn(
-          "rounded border px-3 py-1 text-lg font-bold tracking-wider",
+          "rounded border px-3 py-1 font-bold text-lg tracking-wider",
           styles.bg,
           styles.text,
           styles.border
@@ -57,5 +57,5 @@ export function Countdown({
         {value}
       </span>
     </div>
-  )
+  );
 }

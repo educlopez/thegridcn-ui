@@ -21,7 +21,8 @@ function getGitCreationDate(filePath: string): string | null {
     ).trim();
     // Take the last line (earliest commit) if multiple results
     const lines = result.split("\n").filter(Boolean);
-    return lines.length > 0 ? lines[lines.length - 1].split("T")[0] : null;
+    const earliest = lines.at(-1);
+    return earliest ? (earliest.split("T")[0] ?? null) : null;
   } catch {
     return null;
   }

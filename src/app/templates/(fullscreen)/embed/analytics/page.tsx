@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
 const AnalyticsTemplate = dynamic(
   () =>
@@ -8,8 +8,8 @@ const AnalyticsTemplate = dynamic(
       (mod) => mod.AnalyticsTemplate
     ),
   { ssr: false }
-)
+);
 
 export default function AnalyticsEmbedPage() {
-  return <AnalyticsTemplate />
+  return <AnalyticsTemplate />;
 }

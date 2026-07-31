@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Canvas, useFrame } from "@react-three/fiber"
-import * as THREE from "three"
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as React from "react";
+import * as THREE from "three";
 
 // Convert hex to THREE.Color
 function hexToThreeColor(hex: string): THREE.Color {
-  return new THREE.Color(hex)
+  return new THREE.Color(hex);
 }
 
 // Hologram shaders - hoisted outside component for performance
@@ -29,7 +29,7 @@ const hologramVertexShader = `
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
   }
-`
+`;
 
 const hologramFragmentShader = `
   uniform float uTime;
@@ -61,54 +61,62 @@ const hologramFragmentShader = `
 
     gl_FragColor = vec4(uColor * flicker, alpha * flicker);
   }
-`
+`;
 
 // Shared glitch context - so all materials in an avatar glitch together
-const GlitchContext = React.createContext<React.MutableRefObject<number> | null>(null)
+const GlitchContext =
+  React.createContext<React.MutableRefObject<number> | null>(null);
 
 function GlitchProvider({ children }: { children: React.ReactNode }) {
-  const glitchRef = React.useRef(0)
+  const glitchRef = React.useRef(0);
 
   useFrame(() => {
     // Shared glitch calculation - affects all materials equally
     if (Math.random() > 0.99) {
-      glitchRef.current = 0.1
+      glitchRef.current = 0.1;
     } else {
-      glitchRef.current *= 0.92
+      glitchRef.current *= 0.92;
     }
-  })
+  });
 
   return (
     <GlitchContext.Provider value={glitchRef}>
       {children}
     </GlitchContext.Provider>
-  )
+  );
 }
 
 // Hologram material with scanlines and glow
-function HologramMaterial({ color, wireframe = false }: { color: string; wireframe?: boolean }) {
-  const materialRef = React.useRef<THREE.ShaderMaterial>(null)
-  const colorRef = React.useRef(color)
-  colorRef.current = color
-  const glitchRef = React.useContext(GlitchContext)
+function HologramMaterial({
+  color,
+  wireframe = false,
+}: {
+  color: string;
+  wireframe?: boolean;
+}) {
+  const materialRef = React.useRef<THREE.ShaderMaterial>(null);
+  const colorRef = React.useRef(color);
+  colorRef.current = color;
+  const glitchRef = React.useContext(GlitchContext);
 
   const uniforms = React.useMemo(
     () => ({
-      uTime: { value: 0 },
       uColor: { value: hexToThreeColor(color) },
-      uScanlineIntensity: { value: 0.15 },
       uGlitchIntensity: { value: 0.02 },
+      uScanlineIntensity: { value: 0.15 },
+      uTime: { value: 0 },
     }),
-    []
-  )
+    [color]
+  );
 
   useFrame((state) => {
     if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value = state.clock.elapsedTime
-      materialRef.current.uniforms.uColor.value.set(colorRef.current)
-      materialRef.current.uniforms.uGlitchIntensity.value = glitchRef?.current ?? 0
+      materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
+      materialRef.current.uniforms.uColor.value.set(colorRef.current);
+      materialRef.current.uniforms.uGlitchIntensity.value =
+        glitchRef?.current ?? 0;
     }
-  })
+  });
 
   return (
     <shaderMaterial
@@ -122,41 +130,48 @@ function HologramMaterial({ color, wireframe = false }: { color: string; wirefra
       depthWrite={false}
       blending={THREE.AdditiveBlending}
     />
-  )
+  );
 }
 
 // Floating particles around the avatar - reduced count for performance
-function AvatarParticles({ color, count = 20 }: { color: string; count?: number }) {
-  const pointsRef = React.useRef<THREE.Points>(null)
-  const geometryRef = React.useRef<THREE.BufferGeometry>(null)
-  const materialRef = React.useRef<THREE.PointsMaterial>(null)
+function AvatarParticles({
+  color,
+  count = 20,
+}: {
+  color: string;
+  count?: number;
+}) {
+  const pointsRef = React.useRef<THREE.Points>(null);
+  const geometryRef = React.useRef<THREE.BufferGeometry>(null);
+  const materialRef = React.useRef<THREE.PointsMaterial>(null);
 
   const particlesPosition = React.useMemo(() => {
-    const positions = new Float32Array(count * 3)
+    const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      const theta = Math.random() * Math.PI * 2
-      const phi = Math.random() * Math.PI
-      const r = 0.8 + Math.random() * 0.4
-      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta)
-      positions[i * 3 + 1] = r * Math.cos(phi)
-      positions[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta)
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI;
+      const r = 0.8 + Math.random() * 0.4;
+      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      positions[i * 3 + 1] = r * Math.cos(phi);
+      positions[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
     }
-    return positions
-  }, [count])
+    return positions;
+  }, [count]);
 
   // Cleanup
-  React.useEffect(() => {
-    return () => {
-      geometryRef.current?.dispose()
-      materialRef.current?.dispose()
-    }
-  }, [])
+  React.useEffect(
+    () => () => {
+      geometryRef.current?.dispose();
+      materialRef.current?.dispose();
+    },
+    []
+  );
 
   useFrame((state) => {
     if (pointsRef.current) {
-      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.3
+      pointsRef.current.rotation.y = state.clock.elapsedTime * 0.3;
     }
-  })
+  });
 
   return (
     <points ref={pointsRef}>
@@ -176,18 +191,19 @@ function AvatarParticles({ color, count = 20 }: { color: string; count?: number 
         blending={THREE.AdditiveBlending}
       />
     </points>
-  )
+  );
 }
 
 // Ares - God of War (Spartan Shield with Lambda)
 function AresAvatar({ color }: { color: string }) {
-  const groupRef = React.useRef<THREE.Group>(null)
+  const groupRef = React.useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
+      groupRef.current.rotation.y =
+        Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
-  })
+  });
 
   return (
     <group ref={groupRef}>
@@ -232,18 +248,19 @@ function AresAvatar({ color }: { color: string }) {
       </group>
       <AvatarParticles color={color} />
     </group>
-  )
+  );
 }
 
 // Tron - Security Program (Digital Head)
 function TronAvatar({ color }: { color: string }) {
-  const groupRef = React.useRef<THREE.Group>(null)
+  const groupRef = React.useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
+      groupRef.current.rotation.y =
+        Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
-  })
+  });
 
   return (
     <group ref={groupRef}>
@@ -264,18 +281,19 @@ function TronAvatar({ color }: { color: string }) {
       </mesh>
       <AvatarParticles color={color} />
     </group>
-  )
+  );
 }
 
 // Clu - System Admin (Angular Digital Head)
 function CluAvatar({ color }: { color: string }) {
-  const groupRef = React.useRef<THREE.Group>(null)
+  const groupRef = React.useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
+      groupRef.current.rotation.y =
+        Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
-  })
+  });
 
   return (
     <group ref={groupRef}>
@@ -296,24 +314,27 @@ function CluAvatar({ color }: { color: string }) {
       </mesh>
       <AvatarParticles color={color} />
     </group>
-  )
+  );
 }
 
 // Athena - Goddess of Wisdom (Corinthian Helmet)
 function AthenaAvatar({ color }: { color: string }) {
-  const groupRef = React.useRef<THREE.Group>(null)
+  const groupRef = React.useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
+      groupRef.current.rotation.y =
+        Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
-  })
+  });
 
   return (
     <group ref={groupRef}>
       {/* Helmet dome */}
       <mesh position={[0, 0.1, 0]}>
-        <sphereGeometry args={[0.32, 16, 16, 0, Math.PI * 2, 0, Math.PI * 0.6]} />
+        <sphereGeometry
+          args={[0.32, 16, 16, 0, Math.PI * 2, 0, Math.PI * 0.6]}
+        />
         <HologramMaterial color={color} />
       </mesh>
       {/* Helmet crest - tall mohawk style */}
@@ -351,18 +372,19 @@ function AthenaAvatar({ color }: { color: string }) {
       </mesh>
       <AvatarParticles color={color} />
     </group>
-  )
+  );
 }
 
 // Aphrodite - Goddess of Love (Venus Symbol ♀)
 function AphroditeAvatar({ color }: { color: string }) {
-  const groupRef = React.useRef<THREE.Group>(null)
+  const groupRef = React.useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
+      groupRef.current.rotation.y =
+        Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
-  })
+  });
 
   return (
     <group ref={groupRef}>
@@ -406,18 +428,19 @@ function AphroditeAvatar({ color }: { color: string }) {
       </mesh>
       <AvatarParticles color={color} count={40} />
     </group>
-  )
+  );
 }
 
 // Poseidon - God of the Sea (Trident)
 function PoseidonAvatar({ color }: { color: string }) {
-  const groupRef = React.useRef<THREE.Group>(null)
+  const groupRef = React.useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
+      groupRef.current.rotation.y =
+        Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
-  })
+  });
 
   return (
     <group ref={groupRef}>
@@ -465,18 +488,19 @@ function PoseidonAvatar({ color }: { color: string }) {
       </mesh>
       <AvatarParticles color={color} />
     </group>
-  )
+  );
 }
 
 // Creator - Architect (Identity Disc with "C" Monogram)
 function CreatorAvatar({ color }: { color: string }) {
-  const groupRef = React.useRef<THREE.Group>(null)
+  const groupRef = React.useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2
+      groupRef.current.rotation.y =
+        Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
     }
-  })
+  });
 
   return (
     <group ref={groupRef}>
@@ -517,38 +541,47 @@ function CreatorAvatar({ color }: { color: string }) {
       </mesh>
       <AvatarParticles color={color} count={40} />
     </group>
-  )
+  );
 }
 
 // Avatar selector based on theme
 function GodAvatar({ themeId, color }: { themeId: string; color: string }) {
   const avatars: Record<string, React.ReactNode> = {
-    ares: <AresAvatar color={color} />,
-    tron: <TronAvatar color={color} />,
-    clu: <CluAvatar color={color} />,
-    athena: <AthenaAvatar color={color} />,
     aphrodite: <AphroditeAvatar color={color} />,
-    poseidon: <PoseidonAvatar color={color} />,
+    ares: <AresAvatar color={color} />,
+    athena: <AthenaAvatar color={color} />,
+    clu: <CluAvatar color={color} />,
     creator: <CreatorAvatar color={color} />,
-  }
+    poseidon: <PoseidonAvatar color={color} />,
+    tron: <TronAvatar color={color} />,
+  };
 
-  return avatars[themeId] || <TronAvatar color={color} />
+  return avatars[themeId] || <TronAvatar color={color} />;
 }
 
 // Main exported component
 interface GodAvatar3DProps {
-  themeId: string
-  color: string
-  size?: number
-  className?: string
+  className?: string;
+  color: string;
+  size?: number;
+  themeId: string;
 }
 
-export function GodAvatar3D({ themeId, color, size = 64, className }: GodAvatar3DProps) {
+export function GodAvatar3D({
+  themeId,
+  color,
+  size = 64,
+  className,
+}: GodAvatar3DProps) {
   return (
-    <div className={className} style={{ width: size, height: size }}>
+    <div className={className} style={{ height: size, width: size }}>
       <Canvas
-        camera={{ position: [0, 0, 2], fov: 50 }}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        camera={{ fov: 50, position: [0, 0, 2] }}
+        gl={{
+          alpha: true,
+          antialias: true,
+          powerPreference: "high-performance",
+        }}
         dpr={[1, 2]} // Limit DPR to max 2 for performance
         style={{ background: "transparent", pointerEvents: "none" }}
       >
@@ -559,5 +592,5 @@ export function GodAvatar3D({ themeId, color, size = 64, className }: GodAvatar3
         <pointLight position={[2, 2, 2]} color={color} intensity={1} />
       </Canvas>
     </div>
-  )
+  );
 }

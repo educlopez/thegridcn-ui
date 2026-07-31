@@ -1,34 +1,34 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface IdentityDiscProps extends React.HTMLAttributes<HTMLDivElement> {
-  name: string
-  designation?: string
-  id?: string
-  accessLevel?: "user" | "admin" | "system"
-  status?: "active" | "inactive" | "derezzed"
-  avatar?: string
+  accessLevel?: "user" | "admin" | "system";
+  avatar?: string;
+  designation?: string;
+  id?: string;
+  name: string;
+  status?: "active" | "inactive" | "derezzed";
 }
 
 const statusGlow: Record<string, string> = {
   active: "drop-shadow(0 0 8px var(--primary))",
-  inactive: "drop-shadow(0 0 4px rgba(107,114,128,0.5))",
   derezzed: "drop-shadow(0 0 8px rgba(239,68,68,0.6))",
-}
+  inactive: "drop-shadow(0 0 4px rgba(107,114,128,0.5))",
+};
 
 const statusRing: Record<string, string> = {
   active: "stroke-primary",
-  inactive: "stroke-gray-500",
   derezzed: "stroke-red-500",
-}
+  inactive: "stroke-gray-500",
+};
 
 const accessBadge: Record<string, { label: string; color: string }> = {
-  user: { label: "USER", color: "text-primary border-primary/50" },
-  admin: { label: "ADMIN", color: "text-amber-500 border-amber-500/50" },
-  system: { label: "SYSTEM", color: "text-red-500 border-red-500/50" },
-}
+  admin: { color: "text-amber-500 border-amber-500/50", label: "ADMIN" },
+  system: { color: "text-red-500 border-red-500/50", label: "SYSTEM" },
+  user: { color: "text-primary border-primary/50", label: "USER" },
+};
 
 function getInitials(name: string) {
   return name
@@ -36,7 +36,7 @@ function getInitials(name: string) {
     .map((w) => w[0])
     .join("")
     .toUpperCase()
-    .slice(0, 2)
+    .slice(0, 2);
 }
 
 export function IdentityDisc({
@@ -49,9 +49,9 @@ export function IdentityDisc({
   className,
   ...props
 }: IdentityDiscProps) {
-  const dim = 180
-  const center = dim / 2
-  const glowId = React.useId()
+  const dim = 180;
+  const center = dim / 2;
+  const glowId = React.useId();
 
   return (
     <div
@@ -63,7 +63,7 @@ export function IdentityDisc({
       <style jsx>{`
         @keyframes discPulse {
           0%, 100% { filter: ${statusGlow[status]}; }
-          50% { filter: ${statusGlow[status].replace(/\d+px/g, (m) => parseInt(m) * 2 + "px")}; }
+          50% { filter: ${statusGlow[status].replace(/\d+px/g, (m) => `${Number.parseInt(m, 10) * 2}px`)}; }
         }
         @keyframes discGlitch {
           0%, 95%, 100% { opacity: 1; }
@@ -74,17 +74,19 @@ export function IdentityDisc({
         }
       `}</style>
 
-      <div className="relative" style={{ width: dim, height: dim }}>
+      <div className="relative" style={{ height: dim, width: dim }}>
         <svg
+          aria-hidden="true"
           width={dim}
           height={dim}
           className="absolute inset-0"
           style={{
-            animation: status === "active"
-              ? "discPulse 3s ease-in-out infinite"
-              : status === "derezzed"
-                ? "discGlitch 2s steps(1) infinite"
-                : undefined,
+            animation:
+              status === "active"
+                ? "discPulse 3s ease-in-out infinite"
+                : status === "derezzed"
+                  ? "discGlitch 2s steps(1) infinite"
+                  : undefined,
             filter: statusGlow[status],
           }}
         >
@@ -106,7 +108,10 @@ export function IdentityDisc({
             fill="none"
             strokeWidth={2}
             strokeDasharray="8 4"
-            className={cn(statusRing[status], "animate-[spin_20s_linear_infinite]")}
+            className={cn(
+              statusRing[status],
+              "animate-[spin_20s_linear_infinite]"
+            )}
             style={{ transformOrigin: "center" }}
           />
 
@@ -118,7 +123,10 @@ export function IdentityDisc({
             fill="none"
             strokeWidth={1}
             strokeDasharray="2 6"
-            className={cn(statusRing[status], "animate-[spin_15s_linear_infinite_reverse]")}
+            className={cn(
+              statusRing[status],
+              "animate-[spin_15s_linear_infinite_reverse]"
+            )}
             style={{ transformOrigin: "center" }}
             opacity={0.3}
           />
@@ -136,10 +144,10 @@ export function IdentityDisc({
 
           {/* Tick marks */}
           {Array.from({ length: 24 }, (_, i) => {
-            const angle = (i * 360) / 24
-            const rad = (angle * Math.PI) / 180
-            const innerR = center - 14
-            const outerR = center - 8
+            const angle = (i * 360) / 24;
+            const rad = (angle * Math.PI) / 180;
+            const innerR = center - 14;
+            const outerR = center - 8;
             return (
               <line
                 key={i}
@@ -151,7 +159,7 @@ export function IdentityDisc({
                 className={statusRing[status]}
                 opacity={i % 6 === 0 ? 0.8 : 0.3}
               />
-            )
+            );
           })}
 
           {/* Inner ring with glow */}
@@ -174,7 +182,10 @@ export function IdentityDisc({
             fill="none"
             strokeWidth={2}
             strokeDasharray={`${Math.PI * (center - 22) * 0.25} ${Math.PI * (center - 22) * 1.75}`}
-            className={cn(statusRing[status], "animate-[spin_8s_linear_infinite]")}
+            className={cn(
+              statusRing[status],
+              "animate-[spin_8s_linear_infinite]"
+            )}
             style={{ transformOrigin: "center" }}
             opacity={0.5}
           />
@@ -184,7 +195,7 @@ export function IdentityDisc({
         <div className="absolute inset-0 flex items-center justify-center">
           <div
             className="flex items-center justify-center overflow-hidden rounded-full border border-primary/30 bg-card/90"
-            style={{ width: dim - 64, height: dim - 64 }}
+            style={{ height: dim - 64, width: dim - 64 }}
           >
             {avatar ? (
               <img
@@ -193,7 +204,7 @@ export function IdentityDisc({
                 className="h-full w-full object-cover"
               />
             ) : (
-              <span className="font-display text-2xl font-bold tracking-wider text-primary">
+              <span className="font-bold font-display text-2xl text-primary tracking-wider">
                 {getInitials(name)}
               </span>
             )}
@@ -203,19 +214,19 @@ export function IdentityDisc({
 
       {/* Info below disc */}
       <div className="flex flex-col items-center gap-1">
-        <span className="font-display text-sm font-bold uppercase tracking-wider">
+        <span className="font-bold font-display text-sm uppercase tracking-wider">
           {name}
         </span>
-        {designation && (
-          <span className="text-[10px] uppercase tracking-widest text-foreground/60">
+        {designation ? (
+          <span className="text-[10px] text-foreground/60 uppercase tracking-widest">
             {designation}
           </span>
-        )}
-        {id && (
-          <span className="font-mono text-[10px] tracking-widest text-foreground/40">
+        ) : null}
+        {id ? (
+          <span className="font-mono text-[10px] text-foreground/40 tracking-widest">
             ID: {id}
           </span>
-        )}
+        ) : null}
         <span
           className={cn(
             "mt-1 rounded border px-2 py-0.5 text-[9px] uppercase tracking-widest",
@@ -227,5 +238,5 @@ export function IdentityDisc({
         </span>
       </div>
     </div>
-  )
+  );
 }

@@ -1,7 +1,14 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import {
+  AlertCircle,
+  AlertTriangle,
+  CheckCircle,
+  Info,
+  Terminal,
+} from "lucide-react";
+import { toast } from "sonner";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,7 +19,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -21,16 +29,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-  SheetFooter,
-} from "@/components/ui/sheet"
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerContent,
@@ -39,13 +38,19 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "sonner"
-import { SectionWrapper, ComponentCard } from "./section-wrapper"
-import { AlertCircle, CheckCircle, Info, AlertTriangle, Terminal } from "lucide-react"
+} from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { ComponentCard, SectionWrapper } from "./section-wrapper";
 
 export function FeedbackSection() {
   return (
@@ -83,7 +88,8 @@ export function FeedbackSection() {
             <AlertTriangle className="h-4 w-4 text-yellow-500" />
             <AlertTitle className="text-yellow-500">Warning</AlertTitle>
             <AlertDescription className="text-yellow-400/80">
-              System resources running low. Consider derezzzing inactive programs.
+              System resources running low. Consider derezzzing inactive
+              programs.
             </AlertDescription>
           </Alert>
 
@@ -101,7 +107,9 @@ export function FeedbackSection() {
         <div className="flex flex-wrap gap-4">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className="btn-glow">Open Dialog</Button>
+              <Button variant="outline" className="btn-glow">
+                Open Dialog
+              </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
@@ -121,7 +129,11 @@ export function FeedbackSection() {
                   <Label htmlFor="type" className="text-right">
                     Type
                   </Label>
-                  <Input id="type" defaultValue="Security" className="col-span-3" />
+                  <Input
+                    id="type"
+                    defaultValue="Security"
+                    className="col-span-3"
+                  />
                 </div>
               </div>
               <DialogFooter>
@@ -157,7 +169,9 @@ export function FeedbackSection() {
         <div className="flex flex-wrap gap-4">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" className="btn-glow">Open Sheet (Right)</Button>
+              <Button variant="outline" className="btn-glow">
+                Open Sheet (Right)
+              </Button>
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
@@ -184,7 +198,9 @@ export function FeedbackSection() {
 
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" className="btn-glow">Open Sheet (Left)</Button>
+              <Button variant="outline" className="btn-glow">
+                Open Sheet (Left)
+              </Button>
             </SheetTrigger>
             <SheetContent side="left">
               <SheetHeader>
@@ -195,11 +211,17 @@ export function FeedbackSection() {
               </SheetHeader>
               <div className="py-4">
                 <nav className="space-y-2">
-                  {["Dashboard", "Programs", "Sectors", "Settings"].map((item) => (
-                    <Button key={item} variant="ghost" className="w-full justify-start">
-                      {item}
-                    </Button>
-                  ))}
+                  {["Dashboard", "Programs", "Sectors", "Settings"].map(
+                    (item) => (
+                      <Button
+                        key={item}
+                        variant="ghost"
+                        className="w-full justify-start"
+                      >
+                        {item}
+                      </Button>
+                    )
+                  )}
                 </nav>
               </div>
             </SheetContent>
@@ -210,7 +232,9 @@ export function FeedbackSection() {
       <ComponentCard title="Drawer">
         <Drawer>
           <DrawerTrigger asChild>
-            <Button variant="outline" className="btn-glow">Open Drawer</Button>
+            <Button variant="outline" className="btn-glow">
+              Open Drawer
+            </Button>
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
@@ -222,20 +246,28 @@ export function FeedbackSection() {
             <div className="p-4 pb-0">
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="rounded-lg border border-border p-4">
-                  <div className="text-sm text-muted-foreground">Active Programs</div>
-                  <div className="text-2xl font-bold">2,847</div>
+                  <div className="text-muted-foreground text-sm">
+                    Active Programs
+                  </div>
+                  <div className="font-bold text-2xl">2,847</div>
                 </div>
                 <div className="rounded-lg border border-border p-4">
-                  <div className="text-sm text-muted-foreground">Grid Uptime</div>
-                  <div className="text-2xl font-bold">99.9%</div>
+                  <div className="text-muted-foreground text-sm">
+                    Grid Uptime
+                  </div>
+                  <div className="font-bold text-2xl">99.9%</div>
                 </div>
                 <div className="rounded-lg border border-border p-4">
-                  <div className="text-sm text-muted-foreground">Data Transfer</div>
-                  <div className="text-2xl font-bold">1.2 TB</div>
+                  <div className="text-muted-foreground text-sm">
+                    Data Transfer
+                  </div>
+                  <div className="font-bold text-2xl">1.2 TB</div>
                 </div>
                 <div className="rounded-lg border border-border p-4">
-                  <div className="text-sm text-muted-foreground">Sectors Online</div>
-                  <div className="text-2xl font-bold">42</div>
+                  <div className="text-muted-foreground text-sm">
+                    Sectors Online
+                  </div>
+                  <div className="font-bold text-2xl">42</div>
                 </div>
               </div>
             </div>
@@ -299,9 +331,9 @@ export function FeedbackSection() {
               toast.promise(
                 new Promise((resolve) => setTimeout(resolve, 2000)),
                 {
+                  error: "Upload failed.",
                   loading: "Uploading to Grid...",
                   success: "Upload complete!",
-                  error: "Upload failed.",
                 }
               )
             }
@@ -311,5 +343,5 @@ export function FeedbackSection() {
         </div>
       </ComponentCard>
     </SectionWrapper>
-  )
+  );
 }

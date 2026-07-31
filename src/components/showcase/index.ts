@@ -1,10 +1,10 @@
-export { SectionWrapper, ComponentCard } from "./section-wrapper"
-export { ButtonsSection } from "./buttons-section"
-export { FormsSection } from "./forms-section"
-export { DataDisplaySection } from "./data-display-section"
-export { FeedbackSection } from "./feedback-section"
-export { NavigationSection } from "./navigation-section"
-export { LayoutSection } from "./layout-section"
-export { OverlaysSection } from "./overlays-section"
-export { TronMovieSection } from "./tron-movie-section"
-export { ThemeShowcaseSection } from "./theme-showcase-section"
+export { ButtonsSection } from "./buttons-section";
+export { DataDisplaySection } from "./data-display-section";
+export { FeedbackSection } from "./feedback-section";
+export { FormsSection } from "./forms-section";
+export { LayoutSection } from "./layout-section";
+export { NavigationSection } from "./navigation-section";
+export { OverlaysSection } from "./overlays-section";
+export { ComponentCard, SectionWrapper } from "./section-wrapper";
+export { ThemeShowcaseSection } from "./theme-showcase-section";
+export { TronMovieSection } from "./tron-movie-section";

@@ -1,14 +1,19 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import * as React from "react";
 import { cn } from "@/lib/utils";
 import { TheGridcnLogo } from "./thegridcn-logo";
 
 function XIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
@@ -16,7 +21,12 @@ function XIcon({ className }: { className?: string }) {
 
 function GitHubIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
       <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
     </svg>
   );
@@ -25,6 +35,7 @@ function GitHubIcon({ className }: { className?: string }) {
 function MenuIcon({ className }: { className?: string }) {
   return (
     <svg
+      aria-hidden="true"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -41,6 +52,7 @@ function MenuIcon({ className }: { className?: string }) {
 function CloseIcon({ className }: { className?: string }) {
   return (
     <svg
+      aria-hidden="true"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -85,7 +97,9 @@ function GitHubStars() {
       className="flex items-center gap-1.5 rounded border border-primary/30 bg-primary/5 px-2.5 py-1.5 font-mono text-xs transition-colors hover:border-primary/50 hover:bg-primary/10"
     >
       <GitHubIcon className="h-4 w-4 text-primary" />
-      <span className="text-primary">{stars !== null ? stars : "—"}</span>
+      <span className="text-primary">
+        {stars === null ? "—" : String(stars)}
+      </span>
     </a>
   );
 }
@@ -115,7 +129,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
   // Close menu on route change
   React.useEffect(() => {
     setMobileMenuOpen(false);
-  }, [pathname]);
+  }, []);
 
   // Prevent scroll when menu is open
   React.useEffect(() => {
@@ -132,15 +146,11 @@ export function TronHeader({ navItems }: TronHeaderProps) {
   return (
     <header className="sticky top-0 z-50">
       {/* Main header bar */}
-      <div
-        className="relative border-b border-primary/30 bg-panel"
-      >
+      <div className="relative border-primary/30 border-b bg-panel">
         {/* CRT scanline effect */}
-        <div
-          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
-        />
+        <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
         {/* Top accent line */}
-        <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
+        <div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
 
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
@@ -197,6 +207,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
 
               {/* Mobile menu button */}
               <button
+                type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="flex items-center rounded border border-primary/30 bg-primary/5 px-2.5 py-1.5 text-primary transition-colors hover:border-primary/50 hover:bg-primary/10 lg:hidden"
                 aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
@@ -216,9 +227,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
       <div
         className={cn(
           "fixed inset-0 z-40 bg-background/80 backdrop-blur-sm transition-opacity lg:hidden",
-          mobileMenuOpen
-            ? "opacity-100"
-            : "pointer-events-none opacity-0"
+          mobileMenuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         )}
         onClick={() => setMobileMenuOpen(false)}
       />
@@ -226,24 +235,23 @@ export function TronHeader({ navItems }: TronHeaderProps) {
       {/* Mobile Menu Panel */}
       <div
         className={cn(
-          "fixed right-0 top-0 z-50 h-full w-72 transform border-l border-primary/30 bg-panel transition-transform duration-300 ease-in-out lg:hidden",
+          "fixed top-0 right-0 z-50 h-full w-72 transform border-primary/30 border-l bg-panel transition-transform duration-300 ease-in-out lg:hidden",
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
         {/* CRT scanline effect */}
-        <div
-          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
-        />
+        <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
         {/* Menu Header - Tron terminal style */}
-        <div className="relative flex h-14 items-center justify-between border-b border-primary/20 px-4">
+        <div className="relative flex h-14 items-center justify-between border-primary/20 border-b px-4">
           {/* Top accent line */}
-          <div className="absolute left-0 right-8 top-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
+          <div className="absolute top-0 right-8 left-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
 
-          <span className="font-mono text-[11px] tracking-[0.2em] text-foreground">
+          <span className="font-mono text-[11px] text-foreground tracking-[0.2em]">
             NAVIGATION: <span className="text-foreground/70">00.SYS</span>
           </span>
 
           <button
+            type="button"
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center justify-center text-foreground/50 transition-colors hover:text-primary"
             aria-label="Close menu"
@@ -284,10 +292,10 @@ export function TronHeader({ navItems }: TronHeaderProps) {
                 )}
 
                 {/* Corner accents */}
-                <span className="absolute left-0 top-0 h-2 w-2 border-l border-t border-primary/50" />
-                <span className="absolute right-0 top-0 h-2 w-2 border-r border-t border-primary/50" />
-                <span className="absolute bottom-0 left-0 h-2 w-2 border-b border-l border-primary/50" />
-                <span className="absolute bottom-0 right-0 h-2 w-2 border-b border-r border-primary/50" />
+                <span className="absolute top-0 left-0 h-2 w-2 border-primary/50 border-t border-l" />
+                <span className="absolute top-0 right-0 h-2 w-2 border-primary/50 border-t border-r" />
+                <span className="absolute bottom-0 left-0 h-2 w-2 border-primary/50 border-b border-l" />
+                <span className="absolute right-0 bottom-0 h-2 w-2 border-primary/50 border-r border-b" />
               </Link>
             ))}
           </nav>
@@ -297,7 +305,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
 
           {/* Social Links */}
           <div className="flex flex-col gap-3">
-            <span className="font-mono text-[10px] tracking-widest text-foreground">
+            <span className="font-mono text-[10px] text-foreground tracking-widest">
               EXTERNAL LINKS
             </span>
 
@@ -305,7 +313,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
               href="https://github.com/educlopez/thegridcn-ui"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded border border-primary/30 px-4 py-3 font-mono text-sm tracking-wider text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+              className="flex items-center gap-3 rounded border border-primary/30 px-4 py-3 font-mono text-foreground text-sm tracking-wider transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
             >
               <GitHubIcon className="h-5 w-5 text-primary" />
               <span>GITHUB</span>
@@ -315,7 +323,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
               href="https://x.com/educalvolpz"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded border border-primary/30 px-4 py-3 font-mono text-sm tracking-wider text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+              className="flex items-center gap-3 rounded border border-primary/30 px-4 py-3 font-mono text-foreground text-sm tracking-wider transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
             >
               <XIcon className="h-5 w-5 text-primary" />
               <span>X / TWITTER</span>
@@ -325,10 +333,10 @@ export function TronHeader({ navItems }: TronHeaderProps) {
           {/* Footer */}
           <div className="mt-auto pt-6">
             <div className="rounded border border-primary/30 bg-primary/5 p-3">
-              <div className="font-mono text-[10px] tracking-widest text-foreground">
+              <div className="font-mono text-[10px] text-foreground tracking-widest">
                 SYSTEM STATUS
               </div>
-              <div className="mt-1 font-mono text-xs text-primary">
+              <div className="mt-1 font-mono text-primary text-xs">
                 ALL SYSTEMS OPERATIONAL
               </div>
             </div>

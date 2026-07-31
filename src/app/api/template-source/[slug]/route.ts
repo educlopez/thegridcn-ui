@@ -1,26 +1,34 @@
-import { NextRequest, NextResponse } from "next/server"
-import { promises as fs } from "fs"
-import path from "path"
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import { type NextRequest, NextResponse } from "next/server";
 
-const VALID_TEMPLATES = ["dashboard", "landing", "blog", "login", "analytics"] as const
+const VALID_TEMPLATES = [
+  "dashboard",
+  "landing",
+  "blog",
+  "login",
+  "analytics",
+] as const;
 
-type TemplateSlug = (typeof VALID_TEMPLATES)[number]
+type TemplateSlug = (typeof VALID_TEMPLATES)[number];
 
 function isValidTemplate(slug: string): slug is TemplateSlug {
-  return (VALID_TEMPLATES as readonly string[]).includes(slug)
+  return (VALID_TEMPLATES as readonly string[]).includes(slug);
 }
 
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = await params
+  const { slug } = await params;
 
   if (!isValidTemplate(slug)) {
     return NextResponse.json(
-      { error: `Invalid template. Valid options: ${VALID_TEMPLATES.join(", ")}` },
+      {
+        error: `Invalid template. Valid options: ${VALID_TEMPLATES.join(", ")}`,
+      },
       { status: 400 }
-    )
+    );
   }
 
   try {
@@ -28,18 +36,18 @@ export async function GET(
       process.cwd(),
       "src/components/thegridcn/templates",
       `${slug}-template.tsx`
-    )
-    const content = await fs.readFile(filePath, "utf-8")
+    );
+    const content = await fs.readFile(filePath, "utf-8");
 
     return NextResponse.json({
-      slug,
-      fileName: `${slug}-template.tsx`,
       content,
-    })
+      fileName: `${slug}-template.tsx`,
+      slug,
+    });
   } catch {
     return NextResponse.json(
       { error: "Template source not found" },
       { status: 404 }
-    )
+    );
   }
 }

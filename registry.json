@@ -13,10 +13,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-accordion",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-accordion", "lucide-react"]
     },
     {
       "name": "alert",
@@ -28,9 +25,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "class-variance-authority"
-      ]
+      "dependencies": ["class-variance-authority"]
     },
     {
       "name": "alert",
@@ -53,12 +48,8 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "button"
-      ],
-      "dependencies": [
-        "@radix-ui/react-alert-dialog"
-      ]
+      "registryDependencies": ["button"],
+      "dependencies": ["@radix-ui/react-alert-dialog"]
     },
     {
       "name": "anomaly-banner",
@@ -92,9 +83,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-aspect-ratio"
-      ]
+      "dependencies": ["@radix-ui/react-aspect-ratio"]
     },
     {
       "name": "avatar",
@@ -106,9 +95,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-avatar"
-      ]
+      "dependencies": ["@radix-ui/react-avatar"]
     },
     {
       "name": "badge",
@@ -120,10 +107,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority"
-      ]
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
     },
     {
       "name": "beam-marker",
@@ -146,10 +130,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-slot", "lucide-react"]
     },
     {
       "name": "button",
@@ -161,10 +142,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority"
-      ]
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
     },
     {
       "name": "button-group",
@@ -176,13 +154,8 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "separator"
-      ],
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority"
-      ]
+      "registryDependencies": ["separator"],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
     },
     {
       "name": "calendar",
@@ -194,13 +167,8 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "button"
-      ],
-      "dependencies": [
-        "lucide-react",
-        "react-day-picker"
-      ]
+      "registryDependencies": ["button"],
+      "dependencies": ["lucide-react", "react-day-picker"]
     },
     {
       "name": "card",
@@ -223,13 +191,8 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "button"
-      ],
-      "dependencies": [
-        "embla-carousel-react",
-        "lucide-react"
-      ]
+      "registryDependencies": ["button"],
+      "dependencies": ["embla-carousel-react", "lucide-react"]
     },
     {
       "name": "chart",
@@ -242,9 +205,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "recharts"
-      ]
+      "dependencies": ["recharts"]
     },
     {
       "name": "checkbox",
@@ -256,10 +217,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-checkbox",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-checkbox", "lucide-react"]
     },
     {
       "name": "circuit-background",
@@ -282,9 +240,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-collapsible"
-      ]
+      "dependencies": ["@radix-ui/react-collapsible"]
     },
     {
       "name": "command",
@@ -296,13 +252,8 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "dialog"
-      ],
-      "dependencies": [
-        "cmdk",
-        "lucide-react"
-      ]
+      "registryDependencies": ["dialog"],
+      "dependencies": ["cmdk", "lucide-react"]
     },
     {
       "name": "context-menu",
@@ -314,10 +265,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-context-menu",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-context-menu", "lucide-react"]
     },
     {
       "name": "crt-effect",
@@ -352,10 +300,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-dialog",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-dialog", "lucide-react"]
     },
     {
       "name": "drawer",
@@ -367,9 +312,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "vaul"
-      ]
+      "dependencies": ["vaul"]
     },
     {
       "name": "dropdown-menu",
@@ -381,10 +324,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-dropdown-menu",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-dropdown-menu", "lucide-react"]
     },
     {
       "name": "empty",
@@ -396,9 +336,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "class-variance-authority"
-      ]
+      "dependencies": ["class-variance-authority"]
     },
     {
       "name": "field",
@@ -410,13 +348,8 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "label",
-        "separator"
-      ],
-      "dependencies": [
-        "class-variance-authority"
-      ]
+      "registryDependencies": ["label", "separator"],
+      "dependencies": ["class-variance-authority"]
     },
     {
       "name": "floating-panel",
@@ -439,9 +372,7 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "label"
-      ],
+      "registryDependencies": ["label"],
       "dependencies": [
         "@radix-ui/react-label",
         "@radix-ui/react-slot",
@@ -470,10 +401,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@react-three/fiber",
-        "three"
-      ]
+      "dependencies": ["@react-three/fiber", "three"]
     },
     {
       "name": "grid-floor",
@@ -507,9 +435,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-hover-card"
-      ]
+      "dependencies": ["@radix-ui/react-hover-card"]
     },
     {
       "name": "hud",
@@ -554,14 +480,8 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "button",
-        "input",
-        "textarea"
-      ],
-      "dependencies": [
-        "class-variance-authority"
-      ]
+      "registryDependencies": ["button", "input", "textarea"],
+      "dependencies": ["class-variance-authority"]
     },
     {
       "name": "input-otp",
@@ -573,10 +493,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "input-otp",
-        "lucide-react"
-      ]
+      "dependencies": ["input-otp", "lucide-react"]
     },
     {
       "name": "item",
@@ -588,13 +505,8 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "separator"
-      ],
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority"
-      ]
+      "registryDependencies": ["separator"],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
     },
     {
       "name": "kbd",
@@ -617,9 +529,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-label"
-      ]
+      "dependencies": ["@radix-ui/react-label"]
     },
     {
       "name": "location-display",
@@ -653,10 +563,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-menubar",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-menubar", "lucide-react"]
     },
     {
       "name": "navigation-menu",
@@ -684,12 +591,8 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "button"
-      ],
-      "dependencies": [
-        "lucide-react"
-      ]
+      "registryDependencies": ["button"],
+      "dependencies": ["lucide-react"]
     },
     {
       "name": "popover",
@@ -701,9 +604,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-popover"
-      ]
+      "dependencies": ["@radix-ui/react-popover"]
     },
     {
       "name": "progress",
@@ -715,9 +616,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-progress"
-      ]
+      "dependencies": ["@radix-ui/react-progress"]
     },
     {
       "name": "radio-group",
@@ -729,10 +628,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-radio-group",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-radio-group", "lucide-react"]
     },
     {
       "name": "scroll-area",
@@ -744,9 +640,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-scroll-area"
-      ]
+      "dependencies": ["@radix-ui/react-scroll-area"]
     },
     {
       "name": "select",
@@ -758,10 +652,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-select",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-select", "lucide-react"]
     },
     {
       "name": "separator",
@@ -773,9 +664,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-separator"
-      ]
+      "dependencies": ["@radix-ui/react-separator"]
     },
     {
       "name": "sheet",
@@ -787,10 +676,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-dialog",
-        "lucide-react"
-      ]
+      "dependencies": ["@radix-ui/react-dialog", "lucide-react"]
     },
     {
       "name": "sidebar",
@@ -837,9 +723,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-slider"
-      ]
+      "dependencies": ["@radix-ui/react-slider"]
     },
     {
       "name": "sonner",
@@ -851,10 +735,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "lucide-react",
-        "sonner"
-      ]
+      "dependencies": ["lucide-react", "sonner"]
     },
     {
       "name": "spinner",
@@ -866,9 +747,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "lucide-react"
-      ]
+      "dependencies": ["lucide-react"]
     },
     {
       "name": "status-bar",
@@ -891,9 +770,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-switch"
-      ]
+      "dependencies": ["@radix-ui/react-switch"]
     },
     {
       "name": "table",
@@ -916,9 +793,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-tabs"
-      ]
+      "dependencies": ["@radix-ui/react-tabs"]
     },
     {
       "name": "textarea",
@@ -963,10 +838,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-toggle",
-        "class-variance-authority"
-      ]
+      "dependencies": ["@radix-ui/react-toggle", "class-variance-authority"]
     },
     {
       "name": "toggle-group",
@@ -978,9 +850,7 @@
           "type": "registry:component"
         }
       ],
-      "registryDependencies": [
-        "toggle"
-      ],
+      "registryDependencies": ["toggle"],
       "dependencies": [
         "@radix-ui/react-toggle-group",
         "class-variance-authority"
@@ -996,9 +866,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@radix-ui/react-tooltip"
-      ]
+      "dependencies": ["@radix-ui/react-tooltip"]
     },
     {
       "name": "tunnel",
@@ -1011,10 +879,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "@react-three/fiber",
-        "three"
-      ]
+      "dependencies": ["@react-three/fiber", "three"]
     },
     {
       "name": "uplink-header",
@@ -1037,9 +902,7 @@
           "type": "registry:component"
         }
       ],
-      "dependencies": [
-        "lucide-react"
-      ]
+      "dependencies": ["lucide-react"]
     },
     {
       "name": "video-progress",

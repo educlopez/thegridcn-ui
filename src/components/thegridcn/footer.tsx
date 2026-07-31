@@ -1,30 +1,30 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface FooterLink {
-  label: string
-  href: string
-  external?: boolean
+  external?: boolean;
+  href: string;
+  label: string;
 }
 
 interface FooterColumn {
-  title: string
-  links: FooterLink[]
+  links: FooterLink[];
+  title: string;
 }
 
 interface FooterSocial {
-  label: string
-  href: string
-  icon: React.ReactNode
+  href: string;
+  icon: React.ReactNode;
+  label: string;
 }
 
 interface FooterProps extends React.HTMLAttributes<HTMLElement> {
-  logo?: React.ReactNode
-  columns?: FooterColumn[]
-  socials?: FooterSocial[]
-  copyright?: string
+  columns?: FooterColumn[];
+  copyright?: string;
+  logo?: React.ReactNode;
+  socials?: FooterSocial[];
 }
 
 export function Footer({
@@ -39,14 +39,14 @@ export function Footer({
     <footer
       data-slot="tron-footer"
       className={cn(
-        "relative overflow-hidden border-t border-primary/30 bg-card/80 backdrop-blur-sm",
+        "relative overflow-hidden border-primary/30 border-t bg-card/80 backdrop-blur-sm",
         className
       )}
       {...props}
     >
       {/* Top edge glow */}
-      <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
-      <div className="pointer-events-none absolute left-0 right-0 top-0 h-8 bg-gradient-to-b from-primary/5 to-transparent" />
+      <div className="pointer-events-none absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+      <div className="pointer-events-none absolute top-0 right-0 left-0 h-8 bg-gradient-to-b from-primary/5 to-transparent" />
 
       {/* Scanline overlay */}
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
@@ -59,7 +59,7 @@ export function Footer({
         <div className="grid gap-10 md:grid-cols-[1.2fr_2fr]">
           {/* Logo & socials column */}
           <div className="space-y-5">
-            {logo && <div className="flex items-center">{logo}</div>}
+            {logo ? <div className="flex items-center">{logo}</div> : null}
 
             {socials.length > 0 && (
               <div className="flex items-center gap-3">
@@ -92,7 +92,7 @@ export function Footer({
             >
               {columns.map((column, i) => (
                 <div key={i} className="space-y-3">
-                  <h4 className="font-mono text-[10px] uppercase tracking-widest text-foreground/50">
+                  <h4 className="font-mono text-[10px] text-foreground/50 uppercase tracking-widest">
                     {column.title}
                   </h4>
                   <ul className="space-y-2">
@@ -101,9 +101,9 @@ export function Footer({
                         <a
                           href={link.href}
                           {...(link.external
-                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            ? { rel: "noopener noreferrer", target: "_blank" }
                             : {})}
-                          className="text-xs text-foreground/60 transition-colors duration-200 hover:text-primary"
+                          className="text-foreground/60 text-xs transition-colors duration-200 hover:text-primary"
                         >
                           {link.label}
                         </a>
@@ -117,25 +117,25 @@ export function Footer({
         </div>
 
         {/* Divider */}
-        {copyright && (
+        {copyright ? (
           <>
             <div className="mt-8 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
 
             {/* Copyright bar */}
             <div className="mt-4 flex items-center justify-center">
-              <p className="font-mono text-[10px] uppercase tracking-widest text-foreground/40">
+              <p className="font-mono text-[10px] text-foreground/40 uppercase tracking-widest">
                 {copyright}
               </p>
             </div>
           </>
-        )}
+        ) : null}
       </div>
 
       {/* Corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-primary/40" />
-      <div className="pointer-events-none absolute right-0 top-0 h-4 w-4 border-r-2 border-t-2 border-primary/40" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-4 w-4 border-b-2 border-l-2 border-primary/40" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-4 w-4 border-b-2 border-r-2 border-primary/40" />
+      <div className="pointer-events-none absolute top-0 left-0 h-4 w-4 border-primary/40 border-t-2 border-l-2" />
+      <div className="pointer-events-none absolute top-0 right-0 h-4 w-4 border-primary/40 border-t-2 border-r-2" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-4 w-4 border-primary/40 border-b-2 border-l-2" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-4 w-4 border-primary/40 border-r-2 border-b-2" />
     </footer>
-  )
+  );
 }

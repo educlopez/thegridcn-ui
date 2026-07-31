@@ -1,33 +1,56 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface RatingProps extends React.HTMLAttributes<HTMLDivElement> {
-  value: number
-  max?: number
-  label?: string
-  size?: "sm" | "md" | "lg"
-  variant?: "default" | "success" | "warning" | "danger"
-  showValue?: boolean
+  label?: string;
+  max?: number;
+  showValue?: boolean;
+  size?: "sm" | "md" | "lg";
+  value: number;
+  variant?: "default" | "success" | "warning" | "danger";
 }
 
 const sizeConfig: Record<string, { dim: number; gap: string; text: string }> = {
-  sm: { dim: 12, gap: "gap-0.5", text: "text-[9px]" },
-  md: { dim: 16, gap: "gap-1", text: "text-[10px]" },
   lg: { dim: 20, gap: "gap-1.5", text: "text-xs" },
-}
+  md: { dim: 16, gap: "gap-1", text: "text-[10px]" },
+  sm: { dim: 12, gap: "gap-0.5", text: "text-[9px]" },
+};
 
 const variantColors: Record<string, { active: string; glow: string }> = {
-  default: { active: "text-primary", glow: "drop-shadow-[0_0_3px_var(--primary)]" },
-  success: { active: "text-green-500", glow: "drop-shadow-[0_0_3px_rgba(34,197,94,0.5)]" },
-  warning: { active: "text-amber-500", glow: "drop-shadow-[0_0_3px_rgba(245,158,11,0.5)]" },
-  danger: { active: "text-red-500", glow: "drop-shadow-[0_0_3px_rgba(239,68,68,0.5)]" },
-}
+  danger: {
+    active: "text-red-500",
+    glow: "drop-shadow-[0_0_3px_rgba(239,68,68,0.5)]",
+  },
+  default: {
+    active: "text-primary",
+    glow: "drop-shadow-[0_0_3px_var(--primary)]",
+  },
+  success: {
+    active: "text-green-500",
+    glow: "drop-shadow-[0_0_3px_rgba(34,197,94,0.5)]",
+  },
+  warning: {
+    active: "text-amber-500",
+    glow: "drop-shadow-[0_0_3px_rgba(245,158,11,0.5)]",
+  },
+};
 
-function DiamondIcon({ filled, dim, color, glow }: { filled: boolean; dim: number; color: string; glow: string }) {
+function DiamondIcon({
+  filled,
+  dim,
+  color,
+  glow,
+}: {
+  filled: boolean;
+  dim: number;
+  color: string;
+  glow: string;
+}) {
   return (
     <svg
+      aria-hidden="true"
       width={dim}
       height={dim}
       viewBox="0 0 16 16"
@@ -44,7 +67,7 @@ function DiamondIcon({ filled, dim, color, glow }: { filled: boolean; dim: numbe
         strokeLinejoin="round"
       />
     </svg>
-  )
+  );
 }
 
 export function Rating({
@@ -57,20 +80,22 @@ export function Rating({
   className,
   ...props
 }: RatingProps) {
-  const config = sizeConfig[size]
-  const colors = variantColors[variant]
+  const config = sizeConfig[size];
+  const colors = variantColors[variant];
 
   // Animate reveal
-  const [revealedIdx, setRevealedIdx] = React.useState(-1)
+  const [revealedIdx, setRevealedIdx] = React.useState(-1);
   React.useEffect(() => {
-    let idx = 0
+    let idx = 0;
     const interval = setInterval(() => {
-      setRevealedIdx(idx)
-      idx++
-      if (idx >= max) clearInterval(interval)
-    }, 80)
-    return () => clearInterval(interval)
-  }, [max])
+      setRevealedIdx(idx);
+      idx++;
+      if (idx >= max) {
+        clearInterval(interval);
+      }
+    }, 80);
+    return () => clearInterval(interval);
+  }, [max]);
 
   return (
     <div
@@ -78,11 +103,16 @@ export function Rating({
       className={cn("inline-flex items-center gap-2", className)}
       {...props}
     >
-      {label && (
-        <span className={cn("font-mono uppercase tracking-widest text-foreground/40", config.text)}>
+      {label ? (
+        <span
+          className={cn(
+            "font-mono text-foreground/40 uppercase tracking-widest",
+            config.text
+          )}
+        >
           {label}
         </span>
-      )}
+      ) : null}
       <div className={cn("flex items-center", config.gap)}>
         {Array.from({ length: max }, (_, i) => (
           <span
@@ -101,11 +131,16 @@ export function Rating({
           </span>
         ))}
       </div>
-      {showValue && (
-        <span className={cn("font-mono tabular-nums text-foreground/50", config.text)}>
+      {showValue ? (
+        <span
+          className={cn(
+            "font-mono text-foreground/50 tabular-nums",
+            config.text
+          )}
+        >
           {value}/{max}
         </span>
-      )}
+      ) : null}
     </div>
-  )
+  );
 }

@@ -5,7 +5,7 @@
 
 /* Panel background */
 :root {
-  --panel: #0C1421;
+  --panel: #0c1421;
 }
 
 /* Core Tron dark backgrounds - deep black with slight blue tint */
@@ -32,19 +32,24 @@
 
 /* Base styles */
 * {
-  border-color: var(--border);
   outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
+  border-color: var(--border);
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--foreground);
+  background-color: var(--background);
 }
 
 /* Heading styles */
-h1, h2, h3, h4, h5, h6 {
-  letter-spacing: 0.05em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }

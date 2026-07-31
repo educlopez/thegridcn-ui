@@ -1,22 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface TabItem {
-  label: string
-  value: string
-  icon?: React.ReactNode
-  disabled?: boolean
+  disabled?: boolean;
+  icon?: React.ReactNode;
+  label: string;
+  value: string;
 }
 
-interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
-  tabs: TabItem[]
-  value?: string
-  defaultValue?: string
-  onChange?: (value: string) => void
-  variant?: "default" | "underline" | "pills"
-  size?: "sm" | "md"
+interface TabsProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  size?: "sm" | "md";
+  tabs: TabItem[];
+  value?: string;
+  variant?: "default" | "underline" | "pills";
 }
 
 export function Tabs({
@@ -30,12 +31,16 @@ export function Tabs({
   children,
   ...props
 }: TabsProps) {
-  const [internalValue, setInternalValue] = React.useState(defaultValue || tabs[0]?.value || "")
-  const active = controlledValue ?? internalValue
+  const [internalValue, setInternalValue] = React.useState(
+    defaultValue || tabs[0]?.value || ""
+  );
+  const active = controlledValue ?? internalValue;
 
   function select(v: string) {
-    if (!controlledValue) setInternalValue(v)
-    onChange?.(v)
+    if (!controlledValue) {
+      setInternalValue(v);
+    }
+    onChange?.(v);
   }
 
   return (
@@ -49,13 +54,14 @@ export function Tabs({
         role="tablist"
         className={cn(
           "relative flex gap-1",
-          variant === "default" && "rounded border border-primary/20 bg-card/80 p-1 backdrop-blur-sm",
-          variant === "underline" && "border-b border-primary/20",
+          variant === "default" &&
+            "rounded border border-primary/20 bg-card/80 p-1 backdrop-blur-sm",
+          variant === "underline" && "border-primary/20 border-b",
           variant === "pills" && "flex-wrap gap-2"
         )}
       >
         {tabs.map((tab) => {
-          const isActive = tab.value === active
+          const isActive = tab.value === active;
           return (
             <button
               key={tab.value}
@@ -87,33 +93,49 @@ export function Tabs({
                 ]
               )}
             >
-              {tab.icon && <span className="flex h-3.5 w-3.5 items-center justify-center">{tab.icon}</span>}
+              {tab.icon ? (
+                <span className="flex h-3.5 w-3.5 items-center justify-center">
+                  {tab.icon}
+                </span>
+              ) : null}
               {tab.label}
               {/* Underline indicator */}
               {variant === "underline" && isActive && (
-                <span className="absolute -bottom-px left-0 right-0 h-px bg-primary shadow-[0_0_6px_rgba(var(--primary-rgb,0,180,255),0.4)]" />
+                <span className="absolute right-0 -bottom-px left-0 h-px bg-primary shadow-[0_0_6px_rgba(var(--primary-rgb,0,180,255),0.4)]" />
               )}
             </button>
-          )
+          );
         })}
       </div>
 
       {/* Content */}
       {children}
     </div>
-  )
+  );
 }
 
 interface TabPanelProps extends React.HTMLAttributes<HTMLDivElement> {
-  value: string
-  activeValue: string
+  activeValue: string;
+  value: string;
 }
 
-export function TabPanel({ value, activeValue, className, children, ...props }: TabPanelProps) {
-  if (value !== activeValue) return null
+export function TabPanel({
+  value,
+  activeValue,
+  className,
+  children,
+  ...props
+}: TabPanelProps) {
+  if (value !== activeValue) {
+    return null;
+  }
   return (
-    <div role="tabpanel" className={cn("animate-in fade-in-0 duration-200", className)} {...props}>
+    <div
+      role="tabpanel"
+      className={cn("fade-in-0 animate-in duration-200", className)}
+      {...props}
+    >
       {children}
     </div>
-  )
+  );
 }

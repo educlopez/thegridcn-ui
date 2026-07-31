@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface BentoGridItem {
-  title: string
-  description?: string
-  icon?: React.ReactNode
-  span?: "1x1" | "2x1" | "1x2" | "2x2"
-  variant?: "default" | "highlight"
+  description?: string;
+  icon?: React.ReactNode;
+  span?: "1x1" | "2x1" | "1x2" | "2x2";
+  title: string;
+  variant?: "default" | "highlight";
 }
 
 interface BentoGridProps extends React.HTMLAttributes<HTMLDivElement> {
-  items: BentoGridItem[]
-  columns?: 2 | 3 | 4
+  columns?: 2 | 3 | 4;
+  items: BentoGridItem[];
 }
 
 const spanMap: Record<string, string> = {
   "1x1": "",
-  "2x1": "md:col-span-2",
   "1x2": "md:row-span-2",
+  "2x1": "md:col-span-2",
   "2x2": "md:col-span-2 md:row-span-2",
-}
+};
 
 const colsMap: Record<number, string> = {
   2: "md:grid-cols-2",
   3: "md:grid-cols-3",
   4: "md:grid-cols-4",
-}
+};
 
 export function BentoGrid({
   items,
@@ -36,25 +36,23 @@ export function BentoGrid({
   ...props
 }: BentoGridProps) {
   // Stagger card reveal
-  const [revealedIdx, setRevealedIdx] = React.useState(-1)
+  const [revealedIdx, setRevealedIdx] = React.useState(-1);
   React.useEffect(() => {
-    let idx = 0
+    let idx = 0;
     const interval = setInterval(() => {
-      setRevealedIdx(idx)
-      idx++
-      if (idx >= items.length) clearInterval(interval)
-    }, 80)
-    return () => clearInterval(interval)
-  }, [items.length])
+      setRevealedIdx(idx);
+      idx++;
+      if (idx >= items.length) {
+        clearInterval(interval);
+      }
+    }, 80);
+    return () => clearInterval(interval);
+  }, [items.length]);
 
   return (
     <div
       data-slot="tron-bento-grid"
-      className={cn(
-        "grid gap-3 grid-cols-1",
-        colsMap[columns],
-        className
-      )}
+      className={cn("grid grid-cols-1 gap-3", colsMap[columns], className)}
       {...props}
     >
       {items.map((item, i) => (
@@ -83,26 +81,26 @@ export function BentoGrid({
           </div>
 
           <div className="relative">
-            {item.icon && (
+            {item.icon ? (
               <div className="mb-3 flex h-8 w-8 items-center justify-center rounded border border-primary/30 bg-primary/10 text-primary/80">
                 {item.icon}
               </div>
-            )}
-            <h3 className="font-mono text-sm font-medium uppercase tracking-wider text-foreground/90">
+            ) : null}
+            <h3 className="font-medium font-mono text-foreground/90 text-sm uppercase tracking-wider">
               {item.title}
             </h3>
-            {item.description && (
-              <p className="mt-1.5 text-xs leading-relaxed text-foreground/50">
+            {item.description ? (
+              <p className="mt-1.5 text-foreground/50 text-xs leading-relaxed">
                 {item.description}
               </p>
-            )}
+            ) : null}
           </div>
 
           {/* Corner decorations */}
-          <div className="pointer-events-none absolute left-0 top-0 h-2.5 w-2.5 border-l border-t border-primary/40 transition-all group-hover:h-3.5 group-hover:w-3.5 group-hover:border-primary/60" />
-          <div className="pointer-events-none absolute right-0 top-0 h-2.5 w-2.5 border-r border-t border-primary/40 transition-all group-hover:h-3.5 group-hover:w-3.5 group-hover:border-primary/60" />
-          <div className="pointer-events-none absolute bottom-0 left-0 h-2.5 w-2.5 border-b border-l border-primary/40 transition-all group-hover:h-3.5 group-hover:w-3.5 group-hover:border-primary/60" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-2.5 w-2.5 border-b border-r border-primary/40 transition-all group-hover:h-3.5 group-hover:w-3.5 group-hover:border-primary/60" />
+          <div className="pointer-events-none absolute top-0 left-0 h-2.5 w-2.5 border-primary/40 border-t border-l transition-all group-hover:h-3.5 group-hover:w-3.5 group-hover:border-primary/60" />
+          <div className="pointer-events-none absolute top-0 right-0 h-2.5 w-2.5 border-primary/40 border-t border-r transition-all group-hover:h-3.5 group-hover:w-3.5 group-hover:border-primary/60" />
+          <div className="pointer-events-none absolute bottom-0 left-0 h-2.5 w-2.5 border-primary/40 border-b border-l transition-all group-hover:h-3.5 group-hover:w-3.5 group-hover:border-primary/60" />
+          <div className="pointer-events-none absolute right-0 bottom-0 h-2.5 w-2.5 border-primary/40 border-r border-b transition-all group-hover:h-3.5 group-hover:w-3.5 group-hover:border-primary/60" />
         </div>
       ))}
 
@@ -113,5 +111,5 @@ export function BentoGrid({
         }
       `}</style>
     </div>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface HUDFrameProps extends React.HTMLAttributes<HTMLDivElement> {
-  label?: string
+  label?: string;
 }
 
 export function HUDFrame({
@@ -23,20 +23,20 @@ export function HUDFrame({
       {...props}
     >
       {/* Top left corner */}
-      <div className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-primary" />
+      <div className="absolute -top-px -left-px h-4 w-4 border-primary border-t-2 border-l-2" />
       {/* Top right corner */}
-      <div className="absolute -right-px -top-px h-4 w-4 border-r-2 border-t-2 border-primary" />
+      <div className="absolute -top-px -right-px h-4 w-4 border-primary border-t-2 border-r-2" />
       {/* Bottom left corner */}
-      <div className="absolute -bottom-px -left-px h-4 w-4 border-b-2 border-l-2 border-primary" />
+      <div className="absolute -bottom-px -left-px h-4 w-4 border-primary border-b-2 border-l-2" />
       {/* Bottom right corner */}
-      <div className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-primary" />
+      <div className="absolute -right-px -bottom-px h-4 w-4 border-primary border-r-2 border-b-2" />
 
       {/* Label */}
-      {label && (
-        <div className="absolute -top-3 left-4 bg-background px-2 text-[10px] uppercase tracking-widest text-primary">
+      {label ? (
+        <div className="absolute -top-3 left-4 bg-background px-2 text-[10px] text-primary uppercase tracking-widest">
           {label}
         </div>
-      )}
+      ) : null}
 
       {/* Grid pattern overlay */}
       <div
@@ -50,5 +50,5 @@ export function HUDFrame({
 
       <div className="relative p-4">{children}</div>
     </div>
-  )
+  );
 }

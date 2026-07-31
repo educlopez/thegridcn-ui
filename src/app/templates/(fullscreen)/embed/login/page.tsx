@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
 const LoginTemplate = dynamic(
   () =>
@@ -8,8 +8,8 @@ const LoginTemplate = dynamic(
       (mod) => mod.LoginTemplate
     ),
   { ssr: false }
-)
+);
 
 export default function LoginEmbedPage() {
-  return <LoginTemplate />
+  return <LoginTemplate />;
 }

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
+export { CoordinateDisplay } from "./coordinate-display";
 // Re-export all map components from their individual files
-export { MapMarker } from "./map-marker"
-export { CoordinateDisplay } from "./coordinate-display"
-export { Radar } from "./radar"
+export { MapMarker } from "./map-marker";
+export { Radar } from "./radar";

@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 // Large movie-style "ANOMALY FOUND" banner
 interface AnomalyBannerProps extends React.HTMLAttributes<HTMLDivElement> {
-  title?: string
-  subtitle?: string
-  animated?: boolean
+  animated?: boolean;
+  subtitle?: string;
+  title?: string;
 }
 
 export function AnomalyBanner({
@@ -22,7 +22,7 @@ export function AnomalyBanner({
       {/* Top line with brackets */}
       <div className="flex items-center">
         <div className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-500/50" />
-        <span className="px-4 font-mono text-[10px] tracking-[0.5em] text-amber-500/70">
+        <span className="px-4 font-mono text-[10px] text-amber-500/70 tracking-[0.5em]">
           [ ALERT ]
         </span>
         <div className="h-px flex-1 bg-gradient-to-l from-transparent to-amber-500/50" />
@@ -31,28 +31,29 @@ export function AnomalyBanner({
       {/* Main content */}
       <div className="relative my-4 overflow-hidden">
         {/* Scan line effect */}
-        {animated && (
+        {animated ? (
           <div
             className="absolute inset-0 bg-gradient-to-b from-amber-500/10 via-transparent to-transparent"
             style={{
               animation: "scan 2s linear infinite",
             }}
           />
-        )}
+        ) : null}
 
         <div className="text-center">
-          {subtitle && (
-            <div className="mb-2 font-mono text-sm tracking-[0.3em] text-amber-500/60">
+          {subtitle ? (
+            <div className="mb-2 font-mono text-amber-500/60 text-sm tracking-[0.3em]">
               {subtitle}
             </div>
-          )}
+          ) : null}
           <h2
             className={cn(
-              "font-display text-4xl font-black tracking-[0.2em] text-amber-500 md:text-5xl lg:text-6xl",
+              "font-black font-display text-4xl text-amber-500 tracking-[0.2em] md:text-5xl lg:text-6xl",
               animated && "animate-pulse"
             )}
             style={{
-              textShadow: "0 0 40px rgba(245, 158, 11, 0.5), 0 0 80px rgba(245, 158, 11, 0.3)",
+              textShadow:
+                "0 0 40px rgba(245, 158, 11, 0.5), 0 0 80px rgba(245, 158, 11, 0.3)",
             }}
           >
             {title}
@@ -64,7 +65,7 @@ export function AnomalyBanner({
       <div className="flex items-center">
         <div className="h-px flex-1 bg-gradient-to-r from-transparent to-amber-500/50" />
         <div className="mx-4 flex gap-2">
-          {[...Array(5)].map((_, i) => (
+          {[...new Array(5)].map((_, i) => (
             <div
               key={i}
               className={cn(
@@ -86,16 +87,16 @@ export function AnomalyBanner({
         }
       `}</style>
     </div>
-  )
+  );
 }
 
 // Movie-style elapsed timer with large numbers
 interface CinematicTimerProps extends React.HTMLAttributes<HTMLDivElement> {
-  hours?: number
-  minutes?: number
-  seconds?: number
-  label?: string
-  variant?: "elapsed" | "countdown" | "timestamp"
+  hours?: number;
+  label?: string;
+  minutes?: number;
+  seconds?: number;
+  variant?: "elapsed" | "countdown" | "timestamp";
 }
 
 export function CinematicTimer({
@@ -107,20 +108,20 @@ export function CinematicTimer({
   className,
   ...props
 }: CinematicTimerProps) {
-  const formatNumber = (n: number) => String(n).padStart(2, "0")
+  const formatNumber = (n: number) => String(n).padStart(2, "0");
 
   const variantColors = {
-    elapsed: "text-foreground",
     countdown: "text-red-500",
+    elapsed: "text-foreground",
     timestamp: "text-primary",
-  }
+  };
 
   return (
     <div className={cn("font-mono", className)} {...props}>
       <div className="flex items-baseline">
         <span
           className={cn(
-            "text-5xl font-light tracking-[0.1em] md:text-7xl lg:text-8xl",
+            "font-light text-5xl tracking-[0.1em] md:text-7xl lg:text-8xl",
             variantColors[variant]
           )}
           style={{
@@ -128,24 +129,24 @@ export function CinematicTimer({
               variant === "elapsed"
                 ? "0 0 30px rgba(255, 255, 255, 0.2)"
                 : variant === "countdown"
-                ? "0 0 30px rgba(239, 68, 68, 0.4)"
-                : "0 0 30px var(--primary)",
+                  ? "0 0 30px rgba(239, 68, 68, 0.4)"
+                  : "0 0 30px var(--primary)",
           }}
         >
           {formatNumber(hours)}:{formatNumber(minutes)}:{formatNumber(seconds)}
         </span>
-        <span className="ml-4 text-xl tracking-[0.3em] text-muted-foreground md:text-2xl">
+        <span className="ml-4 text-muted-foreground text-xl tracking-[0.3em] md:text-2xl">
           {label}
         </span>
       </div>
     </div>
-  )
+  );
 }
 
 // HUD corner frame overlay
 interface HUDCornerFrameProps extends React.HTMLAttributes<HTMLDivElement> {
-  position: "top-left" | "top-right" | "bottom-left" | "bottom-right"
-  size?: number
+  position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  size?: number;
 }
 
 export function HUDCornerFrame({
@@ -155,18 +156,18 @@ export function HUDCornerFrame({
   ...props
 }: HUDCornerFrameProps) {
   const positionClasses = {
-    "top-left": "top-0 left-0",
-    "top-right": "top-0 right-0",
     "bottom-left": "bottom-0 left-0",
     "bottom-right": "bottom-0 right-0",
-  }
+    "top-left": "top-0 left-0",
+    "top-right": "top-0 right-0",
+  };
 
   const borderClasses = {
-    "top-left": "border-l-2 border-t-2",
-    "top-right": "border-r-2 border-t-2",
     "bottom-left": "border-l-2 border-b-2",
     "bottom-right": "border-r-2 border-b-2",
-  }
+    "top-left": "border-l-2 border-t-2",
+    "top-right": "border-r-2 border-t-2",
+  };
 
   return (
     <div
@@ -176,18 +177,18 @@ export function HUDCornerFrame({
         borderClasses[position],
         className
       )}
-      style={{ width: size, height: size }}
+      style={{ height: size, width: size }}
       {...props}
     />
-  )
+  );
 }
 
 // Video player style progress bar with timestamp
 interface VideoProgressProps extends React.HTMLAttributes<HTMLDivElement> {
-  currentTime?: string
-  endTime?: string
-  progress?: number
-  markers?: { position: number; label: string }[]
+  currentTime?: string;
+  endTime?: string;
+  markers?: { position: number; label: string }[];
+  progress?: number;
 }
 
 export function VideoProgress({
@@ -230,13 +231,13 @@ export function VideoProgress({
         <span className="text-muted-foreground">{endTime}</span>
       </div>
     </div>
-  )
+  );
 }
 
 // Horizontal status bar with bracket decorations
 interface StatusStripProps extends React.HTMLAttributes<HTMLDivElement> {
-  items: { label: string; value: string; highlighted?: boolean }[]
-  variant?: "default" | "primary" | "accent"
+  items: { label: string; value: string; highlighted?: boolean }[];
+  variant?: "default" | "primary" | "accent";
 }
 
 export function StatusStrip({
@@ -246,10 +247,10 @@ export function StatusStrip({
   ...props
 }: StatusStripProps) {
   const variantStyles = {
+    accent: "border-amber-500/30 bg-amber-500/5",
     default: "border-border/50 bg-background/50",
     primary: "border-primary/30 bg-primary/5",
-    accent: "border-amber-500/30 bg-amber-500/5",
-  }
+  };
 
   return (
     <div
@@ -261,7 +262,10 @@ export function StatusStrip({
       {...props}
     >
       {items.map((item, i) => (
-        <div key={i} className="flex items-center gap-2 font-mono text-[10px] tracking-widest">
+        <div
+          key={i}
+          className="flex items-center gap-2 font-mono text-[10px] tracking-widest"
+        >
           <span className="text-muted-foreground">{item.label}:</span>
           <span
             className={cn(
@@ -273,15 +277,15 @@ export function StatusStrip({
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 // Floating data panel like in the movie analysis view
 interface FloatingPanelProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
-  subtitle?: string
-  position?: "left" | "right"
-  data?: { label: string; value: string }[]
+  data?: { label: string; value: string }[];
+  position?: "left" | "right";
+  subtitle?: string;
+  title: string;
 }
 
 export function FloatingPanel({
@@ -303,17 +307,23 @@ export function FloatingPanel({
       {...props}
     >
       {/* Corner decorations */}
-      <HUDCornerFrame position={position === "left" ? "top-left" : "top-right"} size={16} />
-      <HUDCornerFrame position={position === "left" ? "bottom-left" : "bottom-right"} size={16} />
+      <HUDCornerFrame
+        position={position === "left" ? "top-left" : "top-right"}
+        size={16}
+      />
+      <HUDCornerFrame
+        position={position === "left" ? "bottom-left" : "bottom-right"}
+        size={16}
+      />
 
       {/* Header */}
-      <div className="border-b border-primary/20 px-4 py-2">
-        {subtitle && (
-          <div className="font-mono text-[9px] tracking-[0.3em] text-muted-foreground">
+      <div className="border-primary/20 border-b px-4 py-2">
+        {subtitle ? (
+          <div className="font-mono text-[9px] text-muted-foreground tracking-[0.3em]">
             {subtitle}
           </div>
-        )}
-        <div className="font-mono text-sm font-bold tracking-wider text-primary">
+        ) : null}
+        <div className="font-bold font-mono text-primary text-sm tracking-wider">
           {title}
         </div>
       </div>
@@ -329,7 +339,9 @@ export function FloatingPanel({
                 position === "right" && "flex-row-reverse"
               )}
             >
-              <span className="tracking-widest text-muted-foreground">{item.label}</span>
+              <span className="text-muted-foreground tracking-widest">
+                {item.label}
+              </span>
               <span className="text-foreground">{item.value}</span>
             </div>
           ))}
@@ -337,7 +349,7 @@ export function FloatingPanel({
       )}
 
       {/* Custom content */}
-      {children && <div className="p-4 pt-0">{children}</div>}
+      {children ? <div className="p-4 pt-0">{children}</div> : null}
 
       {/* Bottom accent line */}
       <div
@@ -347,7 +359,7 @@ export function FloatingPanel({
         )}
       />
     </div>
-  )
+  );
 }
 
 // Grid scan overlay effect
@@ -357,14 +369,18 @@ export function GridScanOverlay({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)}
+      className={cn(
+        "pointer-events-none absolute inset-0 overflow-hidden",
+        className
+      )}
       {...props}
     >
       {/* Horizontal scan lines */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
+          backgroundImage:
+            "repeating-linear-gradient(0deg, var(--primary), var(--primary) 1px, transparent 1px, transparent 3px)",
         }}
       />
 
@@ -393,15 +409,15 @@ export function GridScanOverlay({
         }
       `}</style>
     </div>
-  )
+  );
 }
 
 // Movie-style coordinate/location display
 interface LocationDisplayProps extends React.HTMLAttributes<HTMLDivElement> {
-  sector?: string
-  grid?: string
-  coordinates?: string
-  status?: string
+  coordinates?: string;
+  grid?: string;
+  sector?: string;
+  status?: string;
 }
 
 export function LocationDisplay({
@@ -413,7 +429,10 @@ export function LocationDisplay({
   ...props
 }: LocationDisplayProps) {
   return (
-    <div className={cn("font-mono text-[10px] tracking-widest", className)} {...props}>
+    <div
+      className={cn("font-mono text-[10px] tracking-widest", className)}
+      {...props}
+    >
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
           <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-500" />
@@ -427,5 +446,5 @@ export function LocationDisplay({
         <span className="text-green-500">{status}</span>
       </div>
     </div>
-  )
+  );
 }

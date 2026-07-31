@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: "default" | "success" | "warning" | "danger" | "outline"
-  size?: "sm" | "md"
-  dot?: boolean
-  pulse?: boolean
+  dot?: boolean;
+  pulse?: boolean;
+  size?: "sm" | "md";
+  variant?: "default" | "success" | "warning" | "danger" | "outline";
 }
 
 export function Badge({
@@ -20,20 +20,20 @@ export function Badge({
   ...props
 }: BadgeProps) {
   const variants: Record<string, string> = {
+    danger: "border-red-500/30 bg-red-500/10 text-red-400",
     default: "border-primary/30 bg-primary/10 text-primary",
+    outline: "border-primary/20 bg-transparent text-foreground/50",
     success: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
     warning: "border-amber-500/30 bg-amber-500/10 text-amber-400",
-    danger: "border-red-500/30 bg-red-500/10 text-red-400",
-    outline: "border-primary/20 bg-transparent text-foreground/50",
-  }
+  };
 
   const dotColors: Record<string, string> = {
+    danger: "bg-red-400",
     default: "bg-primary",
+    outline: "bg-foreground/40",
     success: "bg-emerald-400",
     warning: "bg-amber-400",
-    danger: "bg-red-400",
-    outline: "bg-foreground/40",
-  }
+  };
 
   return (
     <span
@@ -46,18 +46,25 @@ export function Badge({
       )}
       {...props}
     >
-      {dot && (
+      {dot ? (
         <span className="relative flex h-1.5 w-1.5">
-          {pulse && (
-            <span className={cn(
-              "absolute inline-flex h-full w-full animate-ping rounded-full opacity-75",
+          {pulse ? (
+            <span
+              className={cn(
+                "absolute inline-flex h-full w-full animate-ping rounded-full opacity-75",
+                dotColors[variant]
+              )}
+            />
+          ) : null}
+          <span
+            className={cn(
+              "relative inline-flex h-1.5 w-1.5 rounded-full",
               dotColors[variant]
-            )} />
-          )}
-          <span className={cn("relative inline-flex h-1.5 w-1.5 rounded-full", dotColors[variant])} />
+            )}
+          />
         </span>
-      )}
+      ) : null}
       {children}
     </span>
-  )
+  );
 }

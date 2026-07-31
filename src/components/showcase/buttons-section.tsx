@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Toggle } from "@/components/ui/toggle"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import {
+  Bold,
+  ChevronDown,
+  Download,
+  Italic,
+  Loader2,
+  Mail,
+  Underline,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,9 +17,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { SectionWrapper, ComponentCard } from "./section-wrapper"
-import { Bold, Italic, Underline, ChevronDown, Loader2, Mail, Download } from "lucide-react"
+} from "@/components/ui/dropdown-menu";
+import { Toggle } from "@/components/ui/toggle";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ComponentCard, SectionWrapper } from "./section-wrapper";
 
 export function ButtonsSection() {
   return (
@@ -23,9 +31,15 @@ export function ButtonsSection() {
       <ComponentCard title="Button Variants">
         <div className="flex flex-wrap gap-4">
           <Button className="btn-glow">Default</Button>
-          <Button variant="secondary" className="btn-glow">Secondary</Button>
-          <Button variant="destructive" className="btn-glow">Destructive</Button>
-          <Button variant="outline" className="btn-glow">Outline</Button>
+          <Button variant="secondary" className="btn-glow">
+            Secondary
+          </Button>
+          <Button variant="destructive" className="btn-glow">
+            Destructive
+          </Button>
+          <Button variant="outline" className="btn-glow">
+            Outline
+          </Button>
           <Button variant="ghost">Ghost</Button>
           <Button variant="link">Link</Button>
         </div>
@@ -33,9 +47,15 @@ export function ButtonsSection() {
 
       <ComponentCard title="Button Sizes">
         <div className="flex flex-wrap items-center gap-4">
-          <Button size="lg" className="btn-glow">Large</Button>
-          <Button size="default" className="btn-glow">Default</Button>
-          <Button size="sm" className="btn-glow">Small</Button>
+          <Button size="lg" className="btn-glow">
+            Large
+          </Button>
+          <Button size="default" className="btn-glow">
+            Default
+          </Button>
+          <Button size="sm" className="btn-glow">
+            Small
+          </Button>
           <Button size="icon" className="btn-glow">
             <Mail className="h-4 w-4" />
           </Button>
@@ -116,5 +136,5 @@ export function ButtonsSection() {
         </DropdownMenu>
       </ComponentCard>
     </SectionWrapper>
-  )
+  );
 }

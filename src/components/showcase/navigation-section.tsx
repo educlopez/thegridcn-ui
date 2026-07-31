@@ -1,7 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import type * as React from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,25 +8,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/breadcrumb";
 import {
   Menubar,
   MenubarContent,
@@ -36,9 +17,28 @@ import {
   MenubarSeparator,
   MenubarShortcut,
   MenubarTrigger,
-} from "@/components/ui/menubar"
-import { SectionWrapper, ComponentCard } from "./section-wrapper"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/menubar";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
+import { ComponentCard, SectionWrapper } from "./section-wrapper";
 
 export function NavigationSection() {
   return (
@@ -53,21 +53,30 @@ export function NavigationSection() {
             <TabsTrigger value="programs">Programs</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
-          <TabsContent value="overview" className="rounded-lg border border-border p-4">
+          <TabsContent
+            value="overview"
+            className="rounded-lg border border-border p-4"
+          >
             <h4 className="font-semibold">Grid Overview</h4>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Monitor system status and active programs in real-time.
             </p>
           </TabsContent>
-          <TabsContent value="programs" className="rounded-lg border border-border p-4">
+          <TabsContent
+            value="programs"
+            className="rounded-lg border border-border p-4"
+          >
             <h4 className="font-semibold">Program Management</h4>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               View and manage all programs running on the Grid.
             </p>
           </TabsContent>
-          <TabsContent value="settings" className="rounded-lg border border-border p-4">
+          <TabsContent
+            value="settings"
+            className="rounded-lg border border-border p-4"
+          >
             <h4 className="font-semibold">System Settings</h4>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Configure Grid parameters and user preferences.
             </p>
           </TabsContent>
@@ -154,8 +163,8 @@ export function NavigationSection() {
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/20 to-primary/5 p-6 no-underline outline-none focus:shadow-md"
                         href="#"
                       >
-                        <div className="mb-2 text-lg font-medium">Tron</div>
-                        <p className="text-sm leading-tight text-muted-foreground">
+                        <div className="mb-2 font-medium text-lg">Tron</div>
+                        <p className="text-muted-foreground text-sm leading-tight">
                           Security program. Fights for the users.
                         </p>
                       </a>
@@ -193,7 +202,10 @@ export function NavigationSection() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()} href="#">
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                href="#"
+              >
                 Documentation
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -252,31 +264,34 @@ export function NavigationSection() {
         </Menubar>
       </ComponentCard>
     </SectionWrapper>
-  )
+  );
 }
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a"> & { title: string }
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
+const ListItem = ({
+  className,
+  title,
+  children,
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<"a"> & { title: string } & {
+  ref?: React.RefObject<React.ElementRef<"a"> | null>;
+}) => (
+  <li>
+    <NavigationMenuLink asChild>
+      <a
+        ref={ref}
+        className={cn(
+          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+          className
+        )}
+        {...props}
+      >
+        <div className="font-medium text-sm leading-none">{title}</div>
+        <p className="line-clamp-2 text-muted-foreground text-sm leading-snug">
+          {children}
+        </p>
+      </a>
+    </NavigationMenuLink>
+  </li>
+);
+ListItem.displayName = "ListItem";

@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 interface SpeedIndicatorProps {
-  speed: number
-  maxSpeed?: number
-  className?: string
+  className?: string;
+  maxSpeed?: number;
+  speed: number;
 }
 
 export function SpeedIndicator({
@@ -15,9 +15,9 @@ export function SpeedIndicator({
 }: SpeedIndicatorProps) {
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <span className="font-mono text-3xl font-bold text-primary">{speed}</span>
+      <span className="font-bold font-mono text-3xl text-primary">{speed}</span>
       <div className="flex flex-col">
-        <span className="text-[10px] uppercase tracking-widest text-foreground/80">
+        <span className="text-[10px] text-foreground/80 uppercase tracking-widest">
           KM/H
         </span>
         <div className="h-1 w-16 overflow-hidden rounded-full bg-muted">
@@ -28,5 +28,5 @@ export function SpeedIndicator({
         </div>
       </div>
     </div>
-  )
+  );
 }

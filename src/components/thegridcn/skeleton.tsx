@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "text" | "circular" | "rectangular" | "card"
-  width?: number | string
-  height?: number | string
-  lines?: number
+  height?: number | string;
+  lines?: number;
+  variant?: "text" | "circular" | "rectangular" | "card";
+  width?: number | string;
 }
 
 export function Skeleton({
@@ -26,7 +26,7 @@ export function Skeleton({
           "relative overflow-hidden rounded border border-primary/15 bg-card/50 p-4",
           className
         )}
-        style={{ width, height }}
+        style={{ height, width }}
         {...props}
       >
         {/* Sweep animation */}
@@ -51,11 +51,11 @@ export function Skeleton({
           }
         `}</style>
       </div>
-    )
+    );
   }
 
   if (variant === "circular") {
-    const dim = typeof width === "number" ? width : 40
+    const dim = typeof width === "number" ? width : 40;
     return (
       <div
         data-slot="tron-skeleton"
@@ -63,7 +63,7 @@ export function Skeleton({
           "relative overflow-hidden rounded-full border border-primary/15 bg-primary/5",
           className
         )}
-        style={{ width: dim, height: dim }}
+        style={{ height: dim, width: dim }}
         {...props}
       >
         <div
@@ -79,7 +79,7 @@ export function Skeleton({
           }
         `}</style>
       </div>
-    )
+    );
   }
 
   if (variant === "rectangular") {
@@ -90,7 +90,7 @@ export function Skeleton({
           "relative overflow-hidden rounded border border-primary/15 bg-primary/5",
           className
         )}
-        style={{ width: width || "100%", height: height || 80 }}
+        style={{ height: height || 80, width: width || "100%" }}
         {...props}
       >
         <div
@@ -106,7 +106,7 @@ export function Skeleton({
           }
         `}</style>
       </div>
-    )
+    );
   }
 
   // Text variant
@@ -129,7 +129,7 @@ export function Skeleton({
           <div
             className="pointer-events-none absolute inset-0"
             style={{
-              animation: `skeletonSweep 2s ease-in-out infinite`,
+              animation: "skeletonSweep 2s ease-in-out infinite",
               animationDelay: `${i * 100}ms`,
             }}
           >
@@ -144,5 +144,5 @@ export function Skeleton({
         }
       `}</style>
     </div>
-  )
+  );
 }

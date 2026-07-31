@@ -1,50 +1,61 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface DropdownItem {
-  label: string
-  icon?: React.ReactNode
-  shortcut?: string
-  onSelect?: () => void
-  disabled?: boolean
-  variant?: "default" | "danger"
-  separator?: boolean
+  disabled?: boolean;
+  icon?: React.ReactNode;
+  label: string;
+  onSelect?: () => void;
+  separator?: boolean;
+  shortcut?: string;
+  variant?: "default" | "danger";
 }
 
 interface DropdownProps {
-  items: DropdownItem[]
-  align?: "left" | "right"
-  children: React.ReactNode
-  className?: string
+  align?: "left" | "right";
+  children: React.ReactNode;
+  className?: string;
+  items: DropdownItem[];
 }
 
-export function Dropdown({ items, align = "left", children, className }: DropdownProps) {
-  const [open, setOpen] = React.useState(false)
-  const ref = React.useRef<HTMLDivElement>(null)
+export function Dropdown({
+  items,
+  align = "left",
+  children,
+  className,
+}: DropdownProps) {
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
 
   // Close on outside click
   React.useEffect(() => {
-    if (!open) return
+    if (!open) {
+      return;
+    }
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false)
+        setOpen(false);
       }
-    }
-    document.addEventListener("mousedown", handler)
-    return () => document.removeEventListener("mousedown", handler)
-  }, [open])
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
 
   // Close on Escape
   React.useEffect(() => {
-    if (!open) return
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false)
+    if (!open) {
+      return;
     }
-    window.addEventListener("keydown", handler)
-    return () => window.removeEventListener("keydown", handler)
-  }, [open])
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [open]);
 
   return (
     <div ref={ref} className={cn("relative inline-block", className)}>
@@ -52,7 +63,7 @@ export function Dropdown({ items, align = "left", children, className }: Dropdow
         {children}
       </div>
 
-      {open && (
+      {open ? (
         <div
           data-slot="tron-dropdown"
           className={cn(
@@ -65,15 +76,15 @@ export function Dropdown({ items, align = "left", children, className }: Dropdow
 
           {items.map((item, i) =>
             item.separator ? (
-              <div key={i} className="my-1 border-t border-primary/15" />
+              <div key={i} className="my-1 border-primary/15 border-t" />
             ) : (
               <button
                 key={i}
                 type="button"
                 disabled={item.disabled}
                 onClick={() => {
-                  item.onSelect?.()
-                  setOpen(false)
+                  item.onSelect?.();
+                  setOpen(false);
                 }}
                 className={cn(
                   "relative flex w-full items-center gap-2.5 px-3 py-1.5 text-left font-mono text-[10px] uppercase tracking-widest transition-colors",
@@ -83,28 +94,28 @@ export function Dropdown({ items, align = "left", children, className }: Dropdow
                     : "text-foreground/60 hover:bg-primary/10 hover:text-primary"
                 )}
               >
-                {item.icon && (
+                {item.icon ? (
                   <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center text-foreground/30">
                     {item.icon}
                   </span>
-                )}
+                ) : null}
                 <span className="flex-1">{item.label}</span>
-                {item.shortcut && (
+                {item.shortcut ? (
                   <kbd className="rounded border border-primary/15 bg-primary/5 px-1 py-0.5 text-[8px] text-foreground/25">
                     {item.shortcut}
                   </kbd>
-                )}
+                ) : null}
               </button>
             )
           )}
 
           {/* Corner decorations */}
-          <div className="pointer-events-none absolute left-0 top-0 h-2 w-2 border-l border-t border-primary/40" />
-          <div className="pointer-events-none absolute right-0 top-0 h-2 w-2 border-r border-t border-primary/40" />
-          <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-b border-l border-primary/40" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-2 w-2 border-b border-r border-primary/40" />
+          <div className="pointer-events-none absolute top-0 left-0 h-2 w-2 border-primary/40 border-t border-l" />
+          <div className="pointer-events-none absolute top-0 right-0 h-2 w-2 border-primary/40 border-t border-r" />
+          <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-primary/40 border-b border-l" />
+          <div className="pointer-events-none absolute right-0 bottom-0 h-2 w-2 border-primary/40 border-r border-b" />
         </div>
-      )}
+      ) : null}
     </div>
-  )
+  );
 }

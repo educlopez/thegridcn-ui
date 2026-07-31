@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
 import {
   Carousel,
+  type CarouselApi,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
   CarouselNext,
-  type CarouselApi,
-} from "@/components/ui/carousel"
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 
 interface TronCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
-  items: React.ReactNode[]
-  autoPlay?: boolean
-  interval?: number
-  showDots?: boolean
-  showArrows?: boolean
-  orientation?: "horizontal" | "vertical"
-  loop?: boolean
+  autoPlay?: boolean;
+  interval?: number;
+  items: React.ReactNode[];
+  loop?: boolean;
+  orientation?: "horizontal" | "vertical";
+  showArrows?: boolean;
+  showDots?: boolean;
 }
 
 export function TronCarousel({
@@ -32,35 +32,39 @@ export function TronCarousel({
   className,
   ...props
 }: TronCarouselProps) {
-  const [api, setApi] = React.useState<CarouselApi>()
-  const [current, setCurrent] = React.useState(0)
-  const [count, setCount] = React.useState(0)
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
-    if (!api) return
+    if (!api) {
+      return;
+    }
 
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap())
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
 
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap())
-    })
-  }, [api])
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   // Auto-play logic
   React.useEffect(() => {
-    if (!autoPlay || !api) return
+    if (!(autoPlay && api)) {
+      return;
+    }
 
     const timer = setInterval(() => {
       if (api.canScrollNext()) {
-        api.scrollNext()
+        api.scrollNext();
       } else {
-        api.scrollTo(0)
+        api.scrollTo(0);
       }
-    }, interval)
+    }, interval);
 
-    return () => clearInterval(timer)
-  }, [api, autoPlay, interval])
+    return () => clearInterval(timer);
+  }, [api, autoPlay, interval]);
 
   return (
     <div
@@ -74,11 +78,12 @@ export function TronCarousel({
         <div className="pointer-events-none absolute inset-0 z-10 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
         {/* Top accent line */}
-        <div className="absolute top-0 left-0 right-0 z-10 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+        <div className="absolute top-0 right-0 left-0 z-10 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
         {/* Slide counter label */}
-        <div className="absolute top-2 right-3 z-20 font-mono text-[9px] uppercase tracking-widest text-foreground/30">
-          {String(current + 1).padStart(2, "0")}/{String(count).padStart(2, "0")}
+        <div className="absolute top-2 right-3 z-20 font-mono text-[9px] text-foreground/30 uppercase tracking-widest">
+          {String(current + 1).padStart(2, "0")}/
+          {String(count).padStart(2, "0")}
         </div>
 
         <Carousel
@@ -95,7 +100,7 @@ export function TronCarousel({
             ))}
           </CarouselContent>
 
-          {showArrows && (
+          {showArrows ? (
             <>
               <CarouselPrevious
                 className={cn(
@@ -118,17 +123,17 @@ export function TronCarousel({
                 )}
               />
             </>
-          )}
+          ) : null}
         </Carousel>
 
         {/* Bottom accent line */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+        <div className="absolute right-0 bottom-0 left-0 z-10 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
         {/* Corner decorations */}
-        <div className="pointer-events-none absolute left-0 top-0 z-10 h-3 w-3 border-l-2 border-t-2 border-primary/30 transition-colors duration-300 group-hover/carousel:border-primary/60" />
-        <div className="pointer-events-none absolute right-0 top-0 z-10 h-3 w-3 border-r-2 border-t-2 border-primary/30 transition-colors duration-300 group-hover/carousel:border-primary/60" />
-        <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-3 w-3 border-b-2 border-l-2 border-primary/30 transition-colors duration-300 group-hover/carousel:border-primary/60" />
-        <div className="pointer-events-none absolute bottom-0 right-0 z-10 h-3 w-3 border-b-2 border-r-2 border-primary/30 transition-colors duration-300 group-hover/carousel:border-primary/60" />
+        <div className="pointer-events-none absolute top-0 left-0 z-10 h-3 w-3 border-primary/30 border-t-2 border-l-2 transition-colors duration-300 group-hover/carousel:border-primary/60" />
+        <div className="pointer-events-none absolute top-0 right-0 z-10 h-3 w-3 border-primary/30 border-t-2 border-r-2 transition-colors duration-300 group-hover/carousel:border-primary/60" />
+        <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-3 w-3 border-primary/30 border-b-2 border-l-2 transition-colors duration-300 group-hover/carousel:border-primary/60" />
+        <div className="pointer-events-none absolute right-0 bottom-0 z-10 h-3 w-3 border-primary/30 border-r-2 border-b-2 transition-colors duration-300 group-hover/carousel:border-primary/60" />
       </div>
 
       {/* Dot indicators */}
@@ -153,7 +158,7 @@ export function TronCarousel({
       )}
 
       {/* Bottom glow */}
-      <div className="pointer-events-none absolute -bottom-4 left-1/4 right-1/4 h-8 rounded-full bg-primary/5 opacity-0 blur-xl transition-opacity duration-500 group-hover/carousel:opacity-100" />
+      <div className="pointer-events-none absolute right-1/4 -bottom-4 left-1/4 h-8 rounded-full bg-primary/5 opacity-0 blur-xl transition-opacity duration-500 group-hover/carousel:opacity-100" />
     </div>
-  )
+  );
 }

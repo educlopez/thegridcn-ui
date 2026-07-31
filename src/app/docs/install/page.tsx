@@ -1,42 +1,42 @@
-import type { Metadata } from "next"
-import { DocShell } from "@/components/docs/doc-shell"
-import { ProseDoc } from "@/components/docs/prose-doc"
-import { renderMarkdownFile } from "@/lib/markdown"
+import type { Metadata } from "next";
+import { DocShell } from "@/components/docs/doc-shell";
+import { ProseDoc } from "@/components/docs/prose-doc";
+import { renderMarkdownFile } from "@/lib/markdown";
 
-export const dynamic = "force-static"
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Install Guide | The Gridcn",
-  description:
-    "Install thegridcn components, themes, and tokens via the shadcn CLI. Works with Next.js, Vite, Remix and any React project.",
-  openGraph: {
-    type: "article",
-    title: "Install Guide | The Gridcn",
-    description:
-      "Install thegridcn components, themes, and tokens via the shadcn CLI.",
-    url: "https://thegridcn.com/docs/install",
-    siteName: "The Gridcn",
-    images: [{ url: "/api/og/tron", width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Install Guide | The Gridcn",
-    description:
-      "Install thegridcn components, themes, and tokens via the shadcn CLI.",
-    images: ["/api/og/tron"],
-  },
   alternates: {
     canonical: "https://thegridcn.com/docs/install",
   },
-}
+  description:
+    "Install thegridcn components, themes, and tokens via the shadcn CLI. Works with Next.js, Vite, Remix and any React project.",
+  openGraph: {
+    description:
+      "Install thegridcn components, themes, and tokens via the shadcn CLI.",
+    images: [{ height: 630, url: "/api/og/tron", width: 1200 }],
+    siteName: "The Gridcn",
+    title: "Install Guide | The Gridcn",
+    type: "article",
+    url: "https://thegridcn.com/docs/install",
+  },
+  title: "Install Guide | The Gridcn",
+  twitter: {
+    card: "summary_large_image",
+    description:
+      "Install thegridcn components, themes, and tokens via the shadcn CLI.",
+    images: ["/api/og/tron"],
+    title: "Install Guide | The Gridcn",
+  },
+};
 
 export default async function InstallPage() {
-  const html = await renderMarkdownFile("docs/install.md")
+  const html = await renderMarkdownFile("docs/install.md");
 
   return (
     <DocShell
       crumbs={[
-        { label: "Home", href: "/" },
+        { href: "/", label: "Home" },
         { label: "Docs" },
         { label: "Install" },
       ]}
@@ -45,5 +45,5 @@ export default async function InstallPage() {
     >
       <ProseDoc html={html} />
     </DocShell>
-  )
+  );
 }

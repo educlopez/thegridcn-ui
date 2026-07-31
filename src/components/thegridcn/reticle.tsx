@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface ReticleProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: number
-  animated?: boolean
-  variant?: "default" | "locked" | "scanning"
+  animated?: boolean;
+  size?: number;
+  variant?: "default" | "locked" | "scanning";
 }
 
 export function Reticle({
@@ -20,15 +20,16 @@ export function Reticle({
     default: "stroke-primary",
     locked: "stroke-red-500",
     scanning: "stroke-amber-500",
-  }
+  };
 
   return (
     <div
       className={cn("relative", className)}
-      style={{ width: size, height: size }}
+      style={{ height: size, width: size }}
       {...props}
     >
       <svg
+        aria-hidden="true"
         viewBox="0 0 100 100"
         className={cn(
           "h-full w-full",
@@ -130,6 +131,7 @@ export function Reticle({
       {/* Rotating ring for scanning */}
       {animated && variant === "scanning" && (
         <svg
+          aria-hidden="true"
           viewBox="0 0 100 100"
           className="absolute inset-0 h-full w-full animate-spin"
           style={{ animationDuration: "3s" }}
@@ -146,5 +148,5 @@ export function Reticle({
         </svg>
       )}
     </div>
-  )
+  );
 }

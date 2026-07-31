@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 export interface TimelineBarProps extends React.HTMLAttributes<HTMLDivElement> {
-  markers: { id: string; position: number; active?: boolean }[]
-  progress: number
-  leftLabel?: string
-  rightLabel?: string
+  leftLabel?: string;
+  markers: { id: string; position: number; active?: boolean }[];
+  progress: number;
+  rightLabel?: string;
 }
 
 export function TimelineBar({
@@ -24,7 +24,7 @@ export function TimelineBar({
       <div className="relative h-6 border border-border/50 bg-card/30">
         {/* Progress fill */}
         <div
-          className="absolute left-0 top-0 h-full bg-primary/20"
+          className="absolute top-0 left-0 h-full bg-primary/20"
           style={{ width: `${progress}%` }}
         />
 
@@ -61,5 +61,5 @@ export function TimelineBar({
         <span>{rightLabel}</span>
       </div>
     </div>
-  )
+  );
 }

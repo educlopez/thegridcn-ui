@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -12,14 +12,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 
 export const InputPreview = React.memo(function InputPreview() {
   return (
-    <div className="space-y-4 max-w-md">
+    <div className="max-w-md space-y-4">
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
         <Input id="name" placeholder="Enter your name" />
@@ -38,7 +37,7 @@ export const InputPreview = React.memo(function InputPreview() {
 
 export const TextareaPreview = React.memo(function TextareaPreview() {
   return (
-    <div className="space-y-4 max-w-md">
+    <div className="max-w-md space-y-4">
       <div className="space-y-2">
         <Label htmlFor="comments">Comments</Label>
         <Textarea id="comments" placeholder="Add any additional comments" />
@@ -49,7 +48,7 @@ export const TextareaPreview = React.memo(function TextareaPreview() {
 
 export const SelectPreview = React.memo(function SelectPreview() {
   return (
-    <div className="space-y-4 max-w-md">
+    <div className="max-w-md space-y-4">
       <div className="space-y-2">
         <Label htmlFor="role">Role</Label>
         <Select>
@@ -69,7 +68,7 @@ export const SelectPreview = React.memo(function SelectPreview() {
 
 export const RadioGroupPreview = React.memo(function RadioGroupPreview() {
   return (
-    <div className="space-y-4 max-w-md">
+    <div className="max-w-md space-y-4">
       <RadioGroup defaultValue="option-one">
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="option-one" id="option-one" />
@@ -86,7 +85,7 @@ export const RadioGroupPreview = React.memo(function RadioGroupPreview() {
 
 export const SliderPreview = React.memo(function SliderPreview() {
   return (
-    <div className="space-y-4 w-full max-w-md">
+    <div className="w-full max-w-md space-y-4">
       <Slider defaultValue={[50]} max={100} step={1} />
     </div>
   );
@@ -119,11 +118,11 @@ export const SwitchPreview = React.memo(function SwitchPreview() {
 });
 
 export const formPreviews: Record<string, React.ComponentType> = {
-  "input": InputPreview,
-  "textarea": TextareaPreview,
-  "select": SelectPreview,
+  checkbox: CheckboxPreview,
+  input: InputPreview,
   "radio-group": RadioGroupPreview,
-  "slider": SliderPreview,
-  "checkbox": CheckboxPreview,
-  "switch": SwitchPreview,
+  select: SelectPreview,
+  slider: SliderPreview,
+  switch: SwitchPreview,
+  textarea: TextareaPreview,
 };

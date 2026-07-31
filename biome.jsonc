@@ -1,0 +1,184 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.6/schema.json",
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/next",
+    "ultracite/biome/vitest"
+  ],
+  "assist": {
+    "actions": {
+      "source": {
+        "useSortedAttributes": "off"
+      }
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": ["**/*", "!src/components/ui", "!public/r"]
+  },
+  "linter": {
+    "rules": {
+      "complexity": {
+        // Showcase pages render every component variant in one pass
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": { "maxAllowedComplexity": 40 }
+        }
+      },
+      "performance": {
+        // index.ts barrels are the public surface of each component folder
+        "noBarrelFile": "off",
+        // The registry scanner walks files one at a time on purpose
+        "noAwaitInLoops": "off",
+        // `import * as THREE` and `import * as React` are the documented forms
+        "noNamespaceImport": "off",
+        // Inline handlers inside .map() are idiomatic React; hoisting each one
+        // would mean a component per row
+        "noJsxPropsBind": "off",
+        // Regexes live next to the parsing code that uses them
+        "useTopLevelRegex": "off"
+      },
+      "style": {
+        // Classic for loops over grid cells and animation frames
+        "noIncrementDecrement": "off",
+        // Conditional rendering in showcase cards
+        "noNestedTernary": "off"
+      },
+      "security": {
+        // Only used for JSON-LD structured data and Shiki-highlighted markup
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "suspicious": {
+        // Static demo/preset grids rendered from fixed-length arrays
+        "noArrayIndexKey": "off",
+        // `React.memo(function SameName() {})` is the standard naming pattern
+        // so DevTools shows the component name
+        "noShadow": "off",
+        // Flags `if (!ref.current)` guards as always truthy — it doesn't model
+        // mutable refs, and removing those guards breaks the code
+        "noUnnecessaryConditions": "off"
+      }
+    }
+  },
+  "overrides": [
+    {
+      // Preview files are inert demos: empty handlers stand in for real ones
+      "includes": [
+        "src/components/components-page/previews/**",
+        "src/components/showcase/**",
+        "src/components/thegridcn/templates/**"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": {
+            // Static template demos: the links go nowhere on purpose
+            "useValidAnchor": "off"
+          },
+          "complexity": { "noForEach": "off" },
+          "suspicious": { "noEmptyBlockStatements": "off" }
+        }
+      }
+    },
+    {
+      // The registry stores component source code as strings, so the `${...}`
+      // inside those strings belong to the emitted code, not to this file
+      "includes": ["src/registry/**"],
+      "linter": {
+        "rules": {
+          "suspicious": { "noTemplateCurlyInString": "off" }
+        }
+      }
+    },
+    {
+      // Avatars and testimonial photos are remote URLs of unknown size
+      "includes": [
+        "src/components/thegridcn/avatar-group.tsx",
+        "src/components/thegridcn/identity-disc.tsx",
+        "src/components/thegridcn/testimonial-card.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": { "useImageSize": "off" },
+          "performance": { "noImgElement": "off" }
+        }
+      }
+    },
+    {
+      // The light-cycle game is a tight simulation loop
+      "includes": [
+        "src/components/thegridcn/light-cycle-engine.ts",
+        "src/components/thegridcn/light-cycle-game.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "complexity": { "noExcessiveCognitiveComplexity": "off" }
+        }
+      }
+    },
+    {
+      // Markdown helpers and build scripts are async by contract
+      "includes": ["src/lib/markdown.ts", "scripts/**", "src/registry/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "useAwait": "off",
+            "noEmptyBlockStatements": "off"
+          }
+        }
+      }
+    },
+    {
+      // Deterministic PRNG (mulberry32) — bitwise maths is the algorithm
+      "includes": ["src/components/thegridcn/agent-avatar.tsx"],
+      "linter": {
+        "rules": {
+          "suspicious": { "noBitwiseOperators": "off" }
+        }
+      }
+    },
+    {
+      // Pointer-driven widgets: drag-and-drop board, modal backdrop, tag input
+      // chips. Keyboard parity for dragging is separate work.
+      "includes": [
+        "src/components/thegridcn/**",
+        "src/components/layout/**",
+        "src/app/page.tsx",
+        "src/app/components/page.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noNoninteractiveElementInteractions": "off",
+            "noStaticElementInteractions": "off",
+            "useKeyWithClickEvents": "off",
+            // Chips render a remove affordance inside an already-interactive
+            // element, so they cannot nest a real <button>
+            "useSemanticElements": "off",
+            // The waveform drives its own transport UI; captions do not apply
+            // to the decorative audio element
+            "useMediaCaption": "off"
+          }
+        }
+      }
+    },
+    {
+      // react-three-fiber renders Three.js objects, not DOM elements, so its
+      // props (uniforms, vertexShader, args, position…) are not DOM attributes
+      "includes": [
+        "src/components/thegridcn/**",
+        "src/components/website/**",
+        "src/app/game/**"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": { "noUnknownAttribute": "off" }
+        }
+      }
+    }
+  ]
+}

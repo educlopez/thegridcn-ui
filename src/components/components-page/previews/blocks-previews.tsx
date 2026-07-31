@@ -2,16 +2,6 @@
 
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Card,
   CardContent,
@@ -20,19 +10,29 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 export const CardFormPreview = React.memo(function CardFormPreview() {
   return (
-    <div className="space-y-4 max-w-2xl">
+    <div className="max-w-2xl space-y-4">
       <Card>
-        <div className="aspect-video w-full bg-muted/30 rounded-t-lg" />
+        <div className="aspect-video w-full rounded-t-lg bg-muted/30" />
         <CardHeader>
           <CardTitle>Observability Plus is replacing Monitoring</CardTitle>
           <CardDescription>
             Switch to the improved way to explore your data, with natural
-            language. Monitoring will no longer be available on the Pro plan
-            in November, 2025.
+            language. Monitoring will no longer be available on the Pro plan in
+            November, 2025.
           </CardDescription>
         </CardHeader>
         <CardFooter className="flex justify-between">
@@ -48,13 +48,11 @@ export const CardFormPreview = React.memo(function CardFormPreview() {
 
 export const FormPreview = React.memo(function FormPreview() {
   return (
-    <div className="space-y-4 max-w-2xl">
+    <div className="max-w-2xl space-y-4">
       <Card>
         <CardHeader>
           <CardTitle>User Information</CardTitle>
-          <CardDescription>
-            Please fill in your details below
-          </CardDescription>
+          <CardDescription>Please fill in your details below</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -89,10 +87,7 @@ export const FormPreview = React.memo(function FormPreview() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="comments">Comments</Label>
-            <Textarea
-              id="comments"
-              placeholder="Add any additional comments"
-            />
+            <Textarea id="comments" placeholder="Add any additional comments" />
           </div>
         </CardContent>
         <CardFooter className="flex gap-2">
@@ -106,7 +101,7 @@ export const FormPreview = React.memo(function FormPreview() {
 
 export const ComplexFormPreview = React.memo(function ComplexFormPreview() {
   return (
-    <div className="space-y-4 max-w-2xl">
+    <div className="max-w-2xl space-y-4">
       <Card>
         <CardHeader>
           <CardTitle>Payment Method</CardTitle>
@@ -144,7 +139,7 @@ export const ComplexFormPreview = React.memo(function ComplexFormPreview() {
 
 export const FieldsPreview = React.memo(function FieldsPreview() {
   return (
-    <div className="space-y-4 max-w-2xl">
+    <div className="max-w-2xl space-y-4">
       <Card>
         <CardHeader>
           <CardTitle>Compute Environment</CardTitle>
@@ -155,19 +150,12 @@ export const FieldsPreview = React.memo(function FieldsPreview() {
         <CardContent>
           <RadioGroup defaultValue="kubernetes" className="space-y-4">
             <div className="flex items-start space-x-3 rounded-lg border border-primary/20 bg-primary/5 p-4">
-              <RadioGroupItem
-                value="kubernetes"
-                id="k8s"
-                className="mt-1"
-              />
+              <RadioGroupItem value="kubernetes" id="k8s" className="mt-1" />
               <div className="flex-1 space-y-1">
-                <Label
-                  htmlFor="k8s"
-                  className="font-semibold cursor-pointer"
-                >
+                <Label htmlFor="k8s" className="cursor-pointer font-semibold">
                   Kubernetes
                 </Label>
-                <p className="text-sm text-foreground/80">
+                <p className="text-foreground/80 text-sm">
                   Run GPU workloads on a K8s configured cluster. This is the
                   default.
                 </p>
@@ -176,13 +164,10 @@ export const FieldsPreview = React.memo(function FieldsPreview() {
             <div className="flex items-start space-x-3 rounded-lg border border-border p-4">
               <RadioGroupItem value="vm" id="vm" className="mt-1" />
               <div className="flex-1 space-y-1">
-                <Label
-                  htmlFor="vm"
-                  className="font-semibold cursor-pointer"
-                >
+                <Label htmlFor="vm" className="cursor-pointer font-semibold">
                   Virtual Machine
                 </Label>
-                <p className="text-sm text-foreground/80">
+                <p className="text-foreground/80 text-sm">
                   Run workloads on a virtual machine instance.
                 </p>
               </div>
@@ -199,7 +184,7 @@ export const FieldsPreview = React.memo(function FieldsPreview() {
 
 export const blocksPreviews: Record<string, React.ComponentType> = {
   "card-form": CardFormPreview,
-  "form": FormPreview,
   "complex-form": ComplexFormPreview,
-  "fields": FieldsPreview,
+  fields: FieldsPreview,
+  form: FormPreview,
 };

@@ -1,38 +1,38 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface Metric {
-  label: string
-  value: string | number
-  change?: string
-  changeType?: "up" | "down" | "neutral"
-  icon?: React.ReactNode
+  change?: string;
+  changeType?: "up" | "down" | "neutral";
+  icon?: React.ReactNode;
+  label: string;
+  value: string | number;
 }
 
 interface MetricRowProps extends React.HTMLAttributes<HTMLDivElement> {
-  metrics: Metric[]
-  columns?: 2 | 3 | 4
+  columns?: 2 | 3 | 4;
+  metrics: Metric[];
 }
 
 const changeColor: Record<string, string> = {
-  up: "text-green-500",
   down: "text-red-500",
   neutral: "text-foreground/50",
-}
+  up: "text-green-500",
+};
 
 const changeIcon: Record<string, string> = {
-  up: "\u25B2",
   down: "\u25BC",
   neutral: "\u2014",
-}
+  up: "\u25B2",
+};
 
 const columnClass: Record<number, string> = {
   2: "grid-cols-1 sm:grid-cols-2",
   3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
   4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
-}
+};
 
 export function MetricRow({
   metrics,
@@ -58,20 +58,20 @@ export function MetricRow({
           <div className="pointer-events-none absolute inset-0 rounded shadow-[inset_0_0_20px_rgba(var(--primary),0.05)]" />
 
           <div className="relative flex items-start gap-3">
-            {metric.icon && (
+            {metric.icon ? (
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded border border-primary/20 bg-primary/10 text-primary">
                 {metric.icon}
               </div>
-            )}
+            ) : null}
 
             <div className="min-w-0 flex-1">
-              <div className="text-[10px] uppercase tracking-widest text-foreground/60">
+              <div className="text-[10px] text-foreground/60 uppercase tracking-widest">
                 {metric.label}
               </div>
-              <div className="mt-1 font-mono text-2xl font-bold text-foreground tabular-nums">
+              <div className="mt-1 font-bold font-mono text-2xl text-foreground tabular-nums">
                 {metric.value}
               </div>
-              {metric.change && metric.changeType && (
+              {metric.change && metric.changeType ? (
                 <div
                   className={cn(
                     "mt-1 flex items-center gap-1 font-mono text-xs",
@@ -81,17 +81,17 @@ export function MetricRow({
                   <span>{changeIcon[metric.changeType]}</span>
                   <span>{metric.change}</span>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 
           {/* Corner decorations */}
-          <div className="pointer-events-none absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-primary/50" />
-          <div className="pointer-events-none absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-primary/50" />
-          <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-b-2 border-l-2 border-primary/50" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-3 w-3 border-b-2 border-r-2 border-primary/50" />
+          <div className="pointer-events-none absolute top-0 left-0 h-3 w-3 border-primary/50 border-t-2 border-l-2" />
+          <div className="pointer-events-none absolute top-0 right-0 h-3 w-3 border-primary/50 border-t-2 border-r-2" />
+          <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-primary/50 border-b-2 border-l-2" />
+          <div className="pointer-events-none absolute right-0 bottom-0 h-3 w-3 border-primary/50 border-r-2 border-b-2" />
         </div>
       ))}
     </div>
-  )
+  );
 }

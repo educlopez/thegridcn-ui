@@ -1,37 +1,37 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Switch } from "@/components/ui/switch"
-import { Slider } from "@/components/ui/slider"
+import * as React from "react";
+import { Calendar } from "@/components/ui/calendar";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Calendar } from "@/components/ui/calendar"
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-  InputOTPSeparator,
-} from "@/components/ui/input-otp"
-import { SectionWrapper, ComponentCard } from "./section-wrapper"
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { ComponentCard, SectionWrapper } from "./section-wrapper";
 
 export function FormsSection() {
-  const [date, setDate] = React.useState<Date | undefined>(undefined)
+  const [date, setDate] = React.useState<Date | undefined>(undefined);
 
   // Set initial date after hydration to avoid server/client mismatch
   React.useEffect(() => {
-    setDate(new Date())
-  }, [])
-  const [sliderValue, setSliderValue] = React.useState([50])
+    setDate(new Date());
+  }, []);
+  const [sliderValue, setSliderValue] = React.useState([50]);
 
   return (
     <SectionWrapper
@@ -170,7 +170,9 @@ export function FormsSection() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>Power Level</Label>
-              <span className="text-sm text-muted-foreground">{sliderValue[0]}%</span>
+              <span className="text-muted-foreground text-sm">
+                {sliderValue[0]}%
+              </span>
             </div>
             <Slider
               value={sliderValue}
@@ -216,5 +218,5 @@ export function FormsSection() {
         </div>
       </ComponentCard>
     </SectionWrapper>
-  )
+  );
 }

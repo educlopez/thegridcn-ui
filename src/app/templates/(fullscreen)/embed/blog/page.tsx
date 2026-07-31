@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
 const BlogTemplate = dynamic(
   () =>
@@ -8,8 +8,8 @@ const BlogTemplate = dynamic(
       (mod) => mod.BlogTemplate
     ),
   { ssr: false }
-)
+);
 
 export default function BlogEmbedPage() {
-  return <BlogTemplate />
+  return <BlogTemplate />;
 }

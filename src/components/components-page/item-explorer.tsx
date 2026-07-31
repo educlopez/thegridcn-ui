@@ -1,24 +1,24 @@
 "use client";
 
-import * as React from "react";
 import { ChevronRightIcon, SearchIcon, XIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
-import {
-  componentSections,
-  standardComponents,
-  type ComponentItem,
-} from "@/lib/component-data";
-import { isNewComponent } from "@/lib/component-new";
+import * as React from "react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import {
+  type ComponentItem,
+  componentSections,
+  standardComponents,
+} from "@/lib/component-data";
+import { isNewComponent } from "@/lib/component-new";
+import { cn } from "@/lib/utils";
 
 interface ItemExplorerProps {
   currentItemId?: string;
-  onItemSelect?: (item: ComponentItem) => void;
   isMobile?: boolean;
+  onItemSelect?: (item: ComponentItem) => void;
 }
 
 // Memoized item button component
@@ -34,7 +34,7 @@ const ItemButton = React.memo(function ItemButton({
   highlight?: string;
 }) {
   // Highlight matching substring
-  const title = item.title;
+  const { title } = item;
   let content: React.ReactNode = title;
 
   if (highlight) {
@@ -43,7 +43,9 @@ const ItemButton = React.memo(function ItemButton({
       content = (
         <>
           {title.slice(0, idx)}
-          <span className="text-primary font-medium">{title.slice(idx, idx + highlight.length)}</span>
+          <span className="font-medium text-primary">
+            {title.slice(idx, idx + highlight.length)}
+          </span>
           {title.slice(idx + highlight.length)}
         </>
       );
@@ -57,16 +59,16 @@ const ItemButton = React.memo(function ItemButton({
       type="button"
       onClick={onSelect}
       className={cn(
-        "flex w-full items-center gap-1.5 text-left rounded px-2 py-1.5 text-xs transition-all",
+        "flex w-full items-center gap-1.5 rounded px-2 py-1.5 text-left text-xs transition-all",
         "hover:bg-primary/10 hover:text-primary",
         isActive
-          ? "bg-primary/20 text-primary border-l-2 border-primary"
+          ? "border-primary border-l-2 bg-primary/20 text-primary"
           : "text-foreground"
       )}
     >
       <span className="truncate">{content}</span>
       {isNew && (
-        <span className="shrink-0 rounded border border-primary/40 bg-primary/10 px-1 py-px font-mono text-[8px] uppercase tracking-wider text-primary">
+        <span className="shrink-0 rounded border border-primary/40 bg-primary/10 px-1 py-px font-mono text-[8px] text-primary uppercase tracking-wider">
           new
         </span>
       )}
@@ -108,7 +110,9 @@ const ExplorerSection = React.memo(function ExplorerSection({
     [items, currentItemId, onItemSelect, highlight]
   );
 
-  if (items.length === 0) return null;
+  if (items.length === 0) {
+    return null;
+  }
 
   return (
     <Collapsible
@@ -117,7 +121,7 @@ const ExplorerSection = React.memo(function ExplorerSection({
       onOpenChange={onToggle}
       className="group/collapsible"
     >
-      <CollapsibleTrigger className="flex w-full items-center gap-2 py-2 text-sm font-medium text-foreground transition-colors hover:text-primary">
+      <CollapsibleTrigger className="flex w-full items-center gap-2 py-2 font-medium text-foreground text-sm transition-colors hover:text-primary">
         <ChevronRightIcon
           className={cn(
             "h-3.5 w-3.5 text-foreground transition-transform",
@@ -130,7 +134,7 @@ const ExplorerSection = React.memo(function ExplorerSection({
         </span>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="ml-6 space-y-0.5 border-l border-primary/20 pl-3">
+        <div className="ml-6 space-y-0.5 border-primary/20 border-l pl-3">
           {itemButtons}
         </div>
       </CollapsibleContent>
@@ -152,8 +156,11 @@ export function ItemExplorer({
   const toggleTronMovie = React.useCallback(() => {
     setOpenSections((prev) => {
       const next = new Set(prev);
-      if (next.has("tron-movie")) next.delete("tron-movie");
-      else next.add("tron-movie");
+      if (next.has("tron-movie")) {
+        next.delete("tron-movie");
+      } else {
+        next.add("tron-movie");
+      }
       return next;
     });
   }, []);
@@ -161,8 +168,11 @@ export function ItemExplorer({
   const toggleComponents = React.useCallback(() => {
     setOpenSections((prev) => {
       const next = new Set(prev);
-      if (next.has("components")) next.delete("components");
-      else next.add("components");
+      if (next.has("components")) {
+        next.delete("components");
+      } else {
+        next.add("components");
+      }
       return next;
     });
   }, []);
@@ -175,7 +185,9 @@ export function ItemExplorer({
   // Filter items by query
   const trimmed = query.trim().toLowerCase();
   const filteredTronItems = React.useMemo(() => {
-    if (!trimmed || !tronMovieSection) return tronMovieSection?.items ?? [];
+    if (!(trimmed && tronMovieSection)) {
+      return tronMovieSection?.items ?? [];
+    }
     return tronMovieSection.items.filter(
       (item) =>
         item.title.toLowerCase().includes(trimmed) ||
@@ -184,7 +196,9 @@ export function ItemExplorer({
   }, [trimmed, tronMovieSection]);
 
   const filteredStandardItems = React.useMemo(() => {
-    if (!trimmed) return standardComponents;
+    if (!trimmed) {
+      return standardComponents;
+    }
     return standardComponents.filter(
       (item) =>
         item.title.toLowerCase().includes(trimmed) ||
@@ -194,15 +208,21 @@ export function ItemExplorer({
 
   // Auto-expand sections with results when searching
   const isSearching = trimmed.length > 0;
-  const effectiveTronOpen = isSearching ? filteredTronItems.length > 0 : isTronMovieOpen;
-  const effectiveComponentsOpen = isSearching ? filteredStandardItems.length > 0 : isComponentsOpen;
+  const effectiveTronOpen = isSearching
+    ? filteredTronItems.length > 0
+    : isTronMovieOpen;
+  const effectiveComponentsOpen = isSearching
+    ? filteredStandardItems.length > 0
+    : isComponentsOpen;
 
   // Keyboard shortcut: "/" to focus search
   React.useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "/" && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
         const tag = (e.target as HTMLElement)?.tagName;
-        if (tag === "INPUT" || tag === "TEXTAREA") return;
+        if (tag === "INPUT" || tag === "TEXTAREA") {
+          return;
+        }
         e.preventDefault();
         inputRef.current?.focus();
       }
@@ -218,12 +238,18 @@ export function ItemExplorer({
       {!isMobile && (
         <div className="mb-4">
           <div className="relative">
-            <div className="absolute -top-1 left-0 right-4 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
+            <div className="absolute -top-1 right-4 left-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
             <div className="absolute -top-1 right-0 h-4 w-4">
-              <div className="absolute right-0 top-0 h-px w-4 bg-primary/40" style={{ transform: 'rotate(-45deg)', transformOrigin: 'right top' }} />
+              <div
+                className="absolute top-0 right-0 h-px w-4 bg-primary/40"
+                style={{
+                  transform: "rotate(-45deg)",
+                  transformOrigin: "right top",
+                }}
+              />
             </div>
-            <div className="border-b border-primary/30 pb-2 pt-1">
-              <span className="font-mono text-[11px] tracking-[0.2em] text-foreground">
+            <div className="border-primary/30 border-b pt-1 pb-2">
+              <span className="font-mono text-[11px] text-foreground tracking-[0.2em]">
                 REGISTRY: <span className="text-foreground/70">01.IDX</span>
               </span>
             </div>
@@ -233,7 +259,7 @@ export function ItemExplorer({
 
       {/* Search input */}
       <div className="relative mb-3">
-        <SearchIcon className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-foreground/30" />
+        <SearchIcon className="pointer-events-none absolute top-1/2 left-2.5 h-3.5 w-3.5 -translate-y-1/2 text-foreground/30" />
         <input
           ref={inputRef}
           type="text"
@@ -241,21 +267,24 @@ export function ItemExplorer({
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search components..."
           className={cn(
-            "w-full rounded border bg-background/50 py-1.5 pl-8 pr-8 font-mono text-xs text-foreground placeholder:text-foreground/30",
+            "w-full rounded border bg-background/50 py-1.5 pr-8 pl-8 font-mono text-foreground text-xs placeholder:text-foreground/30",
             "outline-none transition-colors",
-            "border-primary/20 focus:border-primary/50 focus:bg-background/80",
+            "border-primary/20 focus:border-primary/50 focus:bg-background/80"
           )}
         />
         {query ? (
           <button
             type="button"
-            onClick={() => { setQuery(""); inputRef.current?.focus(); }}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-foreground/30 hover:text-foreground/60"
+            onClick={() => {
+              setQuery("");
+              inputRef.current?.focus();
+            }}
+            className="absolute top-1/2 right-2 -translate-y-1/2 text-foreground/30 hover:text-foreground/60"
           >
             <XIcon className="h-3.5 w-3.5" />
           </button>
         ) : (
-          <kbd className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 rounded border border-primary/20 bg-primary/5 px-1 font-mono text-[9px] text-foreground/30">
+          <kbd className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 rounded border border-primary/20 bg-primary/5 px-1 font-mono text-[9px] text-foreground/30">
             /
           </kbd>
         )}
@@ -263,7 +292,7 @@ export function ItemExplorer({
 
       {/* Result count when searching */}
       {isSearching && (
-        <div className="mb-2 font-mono text-[9px] uppercase tracking-widest text-foreground/30">
+        <div className="mb-2 font-mono text-[9px] text-foreground/30 uppercase tracking-widest">
           {totalResults} {totalResults === 1 ? "result" : "results"}
         </div>
       )}
@@ -300,7 +329,7 @@ export function ItemExplorer({
         {/* No results */}
         {isSearching && totalResults === 0 && (
           <div className="py-8 text-center">
-            <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/30">
+            <div className="font-mono text-[10px] text-foreground/30 uppercase tracking-widest">
               NO MATCH FOUND
             </div>
             <div className="mt-1 font-mono text-[9px] text-foreground/20">
@@ -312,14 +341,16 @@ export function ItemExplorer({
 
       {/* Footer Status */}
       {!isMobile && (
-        <div className="mt-auto border-t border-foreground/20 pt-3">
+        <div className="mt-auto border-foreground/20 border-t pt-3">
           <div className="flex items-center gap-2 font-mono text-[8px]">
             <span className="text-foreground">IDX:</span>
             <span className="text-primary">OK</span>
             <span className="text-foreground/50">|</span>
             <span className="text-foreground">MOD:</span>
             <span className="text-primary">
-              {tronMovieSection ? tronMovieSection.items.length + standardComponents.length : standardComponents.length}
+              {tronMovieSection
+                ? tronMovieSection.items.length + standardComponents.length
+                : standardComponents.length}
             </span>
             <span className="ml-auto text-foreground/70">.END.</span>
           </div>
@@ -328,10 +359,12 @@ export function ItemExplorer({
     </div>
   );
 
-  if (isMobile) return content;
+  if (isMobile) {
+    return content;
+  }
 
   return (
-    <div className="relative z-30 hidden h-full w-64 shrink-0 overflow-y-auto border-r border-primary/30 bg-panel xl:flex xl:flex-col">
+    <div className="relative z-30 hidden h-full w-64 shrink-0 overflow-y-auto border-primary/30 border-r bg-panel xl:flex xl:flex-col">
       <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
       <div className="relative flex-1">{content}</div>
     </div>

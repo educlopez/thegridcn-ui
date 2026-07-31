@@ -1,59 +1,63 @@
-import fs from "node:fs"
-import path from "node:path"
-import { Marked } from "marked"
-import { codeToHtml } from "shiki"
-import { tronTheme } from "./shiki-tron-theme"
+import fs from "node:fs";
+import path from "node:path";
+import { Marked } from "marked";
+import { codeToHtml } from "shiki";
+import { tronTheme } from "./shiki-tron-theme";
 
-type RenderOptions = {
-  highlightCode?: boolean
+interface RenderOptions {
+  highlightCode?: boolean;
 }
 
 export async function renderMarkdownFile(
   relativePath: string,
-  options: RenderOptions = {},
+  options: RenderOptions = {}
 ): Promise<string> {
-  const absolute = path.join(process.cwd(), relativePath)
-  const raw = fs.readFileSync(absolute, "utf-8")
-  return renderMarkdown(raw, options)
+  const absolute = path.join(process.cwd(), relativePath);
+  const raw = fs.readFileSync(absolute, "utf-8");
+  return renderMarkdown(raw, options);
 }
 
 export async function renderMarkdown(
   source: string,
-  options: RenderOptions = {},
+  options: RenderOptions = {}
 ): Promise<string> {
-  const { highlightCode = true } = options
+  const { highlightCode = true } = options;
 
   const marked = new Marked({
     async: true,
-    gfm: true,
     breaks: false,
-  })
+    gfm: true,
+  });
 
   marked.use({
     async: true,
     async walkTokens(token) {
-      if (!highlightCode) return
-      if (token.type !== "code") return
-      const lang = (token as { lang?: string }).lang || "text"
-      const safeLang = isKnownLang(lang) ? lang : "text"
+      if (!highlightCode) {
+        return;
+      }
+      if (token.type !== "code") {
+        return;
+      }
+      const lang = (token as { lang?: string }).lang || "text";
+      const safeLang = isKnownLang(lang) ? lang : "text";
       try {
         const html = await codeToHtml(token.text, {
           lang: safeLang,
           theme: tronTheme,
-        })
-        ;(token as { type: string }).type = "html"
-        ;(token as unknown as { text: string }).text = wrapShiki(html)
+        });
+        (token as { type: string }).type = "html";
+        (token as unknown as { text: string }).text = wrapShiki(html);
       } catch {
         // leave as-is; marked will render generic code block
       }
     },
-  })
+  });
 
-  return marked.parse(source) as Promise<string>
+  return marked.parse(source) as Promise<string>;
 }
 
 function wrapShiki(html: string): string {
-  return `<div class="gridcn-shiki">${html}</div>`
+  return `<div class="gridcn-shiki">${html}</div>`;
 }
 
 const KNOWN_LANGS = new Set([
@@ -77,8 +81,8 @@ const KNOWN_LANGS = new Set([
   "diff",
   "text",
   "plaintext",
-])
+]);
 
 function isKnownLang(lang: string) {
-  return KNOWN_LANGS.has(lang.toLowerCase())
+  return KNOWN_LANGS.has(lang.toLowerCase());
 }

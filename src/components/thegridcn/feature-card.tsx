@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface FeatureCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
-  description: string
-  icon?: React.ReactNode
-  variant?: "default" | "highlight"
+  description: string;
+  icon?: React.ReactNode;
+  title: string;
+  variant?: "default" | "highlight";
 }
 
 export function FeatureCard({
@@ -37,30 +37,30 @@ export function FeatureCard({
       <div className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-primary/5 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 
       {/* Icon */}
-      {icon && (
+      {icon ? (
         <div className="mb-3 flex h-10 w-10 items-center justify-center rounded border border-primary/30 bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary/20">
           {icon}
         </div>
-      )}
+      ) : null}
 
       {/* Title */}
-      <h3 className="font-display text-sm font-bold uppercase tracking-wider text-foreground">
+      <h3 className="font-bold font-display text-foreground text-sm uppercase tracking-wider">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="mt-1.5 text-xs leading-relaxed text-foreground/60">
+      <p className="mt-1.5 text-foreground/60 text-xs leading-relaxed">
         {description}
       </p>
 
       {/* Bottom accent line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="absolute right-0 bottom-0 left-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       {/* Corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-primary/30 transition-colors duration-300 group-hover:border-primary/60" />
-      <div className="pointer-events-none absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-primary/30 transition-colors duration-300 group-hover:border-primary/60" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-b-2 border-l-2 border-primary/30 transition-colors duration-300 group-hover:border-primary/60" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-3 w-3 border-b-2 border-r-2 border-primary/30 transition-colors duration-300 group-hover:border-primary/60" />
+      <div className="pointer-events-none absolute top-0 left-0 h-3 w-3 border-primary/30 border-t-2 border-l-2 transition-colors duration-300 group-hover:border-primary/60" />
+      <div className="pointer-events-none absolute top-0 right-0 h-3 w-3 border-primary/30 border-t-2 border-r-2 transition-colors duration-300 group-hover:border-primary/60" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-primary/30 border-b-2 border-l-2 transition-colors duration-300 group-hover:border-primary/60" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-3 w-3 border-primary/30 border-r-2 border-b-2 transition-colors duration-300 group-hover:border-primary/60" />
     </div>
-  )
+  );
 }

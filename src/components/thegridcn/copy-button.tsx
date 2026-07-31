@@ -1,14 +1,15 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-interface CopyButtonProps extends Omit<React.HTMLAttributes<HTMLButtonElement>, "onCopy"> {
-  value: string
-  variant?: "default" | "ghost" | "outline"
-  size?: "sm" | "md"
-  onCopy?: (value: string) => void
-  disabled?: boolean
+interface CopyButtonProps
+  extends Omit<React.HTMLAttributes<HTMLButtonElement>, "onCopy"> {
+  disabled?: boolean;
+  onCopy?: (value: string) => void;
+  size?: "sm" | "md";
+  value: string;
+  variant?: "default" | "ghost" | "outline";
 }
 
 export function CopyButton({
@@ -21,30 +22,32 @@ export function CopyButton({
   children,
   ...props
 }: CopyButtonProps) {
-  const [copied, setCopied] = React.useState(false)
+  const [copied, setCopied] = React.useState(false);
 
   const handleCopy = React.useCallback(async () => {
-    if (disabled || copied) return
+    if (disabled || copied) {
+      return;
+    }
     try {
-      await navigator.clipboard.writeText(value)
-      setCopied(true)
-      onCopy?.(value)
-      setTimeout(() => setCopied(false), 2000)
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      onCopy?.(value);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
       // Fallback for older browsers
-      const textarea = document.createElement("textarea")
-      textarea.value = value
-      textarea.style.position = "fixed"
-      textarea.style.opacity = "0"
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand("copy")
-      document.body.removeChild(textarea)
-      setCopied(true)
-      onCopy?.(value)
-      setTimeout(() => setCopied(false), 2000)
+      const textarea = document.createElement("textarea");
+      textarea.value = value;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      setCopied(true);
+      onCopy?.(value);
+      setTimeout(() => setCopied(false), 2000);
     }
-  }, [value, disabled, copied, onCopy])
+  }, [value, disabled, copied, onCopy]);
 
   const variants: Record<string, string> = {
     default:
@@ -53,10 +56,10 @@ export function CopyButton({
       "border-transparent bg-transparent text-foreground/50 hover:text-primary hover:bg-primary/5",
     outline:
       "border-primary/20 bg-transparent text-foreground/50 hover:border-primary/40 hover:text-primary",
-  }
+  };
 
   const copiedStyle =
-    "border-emerald-500/30 bg-emerald-500/10 text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.15)]"
+    "border-emerald-500/30 bg-emerald-500/10 text-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.15)]";
 
   return (
     <button
@@ -76,11 +79,12 @@ export function CopyButton({
     >
       {copied ? (
         <svg
+          aria-hidden="true"
           width={size === "sm" ? 10 : 12}
           height={size === "sm" ? 10 : 12}
           viewBox="0 0 12 12"
           fill="none"
-          className="animate-in fade-in zoom-in-50 duration-200"
+          className="fade-in zoom-in-50 animate-in duration-200"
         >
           <path
             d="M2.5 6.5L5 9L9.5 3.5"
@@ -92,6 +96,7 @@ export function CopyButton({
         </svg>
       ) : (
         <svg
+          aria-hidden="true"
           width={size === "sm" ? 10 : 12}
           height={size === "sm" ? 10 : 12}
           viewBox="0 0 12 12"
@@ -115,5 +120,5 @@ export function CopyButton({
       )}
       {children}
     </button>
-  )
+  );
 }

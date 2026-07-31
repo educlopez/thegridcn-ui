@@ -5,7 +5,7 @@
 
 /* Panel background - defined before @theme so it's available for utilities */
 :root {
-  --panel: #0C1421;
+  --panel: #0c1421;
 }
 
 @theme inline {
@@ -312,14 +312,19 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
     font-family: var(--font-rajdhani), system-ui, sans-serif;
+    @apply bg-background text-foreground antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-orbitron), system-ui, sans-serif;
-    letter-spacing: 0.05em;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 }
 
@@ -368,7 +373,8 @@
   }
 
   @keyframes glow-pulse {
-    0%, 100% {
+    0%,
+    100% {
       box-shadow:
         0 0 5px var(--glow),
         0 0 10px var(--glow-muted);
@@ -399,9 +405,11 @@
   }
 
   .scanlines::before {
-    content: '';
     position: absolute;
     inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    content: "";
     background: repeating-linear-gradient(
       0deg,
       transparent,
@@ -409,8 +417,6 @@
       rgba(0, 0, 0, 0.1) 2px,
       rgba(0, 0, 0, 0.1) 4px
     );
-    pointer-events: none;
-    z-index: 10;
   }
 
   /* Grid floor effect */
@@ -418,8 +424,8 @@
     background-image:
       linear-gradient(var(--glow-muted) 1px, transparent 1px),
       linear-gradient(90deg, var(--glow-muted) 1px, transparent 1px);
-    background-size: 50px 50px;
     background-position: center center;
+    background-size: 50px 50px;
   }
 
   /* Circuit pattern */
@@ -448,8 +454,8 @@
    COMPONENT OVERRIDES FOR TRON AESTHETIC
    ============================================ */
 .btn-glow {
-  transition-property: all;
   transition-duration: 300ms;
+  transition-property: all;
 }
 
 .btn-glow:hover {
@@ -460,10 +466,10 @@
 }
 
 .card-tron {
-  border-width: 1px;
   border-color: var(--border);
-  transition-property: all;
+  border-width: 1px;
   transition-duration: 300ms;
+  transition-property: all;
 }
 
 .card-tron:hover {
@@ -484,10 +490,10 @@
    GRIDCN PROSE - Markdown rendering (docs, contributing)
    ============================================ */
 .gridcn-prose {
-  color: var(--foreground);
   font-family: var(--font-rajdhani), system-ui, sans-serif;
-  line-height: 1.7;
   font-size: 0.975rem;
+  line-height: 1.7;
+  color: var(--foreground);
 }
 
 .gridcn-prose > * + * {
@@ -498,23 +504,31 @@
 .gridcn-prose h2,
 .gridcn-prose h3,
 .gridcn-prose h4 {
-  font-family: var(--font-orbitron), system-ui, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--foreground);
   margin-top: 2.25rem;
   margin-bottom: 0.75rem;
+  font-family: var(--font-orbitron), system-ui, sans-serif;
   line-height: 1.25;
+  color: var(--foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.gridcn-prose h1 { font-size: 1.75rem; }
+.gridcn-prose h1 {
+  font-size: 1.75rem;
+}
 .gridcn-prose h2 {
-  font-size: 1.35rem;
   padding-bottom: 0.5rem;
+  font-size: 1.35rem;
   border-bottom: 1px solid color-mix(in oklch, var(--border) 70%, transparent);
 }
-.gridcn-prose h3 { font-size: 1.1rem; color: var(--primary); }
-.gridcn-prose h4 { font-size: 0.95rem; color: var(--primary); }
+.gridcn-prose h3 {
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+.gridcn-prose h4 {
+  font-size: 0.95rem;
+  color: var(--primary);
+}
 
 .gridcn-prose p {
   color: color-mix(in oklch, var(--foreground) 85%, transparent);
@@ -525,7 +539,9 @@
   text-decoration: underline;
   text-decoration-color: color-mix(in oklch, var(--primary) 40%, transparent);
   text-underline-offset: 3px;
-  transition: text-shadow 200ms ease, text-decoration-color 200ms ease;
+  transition:
+    text-shadow 200ms ease,
+    text-decoration-color 200ms ease;
 }
 
 .gridcn-prose a:hover {
@@ -533,105 +549,117 @@
   text-shadow: 0 0 8px var(--primary);
 }
 
-.gridcn-prose strong { color: var(--foreground); font-weight: 600; }
+.gridcn-prose strong {
+  font-weight: 600;
+  color: var(--foreground);
+}
 
 .gridcn-prose ul,
 .gridcn-prose ol {
   padding-left: 1.5rem;
 }
 
-.gridcn-prose ul { list-style: none; }
-.gridcn-prose ul > li { position: relative; padding-left: 0.25rem; }
+.gridcn-prose ul {
+  list-style: none;
+}
+.gridcn-prose ul > li {
+  position: relative;
+  padding-left: 0.25rem;
+}
 .gridcn-prose ul > li::before {
-  content: "";
   position: absolute;
-  left: -1rem;
   top: 0.7em;
+  left: -1rem;
   width: 0.35rem;
   height: 1px;
+  content: "";
   background: var(--primary);
 }
 
-.gridcn-prose ol { list-style: decimal; }
+.gridcn-prose ol {
+  list-style: decimal;
+}
 .gridcn-prose ol > li::marker {
-  color: var(--primary);
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.85em;
+  color: var(--primary);
 }
 
-.gridcn-prose li + li { margin-top: 0.4rem; }
+.gridcn-prose li + li {
+  margin-top: 0.4rem;
+}
 
 .gridcn-prose code {
+  padding: 0.1rem 0.35rem;
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.85em;
   color: var(--primary);
   background: color-mix(in oklch, var(--primary) 8%, transparent);
   border: 1px solid color-mix(in oklch, var(--primary) 20%, transparent);
-  padding: 0.1rem 0.35rem;
 }
 
 .gridcn-prose pre code {
+  padding: 0;
+  font-size: 0.85rem;
+  color: inherit;
   background: none;
   border: 0;
-  padding: 0;
-  color: inherit;
-  font-size: 0.85rem;
 }
 
 .gridcn-prose .gridcn-shiki {
-  border: 1px solid color-mix(in oklch, var(--primary) 25%, transparent);
-  background: #000;
-  overflow-x: auto;
   margin: 1.25rem 0;
+  overflow-x: auto;
+  background: #000;
+  border: 1px solid color-mix(in oklch, var(--primary) 25%, transparent);
 }
 
 .gridcn-prose .gridcn-shiki pre {
   padding: 1rem 1.25rem;
-  background: transparent !important;
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.825rem;
   line-height: 1.6;
+  background: transparent !important;
 }
 
 .gridcn-prose hr {
-  border: 0;
   height: 1px;
+  margin: 2rem 0;
   background: linear-gradient(
     90deg,
     transparent,
     color-mix(in oklch, var(--primary) 50%, transparent),
     transparent
   );
-  margin: 2rem 0;
+  border: 0;
 }
 
 .gridcn-prose blockquote {
-  border-left: 2px solid var(--primary);
   padding: 0.25rem 0 0.25rem 1rem;
   color: color-mix(in oklch, var(--foreground) 75%, transparent);
   background: color-mix(in oklch, var(--primary) 5%, transparent);
+  border-left: 2px solid var(--primary);
 }
 
 .gridcn-prose table {
   width: 100%;
-  border-collapse: collapse;
   font-size: 0.85rem;
+  border-collapse: collapse;
 }
 
 .gridcn-prose th,
 .gridcn-prose td {
-  border: 1px solid color-mix(in oklch, var(--border) 60%, transparent);
   padding: 0.5rem 0.75rem;
   text-align: left;
+  border: 1px solid color-mix(in oklch, var(--border) 60%, transparent);
 }
 
 .gridcn-prose th {
-  background: color-mix(in oklch, var(--primary) 8%, transparent);
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.75rem;
+  color: var(--primary);
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--primary);
+  background: color-mix(in oklch, var(--primary) 8%, transparent);
 }
 
 /* ============================================
@@ -644,16 +672,16 @@ pre.shiki-line-numbers code {
 }
 
 pre.shiki-line-numbers code .line::before {
-  counter-increment: step;
-  content: counter(step);
   display: inline-block;
   width: 3ch;
   margin-right: 1.5ch;
-  text-align: right;
   color: var(--foreground, #a1a1aa);
-  opacity: 0.15;
-  user-select: none;
+  text-align: right;
   -webkit-user-select: none;
+  user-select: none;
+  content: counter(step);
+  counter-increment: step;
+  opacity: 0.15;
 }
 
 /* ============================================
@@ -661,8 +689,9 @@ pre.shiki-line-numbers code .line::before {
    Re-colors per data-theme via --primary
    ============================================ */
 * {
+  scrollbar-color: color-mix(in oklch, var(--primary) 55%, transparent)
+    transparent;
   scrollbar-width: thin;
-  scrollbar-color: color-mix(in oklch, var(--primary) 55%, transparent) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -677,10 +706,12 @@ pre.shiki-line-numbers code .line::before {
 
 *::-webkit-scrollbar-thumb {
   background: color-mix(in oklch, var(--primary) 55%, transparent);
-  border: 2px solid transparent;
   background-clip: padding-box;
+  border: 2px solid transparent;
   box-shadow: inset 0 0 6px color-mix(in oklch, var(--primary) 40%, transparent);
-  transition: background-color 150ms ease, box-shadow 150ms ease;
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
 *::-webkit-scrollbar-thumb:hover {

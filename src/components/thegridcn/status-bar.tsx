@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface StatusBarProps extends React.HTMLAttributes<HTMLDivElement> {
-  leftContent?: React.ReactNode
-  rightContent?: React.ReactNode
-  variant?: "default" | "alert" | "info"
+  leftContent?: React.ReactNode;
+  rightContent?: React.ReactNode;
+  variant?: "default" | "alert" | "info";
 }
 
 export function StatusBar({
@@ -17,10 +17,10 @@ export function StatusBar({
   ...props
 }: StatusBarProps) {
   const variantStyles = {
-    default: "bg-muted/50 border-border",
     alert: "bg-red-500/10 border-red-500/50",
+    default: "bg-muted/50 border-border",
     info: "bg-cyan-500/10 border-cyan-500/50",
-  }
+  };
 
   return (
     <div
@@ -40,14 +40,14 @@ export function StatusBar({
         {rightContent}
       </div>
     </div>
-  )
+  );
 }
 
 interface InfoPanelProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
-  subtitle?: string
-  timestamp?: string
-  status?: "active" | "pending" | "complete"
+  status?: "active" | "pending" | "complete";
+  subtitle?: string;
+  timestamp?: string;
+  title: string;
 }
 
 export function InfoPanel({
@@ -61,9 +61,9 @@ export function InfoPanel({
 }: InfoPanelProps) {
   const statusIndicator = {
     active: "bg-green-500",
-    pending: "bg-amber-500 animate-pulse",
     complete: "bg-cyan-500",
-  }
+    pending: "bg-amber-500 animate-pulse",
+  };
 
   return (
     <div
@@ -75,45 +75,44 @@ export function InfoPanel({
       {...props}
     >
       {/* Header bar */}
-      <div className="flex items-center justify-between border-b border-border/50 bg-muted/30 px-4 py-2">
+      <div className="flex items-center justify-between border-border/50 border-b bg-muted/30 px-4 py-2">
         <div className="flex items-center gap-3">
-          <div className={cn("h-2 w-2 rounded-full", statusIndicator[status])} />
-          <span className="font-mono text-[10px] uppercase tracking-widest text-foreground/80">
+          <div
+            className={cn("h-2 w-2 rounded-full", statusIndicator[status])}
+          />
+          <span className="font-mono text-[10px] text-foreground/80 uppercase tracking-widest">
             {subtitle}
           </span>
         </div>
-        {timestamp && (
+        {timestamp ? (
           <span className="font-mono text-[10px] text-foreground/80">
             {timestamp}
           </span>
-        )}
+        ) : null}
       </div>
 
       {/* Content */}
       <div className="p-4">
-        <h3 className="mb-2 font-mono text-lg font-bold uppercase tracking-wider text-foreground">
+        <h3 className="mb-2 font-bold font-mono text-foreground text-lg uppercase tracking-wider">
           {title}
         </h3>
         {children}
       </div>
 
       {/* Grid dots decoration */}
-      <div className="pointer-events-none absolute right-2 top-2 grid grid-cols-3 gap-1">
+      <div className="pointer-events-none absolute top-2 right-2 grid grid-cols-3 gap-1">
         {Array.from({ length: 9 }).map((_, i) => (
-          <div
-            key={i}
-            className="h-1 w-1 rounded-full bg-primary/20"
-          />
+          <div key={i} className="h-1 w-1 rounded-full bg-primary/20" />
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 interface UplinkBarProps extends React.HTMLAttributes<HTMLDivElement> {
-  channel: string
-  status?: string
-  signal?: "strong" | "medium" | "weak"
+  channel: string;
+  signal?: "strong" | "medium" | "weak";
+  status?: string;
 }
 
 export function UplinkBar({
@@ -124,32 +123,32 @@ export function UplinkBar({
   ...props
 }: UplinkBarProps) {
   const signalBars = {
-    strong: 4,
     medium: 2,
+    strong: 4,
     weak: 1,
-  }
+  };
 
   return (
     <div
       className={cn(
-        "flex items-center justify-between border-y border-cyan-500/30 bg-cyan-500/5 px-4 py-2 font-mono text-xs",
+        "flex items-center justify-between border-cyan-500/30 border-y bg-cyan-500/5 px-4 py-2 font-mono text-xs",
         className
       )}
       {...props}
     >
       <div className="flex items-center gap-2">
         <span className="text-cyan-400">⚡</span>
-        <span className="uppercase tracking-widest text-cyan-500">
+        <span className="text-cyan-500 uppercase tracking-widest">
           UPLINK: {channel}
         </span>
       </div>
 
       <div className="flex items-center gap-4">
-        {status && (
-          <span className="uppercase tracking-widest text-foreground/80">
+        {status ? (
+          <span className="text-foreground/80 uppercase tracking-widest">
             {status}
           </span>
-        )}
+        ) : null}
 
         {/* Signal strength */}
         <div className="flex items-end gap-0.5">
@@ -166,13 +165,13 @@ export function UplinkBar({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 interface ProgressTimelineProps extends React.HTMLAttributes<HTMLDivElement> {
-  progress: number
-  markers?: { position: number; label?: string; active?: boolean }[]
-  currentLabel?: string
+  currentLabel?: string;
+  markers?: { position: number; label?: string; active?: boolean }[];
+  progress: number;
 }
 
 export function ProgressTimeline({
@@ -213,11 +212,13 @@ export function ProgressTimeline({
       </div>
 
       {/* Labels */}
-      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-foreground/80">
+      <div className="flex items-center justify-between font-mono text-[10px] text-foreground/80 uppercase tracking-widest">
         <span>00:00</span>
-        {currentLabel && <span className="text-primary">{currentLabel}</span>}
+        {currentLabel ? (
+          <span className="text-primary">{currentLabel}</span>
+        ) : null}
         <span>END</span>
       </div>
     </div>
-  )
+  );
 }

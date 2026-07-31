@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface SidebarNavItem {
-  label: string
-  href?: string
-  icon?: React.ReactNode
-  active?: boolean
-  children?: SidebarNavItem[]
+  active?: boolean;
+  children?: SidebarNavItem[];
+  href?: string;
+  icon?: React.ReactNode;
+  label: string;
 }
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
-  items: SidebarNavItem[]
-  collapsed?: boolean
-  onToggle?: () => void
-  logo?: React.ReactNode
+  collapsed?: boolean;
+  items: SidebarNavItem[];
+  logo?: React.ReactNode;
+  onToggle?: () => void;
 }
 
 export function SidebarNav({
@@ -28,15 +28,18 @@ export function SidebarNav({
 }: SidebarNavProps) {
   const [expandedSections, setExpandedSections] = React.useState<Set<number>>(
     new Set()
-  )
+  );
 
   function toggleSection(idx: number) {
     setExpandedSections((prev) => {
-      const next = new Set(prev)
-      if (prev.has(idx)) next.delete(idx)
-      else next.add(idx)
-      return next
-    })
+      const next = new Set(prev);
+      if (prev.has(idx)) {
+        next.delete(idx);
+      } else {
+        next.add(idx);
+      }
+      return next;
+    });
   }
 
   return (
@@ -54,14 +57,10 @@ export function SidebarNav({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {/* Logo + Collapse toggle */}
-      {(onToggle || logo) && (
-        <div className="relative flex items-center border-b border-primary/20 p-2">
-          {logo && !collapsed && (
-            <div className="flex-1 pl-1">
-              {logo}
-            </div>
-          )}
-          {onToggle && (
+      {onToggle || logo ? (
+        <div className="relative flex items-center border-primary/20 border-b p-2">
+          {logo && !collapsed && <div className="flex-1 pl-1">{logo}</div>}
+          {onToggle ? (
             <button
               type="button"
               onClick={onToggle}
@@ -72,6 +71,7 @@ export function SidebarNav({
               aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
               <svg
+                aria-hidden="true"
                 width="16"
                 height="16"
                 viewBox="0 0 16 16"
@@ -90,15 +90,15 @@ export function SidebarNav({
                 />
               </svg>
             </button>
-          )}
+          ) : null}
         </div>
-      )}
+      ) : null}
 
       {/* Navigation items */}
       <div className="relative flex-1 overflow-y-auto py-2">
         {items.map((item, i) => {
-          const hasChildren = item.children && item.children.length > 0
-          const isExpanded = expandedSections.has(i)
+          const hasChildren = item.children && item.children.length > 0;
+          const isExpanded = expandedSections.has(i);
 
           return (
             <div key={i}>
@@ -112,17 +112,18 @@ export function SidebarNav({
                     collapsed && "justify-center px-0"
                   )}
                 >
-                  {item.icon && (
+                  {item.icon ? (
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center text-foreground/40 transition-colors group-hover:text-primary/80">
                       {item.icon}
                     </span>
-                  )}
+                  ) : null}
                   {!collapsed && (
                     <>
-                      <span className="flex-1 font-mono text-[10px] uppercase tracking-widest text-foreground/50 transition-colors group-hover:text-foreground/70">
+                      <span className="flex-1 font-mono text-[10px] text-foreground/50 uppercase tracking-widest transition-colors group-hover:text-foreground/70">
                         {item.label}
                       </span>
                       <svg
+                        aria-hidden="true"
                         width="10"
                         height="10"
                         viewBox="0 0 10 10"
@@ -158,24 +159,24 @@ export function SidebarNav({
                   )}
                 >
                   <div className="overflow-hidden">
-                    {item.children!.map((child, j) => (
+                    {item.children?.map((child, j) => (
                       <NavItem key={j} item={child} collapsed={false} nested />
                     ))}
                   </div>
                 </div>
               )}
             </div>
-          )
+          );
         })}
       </div>
 
       {/* Corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-primary/50" />
-      <div className="pointer-events-none absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-primary/50" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-b-2 border-l-2 border-primary/50" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-3 w-3 border-b-2 border-r-2 border-primary/50" />
+      <div className="pointer-events-none absolute top-0 left-0 h-3 w-3 border-primary/50 border-t-2 border-l-2" />
+      <div className="pointer-events-none absolute top-0 right-0 h-3 w-3 border-primary/50 border-t-2 border-r-2" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-primary/50 border-b-2 border-l-2" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-3 w-3 border-primary/50 border-r-2 border-b-2" />
     </nav>
-  )
+  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -185,11 +186,11 @@ function NavItem({
   collapsed,
   nested = false,
 }: {
-  item: SidebarNavItem
-  collapsed: boolean
-  nested?: boolean
+  item: SidebarNavItem;
+  collapsed: boolean;
+  nested?: boolean;
 }) {
-  const Tag = item.href ? "a" : "span"
+  const Tag = item.href ? "a" : "span";
 
   return (
     <Tag
@@ -204,11 +205,11 @@ function NavItem({
       )}
     >
       {/* Active indicator bar */}
-      {item.active && (
-        <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 bg-primary shadow-[0_0_6px_var(--color-primary)]" />
-      )}
+      {item.active ? (
+        <span className="absolute top-1/2 left-0 h-5 w-0.5 -translate-y-1/2 bg-primary shadow-[0_0_6px_var(--color-primary)]" />
+      ) : null}
 
-      {item.icon && (
+      {item.icon ? (
         <span
           className={cn(
             "flex h-5 w-5 shrink-0 items-center justify-center transition-colors",
@@ -219,7 +220,7 @@ function NavItem({
         >
           {item.icon}
         </span>
-      )}
+      ) : null}
 
       {!collapsed && (
         <span
@@ -237,5 +238,5 @@ function NavItem({
       {/* Hover glow line */}
       <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-primary/0 transition-colors group-hover:bg-primary/20" />
     </Tag>
-  )
+  );
 }

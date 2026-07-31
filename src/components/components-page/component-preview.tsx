@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { type ComponentItem } from "@/lib/component-data";
+import type { ComponentItem } from "@/lib/component-data";
 import { previewRegistry } from "./previews";
 
 interface ComponentPreviewProps {
@@ -16,18 +16,18 @@ const PreviewNotFound = React.memo(function PreviewNotFound({
 }) {
   return (
     <div className="flex flex-col items-center justify-center space-y-4 p-8 text-center">
-      <div className="rounded-lg border border-dashed border-primary/30 bg-primary/5 p-6">
-        <p className="font-mono text-sm font-semibold text-primary">
+      <div className="rounded-lg border border-primary/30 border-dashed bg-primary/5 p-6">
+        <p className="font-mono font-semibold text-primary text-sm">
           Component preview not available
         </p>
-        <p className="mt-2 text-xs text-foreground/80">
+        <p className="mt-2 text-foreground/80 text-xs">
           ID:{" "}
           <code className="rounded bg-muted px-1 py-0.5">{component.id}</code>
         </p>
-        <p className="mt-1 text-xs text-foreground/80">
+        <p className="mt-1 text-foreground/80 text-xs">
           Title: {component.title}
         </p>
-        <p className="mt-1 text-xs text-foreground/80">
+        <p className="mt-1 text-foreground/80 text-xs">
           Type: {component.type}
         </p>
       </div>
