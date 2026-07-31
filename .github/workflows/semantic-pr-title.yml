@@ -8,6 +8,9 @@ on:
     types: [opened, edited, reopened, synchronize, ready_for_review]
 
 permissions:
+  # Both are required: the reusable workflow declares contents + pull-requests,
+  # and a caller that grants less makes the run fail at startup.
+  contents: read
   pull-requests: read
 
 jobs:
