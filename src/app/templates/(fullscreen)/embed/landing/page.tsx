@@ -1,5 +1,5 @@
-import { LandingTemplate } from "@/components/thegridcn/templates"
+import { LandingTemplate } from "@/components/thegridcn/templates";
 
 export default function LandingEmbedPage() {
-  return <LandingTemplate />
+  return <LandingTemplate />;
 }

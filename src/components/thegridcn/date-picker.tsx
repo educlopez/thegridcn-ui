@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { CalendarIcon } from "lucide-react"
-import { format } from "date-fns"
-
-import { cn } from "@/lib/utils"
-import { Calendar } from "@/components/ui/calendar"
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import * as React from "react";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
-interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
-  date?: Date
-  onDateChange?: (date: Date | undefined) => void
-  placeholder?: string
-  disabled?: boolean
-  label?: string
+interface DatePickerProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  date?: Date;
+  disabled?: boolean;
+  label?: string;
+  onDateChange?: (date: Date | undefined) => void;
+  placeholder?: string;
 }
 
 export function DatePicker({
@@ -29,11 +29,11 @@ export function DatePicker({
   className,
   ...props
 }: DatePickerProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   function handleSelect(selected: Date | undefined) {
-    onDateChange?.(selected)
-    setOpen(false)
+    onDateChange?.(selected);
+    setOpen(false);
   }
 
   return (
@@ -42,11 +42,11 @@ export function DatePicker({
       className={cn("relative", disabled && "opacity-40", className)}
       {...props}
     >
-      {label && (
-        <span className="mb-1 block font-mono text-[9px] uppercase tracking-widest text-foreground/40">
+      {label ? (
+        <span className="mb-1 block font-mono text-[9px] text-foreground/40 uppercase tracking-widest">
           {label}
         </span>
-      )}
+      ) : null}
 
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild disabled={disabled}>
@@ -61,7 +61,7 @@ export function DatePicker({
             )}
           >
             <CalendarIcon className="size-3 text-primary/50" />
-            {date ? format(date, "PPP") : placeholder}
+            {date ? format(date, "PPP") : (placeholder ?? "")}
           </button>
         </PopoverTrigger>
 
@@ -73,10 +73,10 @@ export function DatePicker({
           <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.02)_2px,rgba(0,0,0,0.02)_4px)]" />
 
           {/* Corner decorations */}
-          <div className="pointer-events-none absolute left-0 top-0 h-2 w-2 border-l border-t border-primary/40" />
-          <div className="pointer-events-none absolute right-0 top-0 h-2 w-2 border-r border-t border-primary/40" />
-          <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-b border-l border-primary/40" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-2 w-2 border-b border-r border-primary/40" />
+          <div className="pointer-events-none absolute top-0 left-0 h-2 w-2 border-primary/40 border-t border-l" />
+          <div className="pointer-events-none absolute top-0 right-0 h-2 w-2 border-primary/40 border-t border-r" />
+          <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-primary/40 border-b border-l" />
+          <div className="pointer-events-none absolute right-0 bottom-0 h-2 w-2 border-primary/40 border-r border-b" />
 
           <Calendar
             mode="single"
@@ -87,5 +87,5 @@ export function DatePicker({
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }

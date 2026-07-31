@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface TimerProps extends React.HTMLAttributes<HTMLDivElement> {
-  hours?: number
-  minutes?: number
-  seconds?: number
-  label?: string
-  sublabel?: string
-  size?: "sm" | "md" | "lg" | "xl"
-  variant?: "default" | "countdown" | "elapsed"
+  hours?: number;
+  label?: string;
+  minutes?: number;
+  seconds?: number;
+  size?: "sm" | "md" | "lg" | "xl";
+  sublabel?: string;
+  variant?: "default" | "countdown" | "elapsed";
 }
 
 export function Timer({
@@ -24,20 +24,20 @@ export function Timer({
   className,
   ...props
 }: TimerProps) {
-  const formatNumber = (num: number) => String(num).padStart(2, "0")
+  const formatNumber = (num: number) => String(num).padStart(2, "0");
 
   const sizeStyles = {
-    sm: "text-2xl",
-    md: "text-4xl",
     lg: "text-6xl",
+    md: "text-4xl",
+    sm: "text-2xl",
     xl: "text-8xl",
-  }
+  };
 
   const variantStyles = {
-    default: "text-primary",
     countdown: "text-red-500",
+    default: "text-primary",
     elapsed: "text-foreground",
-  }
+  };
 
   return (
     <div className={cn("text-center", className)} {...props}>
@@ -46,14 +46,14 @@ export function Timer({
           data-slot="tron-timer-value"
           data-variant={variant}
           className={cn(
-            "font-mono font-light tracking-wider",
+            "font-light font-mono tracking-wider",
             sizeStyles[size],
             variantStyles[variant]
           )}
         >
           {formatNumber(hours)}:{formatNumber(minutes)}:{formatNumber(seconds)}
         </span>
-        {label && (
+        {label ? (
           <span
             className={cn(
               "ml-2 font-mono uppercase tracking-[0.3em]",
@@ -66,12 +66,12 @@ export function Timer({
           >
             {label}
           </span>
-        )}
+        ) : null}
       </div>
-      {sublabel && (
+      {sublabel ? (
         <div
           className={cn(
-            "mt-2 font-mono tracking-wider text-foreground/60",
+            "mt-2 font-mono text-foreground/60 tracking-wider",
             size === "xl" && "text-3xl",
             size === "lg" && "text-2xl",
             size === "md" && "text-lg",
@@ -80,7 +80,7 @@ export function Timer({
         >
           {sublabel}
         </div>
-      )}
+      ) : null}
     </div>
-  )
+  );
 }

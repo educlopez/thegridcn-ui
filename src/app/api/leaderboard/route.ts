@@ -1,159 +1,153 @@
-import { NextRequest, NextResponse } from "next/server"
-import { Ratelimit } from "@upstash/ratelimit"
-import { redis } from "@/lib/redis"
+import { Ratelimit } from "@upstash/ratelimit";
+import { type NextRequest, NextResponse } from "next/server";
 import {
   LEADERBOARD_KEY,
-  SESSION_PREFIX,
+  type LeaderboardEntry,
   MIN_TIMES,
+  SESSION_PREFIX,
   scoreSubmissionSchema,
   verifySessionToken,
-  type LeaderboardEntry,
-} from "@/lib/leaderboard"
+} from "@/lib/leaderboard";
+import { redis } from "@/lib/redis";
 
 export async function GET(request: NextRequest) {
   if (!redis) {
-    return NextResponse.json({ entries: [] })
+    return NextResponse.json({ entries: [] });
   }
 
-  const difficulty = request.nextUrl.searchParams.get("difficulty") ?? "medium"
+  const difficulty = request.nextUrl.searchParams.get("difficulty") ?? "medium";
 
   // Fetch up to 100 entries ascending (fastest time first), then filter by difficulty
-  const raw = await redis.zrange(LEADERBOARD_KEY, 0, 99, { withScores: true })
+  const raw = await redis.zrange(LEADERBOARD_KEY, 0, 99, { withScores: true });
 
-  const entries: LeaderboardEntry[] = []
+  const entries: LeaderboardEntry[] = [];
   for (let i = 0; i < raw.length; i += 2) {
-    const data = raw[i] as unknown as { alias: string; difficulty: string; date: string; character?: string }
-    const score = raw[i + 1] as unknown as number
+    const data = raw[i] as unknown as {
+      alias: string;
+      difficulty: string;
+      date: string;
+      character?: string;
+    };
+    const score = raw[i + 1] as unknown as number;
     if (data && typeof data === "object" && "alias" in data) {
-      if (data.difficulty !== difficulty) continue
+      if (data.difficulty !== difficulty) {
+        continue;
+      }
       entries.push({
         alias: data.alias,
-        time: score,
-        difficulty: data.difficulty,
         date: data.date,
+        difficulty: data.difficulty,
+        time: score,
         ...(data.character && { character: data.character }),
-      })
-      if (entries.length >= 10) break
+      });
+      if (entries.length >= 10) {
+        break;
+      }
     }
   }
 
-  return NextResponse.json({ entries })
+  return NextResponse.json({ entries });
 }
 
 const ratelimit = redis
   ? new Ratelimit({
-      redis,
       limiter: Ratelimit.slidingWindow(5, "60 s"),
+      redis,
     })
-  : null
+  : null;
 
 export async function POST(request: NextRequest) {
   if (!redis) {
     return NextResponse.json(
       { error: "Leaderboard not configured" },
       { status: 503 }
-    )
+    );
   }
 
-  const ip = request.headers.get("x-forwarded-for") ?? "anonymous"
+  const ip = request.headers.get("x-forwarded-for") ?? "anonymous";
 
   if (ratelimit) {
-    const { success } = await ratelimit.limit(ip)
+    const { success } = await ratelimit.limit(ip);
     if (!success) {
       return NextResponse.json(
         { error: "Too many submissions. Try again later." },
         { status: 429 }
-      )
+      );
     }
   }
 
-  const body = await request.json()
-  const parsed = scoreSubmissionSchema.safeParse(body)
+  const body = await request.json();
+  const parsed = scoreSubmissionSchema.safeParse(body);
 
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Invalid submission", details: parsed.error.flatten() },
+      { details: parsed.error.flatten(), error: "Invalid submission" },
       { status: 400 }
-    )
+    );
   }
 
-  const { alias, time, difficulty, character, token } = parsed.data
+  const { alias, time, difficulty, character, token } = parsed.data;
 
   // --- Session validation ---
-  const sessionId = verifySessionToken(token)
+  const sessionId = verifySessionToken(token);
   if (!sessionId) {
-    return NextResponse.json(
-      { error: "Invalid session" },
-      { status: 403 }
-    )
+    return NextResponse.json({ error: "Invalid session" }, { status: 403 });
   }
 
-  const sessionKey = `${SESSION_PREFIX}${sessionId}`
+  const sessionKey = `${SESSION_PREFIX}${sessionId}`;
   // Atomic fetch + delete (one-time use)
-  const sessionRaw = await redis.get<string>(sessionKey)
+  const sessionRaw = await redis.get<string>(sessionKey);
   if (!sessionRaw) {
-    return NextResponse.json(
-      { error: "Invalid session" },
-      { status: 403 }
-    )
+    return NextResponse.json({ error: "Invalid session" }, { status: 403 });
   }
-  await redis.del(sessionKey)
+  await redis.del(sessionKey);
 
   const session =
-    typeof sessionRaw === "string" ? JSON.parse(sessionRaw) : sessionRaw
+    typeof sessionRaw === "string" ? JSON.parse(sessionRaw) : sessionRaw;
   const { difficulty: sessionDifficulty, startTime } = session as {
-    difficulty: string
-    startTime: number
-  }
+    difficulty: string;
+    startTime: number;
+  };
 
   // Difficulty must match
   if (sessionDifficulty !== difficulty) {
-    return NextResponse.json(
-      { error: "Invalid session" },
-      { status: 403 }
-    )
+    return NextResponse.json({ error: "Invalid session" }, { status: 403 });
   }
 
   // Time must be at least the minimum for the difficulty
-  const minTime = MIN_TIMES[difficulty] ?? 3
+  const minTime = MIN_TIMES[difficulty] ?? 3;
   if (time < minTime) {
-    return NextResponse.json(
-      { error: "Invalid session" },
-      { status: 403 }
-    )
+    return NextResponse.json({ error: "Invalid session" }, { status: 403 });
   }
 
   // Wall-clock elapsed must be >= submitted time (with 2s tolerance for latency)
-  const wallElapsedMs = Date.now() - startTime
-  const submittedMs = time * 1000
+  const wallElapsedMs = Date.now() - startTime;
+  const submittedMs = time * 1000;
   if (wallElapsedMs + 2000 < submittedMs) {
-    return NextResponse.json(
-      { error: "Invalid session" },
-      { status: 403 }
-    )
+    return NextResponse.json({ error: "Invalid session" }, { status: 403 });
   }
   // --- End session validation ---
 
   const member = JSON.stringify({
     alias,
-    difficulty,
     date: new Date().toISOString(),
+    difficulty,
     ...(character && { character }),
-  })
+  });
 
-  await redis.zadd(LEADERBOARD_KEY, { score: time, member })
+  await redis.zadd(LEADERBOARD_KEY, { member, score: time });
 
   // Trim to 100 fastest — remove slowest entries (highest scores)
-  const count = await redis.zcard(LEADERBOARD_KEY)
+  const count = await redis.zcard(LEADERBOARD_KEY);
   if (count > 100) {
-    await redis.zremrangebyrank(LEADERBOARD_KEY, 100, -1)
+    await redis.zremrangebyrank(LEADERBOARD_KEY, 100, -1);
   }
 
   // Get rank ascending (lowest time = rank 1 = fastest win)
-  const rank = await redis.zrank(LEADERBOARD_KEY, member)
+  const rank = await redis.zrank(LEADERBOARD_KEY, member);
 
   return NextResponse.json({
+    rank: rank === null ? null : rank + 1,
     success: true,
-    rank: rank !== null ? rank + 1 : null,
-  })
+  });
 }

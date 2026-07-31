@@ -1,22 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface SelectOption {
-  label: string
-  value: string
-  disabled?: boolean
+  disabled?: boolean;
+  label: string;
+  value: string;
 }
 
-interface SelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
-  options: SelectOption[]
-  value?: string
-  defaultValue?: string
-  onChange?: (value: string) => void
-  placeholder?: string
-  label?: string
-  disabled?: boolean
+interface SelectProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  defaultValue?: string;
+  disabled?: boolean;
+  label?: string;
+  onChange?: (value: string) => void;
+  options: SelectOption[];
+  placeholder?: string;
+  value?: string;
 }
 
 export function Select({
@@ -30,28 +31,34 @@ export function Select({
   className,
   ...props
 }: SelectProps) {
-  const [internalValue, setInternalValue] = React.useState(defaultValue)
-  const [open, setOpen] = React.useState(false)
-  const ref = React.useRef<HTMLDivElement>(null)
+  const [internalValue, setInternalValue] = React.useState(defaultValue);
+  const [open, setOpen] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
 
-  const current = controlledValue ?? internalValue
-  const selectedLabel = options.find((o) => o.value === current)?.label
+  const current = controlledValue ?? internalValue;
+  const selectedLabel = options.find((o) => o.value === current)?.label;
 
   function select(value: string) {
-    if (controlledValue === undefined) setInternalValue(value)
-    onChange?.(value)
-    setOpen(false)
+    if (controlledValue === undefined) {
+      setInternalValue(value);
+    }
+    onChange?.(value);
+    setOpen(false);
   }
 
   // Close on outside click
   React.useEffect(() => {
-    if (!open) return
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    if (!open) {
+      return;
     }
-    document.addEventListener("mousedown", handler)
-    return () => document.removeEventListener("mousedown", handler)
-  }, [open])
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
 
   return (
     <div
@@ -60,11 +67,11 @@ export function Select({
       className={cn("relative", disabled && "opacity-40", className)}
       {...props}
     >
-      {label && (
-        <span className="mb-1 block font-mono text-[9px] uppercase tracking-widest text-foreground/40">
+      {label ? (
+        <span className="mb-1 block font-mono text-[9px] text-foreground/40 uppercase tracking-widest">
           {label}
         </span>
-      )}
+      ) : null}
 
       <button
         type="button"
@@ -80,15 +87,27 @@ export function Select({
       >
         {selectedLabel || placeholder}
         <svg
-          width="8" height="8" viewBox="0 0 8 8" fill="none"
-          className={cn("text-foreground/30 transition-transform", open && "rotate-180")}
+          aria-hidden="true"
+          width="8"
+          height="8"
+          viewBox="0 0 8 8"
+          fill="none"
+          className={cn(
+            "text-foreground/30 transition-transform",
+            open && "rotate-180"
+          )}
         >
-          <path d="M2 3l2 2 2-2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+          <path
+            d="M2 3l2 2 2-2"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
         </svg>
       </button>
 
-      {open && (
-        <div className="absolute left-0 right-0 z-50 mt-1 overflow-hidden rounded border border-primary/30 bg-card/95 py-1 shadow-[0_0_20px_rgba(var(--primary-rgb,0,180,255),0.06)] backdrop-blur-md">
+      {open ? (
+        <div className="absolute right-0 left-0 z-50 mt-1 overflow-hidden rounded border border-primary/30 bg-card/95 py-1 shadow-[0_0_20px_rgba(var(--primary-rgb,0,180,255),0.06)] backdrop-blur-md">
           <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.02)_2px,rgba(0,0,0,0.02)_4px)]" />
           {options.map((option) => (
             <button
@@ -111,7 +130,7 @@ export function Select({
             </button>
           ))}
         </div>
-      )}
+      ) : null}
     </div>
-  )
+  );
 }

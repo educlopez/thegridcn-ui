@@ -1,18 +1,19 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-interface SliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
-  value?: number
-  defaultValue?: number
-  min?: number
-  max?: number
-  step?: number
-  onChange?: (value: number) => void
-  label?: string
-  showValue?: boolean
-  disabled?: boolean
+interface SliderProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  defaultValue?: number;
+  disabled?: boolean;
+  label?: string;
+  max?: number;
+  min?: number;
+  onChange?: (value: number) => void;
+  showValue?: boolean;
+  step?: number;
+  value?: number;
 }
 
 export function Slider({
@@ -28,14 +29,16 @@ export function Slider({
   className,
   ...props
 }: SliderProps) {
-  const [internalValue, setInternalValue] = React.useState(defaultValue)
-  const current = controlledValue ?? internalValue
-  const percent = ((current - min) / (max - min)) * 100
+  const [internalValue, setInternalValue] = React.useState(defaultValue);
+  const current = controlledValue ?? internalValue;
+  const percent = ((current - min) / (max - min)) * 100;
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const v = Number(e.target.value)
-    if (controlledValue === undefined) setInternalValue(v)
-    onChange?.(v)
+    const v = Number(e.target.value);
+    if (controlledValue === undefined) {
+      setInternalValue(v);
+    }
+    onChange?.(v);
   }
 
   return (
@@ -44,22 +47,22 @@ export function Slider({
       className={cn("space-y-1.5", disabled && "opacity-40", className)}
       {...props}
     >
-      {(label || showValue) && (
+      {label || showValue ? (
         <div className="flex items-center justify-between">
-          {label && (
-            <span className="font-mono text-[9px] uppercase tracking-widest text-foreground/40">
+          {label ? (
+            <span className="font-mono text-[9px] text-foreground/40 uppercase tracking-widest">
               {label}
             </span>
-          )}
-          {showValue && (
-            <span className="font-mono text-[10px] tabular-nums text-primary">
+          ) : null}
+          {showValue ? (
+            <span className="font-mono text-[10px] text-primary tabular-nums">
               {current}
             </span>
-          )}
+          ) : null}
         </div>
-      )}
+      ) : null}
 
-      <div className="relative h-5 flex items-center">
+      <div className="relative flex h-5 items-center">
         {/* Track background */}
         <div className="absolute h-1 w-full rounded-full bg-primary/10" />
 
@@ -100,5 +103,5 @@ export function Slider({
         />
       </div>
     </div>
-  )
+  );
 }

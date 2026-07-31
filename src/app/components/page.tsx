@@ -1,21 +1,17 @@
 "use client";
 
-import * as React from "react";
+import { ArrowRight, List, Settings, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { List, Settings, X, ArrowRight } from "lucide-react";
-import { TronHeader, TheGridcnLogo } from "@/components/layout";
-import { UplinkHeader } from "@/components/thegridcn";
+import * as React from "react";
 import {
+  Customizer,
   ItemExplorer,
   Preview,
-  Customizer,
 } from "@/components/components-page";
-import {
-  getAllComponents,
-  getComponentById,
-  type ComponentItem,
-} from "@/lib/component-data";
+import { TheGridcnLogo, TronHeader } from "@/components/layout";
+import { UplinkHeader } from "@/components/thegridcn";
+import { type ComponentItem, getComponentById } from "@/lib/component-data";
 import { cn } from "@/lib/utils";
 
 // Dynamic import for Three.js (client-side only)
@@ -69,7 +65,7 @@ export default function ComponentsPage() {
   }, [explorerOpen, customizerOpen]);
 
   const selectedComponent = selectedComponentId
-    ? getComponentById(selectedComponentId) ?? null
+    ? (getComponentById(selectedComponentId) ?? null)
     : null;
 
   return (
@@ -96,19 +92,20 @@ export default function ComponentsPage() {
       </div>
 
       {/* Templates CTA Banner */}
-      <div className="relative z-10 border-b border-primary/20 bg-card/60 backdrop-blur-sm">
+      <div className="relative z-10 border-primary/20 border-b bg-card/60 backdrop-blur-sm">
         <div className="container mx-auto flex flex-col items-center justify-between gap-3 px-4 py-3 sm:flex-row">
           <div className="flex items-center gap-3">
             <div className="hidden h-1.5 w-1.5 animate-pulse bg-primary sm:block" />
-            <p className="text-center font-mono text-[11px] tracking-wider text-foreground/80 sm:text-left">
-              <span className="text-primary">NEW:</span> See these components in action with our{" "}
-              <span className="text-foreground">Dashboard</span> and{" "}
-              <span className="text-foreground">Landing Page</span> templates
+            <p className="text-center font-mono text-[11px] text-foreground/80 tracking-wider sm:text-left">
+              <span className="text-primary">NEW:</span> See these components in
+              action with our <span className="text-foreground">Dashboard</span>{" "}
+              and <span className="text-foreground">Landing Page</span>{" "}
+              templates
             </p>
           </div>
           <Link
             href="/templates"
-            className="group flex shrink-0 items-center gap-2 rounded border border-primary/50 bg-primary/10 px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest text-primary transition-all hover:bg-primary/20 hover:shadow-[0_0_12px_rgba(var(--primary-rgb,0,180,255),0.15)]"
+            className="group flex shrink-0 items-center gap-2 rounded border border-primary/50 bg-primary/10 px-4 py-1.5 font-mono text-[10px] text-primary uppercase tracking-widest transition-all hover:bg-primary/20 hover:shadow-[0_0_12px_rgba(var(--primary-rgb,0,180,255),0.15)]"
           >
             View Templates
             <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
@@ -117,11 +114,12 @@ export default function ComponentsPage() {
       </div>
 
       {/* Mobile floating buttons */}
-      <div className="fixed bottom-6 left-4 right-4 z-40 flex items-center justify-between xl:hidden">
+      <div className="fixed right-4 bottom-6 left-4 z-40 flex items-center justify-between xl:hidden">
         {/* Explorer button */}
         <button
+          type="button"
           onClick={() => setExplorerOpen(true)}
-          className="flex items-center gap-2 rounded border border-primary/50 bg-background/90 px-4 py-3 font-mono text-xs tracking-wider text-primary shadow-lg shadow-primary/20 backdrop-blur-sm transition-all hover:bg-primary/10"
+          className="flex items-center gap-2 rounded border border-primary/50 bg-background/90 px-4 py-3 font-mono text-primary text-xs tracking-wider shadow-lg shadow-primary/20 backdrop-blur-sm transition-all hover:bg-primary/10"
         >
           <List className="h-4 w-4" />
           <span>COMPONENTS</span>
@@ -129,8 +127,9 @@ export default function ComponentsPage() {
 
         {/* Customizer button */}
         <button
+          type="button"
           onClick={() => setCustomizerOpen(true)}
-          className="flex items-center gap-2 rounded border border-primary/50 bg-background/90 px-4 py-3 font-mono text-xs tracking-wider text-primary shadow-lg shadow-primary/20 backdrop-blur-sm transition-all hover:bg-primary/10"
+          className="flex items-center gap-2 rounded border border-primary/50 bg-background/90 px-4 py-3 font-mono text-primary text-xs tracking-wider shadow-lg shadow-primary/20 backdrop-blur-sm transition-all hover:bg-primary/10"
         >
           <Settings className="h-4 w-4" />
           <span>THEME</span>
@@ -149,24 +148,23 @@ export default function ComponentsPage() {
       {/* Mobile Explorer Panel */}
       <div
         className={cn(
-          "fixed left-0 top-0 z-50 h-full w-72 transform border-r border-primary/30 bg-panel transition-transform duration-300 ease-in-out xl:hidden",
+          "fixed top-0 left-0 z-50 h-full w-72 transform border-primary/30 border-r bg-panel transition-transform duration-300 ease-in-out xl:hidden",
           explorerOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         {/* CRT scanline effect */}
-        <div
-          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
-        />
+        <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
         {/* Panel Header - Tron terminal style */}
-        <div className="relative flex h-14 items-center justify-between border-b border-primary/20 px-4">
+        <div className="relative flex h-14 items-center justify-between border-primary/20 border-b px-4">
           {/* Top accent line */}
-          <div className="absolute left-0 right-8 top-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
+          <div className="absolute top-0 right-8 left-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
 
-          <span className="font-mono text-[11px] tracking-[0.2em] text-foreground">
+          <span className="font-mono text-[11px] text-foreground tracking-[0.2em]">
             REGISTRY: <span className="text-foreground/70">01.IDX</span>
           </span>
 
           <button
+            type="button"
             onClick={() => setExplorerOpen(false)}
             className="flex items-center justify-center text-foreground/50 transition-colors hover:text-primary"
             aria-label="Close panel"
@@ -197,24 +195,23 @@ export default function ComponentsPage() {
       {/* Mobile Customizer Panel */}
       <div
         className={cn(
-          "fixed right-0 top-0 z-50 h-full w-72 transform border-l border-primary/30 bg-panel transition-transform duration-300 ease-in-out xl:hidden",
+          "fixed top-0 right-0 z-50 h-full w-72 transform border-primary/30 border-l bg-panel transition-transform duration-300 ease-in-out xl:hidden",
           customizerOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
         {/* CRT scanline effect */}
-        <div
-          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
-        />
+        <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
         {/* Panel Header - Tron terminal style */}
-        <div className="relative flex h-14 items-center justify-between border-b border-primary/20 px-4">
+        <div className="relative flex h-14 items-center justify-between border-primary/20 border-b px-4">
           {/* Top accent line */}
-          <div className="absolute left-0 right-8 top-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
+          <div className="absolute top-0 right-8 left-0 h-px bg-gradient-to-r from-primary/60 via-primary/30 to-transparent" />
 
-          <span className="font-mono text-[11px] tracking-[0.2em] text-foreground">
+          <span className="font-mono text-[11px] text-foreground tracking-[0.2em]">
             CONFIG: <span className="text-foreground/70">02.SYS</span>
           </span>
 
           <button
+            type="button"
             onClick={() => setCustomizerOpen(false)}
             className="flex items-center justify-center text-foreground/50 transition-colors hover:text-primary"
             aria-label="Close panel"
@@ -250,13 +247,9 @@ export default function ComponentsPage() {
       </main>
 
       {/* Footer */}
-      <footer
-        className="relative z-10 border-t border-primary/30 bg-panel"
-      >
+      <footer className="relative z-10 border-primary/30 border-t bg-panel">
         {/* CRT scanline effect */}
-        <div
-          className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]"
-        />
+        <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
         <UplinkHeader
           leftText="SYSTEM: THE GRIDCN v1.0.0"
           rightText="UPTIME: 99.9% - END OF LINE"
@@ -268,12 +261,10 @@ export default function ComponentsPage() {
               <TheGridcnLogo size="lg" />
               <div className="h-8 w-px bg-primary/40" />
               <div className="font-mono text-[10px]">
-                <div className="tracking-widest text-foreground">
+                <div className="text-foreground tracking-widest">
                   TRON-INSPIRED
                 </div>
-                <div className="tracking-wider text-primary">
-                  THEME SYSTEM
-                </div>
+                <div className="text-primary tracking-wider">THEME SYSTEM</div>
               </div>
             </div>
 
@@ -282,7 +273,7 @@ export default function ComponentsPage() {
                 (tech) => (
                   <span
                     key={tech}
-                    className="border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[9px] tracking-wider text-foreground"
+                    className="border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[9px] text-foreground tracking-wider"
                   >
                     {tech}
                   </span>
@@ -293,7 +284,7 @@ export default function ComponentsPage() {
 
           <div className="mt-8 flex items-center justify-center gap-4">
             <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/30" />
-            <span className="font-mono text-[9px] tracking-widest text-foreground">
+            <span className="font-mono text-[9px] text-foreground tracking-widest">
               GRID YEAR {new Date().getFullYear()} • ALL PROGRAMS RESERVED
             </span>
             <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/30" />

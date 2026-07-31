@@ -52,3 +52,7 @@ references
 public/r
 # Auto-generated component dates
 src/lib/component-dates.generated.ts
+
+# Tooling artifacts
+.codegraph/
+.cursor/rules/

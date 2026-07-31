@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import type * as React from "react";
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
-} from "@/components/ui/popover"
-import { cn } from "@/lib/utils"
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 interface TronPopoverProps {
-  open?: boolean
-  defaultOpen?: boolean
-  onOpenChange?: (open: boolean) => void
-  children: React.ReactNode
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  open?: boolean;
 }
 
 function TronPopover({ children, ...props }: TronPopoverProps) {
@@ -20,16 +20,20 @@ function TronPopover({ children, ...props }: TronPopoverProps) {
     <Popover data-slot="tron-popover" {...props}>
       {children}
     </Popover>
-  )
+  );
 }
 
 interface TronPopoverTriggerProps {
-  children: React.ReactNode
-  asChild?: boolean
-  className?: string
+  asChild?: boolean;
+  children: React.ReactNode;
+  className?: string;
 }
 
-function TronPopoverTrigger({ children, className, ...props }: TronPopoverTriggerProps) {
+function TronPopoverTrigger({
+  children,
+  className,
+  ...props
+}: TronPopoverTriggerProps) {
   return (
     <PopoverTrigger
       data-slot="tron-popover-trigger"
@@ -38,15 +42,15 @@ function TronPopoverTrigger({ children, className, ...props }: TronPopoverTrigge
     >
       {children}
     </PopoverTrigger>
-  )
+  );
 }
 
 interface TronPopoverContentProps {
-  children: React.ReactNode
-  className?: string
-  align?: "start" | "center" | "end"
-  side?: "top" | "bottom" | "left" | "right"
-  sideOffset?: number
+  align?: "start" | "center" | "end";
+  children: React.ReactNode;
+  className?: string;
+  side?: "top" | "bottom" | "left" | "right";
+  sideOffset?: number;
 }
 
 function TronPopoverContent({
@@ -73,15 +77,15 @@ function TronPopoverContent({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {/* Corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 h-2 w-2 border-l border-t border-primary/40" />
-      <div className="pointer-events-none absolute right-0 top-0 h-2 w-2 border-r border-t border-primary/40" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-b border-l border-primary/40" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-2 w-2 border-b border-r border-primary/40" />
+      <div className="pointer-events-none absolute top-0 left-0 h-2 w-2 border-primary/40 border-t border-l" />
+      <div className="pointer-events-none absolute top-0 right-0 h-2 w-2 border-primary/40 border-t border-r" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-primary/40 border-b border-l" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-2 w-2 border-primary/40 border-r border-b" />
 
       {/* Content */}
       <div className="relative">{children}</div>
     </PopoverContent>
-  )
+  );
 }
 
-export { TronPopover, TronPopoverTrigger, TronPopoverContent }
+export { TronPopover, TronPopoverContent, TronPopoverTrigger };

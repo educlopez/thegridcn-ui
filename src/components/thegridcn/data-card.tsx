@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface DataFieldProps {
-  label: string
-  value: string
-  highlight?: boolean
+  highlight?: boolean;
+  label: string;
+  value: string;
 }
 
 function DataField({ label, value, highlight = false }: DataFieldProps) {
   return (
     <div className="space-y-1">
-      <div className="text-[10px] uppercase tracking-widest text-foreground/80">
+      <div className="text-[10px] text-foreground/80 uppercase tracking-widest">
         {label}
       </div>
       <div className="flex items-center gap-2">
@@ -27,14 +27,14 @@ function DataField({ label, value, highlight = false }: DataFieldProps) {
         </span>
       </div>
     </div>
-  )
+  );
 }
 
 interface DataCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  title?: string
-  subtitle?: string
-  fields: { label: string; value: string; highlight?: boolean }[]
-  status?: "active" | "inactive" | "alert"
+  fields: { label: string; value: string; highlight?: boolean }[];
+  status?: "active" | "inactive" | "alert";
+  subtitle?: string;
+  title?: string;
 }
 
 export function DataCard({
@@ -47,9 +47,9 @@ export function DataCard({
 }: DataCardProps) {
   const statusColors = {
     active: "border-primary/50",
-    inactive: "border-muted",
     alert: "border-destructive/50",
-  }
+    inactive: "border-muted",
+  };
 
   return (
     <div
@@ -66,23 +66,23 @@ export function DataCard({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {/* Header */}
-      {(title || subtitle) && (
-        <div className="border-b border-border/50 px-4 py-2">
-          {subtitle && (
-            <div className="text-[10px] uppercase tracking-widest text-foreground/80">
+      {title || subtitle ? (
+        <div className="border-border/50 border-b px-4 py-2">
+          {subtitle ? (
+            <div className="text-[10px] text-foreground/80 uppercase tracking-widest">
               {subtitle}
             </div>
-          )}
-          {title && (
+          ) : null}
+          {title ? (
             <div className="flex items-center gap-2">
               <span className="text-primary">|</span>
-              <h3 className="text-lg font-bold uppercase tracking-wider">
+              <h3 className="font-bold text-lg uppercase tracking-wider">
                 {title}
               </h3>
             </div>
-          )}
+          ) : null}
         </div>
-      )}
+      ) : null}
 
       {/* Fields */}
       <div className="space-y-3 p-4">
@@ -97,10 +97,10 @@ export function DataCard({
       </div>
 
       {/* Corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-primary/50" />
-      <div className="pointer-events-none absolute right-0 top-0 h-4 w-4 border-r-2 border-t-2 border-primary/50" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-4 w-4 border-b-2 border-l-2 border-primary/50" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-4 w-4 border-b-2 border-r-2 border-primary/50" />
+      <div className="pointer-events-none absolute top-0 left-0 h-4 w-4 border-primary/50 border-t-2 border-l-2" />
+      <div className="pointer-events-none absolute top-0 right-0 h-4 w-4 border-primary/50 border-t-2 border-r-2" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-4 w-4 border-primary/50 border-b-2 border-l-2" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-4 w-4 border-primary/50 border-r-2 border-b-2" />
     </div>
-  )
+  );
 }

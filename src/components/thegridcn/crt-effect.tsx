@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface CRTEffectProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Intensity of the scanlines effect */
-  intensity?: "light" | "medium" | "heavy"
   /** Enable animated scan sweep line */
-  animated?: boolean
-  /** Line spacing in pixels */
-  spacing?: number
+  animated?: boolean;
   /** Use theme primary color for lines (gives cyan/colored tint) */
-  colored?: boolean
+  colored?: boolean;
+  /** Intensity of the scanlines effect */
+  intensity?: "light" | "medium" | "heavy";
+  /** Line spacing in pixels */
+  spacing?: number;
 }
 
 /**
@@ -28,10 +28,10 @@ export function CRTEffect({
   ...props
 }: CRTEffectProps) {
   const opacityMap = {
+    heavy: 0.25,
     light: 0.08,
     medium: 0.15,
-    heavy: 0.25,
-  }
+  };
 
   return (
     <div className={cn("relative overflow-hidden", className)} {...props}>
@@ -45,8 +45,8 @@ export function CRTEffect({
             0deg,
             transparent,
             transparent ${spacing}px,
-            ${colored ? 'hsl(var(--primary) / ' + opacityMap[intensity] + ')' : `rgba(0, 0, 0, ${opacityMap[intensity]})`} ${spacing}px,
-            ${colored ? 'hsl(var(--primary) / ' + opacityMap[intensity] + ')' : `rgba(0, 0, 0, ${opacityMap[intensity]})`} ${spacing * 2}px
+            ${colored ? `hsl(var(--primary) / ${opacityMap[intensity]})` : `rgba(0, 0, 0, ${opacityMap[intensity]})`} ${spacing}px,
+            ${colored ? `hsl(var(--primary) / ${opacityMap[intensity]})` : `rgba(0, 0, 0, ${opacityMap[intensity]})`} ${spacing * 2}px
           )`,
         }}
       />
@@ -55,27 +55,31 @@ export function CRTEffect({
       <div
         className="pointer-events-none absolute inset-0 z-10 animate-flicker opacity-[0.02]"
         style={{
-          background: "linear-gradient(transparent 50%, rgba(0, 0, 0, 0.1) 50%)",
+          background:
+            "linear-gradient(transparent 50%, rgba(0, 0, 0, 0.1) 50%)",
           backgroundSize: "100% 4px",
         }}
       />
 
       {/* Animated scan sweep line */}
-      {animated && (
+      {animated ? (
         <div
-          className="pointer-events-none absolute left-0 right-0 z-20 h-[2px] animate-scan-sweep"
+          className="pointer-events-none absolute right-0 left-0 z-20 h-[2px] animate-scan-sweep"
           style={{
-            background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5), transparent)",
-            boxShadow: "0 0 10px hsl(var(--primary) / 0.3), 0 0 20px hsl(var(--primary) / 0.2)",
+            background:
+              "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5), transparent)",
+            boxShadow:
+              "0 0 10px hsl(var(--primary) / 0.3), 0 0 20px hsl(var(--primary) / 0.2)",
           }}
         />
-      )}
+      ) : null}
 
       {/* Vignette effect */}
       <div
         className="pointer-events-none absolute inset-0 z-10"
         style={{
-          background: "radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.3) 100%)",
+          background:
+            "radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.3) 100%)",
         }}
       />
 
@@ -115,5 +119,5 @@ export function CRTEffect({
         }
       `}</style>
     </div>
-  )
+  );
 }

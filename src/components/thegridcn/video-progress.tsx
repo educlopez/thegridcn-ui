@@ -1,13 +1,14 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
-export interface VideoProgressProps extends React.HTMLAttributes<HTMLDivElement> {
-  currentTime?: string
-  endTime?: string
-  progress?: number
-  markers?: { position: number; label?: string }[]
+export interface VideoProgressProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  currentTime?: string;
+  endTime?: string;
+  markers?: { position: number; label?: string }[];
+  progress?: number;
 }
 
 export function VideoProgress({
@@ -51,5 +52,5 @@ export function VideoProgress({
         <span className="text-foreground/80">{endTime}</span>
       </div>
     </div>
-  )
+  );
 }

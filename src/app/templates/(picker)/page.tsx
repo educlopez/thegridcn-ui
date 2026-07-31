@@ -1,47 +1,52 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { LayoutDashboard, Globe, FileText, LogIn, BarChart3 } from "lucide-react"
-import { GlowContainer } from "@/components/thegridcn"
-import { UplinkHeader } from "@/components/thegridcn"
+import {
+  BarChart3,
+  FileText,
+  Globe,
+  LayoutDashboard,
+  LogIn,
+} from "lucide-react";
+import Link from "next/link";
+import { GlowContainer, UplinkHeader } from "@/components/thegridcn";
 
 const TEMPLATES = [
   {
-    name: "Dashboard",
     description:
       "Full admin dashboard with collapsible sidebar, metric cards, charts, data table, activity feed, and widget cluster. Demonstrates 12+ components in a real-world layout.",
     href: "/templates/dashboard",
     icon: LayoutDashboard,
+    name: "Dashboard",
   },
   {
-    name: "Landing Page",
     description:
       "Complete marketing landing page with hero section, feature grid, pricing cards, testimonials, comparison table, FAQ, and newsletter form. Demonstrates 12+ components in a conversion-focused layout.",
     href: "/templates/landing",
     icon: Globe,
+    name: "Landing Page",
   },
   {
-    name: "Blog",
     description:
       "Full blog article page with two-column layout, table of contents sidebar, code blocks, author bio, newsletter CTA, and related articles. Perfect for content-driven sites.",
     href: "/templates/blog",
     icon: FileText,
+    name: "Blog",
   },
   {
-    name: "Login",
     description:
       "Split-panel authentication page with decorative branding panel, email/password form, social login buttons, and circuit background effects. Clean and secure feeling.",
     href: "/templates/login",
     icon: LogIn,
+    name: "Login",
   },
   {
-    name: "Analytics",
     description:
       "Data-rich analytics dashboard with tab navigation, KPI cards, area/bar/pie charts, heatmap, data tables, and real-time metrics. No sidebar — full-width chart-focused layout.",
     href: "/templates/analytics",
     icon: BarChart3,
+    name: "Analytics",
   },
-]
+];
 
 export default function TemplatesPickerPage() {
   return (
@@ -58,10 +63,10 @@ export default function TemplatesPickerPage() {
       <div className="relative z-10 mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="mb-12 text-center">
-          <h1 className="font-[family-name:var(--font-orbitron)] text-3xl font-bold tracking-wider text-primary sm:text-4xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
+          <h1 className="font-[family-name:var(--font-orbitron)] font-bold text-3xl text-primary tracking-wider [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)] sm:text-4xl">
             TEMPLATES
           </h1>
-          <p className="mt-4 font-mono text-sm text-foreground/60">
+          <p className="mt-4 font-mono text-foreground/60 text-sm">
             Full-page compositions demonstrating thegridcn components in
             real-world layouts. Click to view full-screen.
           </p>
@@ -83,18 +88,19 @@ export default function TemplatesPickerPage() {
 
                 {/* Info */}
                 <div className="flex flex-1 flex-col gap-2">
-                  <h2 className="font-[family-name:var(--font-orbitron)] text-lg font-semibold tracking-wider text-primary">
+                  <h2 className="font-[family-name:var(--font-orbitron)] font-semibold text-lg text-primary tracking-wider">
                     {template.name}
                   </h2>
-                  <p className="text-sm leading-relaxed text-foreground/60">
+                  <p className="text-foreground/60 text-sm leading-relaxed">
                     {template.description}
                   </p>
                 </div>
 
                 {/* CTA */}
-                <div className="mt-auto flex items-center gap-2 font-mono text-xs tracking-widest text-primary/60 transition-colors group-hover:text-primary">
+                <div className="mt-auto flex items-center gap-2 font-mono text-primary/60 text-xs tracking-widest transition-colors group-hover:text-primary">
                   <span>VIEW TEMPLATE</span>
                   <svg
+                    aria-hidden="true"
                     width="14"
                     height="14"
                     viewBox="0 0 16 16"
@@ -116,5 +122,5 @@ export default function TemplatesPickerPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

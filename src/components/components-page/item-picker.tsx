@@ -1,10 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { SearchIcon } from "lucide-react";
-import { getAllComponents, type ComponentItem } from "@/lib/component-data";
-import { groupComponentsByType } from "@/lib/utils";
-import { isNewComponent } from "@/lib/component-new";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   CommandDialog,
@@ -14,17 +11,16 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { type ComponentItem, getAllComponents } from "@/lib/component-data";
+import { isNewComponent } from "@/lib/component-new";
+import { groupComponentsByType } from "@/lib/utils";
 
 interface ItemPickerProps {
   currentItemId?: string;
   onItemSelect?: (item: ComponentItem) => void;
 }
 
-
-export function ItemPicker({
-  currentItemId,
-  onItemSelect,
-}: ItemPickerProps) {
+export function ItemPicker({ currentItemId, onItemSelect }: ItemPickerProps) {
   const [open, setOpen] = React.useState(false);
   const allComponents = React.useMemo(() => getAllComponents(), []);
   const groupedItems = React.useMemo(
@@ -71,7 +67,7 @@ export function ItemPicker({
             {currentItem?.title || "Search components..."}
           </span>
         </div>
-        <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+        <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-medium font-mono text-[10px] opacity-100 sm:flex">
           <span className="text-xs">⌘</span>K
         </kbd>
       </Button>
@@ -90,11 +86,11 @@ export function ItemPicker({
                 >
                   <span>{item.title}</span>
                   {isNewComponent(item.id) && (
-                    <span className="shrink-0 rounded border border-primary/40 bg-primary/10 px-1 py-px font-mono text-[8px] uppercase tracking-wider text-primary">
+                    <span className="shrink-0 rounded border border-primary/40 bg-primary/10 px-1 py-px font-mono text-[8px] text-primary uppercase tracking-wider">
                       new
                     </span>
                   )}
-                  <span className="text-foreground/80 ml-auto text-xs opacity-0 group-data-[selected=true]:opacity-100">
+                  <span className="ml-auto text-foreground/80 text-xs opacity-0 group-data-[selected=true]:opacity-100">
                     {group.title}
                   </span>
                 </CommandItem>

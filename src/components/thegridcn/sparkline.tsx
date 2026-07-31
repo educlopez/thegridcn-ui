@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface SparklineProps extends React.HTMLAttributes<HTMLDivElement> {
-  data: number[]
-  width?: number
-  height?: number
-  variant?: "default" | "success" | "warning" | "danger"
-  showArea?: boolean
-  animated?: boolean
+  animated?: boolean;
+  data: number[];
+  height?: number;
+  showArea?: boolean;
+  variant?: "default" | "success" | "warning" | "danger";
+  width?: number;
 }
 
 const variantStroke: Record<string, string> = {
+  danger: "rgb(239,68,68)",
   default: "var(--primary)",
   success: "rgb(34,197,94)",
   warning: "rgb(245,158,11)",
-  danger: "rgb(239,68,68)",
-}
+};
 
 export function Sparkline({
   data,
@@ -29,37 +29,44 @@ export function Sparkline({
   className,
   ...props
 }: SparklineProps) {
-  const filterId = React.useId()
-  const stroke = variantStroke[variant]
-  const pathRef = React.useRef<SVGPathElement>(null)
+  const filterId = React.useId();
+  const stroke = variantStroke[variant];
+  const pathRef = React.useRef<SVGPathElement>(null);
 
   React.useEffect(() => {
-    if (!animated || !pathRef.current) return
-    const path = pathRef.current
-    const length = path.getTotalLength()
-    path.style.strokeDasharray = `${length}`
-    path.style.strokeDashoffset = `${length}`
+    if (!(animated && pathRef.current)) {
+      return;
+    }
+    const path = pathRef.current;
+    const length = path.getTotalLength();
+    path.style.strokeDasharray = `${length}`;
+    path.style.strokeDashoffset = `${length}`;
     // Trigger animation
     requestAnimationFrame(() => {
-      path.style.transition = "stroke-dashoffset 1s ease-out"
-      path.style.strokeDashoffset = "0"
-    })
-  }, [animated, data])
+      path.style.transition = "stroke-dashoffset 1s ease-out";
+      path.style.strokeDashoffset = "0";
+    });
+  }, [animated]);
 
-  if (data.length < 2) return null
+  if (data.length < 2) {
+    return null;
+  }
 
-  const maxVal = Math.max(...data)
-  const minVal = Math.min(...data)
-  const range = maxVal - minVal || 1
-  const pad = 2
+  const maxVal = Math.max(...data);
+  const minVal = Math.min(...data);
+  const range = maxVal - minVal || 1;
+  const pad = 2;
 
   const points = data.map((v, i) => ({
     x: pad + (i / (data.length - 1)) * (width - pad * 2),
     y: pad + (1 - (v - minVal) / range) * (height - pad * 2),
-  }))
+  }));
 
-  const linePath = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ")
-  const areaPath = linePath + ` L${width - pad},${height} L${pad},${height} Z`
+  const linePath = points
+    .map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`)
+    .join(" ");
+  const areaPath = `${linePath} L${width - pad},${height} L${pad},${height} Z`;
+  const lastPoint = points.at(-1) ?? { x: pad, y: height - pad };
 
   return (
     <div
@@ -67,7 +74,7 @@ export function Sparkline({
       className={cn("inline-block", className)}
       {...props}
     >
-      <svg width={width} height={height}>
+      <svg aria-hidden="true" width={width} height={height}>
         <defs>
           <filter id={filterId}>
             <feGaussianBlur stdDeviation="1.5" result="blur" />
@@ -78,9 +85,7 @@ export function Sparkline({
           </filter>
         </defs>
 
-        {showArea && (
-          <path d={areaPath} fill={stroke} opacity={0.08} />
-        )}
+        {showArea ? <path d={areaPath} fill={stroke} opacity={0.08} /> : null}
 
         <path
           ref={pathRef}
@@ -95,13 +100,13 @@ export function Sparkline({
 
         {/* End dot */}
         <circle
-          cx={points[points.length - 1].x}
-          cy={points[points.length - 1].y}
+          cx={lastPoint.x}
+          cy={lastPoint.y}
           r={2.5}
           fill={stroke}
           className="animate-pulse"
         />
       </svg>
     </div>
-  )
+  );
 }

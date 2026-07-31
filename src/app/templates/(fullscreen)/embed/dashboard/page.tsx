@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 
 const DashboardTemplate = dynamic(
   () =>
@@ -8,8 +8,8 @@ const DashboardTemplate = dynamic(
       (mod) => mod.DashboardTemplate
     ),
   { ssr: false }
-)
+);
 
 export default function DashboardEmbedPage() {
-  return <DashboardTemplate />
+  return <DashboardTemplate />;
 }

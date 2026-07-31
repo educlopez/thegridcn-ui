@@ -1,6 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,11 +11,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Skeleton } from "@/components/ui/skeleton"
+} from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -21,24 +22,41 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { SectionWrapper, ComponentCard } from "./section-wrapper"
+} from "@/components/ui/table";
+import { ComponentCard, SectionWrapper } from "./section-wrapper";
 
 const programs = [
-  { id: "PRG-001", name: "Tron", type: "Security", status: "Active", cycles: 2847 },
-  { id: "PRG-002", name: "Clu", type: "Admin", status: "Derezzed", cycles: 1000 },
-  { id: "PRG-003", name: "Quorra", type: "ISO", status: "Active", cycles: 512 },
-  { id: "PRG-004", name: "Rinzler", type: "Combat", status: "Repurposed", cycles: 1523 },
-]
+  {
+    cycles: 2847,
+    id: "PRG-001",
+    name: "Tron",
+    status: "Active",
+    type: "Security",
+  },
+  {
+    cycles: 1000,
+    id: "PRG-002",
+    name: "Clu",
+    status: "Derezzed",
+    type: "Admin",
+  },
+  { cycles: 512, id: "PRG-003", name: "Quorra", status: "Active", type: "ISO" },
+  {
+    cycles: 1523,
+    id: "PRG-004",
+    name: "Rinzler",
+    status: "Repurposed",
+    type: "Combat",
+  },
+];
 
 export function DataDisplaySection() {
-  const [progress, setProgress] = React.useState(13)
+  const [progress, setProgress] = React.useState(13);
 
   React.useEffect(() => {
-    const timer = setTimeout(() => setProgress(66), 500)
-    return () => clearTimeout(timer)
-  }, [])
+    const timer = setTimeout(() => setProgress(66), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <SectionWrapper
@@ -53,8 +71,10 @@ export function DataDisplaySection() {
               <CardDescription>Grid diagnostics report</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-2xl font-bold text-primary">Online</p>
-              <p className="text-sm text-muted-foreground">All systems operational</p>
+              <p className="font-bold text-2xl text-primary">Online</p>
+              <p className="text-muted-foreground text-sm">
+                All systems operational
+              </p>
             </CardContent>
             <CardFooter>
               <Button variant="outline" size="sm">
@@ -69,7 +89,7 @@ export function DataDisplaySection() {
               <CardDescription>Currently running</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-4xl font-bold text-primary">2,847</p>
+              <p className="font-bold text-4xl text-primary">2,847</p>
             </CardContent>
           </Card>
 
@@ -80,7 +100,9 @@ export function DataDisplaySection() {
             </CardHeader>
             <CardContent className="space-y-2">
               <Progress value={progress} className="h-2" />
-              <p className="text-sm text-muted-foreground">{progress}% capacity</p>
+              <p className="text-muted-foreground text-sm">
+                {progress}% capacity
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -88,33 +110,49 @@ export function DataDisplaySection() {
 
       <ComponentCard title="Avatar">
         <div className="flex flex-wrap items-center gap-4">
-          <Avatar className="h-16 w-16 border-2 border-primary glow-sm">
+          <Avatar className="glow-sm h-16 w-16 border-2 border-primary">
             <AvatarImage src="/placeholder-user.jpg" alt="User" />
-            <AvatarFallback className="bg-primary/20 text-primary">TR</AvatarFallback>
+            <AvatarFallback className="bg-primary/20 text-primary">
+              TR
+            </AvatarFallback>
           </Avatar>
           <Avatar className="h-12 w-12 border-2 border-primary">
-            <AvatarFallback className="bg-primary/20 text-primary">CL</AvatarFallback>
+            <AvatarFallback className="bg-primary/20 text-primary">
+              CL
+            </AvatarFallback>
           </Avatar>
           <Avatar className="h-10 w-10 border-2 border-primary">
-            <AvatarFallback className="bg-primary/20 text-primary">QR</AvatarFallback>
+            <AvatarFallback className="bg-primary/20 text-primary">
+              QR
+            </AvatarFallback>
           </Avatar>
           <Avatar className="h-8 w-8 border-2 border-primary">
-            <AvatarFallback className="bg-primary/20 text-primary">RZ</AvatarFallback>
+            <AvatarFallback className="bg-primary/20 text-primary">
+              RZ
+            </AvatarFallback>
           </Avatar>
 
           {/* Stacked avatars */}
           <div className="flex -space-x-4">
             <Avatar className="border-2 border-background">
-              <AvatarFallback className="bg-primary/20 text-primary">A</AvatarFallback>
+              <AvatarFallback className="bg-primary/20 text-primary">
+                A
+              </AvatarFallback>
             </Avatar>
             <Avatar className="border-2 border-background">
-              <AvatarFallback className="bg-primary/20 text-primary">B</AvatarFallback>
+              <AvatarFallback className="bg-primary/20 text-primary">
+                B
+              </AvatarFallback>
             </Avatar>
             <Avatar className="border-2 border-background">
-              <AvatarFallback className="bg-primary/20 text-primary">C</AvatarFallback>
+              <AvatarFallback className="bg-primary/20 text-primary">
+                C
+              </AvatarFallback>
             </Avatar>
             <Avatar className="border-2 border-background">
-              <AvatarFallback className="bg-muted text-muted-foreground">+3</AvatarFallback>
+              <AvatarFallback className="bg-muted text-muted-foreground">
+                +3
+              </AvatarFallback>
             </Avatar>
           </div>
         </div>
@@ -126,7 +164,7 @@ export function DataDisplaySection() {
           <Badge variant="secondary">Secondary</Badge>
           <Badge variant="outline">Outline</Badge>
           <Badge variant="destructive">Destructive</Badge>
-          <Badge className="bg-primary/20 text-primary glow-sm">Glow</Badge>
+          <Badge className="glow-sm bg-primary/20 text-primary">Glow</Badge>
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
           <Badge className="bg-green-500/20 text-green-400">Online</Badge>
@@ -178,7 +216,9 @@ export function DataDisplaySection() {
             <TableBody>
               {programs.map((program) => (
                 <TableRow key={program.id}>
-                  <TableCell className="font-mono text-xs">{program.id}</TableCell>
+                  <TableCell className="font-mono text-xs">
+                    {program.id}
+                  </TableCell>
                   <TableCell className="font-medium">{program.name}</TableCell>
                   <TableCell>{program.type}</TableCell>
                   <TableCell>
@@ -188,14 +228,16 @@ export function DataDisplaySection() {
                         program.status === "Active"
                           ? "border-green-500 text-green-400"
                           : program.status === "Derezzed"
-                          ? "border-red-500 text-red-400"
-                          : "border-yellow-500 text-yellow-400"
+                            ? "border-red-500 text-red-400"
+                            : "border-yellow-500 text-yellow-400"
                       }
                     >
                       {program.status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right font-mono">{program.cycles}</TableCell>
+                  <TableCell className="text-right font-mono">
+                    {program.cycles}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -220,5 +262,5 @@ export function DataDisplaySection() {
         </div>
       </ComponentCard>
     </SectionWrapper>
-  )
+  );
 }

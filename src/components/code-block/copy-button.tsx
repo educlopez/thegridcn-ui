@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState, type ComponentProps } from "react";
-
-import { cn } from "@/lib/utils";
 import { Check, Copy } from "lucide-react";
+import { type ComponentProps, useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface CopyButtonProps extends ComponentProps<"button"> {
   content: string;
@@ -21,7 +20,9 @@ const CopyButton = ({
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!isCopied) return;
+    if (!isCopied) {
+      return;
+    }
 
     const timeout = setTimeout(() => {
       setIsCopied(false);
@@ -54,7 +55,7 @@ const CopyButton = ({
         "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/60",
         "data-[copied=true]:text-primary",
         "data-[copied=true]:shadow-[0_0_10px_var(--primary)]",
-        className,
+        className
       )}
       onClick={handleCopy}
       {...props}
@@ -62,17 +63,17 @@ const CopyButton = ({
       {isCopied ? (
         <Check
           size={iconSize}
-          className="animate-in zoom-in-50 duration-200"
+          className="zoom-in-50 animate-in duration-200"
           aria-hidden="true"
         />
       ) : (
         <Copy
           size={iconSize}
-          className="animate-in zoom-in-50 duration-200"
+          className="zoom-in-50 animate-in duration-200"
           aria-hidden="true"
         />
       )}
-      {label ? <span>{isCopied ? "Copied" : label}</span> : null}
+      {label ? <span>{isCopied ? "Copied" : String(label)}</span> : null}
     </button>
   );
 };

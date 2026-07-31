@@ -1,25 +1,25 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { CopyButton } from "@/components/thegridcn/copy-button"
+import * as React from "react";
+import { CopyButton } from "@/components/thegridcn/copy-button";
+import { cn } from "@/lib/utils";
 
-type PackageManager = "npm" | "yarn" | "pnpm" | "bun"
+type PackageManager = "npm" | "yarn" | "pnpm" | "bun";
 
 interface InstallCommandProps extends React.HTMLAttributes<HTMLDivElement> {
-  packageName: string
-  packageManager?: PackageManager | "auto"
-  command?: string
+  command?: string;
+  packageManager?: PackageManager | "auto";
+  packageName: string;
 }
 
 const managerCommands: Record<PackageManager, string> = {
-  npm: "npm install",
-  yarn: "yarn add",
-  pnpm: "pnpm add",
   bun: "bun add",
-}
+  npm: "npm install",
+  pnpm: "pnpm add",
+  yarn: "yarn add",
+};
 
-const allManagers: PackageManager[] = ["npm", "yarn", "pnpm", "bun"]
+const allManagers: PackageManager[] = ["npm", "yarn", "pnpm", "bun"];
 
 export function InstallCommand({
   packageName,
@@ -30,13 +30,13 @@ export function InstallCommand({
 }: InstallCommandProps) {
   const [activeManager, setActiveManager] = React.useState<PackageManager>(
     packageManager === "auto" ? "npm" : packageManager
-  )
+  );
 
-  const showTabs = packageManager === "auto"
+  const showTabs = packageManager === "auto";
 
   const fullCommand = command
     ? command
-    : `${managerCommands[activeManager]} ${packageName}`
+    : `${managerCommands[activeManager]} ${packageName}`;
 
   return (
     <div
@@ -51,14 +51,14 @@ export function InstallCommand({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {/* Corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 h-2 w-2 border-l border-t border-primary/40" />
-      <div className="pointer-events-none absolute right-0 top-0 h-2 w-2 border-r border-t border-primary/40" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-b border-l border-primary/40" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-2 w-2 border-b border-r border-primary/40" />
+      <div className="pointer-events-none absolute top-0 left-0 h-2 w-2 border-primary/40 border-t border-l" />
+      <div className="pointer-events-none absolute top-0 right-0 h-2 w-2 border-primary/40 border-t border-r" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-primary/40 border-b border-l" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-2 w-2 border-primary/40 border-r border-b" />
 
       {/* Package manager tabs */}
       {showTabs && (
-        <div className="relative flex border-b border-primary/15">
+        <div className="relative flex border-primary/15 border-b">
           {allManagers.map((manager) => (
             <button
               key={manager}
@@ -73,7 +73,7 @@ export function InstallCommand({
             >
               {manager}
               {activeManager === manager && (
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-primary/60 shadow-[0_0_4px_rgba(var(--primary-rgb,0,180,255),0.3)]" />
+                <div className="absolute right-0 bottom-0 left-0 h-px bg-primary/60 shadow-[0_0_4px_rgba(var(--primary-rgb,0,180,255),0.3)]" />
               )}
             </button>
           ))}
@@ -83,10 +83,10 @@ export function InstallCommand({
       {/* Command display */}
       <div className="relative flex items-center gap-3 px-4 py-3">
         <div className="flex min-w-0 flex-1 items-center gap-2">
-          <span className="shrink-0 font-mono text-xs text-foreground/30">
+          <span className="shrink-0 font-mono text-foreground/30 text-xs">
             $
           </span>
-          <code className="min-w-0 flex-1 truncate font-mono text-xs text-foreground/70">
+          <code className="min-w-0 flex-1 truncate font-mono text-foreground/70 text-xs">
             {fullCommand}
           </code>
         </div>
@@ -99,7 +99,7 @@ export function InstallCommand({
       </div>
 
       {/* Bottom glow */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
     </div>
-  )
+  );
 }

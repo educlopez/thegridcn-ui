@@ -1,23 +1,23 @@
 "use client";
 
+import { Check, ChevronDown, Code, Copy, Eye } from "lucide-react";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Copy, Check, ChevronDown, Code, Eye } from "lucide-react";
-import { type ComponentItem } from "@/lib/component-data";
-import { AnomalyBanner } from "@/components/thegridcn";
-import { useTheme } from "@/components/theme";
-import { ComponentPreview } from "./component-preview";
-import { ComponentErrorBoundary } from "./error-boundary";
-import { cn } from "@/lib/utils";
 import {
   CodeBlock,
+  CodeBlockContent,
+  CodeBlockGroup,
   CodeBlockHeader,
   CodeBlockIcon,
-  CodeBlockGroup,
-  CodeBlockContent,
 } from "@/components/code-block/code-block";
 import { CopyButton } from "@/components/code-block/copy-button";
 import { CodeBlockShiki } from "@/components/code-block/shiki";
+import { AnomalyBanner } from "@/components/thegridcn";
+import { useTheme } from "@/components/theme";
+import type { ComponentItem } from "@/lib/component-data";
+import { cn } from "@/lib/utils";
+import { ComponentPreview } from "./component-preview";
+import { ComponentErrorBoundary } from "./error-boundary";
 
 type ViewMode = "preview" | "code";
 
@@ -31,16 +31,16 @@ function getRegistryName(componentId: string): string | null {
   // (prefixed to avoid clashing with shadcn base components)
   const specialMappings: Record<string, string> = {
     "alert-banner": "thegridcn-alert",
-    "skeleton": "thegridcn-skeleton",
-    "tabs": "thegridcn-tabs",
-    "tooltip": "thegridcn-tooltip",
-    "toggle": "thegridcn-toggle",
-    "pagination": "thegridcn-pagination",
-    "badge": "thegridcn-badge",
-    "slider": "thegridcn-slider",
-    "select": "thegridcn-select",
-    "timeline": "thegridcn-timeline",
+    badge: "thegridcn-badge",
+    pagination: "thegridcn-pagination",
+    select: "thegridcn-select",
     "sidebar-nav": "sidebar",
+    skeleton: "thegridcn-skeleton",
+    slider: "thegridcn-slider",
+    tabs: "thegridcn-tabs",
+    timeline: "thegridcn-timeline",
+    toggle: "thegridcn-toggle",
+    tooltip: "thegridcn-tooltip",
   };
 
   if (specialMappings[componentId]) {
@@ -58,10 +58,10 @@ function getRegistryName(componentId: string): string | null {
 type PackageManager = "pnpm" | "npm" | "yarn" | "bun";
 
 const packageManagerCommands: Record<PackageManager, string> = {
-  pnpm: "pnpm dlx shadcn@latest add",
-  npm: "npx shadcn@latest add",
-  yarn: "yarn shadcn@latest add",
   bun: "bunx --bun shadcn@latest add",
+  npm: "npx shadcn@latest add",
+  pnpm: "pnpm dlx shadcn@latest add",
+  yarn: "yarn shadcn@latest add",
 };
 
 /** Resolve file path from registry data into a short display name */
@@ -98,11 +98,13 @@ function CodeViewer({ componentId }: { componentId: string }) {
 
     fetch(`/r/${registryName}.json`)
       .then((res) => {
-        if (!res.ok) throw new Error("Component not found");
+        if (!res.ok) {
+          throw new Error("Component not found");
+        }
         return res.json();
       })
       .then((data) => {
-        if (data.files && data.files[0]?.content) {
+        if (data.files?.[0]?.content) {
           setCode(data.files[0].content);
           setFileName(getFileName(data));
         } else {
@@ -121,7 +123,7 @@ function CodeViewer({ componentId }: { componentId: string }) {
   if (loading) {
     return (
       <div className="flex h-full items-center justify-center bg-black">
-        <div className="flex items-center gap-2 font-mono text-xs text-foreground/40">
+        <div className="flex items-center gap-2 font-mono text-foreground/40 text-xs">
           <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
           LOADING SOURCE...
         </div>
@@ -132,7 +134,7 @@ function CodeViewer({ componentId }: { componentId: string }) {
   if (error || !code) {
     return (
       <div className="flex h-full items-center justify-center bg-black">
-        <div className="font-mono text-[10px] uppercase tracking-widest text-foreground/30">
+        <div className="font-mono text-[10px] text-foreground/30 uppercase tracking-widest">
           {error || "No source code available"}
         </div>
       </div>
@@ -150,7 +152,7 @@ function CodeViewer({ componentId }: { componentId: string }) {
           <span className="font-mono text-[11px]">{fileName}</span>
         </CodeBlockGroup>
         <CodeBlockGroup>
-          <span className="font-mono text-[9px] uppercase tracking-widest text-foreground/20">
+          <span className="font-mono text-[9px] text-foreground/20 uppercase tracking-widest">
             {lineCount} lines
           </span>
           <CopyButton content={code} />
@@ -166,8 +168,12 @@ function CodeViewer({ componentId }: { componentId: string }) {
 function InstallCommand({ componentId }: { componentId: string }) {
   const [copied, setCopied] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
-  const [packageManager, setPackageManager] = React.useState<PackageManager>("pnpm");
-  const [dropdownPosition, setDropdownPosition] = React.useState({ top: 0, left: 0 });
+  const [packageManager, setPackageManager] =
+    React.useState<PackageManager>("pnpm");
+  const [dropdownPosition, setDropdownPosition] = React.useState({
+    left: 0,
+    top: 0,
+  });
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
   const { theme, tronIntensity } = useTheme();
@@ -177,12 +183,18 @@ function InstallCommand({ componentId }: { componentId: string }) {
 
   // Build command dynamically — only append theme/intensity when different from defaults
   const parts = registryName ? [`@thegridcn/${registryName}`] : [];
-  if (theme !== "tron") parts.push(`@thegridcn/theme-${theme}`);
-  if (tronIntensity !== "light") parts.push(`@thegridcn/intensity-${tronIntensity}`);
+  if (theme !== "tron") {
+    parts.push(`@thegridcn/theme-${theme}`);
+  }
+  if (tronIntensity !== "light") {
+    parts.push(`@thegridcn/intensity-${tronIntensity}`);
+  }
   const command = registryName ? `${base} ${parts.join(" ")}` : "";
 
   const handleCopy = async () => {
-    if (!command) return;
+    if (!command) {
+      return;
+    }
     await navigator.clipboard.writeText(command);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -197,8 +209,8 @@ function InstallCommand({ componentId }: { componentId: string }) {
     if (!isOpen && buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect();
       setDropdownPosition({
-        top: rect.bottom + 4,
         left: rect.left,
+        top: rect.bottom + 4,
       });
     }
     setIsOpen(!isOpen);
@@ -206,7 +218,9 @@ function InstallCommand({ componentId }: { componentId: string }) {
 
   // Close dropdown when clicking outside
   React.useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      return;
+    }
 
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
@@ -238,24 +252,29 @@ function InstallCommand({ componentId }: { componentId: string }) {
     <div className="flex min-w-0 max-w-full items-center">
       {/* Package manager selector */}
       <button
+        type="button"
         ref={buttonRef}
         onClick={handleToggle}
-        className="flex items-center gap-1 rounded-l border border-r-0 border-primary/30 bg-primary/10 px-2 py-1.5 font-mono text-xs text-primary transition-all hover:bg-primary/20"
+        className="flex items-center gap-1 rounded-l border border-primary/30 border-r-0 bg-primary/10 px-2 py-1.5 font-mono text-primary text-xs transition-all hover:bg-primary/20"
       >
         {packageManager}
-        <ChevronDown className={cn("h-3 w-3 transition-transform", isOpen && "rotate-180")} />
+        <ChevronDown
+          className={cn("h-3 w-3 transition-transform", isOpen && "rotate-180")}
+        />
       </button>
 
       {/* Dropdown rendered via Portal */}
-      {isOpen && typeof document !== "undefined" &&
+      {isOpen &&
+        typeof document !== "undefined" &&
         ReactDOM.createPortal(
           <div
             ref={dropdownRef}
-            className="fixed z-[9999] min-w-[80px] overflow-hidden rounded border border-primary/30 bg-panel shadow-lg shadow-black/20"
-            style={{ top: dropdownPosition.top, left: dropdownPosition.left }}
+            className="fixed z-[9999] min-w-[80px] overflow-hidden rounded border border-primary/30 bg-panel shadow-black/20 shadow-lg"
+            style={{ left: dropdownPosition.left, top: dropdownPosition.top }}
           >
             {packageManagers.map((pm) => (
               <button
+                type="button"
                 key={pm}
                 onClick={() => handleSelect(pm)}
                 className={cn(
@@ -270,13 +289,13 @@ function InstallCommand({ componentId }: { componentId: string }) {
             ))}
           </div>,
           document.body
-        )
-      }
+        )}
 
       {/* Command display and copy button */}
       <button
+        type="button"
         onClick={handleCopy}
-        className="group flex min-w-0 flex-1 items-center gap-2 rounded-r border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-xs text-primary/80 transition-all hover:bg-primary/20"
+        className="group flex min-w-0 flex-1 items-center gap-2 rounded-r border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-primary/80 text-xs transition-all hover:bg-primary/20"
       >
         <code className="truncate">{command}</code>
         {copied ? (
@@ -295,34 +314,35 @@ export function Preview({ component }: PreviewProps) {
   // Reset to preview when component changes
   React.useEffect(() => {
     setViewMode("preview");
-  }, [component?.id]);
+  }, []);
 
   return (
     <div className="relative flex h-full min-w-0 flex-col">
       {/* Component title banner - outside the terminal */}
-      {component && (
+      {component ? (
         <div className="mb-4 shrink-0">
           <AnomalyBanner
             title={component.title}
             animated={false}
-            className="scale-75 origin-center"
+            className="origin-center scale-75"
           />
         </div>
-      )}
+      ) : null}
 
-      <div className="relative mx-auto flex min-h-0 flex-1 w-full min-w-0 flex-col overflow-hidden rounded-lg border border-primary/20 bg-background/50 ring-1 ring-primary/10">
+      <div className="relative mx-auto flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden rounded-lg border border-primary/20 bg-background/50 ring-1 ring-primary/10">
         <div className="pointer-events-none absolute inset-0 rounded-lg bg-gradient-to-br from-background/80 to-background/40" />
 
         {component ? (
           <div className="relative z-10 flex h-full min-h-0 flex-col">
             {/* Header with bg-panel and CRT effect */}
-            <div className="relative shrink-0 border-b border-primary/20 bg-panel px-4 py-3">
+            <div className="relative shrink-0 border-primary/20 border-b bg-panel px-4 py-3">
               {/* CRT scanline effect */}
               <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
               <div className="relative flex flex-wrap items-center gap-3">
                 {/* View mode tabs */}
                 <div className="flex items-center gap-1">
                   <button
+                    type="button"
                     onClick={() => setViewMode("preview")}
                     className={cn(
                       "flex items-center gap-1.5 rounded px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider transition-all",
@@ -335,6 +355,7 @@ export function Preview({ component }: PreviewProps) {
                     Preview
                   </button>
                   <button
+                    type="button"
                     onClick={() => setViewMode("code")}
                     className={cn(
                       "flex items-center gap-1.5 rounded px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-wider transition-all",
@@ -370,10 +391,10 @@ export function Preview({ component }: PreviewProps) {
           </div>
         ) : (
           <div className="relative z-10 flex h-full flex-col items-center justify-center p-8 text-center">
-            <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
+            <div className="mb-4 font-mono text-[10px] text-foreground/80 tracking-widest">
               [ NO COMPONENT SELECTED ]
             </div>
-            <p className="text-sm text-foreground/80">
+            <p className="text-foreground/80 text-sm">
               Select a component from the sidebar to preview it here
             </p>
           </div>

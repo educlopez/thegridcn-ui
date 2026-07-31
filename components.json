@@ -33,10 +33,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-accordion",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-accordion", "lucide-react"]
         },
         "alert": {
           "name": "alert",
@@ -52,9 +49,7 @@
         "alert-dialog": {
           "name": "alert-dialog",
           "type": "components:ui",
-          "registryDependencies": [
-            "button"
-          ],
+          "registryDependencies": ["button"],
           "files": [
             {
               "path": "src/components/ui/alert-dialog.tsx",
@@ -62,9 +57,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-alert-dialog"
-          ]
+          "dependencies": ["@radix-ui/react-alert-dialog"]
         },
         "anomaly-banner": {
           "name": "anomaly-banner",
@@ -98,9 +91,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-aspect-ratio"
-          ]
+          "dependencies": ["@radix-ui/react-aspect-ratio"]
         },
         "avatar": {
           "name": "avatar",
@@ -112,9 +103,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-avatar"
-          ]
+          "dependencies": ["@radix-ui/react-avatar"]
         },
         "badge": {
           "name": "badge",
@@ -126,10 +115,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-slot",
-            "class-variance-authority"
-          ]
+          "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
         },
         "beam-marker": {
           "name": "beam-marker",
@@ -152,10 +138,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-slot",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-slot", "lucide-react"]
         },
         "button": {
           "name": "button",
@@ -167,17 +150,12 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-slot",
-            "class-variance-authority"
-          ]
+          "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
         },
         "button-group": {
           "name": "button-group",
           "type": "components:ui",
-          "registryDependencies": [
-            "separator"
-          ],
+          "registryDependencies": ["separator"],
           "files": [
             {
               "path": "src/components/ui/button-group.tsx",
@@ -185,17 +163,12 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-slot",
-            "class-variance-authority"
-          ]
+          "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
         },
         "calendar": {
           "name": "calendar",
           "type": "components:ui",
-          "registryDependencies": [
-            "button"
-          ],
+          "registryDependencies": ["button"],
           "files": [
             {
               "path": "src/components/ui/calendar.tsx",
@@ -203,10 +176,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "lucide-react",
-            "react-day-picker"
-          ]
+          "dependencies": ["lucide-react", "react-day-picker"]
         },
         "card": {
           "name": "card",
@@ -222,9 +192,7 @@
         "carousel": {
           "name": "carousel",
           "type": "components:ui",
-          "registryDependencies": [
-            "button"
-          ],
+          "registryDependencies": ["button"],
           "files": [
             {
               "path": "src/components/ui/carousel.tsx",
@@ -232,10 +200,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "embla-carousel-react",
-            "lucide-react"
-          ]
+          "dependencies": ["embla-carousel-react", "lucide-react"]
         },
         "chart": {
           "name": "chart",
@@ -247,9 +212,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "recharts"
-          ]
+          "dependencies": ["recharts"]
         },
         "checkbox": {
           "name": "checkbox",
@@ -261,10 +224,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-checkbox",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-checkbox", "lucide-react"]
         },
         "circuit-background": {
           "name": "circuit-background",
@@ -287,16 +247,12 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-collapsible"
-          ]
+          "dependencies": ["@radix-ui/react-collapsible"]
         },
         "command": {
           "name": "command",
           "type": "components:ui",
-          "registryDependencies": [
-            "dialog"
-          ],
+          "registryDependencies": ["dialog"],
           "files": [
             {
               "path": "src/components/ui/command.tsx",
@@ -304,10 +260,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "cmdk",
-            "lucide-react"
-          ]
+          "dependencies": ["cmdk", "lucide-react"]
         },
         "context-menu": {
           "name": "context-menu",
@@ -319,10 +272,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-context-menu",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-context-menu", "lucide-react"]
         },
         "crt-effect": {
           "name": "crt-effect",
@@ -356,10 +306,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-dialog",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-dialog", "lucide-react"]
         },
         "drawer": {
           "name": "drawer",
@@ -371,9 +318,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "vaul"
-          ]
+          "dependencies": ["vaul"]
         },
         "dropdown-menu": {
           "name": "dropdown-menu",
@@ -385,10 +330,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-dropdown-menu",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-dropdown-menu", "lucide-react"]
         },
         "empty": {
           "name": "empty",
@@ -400,17 +342,12 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "class-variance-authority"
-          ]
+          "dependencies": ["class-variance-authority"]
         },
         "field": {
           "name": "field",
           "type": "components:ui",
-          "registryDependencies": [
-            "label",
-            "separator"
-          ],
+          "registryDependencies": ["label", "separator"],
           "files": [
             {
               "path": "src/components/ui/field.tsx",
@@ -418,9 +355,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "class-variance-authority"
-          ]
+          "dependencies": ["class-variance-authority"]
         },
         "floating-panel": {
           "name": "floating-panel",
@@ -436,9 +371,7 @@
         "form": {
           "name": "form",
           "type": "components:ui",
-          "registryDependencies": [
-            "label"
-          ],
+          "registryDependencies": ["label"],
           "files": [
             {
               "path": "src/components/ui/form.tsx",
@@ -473,10 +406,7 @@
               "type": "registry:component"
             }
           ],
-          "dependencies": [
-            "@react-three/fiber",
-            "three"
-          ]
+          "dependencies": ["@react-three/fiber", "three"]
         },
         "grid-floor": {
           "name": "grid-floor",
@@ -510,9 +440,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-hover-card"
-          ]
+          "dependencies": ["@radix-ui/react-hover-card"]
         },
         "hud": {
           "name": "hud",
@@ -550,11 +478,7 @@
         "input-group": {
           "name": "input-group",
           "type": "components:ui",
-          "registryDependencies": [
-            "button",
-            "input",
-            "textarea"
-          ],
+          "registryDependencies": ["button", "input", "textarea"],
           "files": [
             {
               "path": "src/components/ui/input-group.tsx",
@@ -562,9 +486,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "class-variance-authority"
-          ]
+          "dependencies": ["class-variance-authority"]
         },
         "input-otp": {
           "name": "input-otp",
@@ -576,17 +498,12 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "input-otp",
-            "lucide-react"
-          ]
+          "dependencies": ["input-otp", "lucide-react"]
         },
         "item": {
           "name": "item",
           "type": "components:ui",
-          "registryDependencies": [
-            "separator"
-          ],
+          "registryDependencies": ["separator"],
           "files": [
             {
               "path": "src/components/ui/item.tsx",
@@ -594,10 +511,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-slot",
-            "class-variance-authority"
-          ]
+          "dependencies": ["@radix-ui/react-slot", "class-variance-authority"]
         },
         "kbd": {
           "name": "kbd",
@@ -620,9 +534,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-label"
-          ]
+          "dependencies": ["@radix-ui/react-label"]
         },
         "location-display": {
           "name": "location-display",
@@ -656,10 +568,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-menubar",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-menubar", "lucide-react"]
         },
         "navigation-menu": {
           "name": "navigation-menu",
@@ -680,9 +589,7 @@
         "pagination": {
           "name": "pagination",
           "type": "components:ui",
-          "registryDependencies": [
-            "button"
-          ],
+          "registryDependencies": ["button"],
           "files": [
             {
               "path": "src/components/ui/pagination.tsx",
@@ -690,9 +597,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "lucide-react"
-          ]
+          "dependencies": ["lucide-react"]
         },
         "popover": {
           "name": "popover",
@@ -704,9 +609,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-popover"
-          ]
+          "dependencies": ["@radix-ui/react-popover"]
         },
         "progress": {
           "name": "progress",
@@ -718,9 +621,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-progress"
-          ]
+          "dependencies": ["@radix-ui/react-progress"]
         },
         "radio-group": {
           "name": "radio-group",
@@ -732,10 +633,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-radio-group",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-radio-group", "lucide-react"]
         },
         "scroll-area": {
           "name": "scroll-area",
@@ -747,9 +645,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-scroll-area"
-          ]
+          "dependencies": ["@radix-ui/react-scroll-area"]
         },
         "select": {
           "name": "select",
@@ -761,10 +657,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-select",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-select", "lucide-react"]
         },
         "separator": {
           "name": "separator",
@@ -776,9 +669,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-separator"
-          ]
+          "dependencies": ["@radix-ui/react-separator"]
         },
         "sheet": {
           "name": "sheet",
@@ -790,10 +681,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-dialog",
-            "lucide-react"
-          ]
+          "dependencies": ["@radix-ui/react-dialog", "lucide-react"]
         },
         "sidebar": {
           "name": "sidebar",
@@ -840,9 +728,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-slider"
-          ]
+          "dependencies": ["@radix-ui/react-slider"]
         },
         "sonner": {
           "name": "sonner",
@@ -854,10 +740,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "lucide-react",
-            "sonner"
-          ]
+          "dependencies": ["lucide-react", "sonner"]
         },
         "spinner": {
           "name": "spinner",
@@ -869,9 +752,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "lucide-react"
-          ]
+          "dependencies": ["lucide-react"]
         },
         "status-bar": {
           "name": "status-bar",
@@ -894,9 +775,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-switch"
-          ]
+          "dependencies": ["@radix-ui/react-switch"]
         },
         "table": {
           "name": "table",
@@ -919,9 +798,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-tabs"
-          ]
+          "dependencies": ["@radix-ui/react-tabs"]
         },
         "textarea": {
           "name": "textarea",
@@ -966,17 +843,12 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-toggle",
-            "class-variance-authority"
-          ]
+          "dependencies": ["@radix-ui/react-toggle", "class-variance-authority"]
         },
         "toggle-group": {
           "name": "toggle-group",
           "type": "components:ui",
-          "registryDependencies": [
-            "toggle"
-          ],
+          "registryDependencies": ["toggle"],
           "files": [
             {
               "path": "src/components/ui/toggle-group.tsx",
@@ -999,9 +871,7 @@
               "type": "registry:ui"
             }
           ],
-          "dependencies": [
-            "@radix-ui/react-tooltip"
-          ]
+          "dependencies": ["@radix-ui/react-tooltip"]
         },
         "tunnel": {
           "name": "tunnel",
@@ -1013,10 +883,7 @@
               "type": "registry:component"
             }
           ],
-          "dependencies": [
-            "@react-three/fiber",
-            "three"
-          ]
+          "dependencies": ["@react-three/fiber", "three"]
         },
         "uplink-header": {
           "name": "uplink-header",
@@ -1039,9 +906,7 @@
               "type": "registry:component"
             }
           ],
-          "dependencies": [
-            "lucide-react"
-          ]
+          "dependencies": ["lucide-react"]
         },
         "video-progress": {
           "name": "video-progress",

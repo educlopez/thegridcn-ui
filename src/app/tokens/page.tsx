@@ -1,112 +1,112 @@
-import type { Metadata } from "next"
-import fs from "node:fs"
-import path from "node:path"
-import { TronHeader } from "@/components/layout"
-import { SiteFooter } from "@/components/layout/site-footer"
-import { DocShell } from "@/components/docs/doc-shell"
-import { TokensExplorer } from "@/components/tokens/tokens-explorer"
+import fs from "node:fs";
+import path from "node:path";
+import type { Metadata } from "next";
+import { DocShell } from "@/components/docs/doc-shell";
+import { TronHeader } from "@/components/layout";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { TokensExplorer } from "@/components/tokens/tokens-explorer";
 
-export const dynamic = "force-static"
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "Design Tokens | The Gridcn",
-  description:
-    "Design tokens for all six thegridcn themes — CSS variables, Tailwind mappings, and downloadable CSS/JSON.",
-  openGraph: {
-    type: "article",
-    title: "Design Tokens | The Gridcn",
-    description:
-      "Design tokens for all six thegridcn themes — CSS variables, Tailwind mappings, and downloadable CSS/JSON.",
-    url: "https://thegridcn.com/tokens",
-    siteName: "The Gridcn",
-    images: [{ url: "/api/og/clu", width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Design Tokens | The Gridcn",
-    description:
-      "Design tokens for all six thegridcn themes — CSS variables, Tailwind mappings, and downloadable CSS/JSON.",
-    images: ["/api/og/clu"],
-  },
   alternates: {
     canonical: "https://thegridcn.com/tokens",
   },
+  description:
+    "Design tokens for all six thegridcn themes — CSS variables, Tailwind mappings, and downloadable CSS/JSON.",
+  openGraph: {
+    description:
+      "Design tokens for all six thegridcn themes — CSS variables, Tailwind mappings, and downloadable CSS/JSON.",
+    images: [{ height: 630, url: "/api/og/clu", width: 1200 }],
+    siteName: "The Gridcn",
+    title: "Design Tokens | The Gridcn",
+    type: "article",
+    url: "https://thegridcn.com/tokens",
+  },
+  title: "Design Tokens | The Gridcn",
+  twitter: {
+    card: "summary_large_image",
+    description:
+      "Design tokens for all six thegridcn themes — CSS variables, Tailwind mappings, and downloadable CSS/JSON.",
+    images: ["/api/og/clu"],
+    title: "Design Tokens | The Gridcn",
+  },
+};
+
+interface ThemeIndexEntry {
+  css: string;
+  json: string;
+  name: string;
+  varCount: number;
 }
 
-type ThemeIndexEntry = {
-  name: string
-  css: string
-  json: string
-  varCount: number
+interface ThemeIndex {
+  generatedAt: string;
+  name: string;
+  themes: ThemeIndexEntry[];
 }
 
-type ThemeIndex = {
-  name: string
-  generatedAt: string
-  themes: ThemeIndexEntry[]
-}
-
-export type ThemeTokens = {
-  name: string
-  god: string
-  selector: string
-  varCount: number
-  cssPath: string
-  jsonPath: string
-  vars: Record<string, string>
+export interface ThemeTokens {
+  cssPath: string;
+  god: string;
+  jsonPath: string;
+  name: string;
+  selector: string;
+  varCount: number;
+  vars: Record<string, string>;
 }
 
 const GOD_MAP: Record<string, string> = {
-  tron: "User",
-  ares: "God of War",
-  clu: "Program",
-  athena: "Goddess of Wisdom",
   aphrodite: "Goddess of Love",
+  ares: "God of War",
+  athena: "Goddess of Wisdom",
+  clu: "Program",
   poseidon: "God of Sea",
-}
+  tron: "User",
+};
 
 function readThemeTokens(): { themes: ThemeTokens[]; generatedAt: string } {
-  const tokensDir = path.join(process.cwd(), "public", "tokens")
-  const indexRaw = fs.readFileSync(path.join(tokensDir, "index.json"), "utf-8")
-  const index = JSON.parse(indexRaw) as ThemeIndex
+  const tokensDir = path.join(process.cwd(), "public", "tokens");
+  const indexRaw = fs.readFileSync(path.join(tokensDir, "index.json"), "utf-8");
+  const index = JSON.parse(indexRaw) as ThemeIndex;
 
   const themes: ThemeTokens[] = index.themes.map((entry) => {
-    const jsonPath = path.join(tokensDir, `${entry.name}.json`)
+    const jsonPath = path.join(tokensDir, `${entry.name}.json`);
     const parsed = JSON.parse(fs.readFileSync(jsonPath, "utf-8")) as {
-      name: string
-      selector: string
-      vars: Record<string, string>
-    }
+      name: string;
+      selector: string;
+      vars: Record<string, string>;
+    };
     return {
-      name: entry.name,
+      cssPath: entry.css,
       god: GOD_MAP[entry.name] ?? "",
+      jsonPath: entry.json,
+      name: entry.name,
       selector: parsed.selector,
       varCount: entry.varCount,
-      cssPath: entry.css,
-      jsonPath: entry.json,
       vars: parsed.vars,
-    }
-  })
+    };
+  });
 
-  return { themes, generatedAt: index.generatedAt }
+  return { generatedAt: index.generatedAt, themes };
 }
 
 export default function TokensPage() {
-  const { themes, generatedAt } = readThemeTokens()
+  const { themes, generatedAt } = readThemeTokens();
 
   return (
     <div className="relative min-h-screen bg-background">
       <TronHeader />
       <main>
         <DocShell
-          crumbs={[{ label: "Home", href: "/" }, { label: "Tokens" }]}
+          crumbs={[{ href: "/", label: "Home" }, { label: "Tokens" }]}
           title="Design Tokens"
           subtitle="Six themes. oklch() color space. Copy a var, download a file, or drop the CSS straight into your globals."
         >
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border border-border/60 bg-card/40 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border border-border/60 bg-card/40 px-4 py-3 font-mono text-[10px] text-muted-foreground uppercase tracking-[0.2em]">
             <span>
-              <span className="text-primary">MANIFEST:</span>{" "}
-              {themes.length} themes &middot; generated{" "}
+              <span className="text-primary">MANIFEST:</span> {themes.length}{" "}
+              themes &middot; generated{" "}
               {new Date(generatedAt).toISOString().slice(0, 10)}
             </span>
             <a
@@ -122,5 +122,5 @@ export default function TokensPage() {
       </main>
       <SiteFooter />
     </div>
-  )
+  );
 }

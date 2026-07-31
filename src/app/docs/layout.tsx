@@ -1,10 +1,10 @@
-import { TronHeader } from "@/components/layout"
-import { SiteFooter } from "@/components/layout/site-footer"
+import { TronHeader } from "@/components/layout";
+import { SiteFooter } from "@/components/layout/site-footer";
 
 export default function DocsLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <div className="relative min-h-screen bg-background">
@@ -12,5 +12,5 @@ export default function DocsLayout({
       <main className="relative">{children}</main>
       <SiteFooter />
     </div>
-  )
+  );
 }

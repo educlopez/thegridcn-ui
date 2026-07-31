@@ -1,6 +1,13 @@
 "use client";
 
 import * as React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,15 +17,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 export const CardPreview = React.memo(function CardPreview() {
   return (
@@ -52,7 +52,7 @@ export const BadgePreview = React.memo(function BadgePreview() {
 
 export const ProgressPreview = React.memo(function ProgressPreview() {
   return (
-    <div className="space-y-4 w-full max-w-md">
+    <div className="w-full max-w-md space-y-4">
       <Progress value={33} />
       <Progress value={66} />
       <Progress value={100} />
@@ -107,9 +107,9 @@ export const AccordionPreview = React.memo(function AccordionPreview() {
 });
 
 export const dataDisplayPreviews: Record<string, React.ComponentType> = {
-  "card": CardPreview,
-  "badge": BadgePreview,
-  "progress": ProgressPreview,
-  "tabs": TabsPreview,
-  "accordion": AccordionPreview,
+  accordion: AccordionPreview,
+  badge: BadgePreview,
+  card: CardPreview,
+  progress: ProgressPreview,
+  tabs: TabsPreview,
 };

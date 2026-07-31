@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { selectableThemes, useTheme, type Theme } from "@/components/theme"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { StatusStrip } from "@/components/website"
-import { cn } from "@/lib/utils"
+import Link from "next/link";
+import { selectableThemes, type Theme, useTheme } from "@/components/theme";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { StatusStrip } from "@/components/website";
+import { cn } from "@/lib/utils";
 
 const STATUS_STRIP_THEMES = [
-  { label: "SECTION", value: "THEMES", highlighted: true },
+  { highlighted: true, label: "SECTION", value: "THEMES" },
   { label: "VARIANTS", value: "6 ACTIVE" },
   { label: "COLOR SPACE", value: "OKLCH" },
-]
+];
 
 function ThemeCard({
   id,
@@ -19,16 +19,16 @@ function ThemeCard({
   god,
   color,
 }: {
-  id: Theme
-  name: string
-  god: string
-  color: string
+  id: Theme;
+  name: string;
+  god: string;
+  color: string;
 }) {
-  const { setTheme } = useTheme()
+  const { setTheme } = useTheme();
 
   const handleActivate = () => {
-    setTheme(id)
-  }
+    setTheme(id);
+  };
 
   return (
     <Link
@@ -42,10 +42,10 @@ function ThemeCard({
       )}
     >
       {/* Corner brackets */}
-      <div className="absolute -left-px -top-px h-4 w-4 border-l-2 border-t-2 border-primary/50 transition-colors group-hover:border-primary" />
-      <div className="absolute -right-px -top-px h-4 w-4 border-r-2 border-t-2 border-primary/50 transition-colors group-hover:border-primary" />
-      <div className="absolute -bottom-px -left-px h-4 w-4 border-b-2 border-l-2 border-primary/50 transition-colors group-hover:border-primary" />
-      <div className="absolute -bottom-px -right-px h-4 w-4 border-b-2 border-r-2 border-primary/50 transition-colors group-hover:border-primary" />
+      <div className="absolute -top-px -left-px h-4 w-4 border-primary/50 border-t-2 border-l-2 transition-colors group-hover:border-primary" />
+      <div className="absolute -top-px -right-px h-4 w-4 border-primary/50 border-t-2 border-r-2 transition-colors group-hover:border-primary" />
+      <div className="absolute -bottom-px -left-px h-4 w-4 border-primary/50 border-b-2 border-l-2 transition-colors group-hover:border-primary" />
+      <div className="absolute -right-px -bottom-px h-4 w-4 border-primary/50 border-r-2 border-b-2 transition-colors group-hover:border-primary" />
 
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
@@ -59,15 +59,15 @@ function ThemeCard({
             aria-hidden
           />
           <div>
-            <div className="font-display text-lg font-bold tracking-[0.2em] text-primary">
+            <div className="font-bold font-display text-lg text-primary tracking-[0.2em]">
               {name.toUpperCase()}
             </div>
-            <div className="font-mono text-[10px] tracking-widest text-foreground/60">
+            <div className="font-mono text-[10px] text-foreground/60 tracking-widest">
               {god.toUpperCase()}
             </div>
           </div>
         </div>
-        <span className="font-mono text-[9px] tracking-widest text-primary/70">
+        <span className="font-mono text-[9px] text-primary/70 tracking-widest">
           {`//${id}`}
         </span>
       </div>
@@ -81,18 +81,21 @@ function ThemeCard({
           <Button size="sm" className="font-mono text-[10px] tracking-widest">
             EXECUTE
           </Button>
-          <Badge variant="outline" className="font-mono text-[9px] tracking-widest">
+          <Badge
+            variant="outline"
+            className="font-mono text-[9px] tracking-widest"
+          >
             ACTIVE
           </Badge>
         </div>
 
         <div className="rounded border border-primary/30 bg-card/60 p-3">
-          <div className="mb-1 flex items-center justify-between font-mono text-[9px] uppercase tracking-widest text-foreground/60">
+          <div className="mb-1 flex items-center justify-between font-mono text-[9px] text-foreground/60 uppercase tracking-widest">
             <span>DATA.STREAM</span>
             <span className="text-primary">ONLINE</span>
           </div>
           <div className="flex items-end justify-between">
-            <div className="font-display text-2xl font-bold text-primary">
+            <div className="font-bold font-display text-2xl text-primary">
               98.2
             </div>
             <div className="flex gap-0.5">
@@ -112,21 +115,23 @@ function ThemeCard({
       </div>
 
       {/* Footer action */}
-      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-primary/80 transition-colors group-hover:text-primary">
+      <div className="flex items-center justify-between font-mono text-[10px] text-primary/80 uppercase tracking-widest transition-colors group-hover:text-primary">
         <span>OPEN SUBJECT</span>
         <span className="inline-flex items-center gap-1">
-          <span className="transition-transform group-hover:translate-x-1">→</span>
+          <span className="transition-transform group-hover:translate-x-1">
+            →
+          </span>
         </span>
       </div>
     </Link>
-  )
+  );
 }
 
 export function ThemeShowcaseSection() {
   return (
     <section
       id="theme-showcase"
-      className="relative border-t border-primary/20 py-24"
+      className="relative border-primary/20 border-t py-24"
     >
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
 
@@ -134,10 +139,10 @@ export function ThemeShowcaseSection() {
 
       <div className="container relative mx-auto px-4 pt-8">
         <div className="mb-16 text-center">
-          <div className="mb-4 font-mono text-[10px] tracking-widest text-foreground/80">
+          <div className="mb-4 font-mono text-[10px] text-foreground/80 tracking-widest">
             [ THEME DOSSIER ]
           </div>
-          <h2 className="font-display text-3xl font-bold tracking-wider text-primary md:text-4xl lg:text-5xl [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)]">
+          <h2 className="font-bold font-display text-3xl text-primary tracking-wider [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)] md:text-4xl lg:text-5xl">
             CHOOSE YOUR DEITY
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-foreground/80">
@@ -159,5 +164,5 @@ export function ThemeShowcaseSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

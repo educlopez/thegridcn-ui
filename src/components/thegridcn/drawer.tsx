@@ -1,52 +1,56 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
 import {
   Drawer as DrawerPrimitive,
-  DrawerTrigger as DrawerPrimitiveTrigger,
   DrawerClose as DrawerPrimitiveClose,
   DrawerContent as DrawerPrimitiveContent,
-  DrawerHeader as DrawerPrimitiveHeader,
-  DrawerFooter as DrawerPrimitiveFooter,
-  DrawerTitle as DrawerPrimitiveTitle,
   DrawerDescription as DrawerPrimitiveDescription,
-} from "@/components/ui/drawer"
+  DrawerFooter as DrawerPrimitiveFooter,
+  DrawerHeader as DrawerPrimitiveHeader,
+  DrawerTitle as DrawerPrimitiveTitle,
+  DrawerTrigger as DrawerPrimitiveTrigger,
+} from "@/components/ui/drawer";
+import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */
 /*  TronDrawer (root)                                                  */
 /* ------------------------------------------------------------------ */
 
-type TronDrawerProps = React.ComponentProps<typeof DrawerPrimitive>
+type TronDrawerProps = React.ComponentProps<typeof DrawerPrimitive>;
 
 function TronDrawer({ ...props }: TronDrawerProps) {
-  return <DrawerPrimitive {...props} />
+  return <DrawerPrimitive {...props} />;
 }
 
 /* ------------------------------------------------------------------ */
 /*  TronDrawerTrigger                                                  */
 /* ------------------------------------------------------------------ */
 
-type TronDrawerTriggerProps = React.ComponentProps<typeof DrawerPrimitiveTrigger>
+type TronDrawerTriggerProps = React.ComponentProps<
+  typeof DrawerPrimitiveTrigger
+>;
 
 function TronDrawerTrigger({ className, ...props }: TronDrawerTriggerProps) {
   return (
     <DrawerPrimitiveTrigger
       data-slot="tron-drawer-trigger"
       className={cn(
-        "rounded border border-primary/20 bg-card/60 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-foreground/50 backdrop-blur-sm transition-all hover:border-primary/40 hover:text-primary hover:shadow-[0_0_8px_rgba(var(--primary-rgb,0,180,255),0.1)]",
+        "rounded border border-primary/20 bg-card/60 px-4 py-2 font-mono text-[10px] text-foreground/50 uppercase tracking-widest backdrop-blur-sm transition-all hover:border-primary/40 hover:text-primary hover:shadow-[0_0_8px_rgba(var(--primary-rgb,0,180,255),0.1)]",
         className
       )}
       {...props}
     />
-  )
+  );
 }
 
 /* ------------------------------------------------------------------ */
 /*  TronDrawerContent                                                  */
 /* ------------------------------------------------------------------ */
 
-type TronDrawerContentProps = React.ComponentProps<typeof DrawerPrimitiveContent>
+type TronDrawerContentProps = React.ComponentProps<
+  typeof DrawerPrimitiveContent
+>;
 
 function TronDrawerContent({
   className,
@@ -69,75 +73,74 @@ function TronDrawerContent({
       <div className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.03)_2px,rgba(0,0,0,0.03)_4px)]" />
 
       {/* Corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 h-3 w-3 border-l-2 border-t-2 border-primary/50" />
-      <div className="pointer-events-none absolute right-0 top-0 h-3 w-3 border-r-2 border-t-2 border-primary/50" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-b-2 border-l-2 border-primary/50" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-3 w-3 border-b-2 border-r-2 border-primary/50" />
+      <div className="pointer-events-none absolute top-0 left-0 h-3 w-3 border-primary/50 border-t-2 border-l-2" />
+      <div className="pointer-events-none absolute top-0 right-0 h-3 w-3 border-primary/50 border-t-2 border-r-2" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-3 w-3 border-primary/50 border-b-2 border-l-2" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-3 w-3 border-primary/50 border-r-2 border-b-2" />
 
       {children}
     </DrawerPrimitiveContent>
-  )
+  );
 }
 
 /* ------------------------------------------------------------------ */
 /*  TronDrawerHeader                                                   */
 /* ------------------------------------------------------------------ */
 
-type TronDrawerHeaderProps = React.ComponentProps<typeof DrawerPrimitiveHeader>
+type TronDrawerHeaderProps = React.ComponentProps<typeof DrawerPrimitiveHeader>;
 
 function TronDrawerHeader({ className, ...props }: TronDrawerHeaderProps) {
   return (
     <DrawerPrimitiveHeader
       data-slot="tron-drawer-header"
-      className={cn("border-b border-primary/20 px-5 py-3", className)}
+      className={cn("border-primary/20 border-b px-5 py-3", className)}
       {...props}
     />
-  )
+  );
 }
 
 /* ------------------------------------------------------------------ */
 /*  TronDrawerFooter                                                   */
 /* ------------------------------------------------------------------ */
 
-type TronDrawerFooterProps = React.ComponentProps<typeof DrawerPrimitiveFooter>
+type TronDrawerFooterProps = React.ComponentProps<typeof DrawerPrimitiveFooter>;
 
 function TronDrawerFooter({ className, ...props }: TronDrawerFooterProps) {
   return (
     <DrawerPrimitiveFooter
       data-slot="tron-drawer-footer"
-      className={cn(
-        "border-t border-primary/20 px-5 py-3",
-        className
-      )}
+      className={cn("border-primary/20 border-t px-5 py-3", className)}
       {...props}
     />
-  )
+  );
 }
 
 /* ------------------------------------------------------------------ */
 /*  TronDrawerTitle                                                    */
 /* ------------------------------------------------------------------ */
 
-type TronDrawerTitleProps = React.ComponentProps<typeof DrawerPrimitiveTitle>
+type TronDrawerTitleProps = React.ComponentProps<typeof DrawerPrimitiveTitle>;
 
 function TronDrawerTitle({ className, ...props }: TronDrawerTitleProps) {
   return (
     <DrawerPrimitiveTitle
       data-slot="tron-drawer-title"
       className={cn(
-        "font-mono text-xs uppercase tracking-widest text-primary",
+        "font-mono text-primary text-xs uppercase tracking-widest",
         className
       )}
       {...props}
     />
-  )
+  );
 }
 
 /* ------------------------------------------------------------------ */
 /*  TronDrawerDescription                                              */
 /* ------------------------------------------------------------------ */
 
-type TronDrawerDescriptionProps = React.ComponentProps<typeof DrawerPrimitiveDescription>
+type TronDrawerDescriptionProps = React.ComponentProps<
+  typeof DrawerPrimitiveDescription
+>;
 
 function TronDrawerDescription({
   className,
@@ -152,14 +155,14 @@ function TronDrawerDescription({
       )}
       {...props}
     />
-  )
+  );
 }
 
 /* ------------------------------------------------------------------ */
 /*  TronDrawerClose                                                    */
 /* ------------------------------------------------------------------ */
 
-type TronDrawerCloseProps = React.ComponentProps<typeof DrawerPrimitiveClose>
+type TronDrawerCloseProps = React.ComponentProps<typeof DrawerPrimitiveClose>;
 
 function TronDrawerClose({ className, ...props }: TronDrawerCloseProps) {
   return (
@@ -171,7 +174,7 @@ function TronDrawerClose({ className, ...props }: TronDrawerCloseProps) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 /* ------------------------------------------------------------------ */
@@ -180,11 +183,11 @@ function TronDrawerClose({ className, ...props }: TronDrawerCloseProps) {
 
 export {
   TronDrawer,
-  TronDrawerTrigger,
-  TronDrawerContent,
-  TronDrawerHeader,
-  TronDrawerFooter,
-  TronDrawerTitle,
-  TronDrawerDescription,
   TronDrawerClose,
-}
+  TronDrawerContent,
+  TronDrawerDescription,
+  TronDrawerFooter,
+  TronDrawerHeader,
+  TronDrawerTitle,
+  TronDrawerTrigger,
+};

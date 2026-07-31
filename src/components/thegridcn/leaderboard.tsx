@@ -1,21 +1,24 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import dynamic from "next/dynamic"
-import { UplinkHeader } from "./uplink-header"
-import type { LeaderboardEntry } from "@/lib/leaderboard"
-import { themes } from "@/components/theme/theme-provider"
-import { cn } from "@/lib/utils"
+import dynamic from "next/dynamic";
+import * as React from "react";
+import { themes } from "@/components/theme/theme-provider";
+import type { LeaderboardEntry } from "@/lib/leaderboard";
+import { cn } from "@/lib/utils";
+import { UplinkHeader } from "./uplink-header";
 
 const GodAvatar3D = dynamic(
-  () => import("@/components/website/god-avatar").then((mod) => mod.GodAvatar3D),
+  () =>
+    import("@/components/website/god-avatar").then((mod) => mod.GodAvatar3D),
   { ssr: false }
-)
+);
 
 function CharacterAvatar({ character }: { character?: string }) {
-  const theme = character ? themes.find((t) => t.id === character) : null
+  const theme = character ? themes.find((t) => t.id === character) : null;
   if (!theme) {
-    return <span className="inline-block h-5 w-5 rounded border border-primary/10 bg-primary/5" />
+    return (
+      <span className="inline-block h-5 w-5 rounded border border-primary/10 bg-primary/5" />
+    );
   }
   return (
     <div className="group relative h-5 w-5">
@@ -25,11 +28,11 @@ function CharacterAvatar({ character }: { character?: string }) {
       >
         <GodAvatar3D themeId={theme.id} color={theme.color} size={20} />
       </div>
-      <span className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 whitespace-nowrap rounded border border-primary/30 bg-black/90 px-2 py-0.5 font-mono text-[9px] tracking-widest text-primary opacity-0 transition-opacity group-hover:opacity-100">
+      <span className="pointer-events-none absolute bottom-full left-1/2 mb-1.5 -translate-x-1/2 whitespace-nowrap rounded border border-primary/30 bg-black/90 px-2 py-0.5 font-mono text-[9px] text-primary tracking-widest opacity-0 transition-opacity group-hover:opacity-100">
         {theme.name.toUpperCase()}
       </span>
     </div>
-  )
+  );
 }
 
 const FILTERS = [
@@ -37,52 +40,55 @@ const FILTERS = [
   { id: "medium", label: "MEDIUM" },
   { id: "hard", label: "HARD" },
   { id: "insane", label: "INSANE" },
-]
+];
 
 interface LeaderboardProps {
-  refreshKey?: number
+  refreshKey?: number;
 }
 
-export function Leaderboard({ refreshKey = 0 }: LeaderboardProps) {
-  const [entries, setEntries] = React.useState<LeaderboardEntry[]>([])
-  const [loading, setLoading] = React.useState(true)
-  const [filter, setFilter] = React.useState("medium")
+export function Leaderboard({ refreshKey: _refreshKey = 0 }: LeaderboardProps) {
+  const [entries, setEntries] = React.useState<LeaderboardEntry[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [filter, setFilter] = React.useState("medium");
 
   React.useEffect(() => {
-    let cancelled = false
-    setLoading(true)
+    let cancelled = false;
+    setLoading(true);
 
     fetch(`/api/leaderboard?difficulty=${filter}`)
       .then((res) => res.json())
       .then((data) => {
         if (!cancelled) {
-          setEntries(data.entries ?? [])
-          setLoading(false)
+          setEntries(data.entries ?? []);
+          setLoading(false);
         }
       })
       .catch(() => {
-        if (!cancelled) setLoading(false)
-      })
+        if (!cancelled) {
+          setLoading(false);
+        }
+      });
 
     return () => {
-      cancelled = true
-    }
-  }, [refreshKey, filter])
+      cancelled = true;
+    };
+  }, [filter]);
 
   const formatTime = (s: number) => {
-    const m = Math.floor(s / 60)
-    const sec = s % 60
-    return `${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`
-  }
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+  };
 
   return (
     <div className="w-full">
       <UplinkHeader leftText="LEADERBOARD" rightText="FASTEST WINS" />
 
       {/* Difficulty filter tabs */}
-      <div className="flex border-x border-b border-primary/20 bg-card/20">
+      <div className="flex border-primary/20 border-x border-b bg-card/20">
         {FILTERS.map((f) => (
           <button
+            type="button"
             key={f.id}
             onClick={() => setFilter(f.id)}
             className={cn(
@@ -100,21 +106,21 @@ export function Leaderboard({ refreshKey = 0 }: LeaderboardProps) {
         ))}
       </div>
 
-      <div className="border-x border-b border-primary/20 bg-card/30">
+      <div className="border-primary/20 border-x border-b bg-card/30">
         {/* Table header */}
-        <div className="grid grid-cols-[3rem_2rem_1fr_5rem] gap-2 border-b border-primary/10 px-3 py-1.5 font-mono text-[9px] tracking-widest text-muted-foreground/60">
+        <div className="grid grid-cols-[3rem_2rem_1fr_5rem] gap-2 border-primary/10 border-b px-3 py-1.5 font-mono text-[9px] text-muted-foreground/60 tracking-widest">
           <span>RANK</span>
-          <span></span>
+          <span />
           <span>ALIAS</span>
           <span className="text-right">TIME</span>
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-6 font-mono text-[10px] tracking-widest text-muted-foreground/40">
+          <div className="flex items-center justify-center py-6 font-mono text-[10px] text-muted-foreground/40 tracking-widest">
             LOADING...
           </div>
         ) : entries.length === 0 ? (
-          <div className="flex items-center justify-center py-6 font-mono text-[10px] tracking-widest text-muted-foreground/40">
+          <div className="flex items-center justify-center py-6 font-mono text-[10px] text-muted-foreground/40 tracking-widest">
             NO RECORDS FOUND
           </div>
         ) : (
@@ -128,7 +134,7 @@ export function Leaderboard({ refreshKey = 0 }: LeaderboardProps) {
                   : i < 3
                     ? "text-primary/80"
                     : "text-foreground/70",
-                i < entries.length - 1 && "border-b border-primary/5"
+                i < entries.length - 1 && "border-primary/5 border-b"
               )}
             >
               <span className="text-muted-foreground/50">
@@ -142,5 +148,5 @@ export function Leaderboard({ refreshKey = 0 }: LeaderboardProps) {
         )}
       </div>
     </div>
-  )
+  );
 }

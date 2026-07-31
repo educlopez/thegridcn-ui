@@ -4,24 +4,30 @@
  * Scans components/ui directory and updates the registry
  */
 
-import { writeFile, readFile } from "fs/promises"
-import { join } from "path"
-import { generateRegistryIndex, generateShadcnRegistry } from "../src/registry/scanner"
+import { readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import {
+  generateRegistryIndex,
+  generateShadcnRegistry,
+} from "../src/registry/scanner";
 
 async function loadComponentsJson() {
-  const content = await readFile(join(process.cwd(), "components.json"), "utf-8")
-  return JSON.parse(content)
+  const content = await readFile(
+    join(process.cwd(), "components.json"),
+    "utf-8"
+  );
+  return JSON.parse(content);
 }
 
 async function updateRegistry() {
-  console.log("🔍 Scanning components...")
+  console.log("🔍 Scanning components...");
 
   try {
     // Load current components.json
-    const componentsJson = await loadComponentsJson()
+    const componentsJson = await loadComponentsJson();
 
     // Generate registry entries
-    const registryIndex = await generateRegistryIndex()
+    const registryIndex = await generateRegistryIndex();
 
     // Update components.json with registry
     const updatedComponentsJson = {
@@ -30,18 +36,18 @@ async function updateRegistry() {
         ...(componentsJson.registries || {}),
         "https://ui.shadcn.com": {
           name: "shadcn/ui",
-          url: "https://ui.shadcn.com",
           registry: registryIndex,
+          url: "https://ui.shadcn.com",
         },
       },
-    }
+    };
 
     // Write updated components.json
     await writeFile(
       join(process.cwd(), "components.json"),
-      JSON.stringify(updatedComponentsJson, null, 2) + "\n",
+      `${JSON.stringify(updatedComponentsJson, null, 2)}\n`,
       "utf-8"
-    )
+    );
 
     // Generate TypeScript registry index
     const registryIndexContent = `// Auto-generated registry index
@@ -68,52 +74,52 @@ export function getRegistryDependencies(name: string): string[] {
   const entry = registry[name]
   return entry?.registryDependencies || []
 }
-`
+`;
 
     await writeFile(
       join(process.cwd(), "src/registry/index.ts"),
       registryIndexContent,
       "utf-8"
-    )
+    );
 
     // Generate shadcn UI registry.json format
     // Try to get homepage from package.json or use default
-    let homepage: string | undefined
+    let homepage: string | undefined;
     try {
       const packageJson = JSON.parse(
         await readFile(join(process.cwd(), "package.json"), "utf-8")
-      )
+      );
       homepage =
         packageJson.homepage ||
         (packageJson.repository?.url
           ? packageJson.repository.url.replace(/\.git$/, "")
           : undefined) ||
-        "https://github.com/educlopez/thegridcn-ui"
+        "https://github.com/educlopez/thegridcn-ui";
     } catch {
-      homepage = "https://github.com/educlopez/thegridcn-ui"
+      homepage = "https://github.com/educlopez/thegridcn-ui";
     }
 
     const shadcnRegistry = await generateShadcnRegistry(undefined, {
-      name: "thegridcn",
       homepage,
-    })
+      name: "thegridcn",
+    });
 
     await writeFile(
       join(process.cwd(), "registry.json"),
-      JSON.stringify(shadcnRegistry, null, 2) + "\n",
+      `${JSON.stringify(shadcnRegistry, null, 2)}\n`,
       "utf-8"
-    )
+    );
 
-    const componentCount = Object.keys(registryIndex).length
-    console.log(`✅ Registry updated successfully!`)
-    console.log(`   Found ${componentCount} components`)
-    console.log(`   Updated components.json`)
-    console.log(`   Updated src/registry/index.ts`)
-    console.log(`   Updated registry.json`)
+    const componentCount = Object.keys(registryIndex).length;
+    console.log("✅ Registry updated successfully!");
+    console.log(`   Found ${componentCount} components`);
+    console.log("   Updated components.json");
+    console.log("   Updated src/registry/index.ts");
+    console.log("   Updated registry.json");
   } catch (error) {
-    console.error("❌ Failed to update registry:", error)
-    process.exit(1)
+    console.error("❌ Failed to update registry:", error);
+    process.exit(1);
   }
 }
 
-updateRegistry()
+updateRegistry();

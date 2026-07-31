@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface PaginationProps extends React.HTMLAttributes<HTMLElement> {
-  currentPage: number
-  totalPages: number
-  onPageChange: (page: number) => void
-  siblingCount?: number
-  showEdges?: boolean
+  currentPage: number;
+  onPageChange: (page: number) => void;
+  showEdges?: boolean;
+  siblingCount?: number;
+  totalPages: number;
 }
 
 function range(start: number, end: number) {
-  return Array.from({ length: end - start + 1 }, (_, i) => start + i)
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
 
 export function Pagination({
@@ -25,25 +25,33 @@ export function Pagination({
   ...props
 }: PaginationProps) {
   const pages = React.useMemo(() => {
-    const totalPageNumbers = siblingCount * 2 + 3 + 2 // siblings + first + last + current + 2 dots
-    if (totalPages <= totalPageNumbers) return range(1, totalPages)
+    const totalPageNumbers = siblingCount * 2 + 3 + 2; // siblings + first + last + current + 2 dots
+    if (totalPages <= totalPageNumbers) {
+      return range(1, totalPages);
+    }
 
-    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1)
-    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages)
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPages);
 
-    const showLeftDots = leftSiblingIndex > 2
-    const showRightDots = rightSiblingIndex < totalPages - 1
+    const showLeftDots = leftSiblingIndex > 2;
+    const showRightDots = rightSiblingIndex < totalPages - 1;
 
     if (!showLeftDots && showRightDots) {
-      const leftCount = 3 + 2 * siblingCount
-      return [...range(1, leftCount), "...", totalPages]
+      const leftCount = 3 + 2 * siblingCount;
+      return [...range(1, leftCount), "...", totalPages];
     }
     if (showLeftDots && !showRightDots) {
-      const rightCount = 3 + 2 * siblingCount
-      return [1, "...", ...range(totalPages - rightCount + 1, totalPages)]
+      const rightCount = 3 + 2 * siblingCount;
+      return [1, "...", ...range(totalPages - rightCount + 1, totalPages)];
     }
-    return [1, "...", ...range(leftSiblingIndex, rightSiblingIndex), "...", totalPages]
-  }, [currentPage, totalPages, siblingCount])
+    return [
+      1,
+      "...",
+      ...range(leftSiblingIndex, rightSiblingIndex),
+      "...",
+      totalPages,
+    ];
+  }, [currentPage, totalPages, siblingCount]);
 
   return (
     <nav
@@ -56,7 +64,7 @@ export function Pagination({
       {...props}
     >
       {/* Previous */}
-      {showEdges && (
+      {showEdges ? (
         <button
           type="button"
           disabled={currentPage <= 1}
@@ -69,16 +77,31 @@ export function Pagination({
           )}
           aria-label="Previous page"
         >
-          <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-            <path d="M5.5 1L2.5 4l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          <svg
+            aria-hidden="true"
+            width="8"
+            height="8"
+            viewBox="0 0 8 8"
+            fill="none"
+          >
+            <path
+              d="M5.5 1L2.5 4l3 3"
+              stroke="currentColor"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
-      )}
+      ) : null}
 
       {/* Pages */}
       {pages.map((page, i) =>
         page === "..." ? (
-          <span key={`dots-${i}`} className="flex h-7 w-5 items-center justify-center font-mono text-[9px] text-foreground/20">
+          <span
+            key={`dots-${i}`}
+            className="flex h-7 w-5 items-center justify-center font-mono text-[9px] text-foreground/20"
+          >
             ···
           </span>
         ) : (
@@ -99,7 +122,7 @@ export function Pagination({
       )}
 
       {/* Next */}
-      {showEdges && (
+      {showEdges ? (
         <button
           type="button"
           disabled={currentPage >= totalPages}
@@ -112,16 +135,28 @@ export function Pagination({
           )}
           aria-label="Next page"
         >
-          <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-            <path d="M2.5 1L5.5 4l-3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+          <svg
+            aria-hidden="true"
+            width="8"
+            height="8"
+            viewBox="0 0 8 8"
+            fill="none"
+          >
+            <path
+              d="M2.5 1L5.5 4l-3 3"
+              stroke="currentColor"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
-      )}
+      ) : null}
 
       {/* Page info */}
-      <span className="ml-1 border-l border-primary/15 pl-2 font-mono text-[8px] uppercase tracking-widest text-foreground/25">
+      <span className="ml-1 border-primary/15 border-l pl-2 font-mono text-[8px] text-foreground/25 uppercase tracking-widest">
         {currentPage}/{totalPages}
       </span>
     </nav>
-  )
+  );
 }

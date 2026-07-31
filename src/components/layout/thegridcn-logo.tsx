@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 interface TheGridcnLogoProps {
-  size?: "sm" | "md" | "lg"
-  className?: string
-  showIcon?: boolean
+  className?: string;
+  showIcon?: boolean;
+  size?: "sm" | "md" | "lg";
 }
 
 function GridIcon({ className }: { className?: string }) {
   return (
     <svg
+      aria-hidden="true"
       viewBox="0 0 32 32"
       fill="none"
       className={cn("text-primary", className)}
@@ -58,36 +58,45 @@ function GridIcon({ className }: { className?: string }) {
         <line x1="30" y1="30" x2="30" y2="26" />
       </g>
     </svg>
-  )
+  );
 }
 
-export function TheGridcnLogo({ size = "md", className, showIcon = true }: TheGridcnLogoProps) {
+export function TheGridcnLogo({
+  size = "md",
+  className,
+  showIcon = true,
+}: TheGridcnLogoProps) {
   const sizeClasses = {
-    sm: {
-      text: "text-sm",
-      icon: "h-5 w-5",
-      gap: "gap-2",
+    lg: {
+      gap: "gap-3",
+      icon: "h-7 w-7",
+      text: "text-xl",
     },
     md: {
-      text: "text-lg",
-      icon: "h-6 w-6",
       gap: "gap-2.5",
+      icon: "h-6 w-6",
+      text: "text-lg",
     },
-    lg: {
-      text: "text-xl",
-      icon: "h-7 w-7",
-      gap: "gap-3",
+    sm: {
+      gap: "gap-2",
+      icon: "h-5 w-5",
+      text: "text-sm",
     },
-  }
+  };
 
-  const s = sizeClasses[size]
+  const s = sizeClasses[size];
 
   return (
     <div className={cn("flex items-center", s.gap, className)}>
-      {showIcon && <GridIcon className={s.icon} />}
-      <span className={cn("font-display font-bold tracking-wider text-primary", s.text)}>
+      {showIcon ? <GridIcon className={s.icon} /> : null}
+      <span
+        className={cn(
+          "font-bold font-display text-primary tracking-wider",
+          s.text
+        )}
+      >
         THE GRIDCN
       </span>
     </div>
-  )
+  );
 }

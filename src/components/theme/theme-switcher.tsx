@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { useTheme, selectableThemes, themes, type Theme } from "./theme-provider";
 import { cn } from "@/lib/utils";
+import { selectableThemes, themes, useTheme } from "./theme-provider";
 
 // Memoized theme button component to prevent unnecessary re-renders
 const ThemeButton = React.memo(function ThemeButton({
@@ -16,12 +16,13 @@ const ThemeButton = React.memo(function ThemeButton({
 }) {
   return (
     <button
+      type="button"
       onClick={onSelect}
       className={cn(
         "group relative flex items-center gap-2 rounded-lg border px-3 py-2 transition-all duration-300",
         "hover:glow-sm",
         isActive
-          ? "border-primary bg-primary/10 glow-sm"
+          ? "glow-sm border-primary bg-primary/10"
           : "border-border bg-card hover:border-primary/50"
       )}
     >
@@ -32,7 +33,7 @@ const ThemeButton = React.memo(function ThemeButton({
           boxShadow: isActive ? `0 0 10px ${themeData.color}` : "none",
         }}
       />
-      <span className="text-sm font-medium">{themeData.name}</span>
+      <span className="font-medium text-sm">{themeData.name}</span>
     </button>
   );
 });
@@ -69,6 +70,7 @@ const CompactThemeButton = React.memo(function CompactThemeButton({
 }) {
   return (
     <button
+      type="button"
       onClick={onSelect}
       title={`${themeData.name} - ${themeData.god}`}
       className={cn(
@@ -126,6 +128,7 @@ const DropdownThemeItem = React.memo(function DropdownThemeItem({
 }) {
   return (
     <button
+      type="button"
       onClick={onSelect}
       className={cn(
         "flex w-full items-center gap-3 rounded-md px-3 py-2 text-left transition-all",
@@ -141,7 +144,7 @@ const DropdownThemeItem = React.memo(function DropdownThemeItem({
       />
       <div>
         <div className="font-medium">{themeData.name}</div>
-        <div className="text-xs text-muted-foreground">{themeData.god}</div>
+        <div className="text-muted-foreground text-xs">{themeData.god}</div>
       </div>
     </button>
   );
@@ -180,13 +183,18 @@ export function ThemeSwitcherDropdown() {
   return (
     <div className="relative">
       <button
+        type="button"
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 transition-all hover:border-primary hover:glow-sm"
+        className="hover:glow-sm flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 transition-all hover:border-primary"
       >
         <span className="h-3 w-3 rounded-full bg-primary [box-shadow:0_0_8px_var(--primary)]" />
         <span className="font-medium">{currentTheme?.name}</span>
         <svg
-          className={cn("h-4 w-4 transition-transform", open ? "rotate-180" : "")}
+          aria-hidden="true"
+          className={cn(
+            "h-4 w-4 transition-transform",
+            open ? "rotate-180" : ""
+          )}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -202,8 +210,13 @@ export function ThemeSwitcherDropdown() {
 
       {open ? (
         <>
-          <div className="fixed inset-0 z-40" onClick={closeDropdown} />
-          <div className="absolute right-0 top-full z-50 mt-2 min-w-[200px] rounded-lg border border-border bg-card p-2 shadow-lg">
+          <button
+            aria-label="Close theme menu"
+            className="fixed inset-0 z-40 cursor-default"
+            onClick={closeDropdown}
+            type="button"
+          />
+          <div className="absolute top-full right-0 z-50 mt-2 min-w-[200px] rounded-lg border border-border bg-card p-2 shadow-lg">
             {dropdownItems}
           </div>
         </>

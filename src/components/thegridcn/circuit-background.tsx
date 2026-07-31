@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface CircuitBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {
-  animated?: boolean
-  opacity?: number
+  animated?: boolean;
+  opacity?: number;
 }
 
 export function CircuitBackground({
@@ -19,6 +19,7 @@ export function CircuitBackground({
     <div className={cn("relative overflow-hidden", className)} {...props}>
       {/* Circuit SVG pattern */}
       <svg
+        aria-hidden="true"
         className={cn(
           "pointer-events-none absolute inset-0 h-full w-full",
           animated && "animate-circuit"
@@ -62,10 +63,34 @@ export function CircuitBackground({
               className="text-primary"
             />
             {/* Corner nodes */}
-            <circle cx="0" cy="0" r="2" fill="currentColor" className="text-primary" />
-            <circle cx="100" cy="0" r="2" fill="currentColor" className="text-primary" />
-            <circle cx="0" cy="100" r="2" fill="currentColor" className="text-primary" />
-            <circle cx="100" cy="100" r="2" fill="currentColor" className="text-primary" />
+            <circle
+              cx="0"
+              cy="0"
+              r="2"
+              fill="currentColor"
+              className="text-primary"
+            />
+            <circle
+              cx="100"
+              cy="0"
+              r="2"
+              fill="currentColor"
+              className="text-primary"
+            />
+            <circle
+              cx="0"
+              cy="100"
+              r="2"
+              fill="currentColor"
+              className="text-primary"
+            />
+            <circle
+              cx="100"
+              cy="100"
+              r="2"
+              fill="currentColor"
+              className="text-primary"
+            />
             {/* Diagonal connectors */}
             <path
               d="M30 50 L50 30 M50 70 L70 50"
@@ -98,5 +123,5 @@ export function CircuitBackground({
         }
       `}</style>
     </div>
-  )
+  );
 }

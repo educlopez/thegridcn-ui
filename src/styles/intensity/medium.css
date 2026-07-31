@@ -34,7 +34,9 @@
   --tron-dot-gap: 8px;
 
   /* Typography */
-  --tron-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --tron-font:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
   --tron-letter-spacing: 0.1em;
   --tron-letter-spacing-wide: 0.2em;
 
@@ -42,10 +44,12 @@
   --tron-glow-intensity: 0.7;
   --tron-border-glow:
     0 0 var(--tron-glow-spread-sm) var(--glow),
-    0 0 var(--tron-glow-spread-md) color-mix(in oklch, var(--glow-muted) 50%, transparent);
+    0 0 var(--tron-glow-spread-md)
+    color-mix(in oklch, var(--glow-muted) 50%, transparent);
   --tron-hover-glow:
     0 0 var(--tron-glow-spread-md) var(--glow),
-    0 0 var(--tron-glow-spread-lg) color-mix(in oklch, var(--glow-muted) 60%, transparent);
+    0 0 var(--tron-glow-spread-lg)
+    color-mix(in oklch, var(--glow-muted) 60%, transparent);
 }
 
 /* Button glow effects */

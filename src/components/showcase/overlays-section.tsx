@@ -1,27 +1,21 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { format } from "date-fns";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card"
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu"
+  CalendarIcon,
+  Cpu,
+  FileText,
+  Search,
+  Settings,
+  Shield,
+  User,
+  Zap,
+} from "lucide-react";
+import * as React from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Command,
   CommandDialog,
@@ -32,29 +26,48 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "@/components/ui/command"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Calendar } from "@/components/ui/calendar"
-import { SectionWrapper, ComponentCard } from "./section-wrapper"
-import { CalendarIcon, Settings, User, FileText, Search, Zap, Shield, Cpu } from "lucide-react"
-import { format } from "date-fns"
+} from "@/components/ui/command";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { ComponentCard, SectionWrapper } from "./section-wrapper";
 
 export function OverlaysSection() {
-  const [date, setDate] = React.useState<Date>()
-  const [open, setOpen] = React.useState(false)
+  const [date, setDate] = React.useState<Date>();
+  const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setOpen((open) => !open)
+        e.preventDefault();
+        setOpen((open) => !open);
       }
-    }
-    document.addEventListener("keydown", down)
-    return () => document.removeEventListener("keydown", down)
-  }, [])
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
 
   return (
     <SectionWrapper
@@ -73,22 +86,22 @@ export function OverlaysSection() {
               <div className="grid gap-4">
                 <div className="space-y-2">
                   <h4 className="font-medium leading-none">Grid Status</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Current system parameters and diagnostics.
                   </p>
                 </div>
                 <div className="grid gap-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm">Active Programs</span>
-                    <span className="text-sm font-mono">2,847</span>
+                    <span className="font-mono text-sm">2,847</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm">System Load</span>
-                    <span className="text-sm font-mono">67%</span>
+                    <span className="font-mono text-sm">67%</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm">Uptime</span>
-                    <span className="text-sm font-mono">99.9%</span>
+                    <span className="font-mono text-sm">99.9%</span>
                   </div>
                 </div>
               </div>
@@ -97,7 +110,10 @@ export function OverlaysSection() {
 
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="btn-glow w-[240px] justify-start text-left font-normal">
+              <Button
+                variant="outline"
+                className="btn-glow w-[240px] justify-start text-left font-normal"
+              >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {date ? format(date, "PPP") : <span>Pick a date</span>}
               </Button>
@@ -173,18 +189,20 @@ export function OverlaysSection() {
             <HoverCardContent className="w-80">
               <div className="flex justify-between space-x-4">
                 <Avatar className="h-12 w-12 border-2 border-primary">
-                  <AvatarFallback className="bg-primary/20 text-primary">TR</AvatarFallback>
+                  <AvatarFallback className="bg-primary/20 text-primary">
+                    TR
+                  </AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
-                  <h4 className="text-sm font-semibold">Tron</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <h4 className="font-semibold text-sm">Tron</h4>
+                  <p className="text-muted-foreground text-sm">
                     Security program. Fights for the users.
                   </p>
                   <div className="flex items-center pt-2">
                     <Badge variant="outline" className="text-xs">
                       Security
                     </Badge>
-                    <span className="ml-2 text-xs text-muted-foreground">
+                    <span className="ml-2 text-muted-foreground text-xs">
                       Active since Cycle 1
                     </span>
                   </div>
@@ -202,18 +220,20 @@ export function OverlaysSection() {
             <HoverCardContent className="w-80">
               <div className="flex justify-between space-x-4">
                 <Avatar className="h-12 w-12 border-2 border-primary">
-                  <AvatarFallback className="bg-primary/20 text-primary">QR</AvatarFallback>
+                  <AvatarFallback className="bg-primary/20 text-primary">
+                    QR
+                  </AvatarFallback>
                 </Avatar>
                 <div className="space-y-1">
-                  <h4 className="text-sm font-semibold">Quorra</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <h4 className="font-semibold text-sm">Quorra</h4>
+                  <p className="text-muted-foreground text-sm">
                     The last ISO. A miracle.
                   </p>
                   <div className="flex items-center pt-2">
                     <Badge variant="outline" className="text-xs">
                       ISO
                     </Badge>
-                    <span className="ml-2 text-xs text-muted-foreground">
+                    <span className="ml-2 text-muted-foreground text-xs">
                       Unique existence
                     </span>
                   </div>
@@ -226,7 +246,7 @@ export function OverlaysSection() {
 
       <ComponentCard title="Context Menu">
         <ContextMenu>
-          <ContextMenuTrigger className="flex h-[150px] w-full items-center justify-center rounded-md border border-dashed border-border text-sm">
+          <ContextMenuTrigger className="flex h-[150px] w-full items-center justify-center rounded-md border border-border border-dashed text-sm">
             Right click here
           </ContextMenuTrigger>
           <ContextMenuContent className="w-64">
@@ -258,9 +278,9 @@ export function OverlaysSection() {
 
       <ComponentCard title="Command Palette">
         <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Press{" "}
-            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-medium font-mono text-[10px] text-muted-foreground opacity-100">
               <span className="text-xs">⌘</span>K
             </kbd>{" "}
             to open the command palette
@@ -339,5 +359,5 @@ export function OverlaysSection() {
         </div>
       </ComponentCard>
     </SectionWrapper>
-  )
+  );
 }

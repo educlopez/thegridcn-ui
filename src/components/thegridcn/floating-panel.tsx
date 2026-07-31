@@ -1,13 +1,14 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
-export interface FloatingPanelProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
-  subtitle?: string
-  position?: "left" | "right"
-  data?: { label: string; value: string }[]
+export interface FloatingPanelProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  data?: { label: string; value: string }[];
+  position?: "left" | "right";
+  subtitle?: string;
+  title: string;
 }
 
 export function FloatingPanel({
@@ -33,24 +34,28 @@ export function FloatingPanel({
       <div
         className={cn(
           "pointer-events-none absolute h-4 w-4 border-primary/60",
-          position === "left" ? "left-0 top-0 border-l-2 border-t-2" : "right-0 top-0 border-r-2 border-t-2"
+          position === "left"
+            ? "top-0 left-0 border-t-2 border-l-2"
+            : "top-0 right-0 border-t-2 border-r-2"
         )}
       />
       <div
         className={cn(
           "pointer-events-none absolute h-4 w-4 border-primary/60",
-          position === "left" ? "bottom-0 left-0 border-b-2 border-l-2" : "bottom-0 right-0 border-b-2 border-r-2"
+          position === "left"
+            ? "bottom-0 left-0 border-b-2 border-l-2"
+            : "right-0 bottom-0 border-r-2 border-b-2"
         )}
       />
 
       {/* Header */}
-      <div className="border-b border-primary/20 px-4 py-2">
-        {subtitle && (
-          <div className="font-mono text-[9px] tracking-[0.3em] text-foreground/80">
+      <div className="border-primary/20 border-b px-4 py-2">
+        {subtitle ? (
+          <div className="font-mono text-[9px] text-foreground/80 tracking-[0.3em]">
             {subtitle}
           </div>
-        )}
-        <div className="font-mono text-sm font-bold tracking-wider text-primary">
+        ) : null}
+        <div className="font-bold font-mono text-primary text-sm tracking-wider">
           {title}
         </div>
       </div>
@@ -66,7 +71,9 @@ export function FloatingPanel({
                 position === "right" && "flex-row-reverse"
               )}
             >
-              <span className="tracking-widest text-foreground/80">{item.label}</span>
+              <span className="text-foreground/80 tracking-widest">
+                {item.label}
+              </span>
               <span className="text-foreground">{item.value}</span>
             </div>
           ))}
@@ -74,7 +81,7 @@ export function FloatingPanel({
       )}
 
       {/* Custom content */}
-      {children && <div className="p-4 pt-0">{children}</div>}
+      {children ? <div className="p-4 pt-0">{children}</div> : null}
 
       {/* Bottom accent line */}
       <div
@@ -84,5 +91,5 @@ export function FloatingPanel({
         )}
       />
     </div>
-  )
+  );
 }

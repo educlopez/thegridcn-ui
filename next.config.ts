@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/(.*)",
         headers: [
           {
             key: "Content-Security-Policy",
@@ -17,8 +16,9 @@ const nextConfig: NextConfig = {
             value: "camera=(), microphone=(), geolocation=()",
           },
         ],
+        source: "/(.*)",
       },
-    ]
+    ];
   },
 };
 

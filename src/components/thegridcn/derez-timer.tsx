@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface DerezTimerProps extends React.HTMLAttributes<HTMLDivElement> {
-  minutes: number
-  seconds: number
-  milliseconds?: number
+  milliseconds?: number;
+  minutes: number;
+  seconds: number;
 }
 
 export function DerezTimer({
@@ -25,11 +25,11 @@ export function DerezTimer({
       )}
       {...props}
     >
-      <div className="text-[10px] uppercase tracking-widest text-primary/70">
+      <div className="text-[10px] text-primary/70 uppercase tracking-widest">
         TIME TO DE-RESOLUTION
       </div>
       <div className="flex items-baseline">
-        <span className="font-mono text-4xl font-bold tracking-wider text-primary glow-text">
+        <span className="glow-text font-bold font-mono text-4xl text-primary tracking-wider">
           {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
         </span>
         {milliseconds > 0 && (
@@ -39,5 +39,5 @@ export function DerezTimer({
         )}
       </div>
     </div>
-  )
+  );
 }

@@ -1,15 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +12,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const DialogPreview = React.memo(function DialogPreview() {
   return (
@@ -65,6 +65,6 @@ export const AlertDialogPreview = React.memo(function AlertDialogPreview() {
 });
 
 export const overlayPreviews: Record<string, React.ComponentType> = {
-  "dialog": DialogPreview,
   "alert-dialog": AlertDialogPreview,
+  dialog: DialogPreview,
 };

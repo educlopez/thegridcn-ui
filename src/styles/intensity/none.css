@@ -4,3 +4,8 @@
    ============================================ */
 
 /* No glow effects applied */
+
+/* Intentionally no rules: this theme disables every glow. */
+:root {
+  --tron-glow-intensity: 0;
+}

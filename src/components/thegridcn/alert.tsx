@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "warning" | "danger" | "info" | "success"
-  animated?: boolean
+  animated?: boolean;
+  variant?: "warning" | "danger" | "info" | "success";
 }
 
 export function Alert({
@@ -16,18 +16,18 @@ export function Alert({
   ...props
 }: AlertProps) {
   const variantStyles = {
-    warning: "bg-amber-500/90 text-black border-amber-400",
     danger: "bg-red-500/90 text-white border-red-400",
     info: "bg-cyan-500/90 text-black border-cyan-400",
     success: "bg-green-500/90 text-black border-green-400",
-  }
+    warning: "bg-amber-500/90 text-black border-amber-400",
+  };
 
   return (
     <div
       className={cn(
         "relative inline-flex items-center justify-center",
         "border-y-2 px-6 py-2",
-        "font-mono text-sm font-bold uppercase tracking-[0.2em]",
+        "font-bold font-mono text-sm uppercase tracking-[0.2em]",
         variantStyles[variant],
         animated && "animate-pulse",
         className
@@ -35,24 +35,24 @@ export function Alert({
       {...props}
     >
       {/* Left bracket decoration */}
-      <span className="absolute -left-1 top-1/2 -translate-y-1/2 text-lg">
+      <span className="absolute top-1/2 -left-1 -translate-y-1/2 text-lg">
         [
       </span>
 
       {children}
 
       {/* Right bracket decoration */}
-      <span className="absolute -right-1 top-1/2 -translate-y-1/2 text-lg">
+      <span className="absolute top-1/2 -right-1 -translate-y-1/2 text-lg">
         ]
       </span>
     </div>
-  )
+  );
 }
 
 interface AlertBannerProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
-  subtitle?: string
-  variant?: "warning" | "danger" | "info"
+  subtitle?: string;
+  title: string;
+  variant?: "warning" | "danger" | "info";
 }
 
 export function AlertBanner({
@@ -63,11 +63,6 @@ export function AlertBanner({
   ...props
 }: AlertBannerProps) {
   const variantStyles = {
-    warning: {
-      bg: "bg-amber-500/10",
-      border: "border-amber-500/50",
-      text: "text-amber-500",
-    },
     danger: {
       bg: "bg-red-500/10",
       border: "border-red-500/50",
@@ -78,9 +73,14 @@ export function AlertBanner({
       border: "border-cyan-500/50",
       text: "text-cyan-500",
     },
-  }
+    warning: {
+      bg: "bg-amber-500/10",
+      border: "border-amber-500/50",
+      text: "text-amber-500",
+    },
+  };
 
-  const styles = variantStyles[variant]
+  const styles = variantStyles[variant];
 
   return (
     <div
@@ -107,14 +107,14 @@ export function AlertBanner({
       </div>
 
       <div className="relative px-4 py-3">
-        {subtitle && (
-          <div className="mb-1 text-[10px] uppercase tracking-widest text-foreground/80">
+        {subtitle ? (
+          <div className="mb-1 text-[10px] text-foreground/80 uppercase tracking-widest">
             {subtitle}
           </div>
-        )}
+        ) : null}
         <div
           className={cn(
-            "font-mono text-lg font-bold uppercase tracking-widest",
+            "font-bold font-mono text-lg uppercase tracking-widest",
             styles.text
           )}
         >
@@ -133,5 +133,5 @@ export function AlertBanner({
         }
       `}</style>
     </div>
-  )
+  );
 }

@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface MarqueeProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
-  speed?: "slow" | "normal" | "fast"
-  direction?: "left" | "right"
-  pauseOnHover?: boolean
-  variant?: "default" | "subtle"
+  children: React.ReactNode;
+  direction?: "left" | "right";
+  pauseOnHover?: boolean;
+  speed?: "slow" | "normal" | "fast";
+  variant?: "default" | "subtle";
 }
 
 export function Marquee({
@@ -20,9 +20,9 @@ export function Marquee({
   className,
   ...props
 }: MarqueeProps) {
-  const durations = { slow: "40s", normal: "25s", fast: "15s" }
-  const dur = durations[speed]
-  const dir = direction === "right" ? "reverse" : "normal"
+  const durations = { fast: "15s", normal: "25s", slow: "40s" };
+  const dur = durations[speed];
+  const dir = direction === "right" ? "reverse" : "normal";
 
   return (
     <div
@@ -67,14 +67,18 @@ export function Marquee({
       `}</style>
 
       {/* Fade edges */}
-      <div className={cn(
-        "pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r to-transparent",
-        variant === "default" ? "from-card/80" : "from-background"
-      )} />
-      <div className={cn(
-        "pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l to-transparent",
-        variant === "default" ? "from-card/80" : "from-background"
-      )} />
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r to-transparent",
+          variant === "default" ? "from-card/80" : "from-background"
+        )}
+      />
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l to-transparent",
+          variant === "default" ? "from-card/80" : "from-background"
+        )}
+      />
     </div>
-  )
+  );
 }

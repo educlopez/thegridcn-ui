@@ -1,92 +1,92 @@
-import Link from "next/link"
-import { TheGridcnLogo } from "@/components/layout/thegridcn-logo"
-import { UplinkHeader } from "@/components/thegridcn/uplink-header"
+import Link from "next/link";
+import { TheGridcnLogo } from "@/components/layout/thegridcn-logo";
+import { UplinkHeader } from "@/components/thegridcn/uplink-header";
 
-type FooterLink = {
-  label: string
-  href: string
-  external?: boolean
-  description?: string
+interface FooterLink {
+  description?: string;
+  external?: boolean;
+  href: string;
+  label: string;
 }
 
-type FooterColumn = {
-  title: string
-  links: FooterLink[]
+interface FooterColumn {
+  links: FooterLink[];
+  title: string;
 }
 
 const navigateColumn: FooterColumn = {
-  title: "NAVIGATE",
   links: [
-    { label: "Components", href: "/components" },
-    { label: "Templates", href: "/templates" },
-    { label: "Dashboard Template", href: "/templates/dashboard" },
-    { label: "Landing Template", href: "/templates/landing" },
-    { label: "Blog Template", href: "/templates/blog" },
-    { label: "Analytics Template", href: "/templates/analytics" },
-    { label: "Login Template", href: "/templates/login" },
-    { label: "Game", href: "/game" },
+    { href: "/components", label: "Components" },
+    { href: "/templates", label: "Templates" },
+    { href: "/templates/dashboard", label: "Dashboard Template" },
+    { href: "/templates/landing", label: "Landing Template" },
+    { href: "/templates/blog", label: "Blog Template" },
+    { href: "/templates/analytics", label: "Analytics Template" },
+    { href: "/templates/login", label: "Login Template" },
+    { href: "/game", label: "Game" },
   ],
-}
+  title: "NAVIGATE",
+};
 
 const developColumn: FooterColumn = {
-  title: "DEVELOP",
   links: [
-    { label: "Install Guide", href: "/docs/install" },
-    { label: "Tokens", href: "/tokens" },
-    { label: "Changelog", href: "/changelog" },
-    { label: "Contributing", href: "/contributing" },
+    { href: "/docs/install", label: "Install Guide" },
+    { href: "/tokens", label: "Tokens" },
+    { href: "/changelog", label: "Changelog" },
+    { href: "/contributing", label: "Contributing" },
     {
-      label: "GitHub",
-      href: "https://github.com/educlopez/thegridcn-ui",
       external: true,
+      href: "https://github.com/educlopez/thegridcn-ui",
+      label: "GitHub",
     },
   ],
-}
+  title: "DEVELOP",
+};
 
 const byEduardoColumn: FooterColumn = {
-  title: "BY THE MAKER",
   links: [
     {
-      label: "smoothui.dev",
-      href: "https://smoothui.dev",
-      external: true,
       description: "Beautiful React components with smooth animations",
+      external: true,
+      href: "https://smoothui.dev",
+      label: "smoothui.dev",
     },
     {
-      label: "sparkbites.dev",
-      href: "https://sparkbites.dev",
-      external: true,
       description: "Daily design & dev inspiration",
+      external: true,
+      href: "https://sparkbites.dev",
+      label: "sparkbites.dev",
     },
     {
-      label: "codevator.dev",
-      href: "https://codevator.dev",
-      external: true,
       description: "Level up your coding workflow",
+      external: true,
+      href: "https://codevator.dev",
+      label: "codevator.dev",
     },
     {
-      label: "ui-craft",
-      href: "https://skills.smoothui.dev",
-      external: true,
       description: "Claude skill for crafting UI",
+      external: true,
+      href: "https://skills.smoothui.dev",
+      label: "ui-craft",
     },
     {
-      label: "Twitter / X",
-      href: "https://x.com/educalvolpz",
-      external: true,
       description: "@educalvolpz",
+      external: true,
+      href: "https://x.com/educalvolpz",
+      label: "Twitter / X",
     },
   ],
-}
+  title: "BY THE MAKER",
+};
 
-type FooterLinkListProps = {
-  column: FooterColumn
+interface FooterLinkListProps {
+  column: FooterColumn;
 }
 
 function FooterLinkList({ column }: FooterLinkListProps) {
   return (
     <div>
-      <h3 className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+      <h3 className="mb-4 font-mono text-muted-foreground text-xs uppercase tracking-[0.2em]">
         <span aria-hidden="true">{"// "}</span>
         {column.title}
       </h3>
@@ -98,23 +98,23 @@ function FooterLinkList({ column }: FooterLinkListProps) {
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
 function FooterLinkItem({ link }: { link: FooterLink }) {
   const linkClass =
-    "group inline-flex flex-col text-sm text-foreground/80 transition-[color,text-shadow] duration-200 hover:text-primary hover:[text-shadow:0_0_8px_var(--primary)] focus-visible:text-primary focus-visible:outline-none focus-visible:[text-shadow:0_0_8px_var(--primary)]"
+    "group inline-flex flex-col text-sm text-foreground/80 transition-[color,text-shadow] duration-200 hover:text-primary hover:[text-shadow:0_0_8px_var(--primary)] focus-visible:text-primary focus-visible:outline-none focus-visible:[text-shadow:0_0_8px_var(--primary)]";
 
   const content = (
     <>
       <span>{link.label}</span>
-      {link.description && (
-        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground/70 group-hover:text-muted-foreground">
+      {link.description ? (
+        <span className="font-mono text-[10px] text-muted-foreground/70 uppercase tracking-wider group-hover:text-muted-foreground">
           {link.description}
         </span>
-      )}
+      ) : null}
     </>
-  )
+  );
 
   if (link.external) {
     return (
@@ -127,36 +127,36 @@ function FooterLinkItem({ link }: { link: FooterLink }) {
       >
         {content}
       </a>
-    )
+    );
   }
 
   return (
     <Link href={link.href} className={linkClass} title={link.description}>
       {content}
     </Link>
-  )
+  );
 }
 
-type StatusMetric = {
-  label: string
-  value: string
+interface StatusMetric {
+  label: string;
+  value: string;
 }
 
 const statusMetrics: StatusMetric[] = [
   { label: "COMPONENTS", value: "115" },
   { label: "THEMES", value: "6" },
   { label: "VERSION", value: "v0.1.0" },
-]
+];
 
 function StatusHUD() {
   return (
     <div className="relative border border-primary/30 bg-primary/5 p-4">
-      <div className="pointer-events-none absolute left-0 top-0 h-2 w-2 border-l border-t border-primary/60" />
-      <div className="pointer-events-none absolute right-0 top-0 h-2 w-2 border-r border-t border-primary/60" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-b border-l border-primary/60" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-2 w-2 border-b border-r border-primary/60" />
+      <div className="pointer-events-none absolute top-0 left-0 h-2 w-2 border-primary/60 border-t border-l" />
+      <div className="pointer-events-none absolute top-0 right-0 h-2 w-2 border-primary/60 border-t border-r" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-primary/60 border-b border-l" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-2 w-2 border-primary/60 border-r border-b" />
 
-      <div className="mb-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+      <div className="mb-3 flex items-center justify-between font-mono text-[10px] text-primary uppercase tracking-[0.2em]">
         <span>SYSTEM STATUS</span>
         <span className="flex items-center gap-1.5">
           <span
@@ -173,26 +173,23 @@ function StatusHUD() {
             key={metric.label}
             className="flex items-center gap-2 font-mono text-[11px]"
           >
-            <dt className="tracking-wider text-muted-foreground">
+            <dt className="text-muted-foreground tracking-wider">
               {metric.label}
             </dt>
-            <span
-              className="h-px flex-1 bg-border/60"
-              aria-hidden="true"
-            />
-            <dd className="tracking-widest text-foreground">{metric.value}</dd>
+            <span className="h-px flex-1 bg-border/60" aria-hidden="true" />
+            <dd className="text-foreground tracking-widest">{metric.value}</dd>
           </div>
         ))}
       </dl>
     </div>
-  )
+  );
 }
 
 export function SiteFooter() {
-  const year = new Date().getFullYear()
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="relative z-10 border-t border-border bg-background">
+    <footer className="relative z-10 border-border border-t bg-background">
       <UplinkHeader
         leftText="SYSTEM: THE GRIDCN v0.1.0"
         rightText="UPTIME: 99.9% - END OF LINE"
@@ -204,11 +201,11 @@ export function SiteFooter() {
             <div className="flex items-center">
               <TheGridcnLogo size="md" />
             </div>
-            <p className="max-w-xs text-sm leading-relaxed text-foreground/70">
+            <p className="max-w-xs text-foreground/70 text-sm leading-relaxed">
               Greek gods meet the Grid. shadcn/ui themes with Tron DNA.
             </p>
             <StatusHUD />
-            <div className="space-y-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+            <div className="space-y-1 font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
               <p>&copy; {year} Eduardo Calvo</p>
               <p>Built with Next.js 16 &middot; Tailwind 4 &middot; React 19</p>
             </div>
@@ -221,12 +218,12 @@ export function SiteFooter() {
 
         <div className="mt-16 flex items-center gap-4">
           <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/30" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+          <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-[0.25em]">
             GRID YEAR {year} &middot; ALL PROGRAMS RESERVED
           </span>
           <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/30" />
         </div>
       </div>
     </footer>
-  )
+  );
 }

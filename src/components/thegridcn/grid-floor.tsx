@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import type * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface GridFloorProps extends React.HTMLAttributes<HTMLDivElement> {
-  perspective?: boolean
-  animated?: boolean
+  animated?: boolean;
+  perspective?: boolean;
 }
 
 export function GridFloor({
@@ -16,7 +16,10 @@ export function GridFloor({
   ...props
 }: GridFloorProps) {
   return (
-    <div className={cn("relative min-h-screen overflow-hidden", className)} {...props}>
+    <div
+      className={cn("relative min-h-screen overflow-hidden", className)}
+      {...props}
+    >
       {/* Grid background */}
       <div
         className={cn(
@@ -26,7 +29,7 @@ export function GridFloor({
       >
         <div
           className={cn(
-            "absolute inset-0 grid-floor opacity-20",
+            "grid-floor absolute inset-0 opacity-20",
             animated && "animate-grid-scroll"
           )}
         />
@@ -63,5 +66,5 @@ export function GridFloor({
         }
       `}</style>
     </div>
-  )
+  );
 }

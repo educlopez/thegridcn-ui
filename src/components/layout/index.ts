@@ -1,3 +1,3 @@
-export { TronHeader } from "./tron-header"
-export { TheGridcnLogo } from "./thegridcn-logo"
-export { SiteFooter } from "./site-footer"
+export { SiteFooter } from "./site-footer";
+export { TheGridcnLogo } from "./thegridcn-logo";
+export { TronHeader } from "./tron-header";

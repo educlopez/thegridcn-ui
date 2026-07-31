@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ComponentProps } from "react";
+import { type ComponentProps, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface CodeBlockShikiProps extends ComponentProps<"div"> {
@@ -49,7 +49,7 @@ const CodeBlockShiki = ({
       setHighlightedHtml(html);
     }
 
-    void clientHighlight();
+    clientHighlight();
   }, [code, language, lineNumbers]);
 
   const classNames = cn("w-full overflow-x-auto", className);

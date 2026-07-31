@@ -1,45 +1,45 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface TerminalLine {
-  text: string
-  type?: "input" | "output" | "error" | "system"
+  text: string;
+  type?: "input" | "output" | "error" | "system";
 }
 
 interface TerminalProps extends React.HTMLAttributes<HTMLDivElement> {
-  lines: TerminalLine[]
-  title?: string
-  variant?: "default" | "danger" | "locked"
-  typewriter?: boolean
+  lines: TerminalLine[];
+  title?: string;
+  typewriter?: boolean;
+  variant?: "default" | "danger" | "locked";
 }
 
 const linePrefix: Record<string, string> = {
+  error: "! ",
   input: "> ",
   output: "  ",
-  error: "! ",
   system: ":: ",
-}
+};
 
 const lineColor: Record<string, string> = {
+  error: "text-red-500",
   input: "text-primary",
   output: "text-foreground/90",
-  error: "text-red-500",
   system: "text-amber-500",
-}
+};
 
 const variantBorder: Record<string, string> = {
-  default: "border-primary/50",
   danger: "border-red-500/50",
+  default: "border-primary/50",
   locked: "border-amber-500/50",
-}
+};
 
 const variantHeader: Record<string, string> = {
-  default: "border-primary/30 text-primary",
   danger: "border-red-500/30 text-red-500",
+  default: "border-primary/30 text-primary",
   locked: "border-amber-500/30 text-amber-500",
-}
+};
 
 export function Terminal({
   lines,
@@ -49,57 +49,63 @@ export function Terminal({
   className,
   ...props
 }: TerminalProps) {
-  const scrollRef = React.useRef<HTMLDivElement>(null)
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   // Typewriter: reveal lines one by one, then characters within each line
-  const [revealedLines, setRevealedLines] = React.useState(typewriter ? 0 : lines.length)
-  const [charCount, setCharCount] = React.useState(typewriter ? 0 : Infinity)
+  const [revealedLines, setRevealedLines] = React.useState(
+    typewriter ? 0 : lines.length
+  );
+  const [charCount, setCharCount] = React.useState(
+    typewriter ? 0 : Number.POSITIVE_INFINITY
+  );
 
   React.useEffect(() => {
     if (!typewriter) {
-      setRevealedLines(lines.length)
-      setCharCount(Infinity)
-      return
+      setRevealedLines(lines.length);
+      setCharCount(Number.POSITIVE_INFINITY);
+      return;
     }
 
-    setRevealedLines(0)
-    setCharCount(0)
-    let lineIdx = 0
-    let charIdx = 0
-    let cancelled = false
+    setRevealedLines(0);
+    setCharCount(0);
+    let lineIdx = 0;
+    let charIdx = 0;
+    let cancelled = false;
 
     function typeNext() {
-      if (cancelled || lineIdx >= lines.length) return
+      if (cancelled || lineIdx >= lines.length) {
+        return;
+      }
 
-      const currentLine = lines[lineIdx]
+      const currentLine = lines[lineIdx];
       if (charIdx < currentLine.text.length) {
-        charIdx++
-        setCharCount(charIdx)
-        setTimeout(typeNext, 20 + Math.random() * 20)
+        charIdx++;
+        setCharCount(charIdx);
+        setTimeout(typeNext, 20 + Math.random() * 20);
       } else {
         // Line complete, move to next
-        lineIdx++
-        charIdx = 0
-        setRevealedLines(lineIdx)
-        setCharCount(0)
+        lineIdx++;
+        charIdx = 0;
+        setRevealedLines(lineIdx);
+        setCharCount(0);
         if (lineIdx < lines.length) {
-          setTimeout(typeNext, 200 + Math.random() * 150)
+          setTimeout(typeNext, 200 + Math.random() * 150);
         }
       }
     }
 
-    const startTimer = setTimeout(typeNext, 400)
+    const startTimer = setTimeout(typeNext, 400);
     return () => {
-      cancelled = true
-      clearTimeout(startTimer)
-    }
-  }, [lines, typewriter])
+      cancelled = true;
+      clearTimeout(startTimer);
+    };
+  }, [lines, typewriter]);
 
   React.useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [revealedLines, charCount])
+  }, []);
 
   return (
     <div
@@ -118,7 +124,7 @@ export function Terminal({
       {/* Scan sweep */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div
-          className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
+          className="absolute right-0 left-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"
           style={{ animation: "terminalScan 5s ease-in-out infinite" }}
         />
       </div>
@@ -139,11 +145,11 @@ export function Terminal({
           variantHeader[variant]
         )}
       >
-        <span className="text-[10px] uppercase tracking-widest text-foreground/80">
+        <span className="text-[10px] text-foreground/80 uppercase tracking-widest">
           {title}
         </span>
         {variant === "locked" && (
-          <span className="ml-auto text-[10px] uppercase tracking-widest text-amber-500 animate-pulse">
+          <span className="ml-auto animate-pulse text-[10px] text-amber-500 uppercase tracking-widest">
             LOCKED
           </span>
         )}
@@ -155,7 +161,7 @@ export function Terminal({
         className="max-h-64 overflow-y-auto p-4 font-mono text-sm"
       >
         {lines.map((line, i) => {
-          const type = line.type ?? "output"
+          const type = line.type ?? "output";
           // Already fully revealed lines
           if (i < revealedLines) {
             return (
@@ -163,7 +169,7 @@ export function Terminal({
                 <span className="opacity-60">{linePrefix[type]}</span>
                 {line.text}
               </div>
-            )
+            );
           }
           // Currently typing line
           if (i === revealedLines && charCount > 0) {
@@ -173,15 +179,15 @@ export function Terminal({
                 {line.text.slice(0, charCount)}
                 <span className="animate-pulse text-primary">▌</span>
               </div>
-            )
+            );
           }
           // Not yet revealed
-          return null
+          return null;
         })}
 
         {/* Idle cursor (shown when all lines typed) */}
         {revealedLines >= lines.length && (
-          <div className="inline-flex items-center leading-relaxed text-primary">
+          <div className="inline-flex items-center text-primary leading-relaxed">
             <span className="opacity-60">{"> "}</span>
             <span className="animate-pulse">▌</span>
           </div>
@@ -189,10 +195,10 @@ export function Terminal({
       </div>
 
       {/* Corner decorations */}
-      <div className="pointer-events-none absolute left-0 top-0 h-4 w-4 border-l-2 border-t-2 border-primary/50" />
-      <div className="pointer-events-none absolute right-0 top-0 h-4 w-4 border-r-2 border-t-2 border-primary/50" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-4 w-4 border-b-2 border-l-2 border-primary/50" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-4 w-4 border-b-2 border-r-2 border-primary/50" />
+      <div className="pointer-events-none absolute top-0 left-0 h-4 w-4 border-primary/50 border-t-2 border-l-2" />
+      <div className="pointer-events-none absolute top-0 right-0 h-4 w-4 border-primary/50 border-t-2 border-r-2" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-4 w-4 border-primary/50 border-b-2 border-l-2" />
+      <div className="pointer-events-none absolute right-0 bottom-0 h-4 w-4 border-primary/50 border-r-2 border-b-2" />
     </div>
-  )
+  );
 }

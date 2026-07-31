@@ -8,8 +8,8 @@ interface ErrorBoundaryProps {
 }
 
 interface ErrorBoundaryState {
-  hasError: boolean;
   error: Error | null;
+  hasError: boolean;
 }
 
 export class ComponentErrorBoundary extends React.Component<
@@ -18,11 +18,11 @@ export class ComponentErrorBoundary extends React.Component<
 > {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { error: null, hasError: false };
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { hasError: true, error };
+    return { error, hasError: true };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
@@ -35,15 +35,16 @@ export class ComponentErrorBoundary extends React.Component<
         this.props.fallback || (
           <div className="flex flex-col items-center justify-center space-y-4 p-8 text-center">
             <div className="rounded-lg border border-destructive/30 bg-destructive/5 p-6">
-              <p className="font-mono text-sm font-semibold text-destructive">
+              <p className="font-mono font-semibold text-destructive text-sm">
                 Component Preview Error
               </p>
-              <p className="mt-2 text-xs text-foreground/80">
+              <p className="mt-2 text-foreground/80 text-xs">
                 {this.state.error?.message ||
                   "An error occurred while rendering the component"}
               </p>
               <button
-                onClick={() => this.setState({ hasError: false, error: null })}
+                type="button"
+                onClick={() => this.setState({ error: null, hasError: false })}
                 className="mt-4 rounded-md border border-border bg-background px-3 py-1.5 text-xs hover:bg-accent"
               >
                 Try Again

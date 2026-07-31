@@ -1,67 +1,74 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { LightCycleEngine, type Direction, type GamePhase, type BikeConfig } from "./light-cycle-engine"
-import { useTheme, themes } from "@/components/theme/theme-provider"
+import * as React from "react";
+import { themes, useTheme } from "@/components/theme/theme-provider";
+import {
+  type BikeConfig,
+  type Direction,
+  type GamePhase,
+  LightCycleEngine,
+} from "./light-cycle-engine";
 
 interface Particle {
-  x: number
-  y: number
-  vx: number
-  vy: number
-  life: number
-  color: string
+  color: string;
+  life: number;
+  vx: number;
+  vy: number;
+  x: number;
+  y: number;
 }
 
 export interface LightCycleGameProps {
-  className?: string
-  autoPlay?: boolean
-  width?: number
-  height?: number
-  rivals?: number // 1-4 AI opponents
-  tickRate?: number // ticks per second (speed)
-  aiLevel?: number // 0=Easy, 1=Medium, 2=Hard, 3=Insane
-  onGameEnd?: (winner: "player" | "ai" | "draw") => void
-  onPhaseChange?: (phase: GamePhase) => void
+  aiLevel?: number; // 0=Easy, 1=Medium, 2=Hard, 3=Insane
+  autoPlay?: boolean;
+  className?: string;
+  height?: number;
+  onGameEnd?: (winner: "player" | "ai" | "draw") => void;
+  onPhaseChange?: (phase: GamePhase) => void;
+  rivals?: number; // 1-4 AI opponents
+  tickRate?: number; // ticks per second (speed)
+  width?: number;
 }
 
-const GRID_SIZE = 80
-const COUNTDOWN_SECONDS = 3
+const GRID_SIZE = 80;
+const COUNTDOWN_SECONDS = 3;
 
 // AI bike starting positions spread across the arena (clockwise pattern to avoid head-on collisions)
 const AI_SPAWNS: { x: number; y: number; direction: Direction }[] = [
-  { x: 15, y: 15, direction: "right" },
-  { x: 65, y: 15, direction: "down" },
-  { x: 65, y: 65, direction: "left" },
-  { x: 15, y: 65, direction: "up" },
-]
+  { direction: "right", x: 15, y: 15 },
+  { direction: "down", x: 65, y: 15 },
+  { direction: "left", x: 65, y: 65 },
+  { direction: "up", x: 15, y: 65 },
+];
 
 function getThemeColors(currentThemeId: string, rivalCount: number) {
-  const current = themes.find((t) => t.id === currentThemeId)
-  const playerColor = current?.color ?? "#00d4ff"
+  const current = themes.find((t) => t.id === currentThemeId);
+  const playerColor = current?.color ?? "#00d4ff";
 
-  const others = themes.filter((t) => t.id !== currentThemeId && t.id !== "creator")
-  const shuffled = others.sort(() => Math.random() - 0.5)
-  const aiColors = shuffled.slice(0, rivalCount).map((t) => t.color)
+  const others = themes.filter(
+    (t) => t.id !== currentThemeId && t.id !== "creator"
+  );
+  const shuffled = others.sort(() => Math.random() - 0.5);
+  const aiColors = shuffled.slice(0, rivalCount).map((t) => t.color);
 
   // Fill remaining with fallback colors if needed
-  const fallbacks = ["#ff3333", "#ff6600", "#ffd700", "#0066ff"]
+  const fallbacks = ["#ff3333", "#ff6600", "#ffd700", "#0066ff"];
   while (aiColors.length < rivalCount) {
-    aiColors.push(fallbacks[aiColors.length % fallbacks.length])
+    aiColors.push(fallbacks[aiColors.length % fallbacks.length]);
   }
 
-  return { playerColor, aiColors }
+  return { aiColors, playerColor };
 }
 
-function createEngine(playerColor: string, aiColors: string[], aiLevel: number = 1) {
+function createEngine(playerColor: string, aiColors: string[], aiLevel = 1) {
   const configs: BikeConfig[] = [
-    { x: 40, y: 65, direction: "up", color: playerColor },
+    { color: playerColor, direction: "up", x: 40, y: 65 },
     ...aiColors.map((color, i) => ({
       ...AI_SPAWNS[i % AI_SPAWNS.length],
       color,
     })),
-  ]
-  return new LightCycleEngine(GRID_SIZE, configs, aiLevel)
+  ];
+  return new LightCycleEngine(GRID_SIZE, configs, aiLevel);
 }
 
 export const LightCycleGame = React.memo(function LightCycleGame({
@@ -75,429 +82,517 @@ export const LightCycleGame = React.memo(function LightCycleGame({
   onGameEnd,
   onPhaseChange,
 }: LightCycleGameProps) {
-  const canvasRef = React.useRef<HTMLCanvasElement>(null)
-  const engineRef = React.useRef<LightCycleEngine | null>(null)
-  const particlesRef = React.useRef<Particle[]>([])
-  const lastTickRef = React.useRef(0)
-  const countdownRef = React.useRef(0)
-  const countdownStartRef = React.useRef(0)
-  const animFrameRef = React.useRef(0)
-  const autoRestartTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
-  const prevPhaseRef = React.useRef<GamePhase>("ready")
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const engineRef = React.useRef<LightCycleEngine | null>(null);
+  const particlesRef = React.useRef<Particle[]>([]);
+  const lastTickRef = React.useRef(0);
+  const countdownRef = React.useRef(0);
+  const countdownStartRef = React.useRef(0);
+  const animFrameRef = React.useRef(0);
+  const autoRestartTimerRef = React.useRef<ReturnType<
+    typeof setTimeout
+  > | null>(null);
+  const prevPhaseRef = React.useRef<GamePhase>("ready");
 
   // Keep rivals/tickRate/aiLevel in refs so the game loop always reads the latest values
-  const rivalsRef = React.useRef(rivals)
-  const tickRateRef = React.useRef(tickRate)
-  const aiLevelRef = React.useRef(aiLevel)
-  rivalsRef.current = rivals
-  tickRateRef.current = tickRate
-  aiLevelRef.current = aiLevel
+  const rivalsRef = React.useRef(rivals);
+  const tickRateRef = React.useRef(tickRate);
+  const aiLevelRef = React.useRef(aiLevel);
+  rivalsRef.current = rivals;
+  tickRateRef.current = tickRate;
+  aiLevelRef.current = aiLevel;
 
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   // Initialize engine
+  const startCountdown = React.useCallback(() => {
+    const engine = engineRef.current;
+    if (!engine) {
+      return;
+    }
+    engine.phase = "countdown";
+    countdownRef.current = COUNTDOWN_SECONDS;
+    countdownStartRef.current = performance.now();
+  }, []);
+
   React.useEffect(() => {
-    const { playerColor, aiColors } = getThemeColors(theme, rivalsRef.current)
-    engineRef.current = createEngine(playerColor, aiColors, aiLevelRef.current)
+    const { playerColor, aiColors } = getThemeColors(theme, rivalsRef.current);
+    engineRef.current = createEngine(playerColor, aiColors, aiLevelRef.current);
 
     if (autoPlay) {
-      startCountdown()
+      startCountdown();
     }
 
     return () => {
-      cancelAnimationFrame(animFrameRef.current)
-      if (autoRestartTimerRef.current) clearTimeout(autoRestartTimerRef.current)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+      cancelAnimationFrame(animFrameRef.current);
+      if (autoRestartTimerRef.current) {
+        clearTimeout(autoRestartTimerRef.current);
+      }
+    };
+  }, [startCountdown, theme, autoPlay]);
 
   // Rebuild engine when rivals/aiLevel change (only between games)
   React.useEffect(() => {
-    const engine = engineRef.current
-    if (!engine) return
+    const engine = engineRef.current;
+    if (!engine) {
+      return;
+    }
     // Only rebuild if we're in ready state (not mid-game)
-    if (engine.phase !== "ready" && engine.phase !== "gameover") return
-    const { playerColor, aiColors } = getThemeColors(theme, rivals)
-    engineRef.current = createEngine(playerColor, aiColors, aiLevel)
-    particlesRef.current = []
-  }, [rivals, aiLevel, theme])
+    if (engine.phase !== "ready" && engine.phase !== "gameover") {
+      return;
+    }
+    const { playerColor, aiColors } = getThemeColors(theme, rivals);
+    engineRef.current = createEngine(playerColor, aiColors, aiLevel);
+    particlesRef.current = [];
+  }, [rivals, aiLevel, theme]);
 
   // Update player color on theme change
   React.useEffect(() => {
-    const engine = engineRef.current
-    if (!engine) return
-    const current = themes.find((t) => t.id === theme)
+    const engine = engineRef.current;
+    if (!engine) {
+      return;
+    }
+    const current = themes.find((t) => t.id === theme);
     if (current) {
-      engine.updateBikeColor(0, current.color)
+      engine.updateBikeColor(0, current.color);
     }
-  }, [theme])
+  }, [theme]);
 
-  function startCountdown() {
-    const engine = engineRef.current
-    if (!engine) return
-    engine.phase = "countdown"
-    countdownRef.current = COUNTDOWN_SECONDS
-    countdownStartRef.current = performance.now()
-  }
+  const startGame = React.useCallback(() => {
+    const engine = engineRef.current;
+    if (!engine) {
+      return;
+    }
+    engine.start();
+    lastTickRef.current = performance.now();
+  }, []);
 
-  function startGame() {
-    const engine = engineRef.current
-    if (!engine) return
-    engine.start()
-    lastTickRef.current = performance.now()
-  }
-
-  function resetGame() {
-    const { playerColor, aiColors } = getThemeColors(theme, rivalsRef.current)
-    engineRef.current = createEngine(playerColor, aiColors, aiLevelRef.current)
-    particlesRef.current = []
+  const resetGame = React.useCallback(() => {
+    const { playerColor, aiColors } = getThemeColors(theme, rivalsRef.current);
+    engineRef.current = createEngine(playerColor, aiColors, aiLevelRef.current);
+    particlesRef.current = [];
     if (autoRestartTimerRef.current) {
-      clearTimeout(autoRestartTimerRef.current)
-      autoRestartTimerRef.current = null
+      clearTimeout(autoRestartTimerRef.current);
+      autoRestartTimerRef.current = null;
     }
-    startCountdown()
-  }
+    startCountdown();
+  }, [theme, startCountdown]);
 
   // Keyboard input
   React.useEffect(() => {
-    if (autoPlay) return
+    if (autoPlay) {
+      return;
+    }
 
     function handleKeyDown(e: KeyboardEvent) {
-      const engine = engineRef.current
-      if (!engine) return
+      const engine = engineRef.current;
+      if (!engine) {
+        return;
+      }
 
-      const state = engine.getState()
+      const state = engine.getState();
 
       if (e.key === "Enter") {
         if (state.phase === "ready") {
-          startCountdown()
+          startCountdown();
         } else if (state.phase === "gameover") {
-          resetGame()
+          resetGame();
         }
-        return
+        return;
       }
 
-      if (state.phase !== "playing") return
+      if (state.phase !== "playing") {
+        return;
+      }
 
       const keyMap: Record<string, Direction> = {
-        ArrowUp: "up",
+        A: "left",
         ArrowDown: "down",
         ArrowLeft: "left",
         ArrowRight: "right",
-        w: "up",
-        W: "up",
-        s: "down",
-        S: "down",
+        ArrowUp: "up",
         a: "left",
-        A: "left",
-        d: "right",
         D: "right",
-      }
+        d: "right",
+        S: "down",
+        s: "down",
+        W: "up",
+        w: "up",
+      };
 
-      const dir = keyMap[e.key]
+      const dir = keyMap[e.key];
       if (dir) {
-        e.preventDefault()
-        engine.setBikeDirection(0, dir)
+        e.preventDefault();
+        engine.setBikeDirection(0, dir);
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPlay, theme])
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [autoPlay, startCountdown, resetGame]);
 
   // Main game/render loop
   React.useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
 
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      return;
+    }
 
     // Handle DPR for crisp rendering
-    const dpr = window.devicePixelRatio || 1
-    canvas.width = width * dpr
-    canvas.height = height * dpr
-    canvas.style.width = `${width}px`
-    canvas.style.height = `${height}px`
-    ctx.scale(dpr, dpr)
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    ctx.scale(dpr, dpr);
 
-    const cellW = width / GRID_SIZE
-    const cellH = height / GRID_SIZE
+    const cellW = width / GRID_SIZE;
+    const cellH = height / GRID_SIZE;
 
     function spawnDerezParticles(x: number, y: number, color: string) {
       for (let i = 0; i < 20; i++) {
-        const angle = (Math.PI * 2 * i) / 20
-        const speed = 1 + Math.random() * 3
+        const angle = (Math.PI * 2 * i) / 20;
+        const speed = 1 + Math.random() * 3;
         particlesRef.current.push({
-          x: x * cellW + cellW / 2,
-          y: y * cellH + cellH / 2,
+          color,
+          life: 30 + Math.floor(Math.random() * 15),
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          life: 30 + Math.floor(Math.random() * 15),
-          color,
-        })
+          x: x * cellW + cellW / 2,
+          y: y * cellH + cellH / 2,
+        });
       }
     }
 
-    let prevAlive: boolean[] = []
+    let prevAlive: boolean[] = [];
 
     function gameLoop(now: number) {
-      const engine = engineRef.current
+      const engine = engineRef.current;
       if (!engine) {
-        animFrameRef.current = requestAnimationFrame(gameLoop)
-        return
+        animFrameRef.current = requestAnimationFrame(gameLoop);
+        return;
       }
 
-      const state = engine.getState()
-      const currentTickInterval = 1000 / tickRateRef.current
+      const state = engine.getState();
+      const currentTickInterval = 1000 / tickRateRef.current;
 
       // Notify phase changes
       if (state.phase !== prevPhaseRef.current) {
-        prevPhaseRef.current = state.phase
-        onPhaseChange?.(state.phase)
+        prevPhaseRef.current = state.phase;
+        onPhaseChange?.(state.phase);
       }
 
       // Handle countdown
       if (state.phase === "countdown") {
-        const elapsed = now - countdownStartRef.current
-        const remaining = COUNTDOWN_SECONDS - Math.floor(elapsed / 1000)
-        countdownRef.current = remaining
+        const elapsed = now - countdownStartRef.current;
+        const remaining = COUNTDOWN_SECONDS - Math.floor(elapsed / 1000);
+        countdownRef.current = remaining;
         if (remaining <= 0) {
-          startGame()
+          startGame();
         }
       }
 
       // Handle game ticks
       if (state.phase === "playing") {
-        const elapsed = now - lastTickRef.current
+        const elapsed = now - lastTickRef.current;
         if (elapsed >= currentTickInterval) {
           // Track alive states before tick
-          prevAlive = state.bikes.map((b) => b.alive)
+          prevAlive = state.bikes.map((b) => b.alive);
 
-          engine.tick()
+          engine.tick();
 
           // Auto-move player in autoPlay mode
           if (autoPlay) {
-            const bike = engine.bikes[0]
+            const [bike] = engine.bikes;
             if (bike.alive) {
-              const dirs: Direction[] = ["up", "down", "left", "right"]
-              const opposite: Record<Direction, Direction> = { up: "down", down: "up", left: "right", right: "left" }
+              const dirs: Direction[] = ["up", "down", "left", "right"];
+              const opposite: Record<Direction, Direction> = {
+                down: "up",
+                left: "right",
+                right: "left",
+                up: "down",
+              };
               const safeDirs = dirs.filter((d) => {
-                if (d === opposite[bike.direction]) return false
-                const delta = { up: { dx: 0, dy: -1 }, down: { dx: 0, dy: 1 }, left: { dx: -1, dy: 0 }, right: { dx: 1, dy: 0 } }
-                const nx = bike.x + delta[d].dx
-                const ny = bike.y + delta[d].dy
-                if (nx < 0 || nx >= GRID_SIZE || ny < 0 || ny >= GRID_SIZE) return false
+                if (d === opposite[bike.direction]) {
+                  return false;
+                }
+                const delta = {
+                  down: { dx: 0, dy: 1 },
+                  left: { dx: -1, dy: 0 },
+                  right: { dx: 1, dy: 0 },
+                  up: { dx: 0, dy: -1 },
+                };
+                const nx = bike.x + delta[d].dx;
+                const ny = bike.y + delta[d].dy;
+                if (nx < 0 || nx >= GRID_SIZE || ny < 0 || ny >= GRID_SIZE) {
+                  return false;
+                }
                 for (const b of engine.bikes) {
                   for (const t of b.trail) {
-                    if (t.x === nx && t.y === ny) return false
+                    if (t.x === nx && t.y === ny) {
+                      return false;
+                    }
                   }
                 }
-                return true
-              })
+                return true;
+              });
               if (safeDirs.length > 0) {
-                let bestDir = safeDirs[0]
-                let bestCount = 0
+                let [bestDir] = safeDirs;
+                let bestCount = 0;
                 for (const d of safeDirs) {
-                  const delta = { up: { dx: 0, dy: -1 }, down: { dx: 0, dy: 1 }, left: { dx: -1, dy: 0 }, right: { dx: 1, dy: 0 } }
-                  let count = 0
-                  let cx = bike.x, cy = bike.y
+                  const delta = {
+                    down: { dx: 0, dy: 1 },
+                    left: { dx: -1, dy: 0 },
+                    right: { dx: 1, dy: 0 },
+                    up: { dx: 0, dy: -1 },
+                  };
+                  let count = 0;
+                  let cx = bike.x,
+                    cy = bike.y;
                   for (let s = 0; s < 15; s++) {
-                    cx += delta[d].dx
-                    cy += delta[d].dy
-                    if (cx < 0 || cx >= GRID_SIZE || cy < 0 || cy >= GRID_SIZE) break
-                    let blocked = false
+                    cx += delta[d].dx;
+                    cy += delta[d].dy;
+                    if (
+                      cx < 0 ||
+                      cx >= GRID_SIZE ||
+                      cy < 0 ||
+                      cy >= GRID_SIZE
+                    ) {
+                      break;
+                    }
+                    let blocked = false;
                     for (const b of engine.bikes) {
                       for (const t of b.trail) {
-                        if (t.x === cx && t.y === cy) { blocked = true; break }
+                        if (t.x === cx && t.y === cy) {
+                          blocked = true;
+                          break;
+                        }
                       }
-                      if (blocked) break
+                      if (blocked) {
+                        break;
+                      }
                     }
-                    if (blocked) break
-                    count++
+                    if (blocked) {
+                      break;
+                    }
+                    count++;
                   }
                   if (count > bestCount) {
-                    bestCount = count
-                    bestDir = d
+                    bestCount = count;
+                    bestDir = d;
                   }
                 }
-                if (Math.random() < 0.15 || !safeDirs.includes(bike.direction)) {
-                  engine.setBikeDirection(0, bestDir)
+                if (
+                  Math.random() < 0.15 ||
+                  !safeDirs.includes(bike.direction)
+                ) {
+                  engine.setBikeDirection(0, bestDir);
                 }
               }
             }
           }
 
           // Spawn particles for newly dead bikes
-          const newState = engine.getState()
+          const newState = engine.getState();
           for (let i = 0; i < newState.bikes.length; i++) {
             if (prevAlive[i] && !newState.bikes[i].alive) {
-              spawnDerezParticles(newState.bikes[i].x, newState.bikes[i].y, newState.bikes[i].color)
+              spawnDerezParticles(
+                newState.bikes[i].x,
+                newState.bikes[i].y,
+                newState.bikes[i].color
+              );
             }
           }
 
           // Handle game over
           if (newState.phase === "gameover") {
             if (onGameEnd) {
-              if (newState.winner === 0) onGameEnd("player")
-              else if (newState.winner === -1) onGameEnd("draw")
-              else onGameEnd("ai") // includes -2 (player dead)
+              if (newState.winner === 0) {
+                onGameEnd("player");
+              } else if (newState.winner === -1) {
+                onGameEnd("draw");
+              } else {
+                onGameEnd("ai"); // includes -2 (player dead)
+              }
             }
             if (autoPlay) {
               autoRestartTimerRef.current = setTimeout(() => {
-                resetGame()
-              }, 2000)
+                resetGame();
+              }, 2000);
             }
           }
 
-          lastTickRef.current = now
+          lastTickRef.current = now;
         }
       }
 
       // === RENDER ===
-      if (!ctx) return
+      if (!ctx) {
+        return;
+      }
 
       // Background
-      ctx.fillStyle = "#08080c"
-      ctx.fillRect(0, 0, width, height)
+      ctx.fillStyle = "#08080c";
+      ctx.fillRect(0, 0, width, height);
 
       // Grid lines
-      const bikes = engine.getState().bikes
-      const primaryColor = bikes[0]?.color ?? "#00d4ff"
+      const { bikes } = engine.getState();
+      const primaryColor = bikes[0]?.color ?? "#00d4ff";
 
-      ctx.strokeStyle = hexToRgba(primaryColor, 0.06)
-      ctx.lineWidth = 0.5
+      ctx.strokeStyle = hexToRgba(primaryColor, 0.06);
+      ctx.lineWidth = 0.5;
       for (let i = 0; i <= GRID_SIZE; i++) {
-        const x = i * cellW
-        const y = i * cellH
-        ctx.beginPath()
-        ctx.moveTo(x, 0)
-        ctx.lineTo(x, height)
-        ctx.stroke()
-        ctx.beginPath()
-        ctx.moveTo(0, y)
-        ctx.lineTo(width, y)
-        ctx.stroke()
+        const x = i * cellW;
+        const y = i * cellH;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
       }
 
       // Major grid lines every 10 cells
-      ctx.strokeStyle = hexToRgba(primaryColor, 0.12)
-      ctx.lineWidth = 0.8
+      ctx.strokeStyle = hexToRgba(primaryColor, 0.12);
+      ctx.lineWidth = 0.8;
       for (let i = 0; i <= GRID_SIZE; i += 10) {
-        const x = i * cellW
-        const y = i * cellH
-        ctx.beginPath()
-        ctx.moveTo(x, 0)
-        ctx.lineTo(x, height)
-        ctx.stroke()
-        ctx.beginPath()
-        ctx.moveTo(0, y)
-        ctx.lineTo(width, y)
-        ctx.stroke()
+        const x = i * cellW;
+        const y = i * cellH;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
       }
 
       // Arena border
-      ctx.strokeStyle = hexToRgba(primaryColor, 0.3)
-      ctx.lineWidth = 2
-      ctx.strokeRect(0, 0, width, height)
+      ctx.strokeStyle = hexToRgba(primaryColor, 0.3);
+      ctx.lineWidth = 2;
+      ctx.strokeRect(0, 0, width, height);
 
       // Draw trails
-      ctx.save()
+      ctx.save();
       for (const bike of bikes) {
-        if (bike.trail.length === 0) continue
-        ctx.shadowColor = bike.color
-        ctx.shadowBlur = 8
-        ctx.fillStyle = bike.alive ? bike.color : hexToRgba(bike.color, 0.3)
+        if (bike.trail.length === 0) {
+          continue;
+        }
+        ctx.shadowColor = bike.color;
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = bike.alive ? bike.color : hexToRgba(bike.color, 0.3);
 
         for (const cell of bike.trail) {
-          ctx.fillRect(cell.x * cellW, cell.y * cellH, cellW, cellH)
+          ctx.fillRect(cell.x * cellW, cell.y * cellH, cellW, cellH);
         }
       }
-      ctx.restore()
+      ctx.restore();
 
       // Draw bike heads as mini light-cycle silhouettes
-      ctx.save()
+      ctx.save();
       for (const bike of bikes) {
-        if (!bike.alive) continue
-        drawBikeSprite(ctx, bike.x, bike.y, bike.direction, bike.color, cellW, cellH)
+        if (!bike.alive) {
+          continue;
+        }
+        drawBikeSprite(
+          ctx,
+          bike.x,
+          bike.y,
+          bike.direction,
+          bike.color,
+          cellW,
+          cellH
+        );
       }
-      ctx.restore()
+      ctx.restore();
 
       // Draw particles
-      ctx.save()
-      const particles = particlesRef.current
+      ctx.save();
+      const particles = particlesRef.current;
       for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i]
-        p.x += p.vx
-        p.y += p.vy
-        p.vx *= 0.96
-        p.vy *= 0.96
-        p.life--
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+        p.life--;
 
         if (p.life <= 0) {
-          particles.splice(i, 1)
-          continue
+          particles.splice(i, 1);
+          continue;
         }
 
-        const alpha = p.life / 45
-        ctx.shadowColor = p.color
-        ctx.shadowBlur = 6
-        ctx.fillStyle = hexToRgba(p.color, alpha)
-        ctx.fillRect(p.x - 1.5, p.y - 1.5, 3, 3)
+        const alpha = p.life / 45;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 6;
+        ctx.fillStyle = hexToRgba(p.color, alpha);
+        ctx.fillRect(p.x - 1.5, p.y - 1.5, 3, 3);
       }
-      ctx.restore()
+      ctx.restore();
 
       // Draw overlays
-      const currentState = engine.getState()
+      const currentState = engine.getState();
       if (currentState.phase === "ready") {
         if (autoPlay) {
-          drawOverlay(ctx, width, height, primaryColor, "INITIALIZING...")
+          drawOverlay(ctx, width, height, primaryColor, "INITIALIZING...");
         } else {
           // Just dim — the arena handles the ready overlay
-          ctx.fillStyle = "rgba(0,0,0,0.6)"
-          ctx.fillRect(0, 0, width, height)
+          ctx.fillStyle = "rgba(0,0,0,0.6)";
+          ctx.fillRect(0, 0, width, height);
         }
       } else if (currentState.phase === "countdown") {
-        const num = Math.max(1, countdownRef.current)
-        drawOverlay(ctx, width, height, primaryColor, String(num))
+        const num = Math.max(1, countdownRef.current);
+        drawOverlay(ctx, width, height, primaryColor, String(num));
       } else if (currentState.phase === "gameover") {
-        let text: string
+        let text: string;
         if (autoPlay) {
-          const w = currentState.winner
-          text = w !== null && w >= 0 ? `BIKE ${w + 1} WINS` : "DRAW"
+          const w = currentState.winner;
+          text = w !== null && w >= 0 ? `BIKE ${w + 1} WINS` : "DRAW";
+        } else if (currentState.winner === 0) {
+          text = "VICTORY";
+        } else if (currentState.winner === -1) {
+          text = "DRAW";
         } else {
-          if (currentState.winner === 0) text = "VICTORY"
-          else if (currentState.winner === -1) text = "DRAW"
-          else text = "" // Don't show canvas text — the arena handles the DEREZZED overlay
+          text = ""; // Don't show canvas text — the arena handles the DEREZZED overlay
         }
-        const sub = autoPlay ? "RESTARTING..." : (text ? "PRESS ENTER TO RESTART" : "")
+        const sub = autoPlay
+          ? "RESTARTING..."
+          : text
+            ? "PRESS ENTER TO RESTART"
+            : "";
         if (text || autoPlay) {
-          drawOverlayWithSub(ctx, width, height, primaryColor, text, sub)
+          drawOverlayWithSub(ctx, width, height, primaryColor, text, sub);
         } else {
           // Just dim the background for the external overlay
-          ctx.fillStyle = "rgba(0,0,0,0.6)"
-          ctx.fillRect(0, 0, width, height)
+          ctx.fillStyle = "rgba(0,0,0,0.6)";
+          ctx.fillRect(0, 0, width, height);
         }
       }
 
-      animFrameRef.current = requestAnimationFrame(gameLoop)
+      animFrameRef.current = requestAnimationFrame(gameLoop);
     }
 
-    animFrameRef.current = requestAnimationFrame(gameLoop)
+    animFrameRef.current = requestAnimationFrame(gameLoop);
 
-    return () => cancelAnimationFrame(animFrameRef.current)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [width, height, autoPlay])
+    return () => cancelAnimationFrame(animFrameRef.current);
+  }, [width, height, autoPlay, onPhaseChange, startGame, resetGame, onGameEnd]);
 
   return (
     <canvas
       ref={canvasRef}
       className={className}
-      style={{ width, height, display: "block" }}
+      style={{ display: "block", height, width }}
     />
-  )
-})
+  );
+});
 
 // --- Drawing helpers ---
 
@@ -508,18 +603,18 @@ function drawOverlay(
   color: string,
   text: string
 ) {
-  ctx.fillStyle = "rgba(0,0,0,0.5)"
-  ctx.fillRect(0, 0, w, h)
+  ctx.fillStyle = "rgba(0,0,0,0.5)";
+  ctx.fillRect(0, 0, w, h);
 
-  ctx.save()
-  ctx.shadowColor = color
-  ctx.shadowBlur = 20
-  ctx.fillStyle = color
-  ctx.font = `bold ${Math.floor(w / 15)}px Orbitron, monospace`
-  ctx.textAlign = "center"
-  ctx.textBaseline = "middle"
-  ctx.fillText(text, w / 2, h / 2)
-  ctx.restore()
+  ctx.save();
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 20;
+  ctx.fillStyle = color;
+  ctx.font = `bold ${Math.floor(w / 15)}px Orbitron, monospace`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, w / 2, h / 2);
+  ctx.restore();
 }
 
 function drawOverlayWithSub(
@@ -530,23 +625,23 @@ function drawOverlayWithSub(
   text: string,
   sub: string
 ) {
-  ctx.fillStyle = "rgba(0,0,0,0.5)"
-  ctx.fillRect(0, 0, w, h)
+  ctx.fillStyle = "rgba(0,0,0,0.5)";
+  ctx.fillRect(0, 0, w, h);
 
-  ctx.save()
-  ctx.shadowColor = color
-  ctx.shadowBlur = 20
-  ctx.fillStyle = color
-  ctx.font = `bold ${Math.floor(w / 12)}px Orbitron, monospace`
-  ctx.textAlign = "center"
-  ctx.textBaseline = "middle"
-  ctx.fillText(text, w / 2, h / 2 - 20)
+  ctx.save();
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 20;
+  ctx.fillStyle = color;
+  ctx.font = `bold ${Math.floor(w / 12)}px Orbitron, monospace`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, w / 2, h / 2 - 20);
 
-  ctx.shadowBlur = 10
-  ctx.font = `${Math.floor(w / 30)}px Orbitron, monospace`
-  ctx.fillStyle = hexToRgba(color, 0.7)
-  ctx.fillText(sub, w / 2, h / 2 + 30)
-  ctx.restore()
+  ctx.shadowBlur = 10;
+  ctx.font = `${Math.floor(w / 30)}px Orbitron, monospace`;
+  ctx.fillStyle = hexToRgba(color, 0.7);
+  ctx.fillText(sub, w / 2, h / 2 + 30);
+  ctx.restore();
 }
 
 // Mini light-cycle pixel sprite (facing RIGHT as base orientation)
@@ -560,14 +655,14 @@ const BIKE_SPRITE = [
   [0, 3, 1, 1, 1, 1, 1, 1, 2],
   [0, 0, 0, 1, 1, 2, 2, 2, 0],
   [0, 0, 0, 0, 0, 0, 2, 0, 0],
-]
+];
 
 const DIR_ANGLE: Record<string, number> = {
-  right: 0,
   down: Math.PI / 2,
   left: Math.PI,
+  right: 0,
   up: -Math.PI / 2,
-}
+};
 
 function drawBikeSprite(
   ctx: CanvasRenderingContext2D,
@@ -578,45 +673,51 @@ function drawBikeSprite(
   cellW: number,
   cellH: number
 ) {
-  const spriteW = BIKE_SPRITE[0].length // 9
-  const spriteH = BIKE_SPRITE.length // 7
-  const scale = (cellW * 2.4) / spriteW // fit ~2.4 cells wide
-  const cx = gx * cellW + cellW / 2
-  const cy = gy * cellH + cellH / 2
+  const spriteW = BIKE_SPRITE[0].length; // 9
+  const spriteH = BIKE_SPRITE.length; // 7
+  const scale = (cellW * 2.4) / spriteW; // fit ~2.4 cells wide
+  const cx = gx * cellW + cellW / 2;
+  const cy = gy * cellH + cellH / 2;
 
-  ctx.save()
-  ctx.translate(cx, cy)
-  ctx.rotate(DIR_ANGLE[direction] ?? 0)
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(DIR_ANGLE[direction] ?? 0);
 
   // Outer glow
-  ctx.shadowColor = color
-  ctx.shadowBlur = 16
+  ctx.shadowColor = color;
+  ctx.shadowBlur = 16;
 
-  const ox = -(spriteW * scale) / 2
-  const oy = -(spriteH * scale) / 2
+  const ox = -(spriteW * scale) / 2;
+  const oy = -(spriteH * scale) / 2;
 
   for (let row = 0; row < spriteH; row++) {
     for (let col = 0; col < spriteW; col++) {
-      const v = BIKE_SPRITE[row][col]
-      if (v === 0) continue
-      if (v === 1) ctx.fillStyle = color
-      else if (v === 2) ctx.fillStyle = "#ffffff"
-      else ctx.fillStyle = hexToRgba(color, 0.5)
+      const v = BIKE_SPRITE[row][col];
+      if (v === 0) {
+        continue;
+      }
+      if (v === 1) {
+        ctx.fillStyle = color;
+      } else if (v === 2) {
+        ctx.fillStyle = "#ffffff";
+      } else {
+        ctx.fillStyle = hexToRgba(color, 0.5);
+      }
       ctx.fillRect(
         ox + col * scale,
         oy + row * scale,
         scale + 0.5, // slight overlap to avoid sub-pixel gaps
         scale + 0.5
-      )
+      );
     }
   }
 
-  ctx.restore()
+  ctx.restore();
 }
 
 function hexToRgba(hex: string, alpha: number): string {
-  const r = parseInt(hex.slice(1, 3), 16)
-  const g = parseInt(hex.slice(3, 5), 16)
-  const b = parseInt(hex.slice(5, 7), 16)
-  return `rgba(${r},${g},${b},${alpha})`
+  const r = Number.parseInt(hex.slice(1, 3), 16);
+  const g = Number.parseInt(hex.slice(3, 5), 16);
+  const b = Number.parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
 }

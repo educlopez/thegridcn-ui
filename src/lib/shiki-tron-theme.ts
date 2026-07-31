@@ -3,8 +3,6 @@ import type { ThemeRegistration } from "shiki";
 // Tron: Ares terminal-inspired theme for Shiki syntax highlighting
 // Based on the movie's red, orange, and white terminal aesthetic
 export const tronTheme: ThemeRegistration = {
-  name: "tron-ares",
-  type: "dark",
   colors: {
     // Pure black background like the preview area
     "editor.background": "#000000",
@@ -12,16 +10,17 @@ export const tronTheme: ThemeRegistration = {
     "editor.lineHighlightBackground": "#1A0A0A",
     "editor.selectionBackground": "#4A1515",
     "editorCursor.foreground": "#FF5544",
-    "editorLineNumber.foreground": "#4A2020",
     "editorLineNumber.activeForeground": "#FF5544",
+    "editorLineNumber.foreground": "#4A2020",
   },
+  name: "tron-ares",
   tokenColors: [
     // Comments - muted gray
     {
       scope: ["comment", "punctuation.definition.comment"],
       settings: {
-        foreground: "#666666",
         fontStyle: "italic",
+        foreground: "#666666",
       },
     },
     // Strings - white (like data values in terminal)
@@ -40,24 +39,15 @@ export const tronTheme: ThemeRegistration = {
     },
     // Keywords - bright red (primary terminal color)
     {
-      scope: [
-        "keyword",
-        "keyword.control",
-        "storage.type",
-        "storage.modifier",
-      ],
+      scope: ["keyword", "keyword.control", "storage.type", "storage.modifier"],
       settings: {
-        foreground: "#FF4136",
         fontStyle: "bold",
+        foreground: "#FF4136",
       },
     },
     // Functions - orange (like function calls in terminal)
     {
-      scope: [
-        "entity.name.function",
-        "support.function",
-        "meta.function-call",
-      ],
+      scope: ["entity.name.function", "support.function", "meta.function-call"],
       settings: {
         foreground: "#FFA500",
       },
@@ -71,8 +61,8 @@ export const tronTheme: ThemeRegistration = {
         "support.class",
       ],
       settings: {
-        foreground: "#FFFFFF",
         fontStyle: "bold",
+        foreground: "#FFFFFF",
       },
     },
     // Variables - light gray/white
@@ -171,15 +161,23 @@ export const tronTheme: ThemeRegistration = {
     },
     // Boolean/null - bright orange
     {
-      scope: ["constant.language.boolean", "constant.language.null", "constant.language.undefined"],
+      scope: [
+        "constant.language.boolean",
+        "constant.language.null",
+        "constant.language.undefined",
+      ],
       settings: {
-        foreground: "#FF8C00",
         fontStyle: "bold",
+        foreground: "#FF8C00",
       },
     },
     // Type annotations - orange
     {
-      scope: ["entity.name.type.alias", "entity.name.type.interface", "entity.name.type.enum"],
+      scope: [
+        "entity.name.type.alias",
+        "entity.name.type.interface",
+        "entity.name.type.enum",
+      ],
       settings: {
         foreground: "#FFA500",
       },
@@ -209,8 +207,8 @@ export const tronTheme: ThemeRegistration = {
     {
       scope: ["variable.language.this", "variable.language.self"],
       settings: {
-        foreground: "#FF4136",
         fontStyle: "italic",
+        foreground: "#FF4136",
       },
     },
     // Spread operator - orange
@@ -231,24 +229,24 @@ export const tronTheme: ThemeRegistration = {
     {
       scope: ["markup.heading", "entity.name.section"],
       settings: {
-        foreground: "#FF4136",
         fontStyle: "bold",
+        foreground: "#FF4136",
       },
     },
     // Markdown bold - white bold
     {
       scope: ["markup.bold"],
       settings: {
-        foreground: "#FFFFFF",
         fontStyle: "bold",
+        foreground: "#FFFFFF",
       },
     },
     // Markdown italic - light gray italic
     {
       scope: ["markup.italic"],
       settings: {
-        foreground: "#E0E0E0",
         fontStyle: "italic",
+        foreground: "#E0E0E0",
       },
     },
     // Markdown code - orange
@@ -266,4 +264,5 @@ export const tronTheme: ThemeRegistration = {
       },
     },
   ],
+  type: "dark",
 };
