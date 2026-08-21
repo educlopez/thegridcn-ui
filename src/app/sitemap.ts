@@ -43,6 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       lastModified: now,
       priority: 0.7,
+      url: `${BASE_URL}/docs/api`,
+    },
+    {
+      changeFrequency: "monthly",
+      lastModified: now,
+      priority: 0.7,
       url: `${BASE_URL}/tokens`,
     },
     {
