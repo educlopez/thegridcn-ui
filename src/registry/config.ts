@@ -1,9 +1,9 @@
-// Registry configuration for design system
-
-import type React from "react";
-
-export type MenuAccentValue = "default" | "bold";
-export type MenuColorValue = "default" | "inverted";
+export type MenuAccentValue = "subtle" | "bold";
+export type MenuColorValue =
+  | "default"
+  | "inverted"
+  | "default-translucent"
+  | "inverted-translucent";
 export type BaseColorName =
   | "zinc"
   | "slate"
@@ -17,8 +17,8 @@ export type BaseColorName =
   | "blue"
   | "yellow"
   | "violet";
-export type BaseName = "new-york" | "default";
-export type StyleName = "new-york" | "default";
+export type BaseName = "radix" | "base";
+export type StyleName = "vega";
 export type ThemeName = string;
 export type RadiusValue =
   | "none"
@@ -29,7 +29,7 @@ export type RadiusValue =
   | "xl"
   | "full";
 export type FontValue = string;
-export type IconLibraryName = "lucide-react" | "hugeicons" | "radix-icons";
+export type IconLibraryName = "lucide" | "hugeicons" | "radix";
 
 export interface MenuAccent {
   label: string;
@@ -57,7 +57,6 @@ export interface Base {
 
 export interface Style {
   description?: string;
-  icon?: React.ReactElement;
   name: StyleName;
   title: string;
 }
@@ -82,13 +81,15 @@ export interface IconLibrary {
 }
 
 export const MENU_ACCENTS: readonly MenuAccent[] = [
-  { label: "Default", value: "default" },
+  { label: "Subtle", value: "subtle" },
   { label: "Bold", value: "bold" },
 ] as const;
 
 export const MENU_COLORS: readonly MenuColor[] = [
   { label: "Default", value: "default" },
   { label: "Inverted", value: "inverted" },
+  { label: "Default Translucent", value: "default-translucent" },
+  { label: "Inverted Translucent", value: "inverted-translucent" },
 ] as const;
 
 export const BASE_COLORS: readonly BaseColor[] = [
@@ -107,13 +108,16 @@ export const BASE_COLORS: readonly BaseColor[] = [
 ] as const;
 
 export const BASES: readonly Base[] = [
-  { name: "new-york", title: "New York" },
-  { name: "default", title: "Default" },
+  { name: "radix", title: "Radix UI" },
+  { name: "base", title: "Base UI" },
 ] as const;
 
 export const STYLES: readonly Style[] = [
-  { description: "New York style", name: "new-york", title: "New York" },
-  { description: "Default style", name: "default", title: "Default" },
+  {
+    description: "Vega — the New York look used by The Gridcn",
+    name: "vega",
+    title: "Vega",
+  },
 ] as const;
 
 export const THEMES: readonly Theme[] = [
@@ -143,25 +147,24 @@ export const RADII: readonly Radius[] = [
 
 export const iconLibraries: Record<string, IconLibrary> = {
   hugeicons: { name: "hugeicons", title: "Hugeicons" },
-  "lucide-react": { name: "lucide-react", title: "Lucide React" },
-  "radix-icons": { name: "radix-icons", title: "Radix Icons" },
+  lucide: { name: "lucide", title: "Lucide" },
+  radix: { name: "radix", title: "Radix Icons" },
 } as const;
 
 export const DEFAULT_CONFIG = {
-  base: "new-york" as BaseName,
-  baseColor: "zinc" as BaseColorName,
-  font: "Inter" as FontValue,
-  iconLibrary: "lucide-react" as IconLibraryName,
-  menuAccent: "default" as MenuAccentValue,
+  base: "radix" as BaseName,
+  baseColor: "neutral" as BaseColorName,
+  font: "rajdhani" as FontValue,
+  iconLibrary: "lucide" as IconLibraryName,
+  menuAccent: "subtle" as MenuAccentValue,
   menuColor: "default" as MenuColorValue,
-  style: "new-york" as StyleName,
-  theme: "zinc" as ThemeName,
+  style: "vega" as StyleName,
+  theme: "neutral" as ThemeName,
 } as const;
 
 export function getThemesForBaseColor(
   baseColor: BaseColorName
 ): readonly Theme[] {
-  // Return themes that match the base color or all themes if no match
   return THEMES.filter(
     (theme) =>
       theme.name === baseColor ||

@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 import type { PackageJson } from "type-fest";
+import { type DesignSystemItem, mergeDesignSystemItems } from "./design-system";
 
 export interface ComponentDependency {
   name: string;
@@ -325,7 +326,7 @@ export interface RegistryItem {
 export interface ShadcnRegistry {
   $schema: string;
   homepage?: string;
-  items: RegistryItem[];
+  items: Array<RegistryItem | DesignSystemItem>;
   name: string;
 }
 
@@ -420,7 +421,7 @@ export async function generateShadcnRegistry(
   return {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     homepage: options?.homepage,
-    items: items.sort((a, b) => a.name.localeCompare(b.name)),
+    items: mergeDesignSystemItems(items),
     name: options?.name || "thegridcn",
   };
 }

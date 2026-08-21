@@ -9,6 +9,7 @@ The registry system provides:
 - **Dependency tracking**: Automatically detects component dependencies
 - **Registry index**: Generates a TypeScript registry index for programmatic access
 - **shadcn UI compatibility**: Generates `registry.json` for `shadcn build`
+- **Radix and Base UI presets**: `src/registry/design-system.ts` ships `registry:base` (`radix-vega`, `base-vega`) and Tron `registry:font` items. `pnpm registry:update` merges them into `registry.json`.
 
 ## Usage
 

@@ -44,7 +44,13 @@ Browse every component with live switching across the six themes at [thegridcn.c
 
 ### 3. Install via the registry (recommended)
 
-The site exposes a shadcn-compatible registry. Register the namespace once in your `components.json`:
+The site exposes a shadcn-compatible registry. Apply a `registry:base` preset (Radix or Base UI — Vega is the New York look) or register the namespace yourself:
+
+```bash
+npx shadcn@latest add @thegridcn/radix-vega
+# or
+npx shadcn@latest add @thegridcn/base-vega
+```
 
 ```json
 {

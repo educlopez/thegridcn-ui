@@ -16,7 +16,34 @@ A project that shadcn/ui can write into:
 npx shadcn@latest init
 ```
 
-Answer the prompts for style, base color (pick `neutral`), and CSS variables (say yes).
+Pick **Radix UI** or **Base UI**, then the **Vega** style (Vega is the New York look this registry uses). Base color: `neutral`. CSS variables: yes.
+
+Or skip the prompts and apply a Gridcn `registry:base` preset — see [Radix UI and Base UI](#radix-ui-and-base-ui).
+
+---
+
+## Radix UI and Base UI
+
+shadcn 4.18 stores the primitive library in `components.json` `style` as `{library}-{style}`. Vega is this registry's look (the old `new-york` style):
+
+| `style` | Primitive library | Preset |
+| --- | --- | --- |
+| `radix-vega` | Radix UI (this site) | `@thegridcn/radix-vega` |
+| `base-vega` | Base UI | `@thegridcn/base-vega` |
+
+A project can only have one of those values. Apply the matching preset and it writes `style`, aliases, fonts (Rajdhani, Orbitron, Geist Mono), and the `@thegridcn` registry URL:
+
+```bash
+npx shadcn@latest add @thegridcn/radix-vega
+# or
+npx shadcn@latest add @thegridcn/base-vega
+```
+
+**Works with either primitive:** theme CSS (`theme-ares`, …), intensity styles, and HUD / thegridcn components that are CSS-based.
+
+**Radix source:** `@thegridcn/button` and other `src/components/ui` items import `@radix-ui/*`. If your app is Base UI, keep your own Base UI primitives for those and only add Gridcn themes + HUD components.
+
+This repository's `components.json` uses `"style": "radix-vega"`.
 
 ---
 
@@ -32,7 +59,7 @@ Add `@thegridcn` once to your `components.json` and skip typing URLs:
 }
 ```
 
-From then on, every item is a short name away:
+From then on, every item is a short name away. If you applied `@thegridcn/radix-vega` or `@thegridcn/base-vega`, this namespace is already registered.
 
 ```bash
 # base shadcn component (our version, re-exported)
@@ -125,13 +152,13 @@ curl -sL https://raw.githubusercontent.com/educlopez/thegridcn-ui/main/registry.
 Install a button, a Tron data card, the Ares theme, then render it.
 
 ```bash
-# 1. init shadcn if you haven't
+# 1. init shadcn if you haven't (Radix or Base UI, Vega style)
 npx shadcn@latest init
 
-# 2. register the namespace in components.json
-#    "registries": { "@thegridcn": "https://thegridcn.com/r/{name}.json" }
+# 2. apply a Gridcn base (registers @thegridcn + fonts)
+npx shadcn@latest add @thegridcn/radix-vega
 
-# 3. install everything in one shot
+# 3. install a theme and components
 npx shadcn@latest add @thegridcn/theme-ares @thegridcn/button @thegridcn/data-card
 ```
 
@@ -219,6 +246,7 @@ Verified working:
 - Single-file `registry:component` items (base + tron).
 - Items with `dependencies` (npm) and `registryDependencies` (sibling items).
 - `registry:style` theme items.
+- `registry:base` presets (`radix-vega`, `base-vega`) and `registry:font` items.
 
 Known limitations:
 

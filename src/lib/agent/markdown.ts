@@ -73,7 +73,12 @@ Tron-inspired shadcn/ui theme system with Greek-god color schemes, HUD component
 
 ## Install
 
-Register the namespace in \`components.json\`:
+Apply a Radix or Base UI preset (Vega style), or register the namespace in \`components.json\`:
+
+\`\`\`bash
+npx shadcn@latest add @thegridcn/radix-vega
+npx shadcn@latest add @thegridcn/base-vega
+\`\`\`
 
 \`\`\`json
 {
