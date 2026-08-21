@@ -12,9 +12,16 @@ import {
 } from "@/components/code-block/code-block";
 import { CopyButton } from "@/components/code-block/copy-button";
 import { CodeBlockShiki } from "@/components/code-block/shiki";
+import { usePrimitive } from "@/components/registry/primitive-provider";
+import { PrimitiveSwitcherCompact } from "@/components/registry/primitive-switcher";
 import { AnomalyBanner } from "@/components/thegridcn";
 import { useTheme } from "@/components/theme";
 import type { ComponentItem } from "@/lib/component-data";
+import { getRegistryName } from "@/lib/registry-name";
+import {
+  buildComponentInstallCommand,
+  downloadComponentsJson,
+} from "@/lib/shadcn-primitive";
 import { cn } from "@/lib/utils";
 import { ComponentPreview } from "./component-preview";
 import { ComponentErrorBoundary } from "./error-boundary";
@@ -23,36 +30,6 @@ type ViewMode = "preview" | "code";
 
 interface PreviewProps {
   component: ComponentItem | null;
-}
-
-// Map component IDs to their registry names
-function getRegistryName(componentId: string): string | null {
-  // Special cases where registry name differs from component ID
-  // (prefixed to avoid clashing with shadcn base components)
-  const specialMappings: Record<string, string> = {
-    "alert-banner": "thegridcn-alert",
-    badge: "thegridcn-badge",
-    pagination: "thegridcn-pagination",
-    select: "thegridcn-select",
-    "sidebar-nav": "sidebar",
-    skeleton: "thegridcn-skeleton",
-    slider: "thegridcn-slider",
-    tabs: "thegridcn-tabs",
-    timeline: "thegridcn-timeline",
-    toggle: "thegridcn-toggle",
-    tooltip: "thegridcn-tooltip",
-  };
-
-  if (specialMappings[componentId]) {
-    return specialMappings[componentId];
-  }
-
-  // Standard shadcn components have -example suffix in ID but not in registry
-  if (componentId.endsWith("-example")) {
-    return componentId.replace(/-example$/, "");
-  }
-
-  return componentId;
 }
 
 type PackageManager = "pnpm" | "npm" | "yarn" | "bun";
@@ -177,19 +154,24 @@ function InstallCommand({ componentId }: { componentId: string }) {
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
   const { theme, tronIntensity } = useTheme();
+  const { primitive } = usePrimitive();
 
   const registryName = getRegistryName(componentId);
-  const base = packageManagerCommands[packageManager];
-
-  // Build command dynamically — only append theme/intensity when different from defaults
-  const parts = registryName ? [`@thegridcn/${registryName}`] : [];
+  const extraItems: string[] = [];
   if (theme !== "tron") {
-    parts.push(`@thegridcn/theme-${theme}`);
+    extraItems.push(`@thegridcn/theme-${theme}`);
   }
   if (tronIntensity !== "light") {
-    parts.push(`@thegridcn/intensity-${tronIntensity}`);
+    extraItems.push(`@thegridcn/intensity-${tronIntensity}`);
   }
-  const command = registryName ? `${base} ${parts.join(" ")}` : "";
+  const command = registryName
+    ? buildComponentInstallCommand(
+        packageManagerCommands[packageManager],
+        primitive,
+        componentId,
+        extraItems
+      )
+    : "";
 
   const handleCopy = async () => {
     if (!command) {
@@ -295,7 +277,7 @@ function InstallCommand({ componentId }: { componentId: string }) {
       <button
         type="button"
         onClick={handleCopy}
-        className="group flex min-w-0 flex-1 items-center gap-2 rounded-r border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-primary/80 text-xs transition-all hover:bg-primary/20"
+        className="group flex min-w-0 flex-1 items-center gap-2 border border-primary/30 border-r-0 bg-primary/10 px-3 py-1.5 font-mono text-primary/80 text-xs transition-all hover:bg-primary/20"
       >
         <code className="truncate">{command}</code>
         {copied ? (
@@ -303,6 +285,14 @@ function InstallCommand({ componentId }: { componentId: string }) {
         ) : (
           <Copy className="h-3.5 w-3.5 shrink-0 opacity-50 group-hover:opacity-100" />
         )}
+      </button>
+      <button
+        type="button"
+        onClick={() => downloadComponentsJson(primitive)}
+        className="shrink-0 rounded-r border border-primary/30 bg-primary/10 px-2 py-1.5 font-mono text-[9px] text-primary uppercase tracking-wider transition-all hover:bg-primary/20"
+        title="Download components.json"
+      >
+        JSON
       </button>
     </div>
   );
@@ -369,8 +359,10 @@ export function Preview({ component }: PreviewProps) {
                   </button>
                 </div>
 
+                <PrimitiveSwitcherCompact />
+
                 {/* Install command - pushed to the right */}
-                <div className="ml-auto">
+                <div className="ml-auto min-w-0">
                   <InstallCommand componentId={component.id} />
                 </div>
               </div>

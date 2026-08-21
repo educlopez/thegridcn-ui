@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Orbitron, Rajdhani } from "next/font/google";
 import { WebMcpProvider } from "@/components/agent/webmcp-provider";
+import { PrimitiveProvider } from "@/components/registry/primitive-provider";
 import { ThemeProvider } from "@/components/theme";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
@@ -169,7 +170,7 @@ export default function RootLayout({
                       "@type": "Question",
                       acceptedAnswer: {
                         "@type": "Answer",
-                        text: "You can install components using the shadcn CLI. Run 'pnpm dlx shadcn@latest add @thegridcn/[component]' to add individual components, or use 'pnpm dlx shadcn@latest list @thegridcn' to browse all available components. Works with npm, yarn, and bun too.",
+                        text: "Pick Radix UI or Base UI, then run the generated shadcn command. It applies @thegridcn/radix-vega or @thegridcn/base-vega plus the component. Primitives come from official shadcn; HUD and themes come from The Gridcn. You can also download components.json.",
                       },
                       name: "How do I install The Gridcn components?",
                     },
@@ -180,6 +181,14 @@ export default function RootLayout({
                         text: "Yes. The Gridcn extends shadcn/ui, so you need a project with shadcn/ui initialized. Run 'pnpm dlx shadcn@latest init' first if you don't have it. The Gridcn components integrate seamlessly with your existing shadcn/ui setup and Tailwind CSS configuration.",
                       },
                       name: "Do I need shadcn/ui already set up?",
+                    },
+                    {
+                      "@type": "Question",
+                      acceptedAnswer: {
+                        "@type": "Answer",
+                        text: "Choose Radix UI or Base UI the same way other shadcn registries do: one style value in components.json (radix-vega or base-vega). Button, Dialog, and other primitives install from official shadcn using that style. Gridcn HUD, themes, and 3D components layer on top.",
+                      },
+                      name: "Radix UI or Base UI?",
                     },
                     {
                       "@type": "Question",
@@ -230,19 +239,21 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ThemeProvider>
-          {children}
-          <WebMcpProvider />
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: "var(--card)",
-                border: "1px solid var(--border)",
-                color: "var(--foreground)",
-              },
-            }}
-          />
-          <Analytics />
+          <PrimitiveProvider>
+            {children}
+            <WebMcpProvider />
+            <Toaster
+              position="bottom-right"
+              toastOptions={{
+                style: {
+                  background: "var(--card)",
+                  border: "1px solid var(--border)",
+                  color: "var(--foreground)",
+                },
+              }}
+            />
+            <Analytics />
+          </PrimitiveProvider>
         </ThemeProvider>
       </body>
     </html>

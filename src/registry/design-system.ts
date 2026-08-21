@@ -158,6 +158,18 @@ export function getRegistryBaseItem(primitive: RegistryPrimitive) {
   return item;
 }
 
+export function getComponentsJson(primitive: RegistryPrimitive): string {
+  const item = getRegistryBaseItem(primitive);
+  return `${JSON.stringify(
+    {
+      $schema: "https://ui.shadcn.com/schema.json",
+      ...item.config,
+    },
+    null,
+    2
+  )}\n`;
+}
+
 export function mergeDesignSystemItems<T extends { name: string }>(
   items: T[]
 ): Array<T | DesignSystemItem> {

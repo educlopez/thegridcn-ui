@@ -39,11 +39,11 @@ npx shadcn@latest add @thegridcn/radix-vega
 npx shadcn@latest add @thegridcn/base-vega
 ```
 
-**Works with either primitive:** theme CSS (`theme-ares`, …), intensity styles, and HUD / thegridcn components that are CSS-based.
+On [thegridcn.com](https://thegridcn.com) and in the [component explorer](https://thegridcn.com/components), pick **Radix UI** or **Base UI**. The CLI command updates, and **Download components.json** gives you a pre-filled file — the same pattern other shadcn registries use.
 
-**Radix source:** `@thegridcn/button` and other `src/components/ui` items import `@radix-ui/*`. If your app is Base UI, keep your own Base UI primitives for those and only add Gridcn themes + HUD components.
+**Works with either primitive:** theme CSS (`theme-ares`, …), intensity styles, and HUD / thegridcn components that are CSS-based. Button, Dialog, and other primitives install from official shadcn using your `style`.
 
-This repository's `components.json` uses `"style": "radix-vega"`.
+**This site's own `ui/` copies** still import `@radix-ui/*` (the showcase runs on Radix). `@thegridcn/button` is that Radix source. Base UI apps should install `button` from shadcn after `base-vega`, not `@thegridcn/button`.
 
 ---
 

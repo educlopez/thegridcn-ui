@@ -201,7 +201,7 @@ export async function scanComponents(
 /**
  * thegridcn filenames that collide with shadcn/ui base components (and
  * timeline, which is published under a prefixed name). Keep this in sync with
- * `getRegistryName` in src/components/components-page/preview.tsx.
+ * `getRegistryName` in src/lib/registry-name.ts.
  */
 const THEGRIDCN_PREFIXED_NAMES = new Set([
   "alert",
