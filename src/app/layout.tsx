@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Orbitron, Rajdhani } from "next/font/google";
 import { WebMcpProvider } from "@/components/agent/webmcp-provider";
+import { ActivityBeacon } from "@/components/analytics/activity-beacon";
 import { ThemeProvider } from "@/components/theme";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
@@ -231,6 +232,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider>
           {children}
+          <ActivityBeacon />
           <WebMcpProvider />
           <Toaster
             position="bottom-right"
