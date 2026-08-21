@@ -1,8 +1,18 @@
 import type { NextConfig } from "next";
+import { getHomepageLinkHeader } from "./src/lib/agent/link-header";
 
 const nextConfig: NextConfig = {
   async headers() {
     return [
+      {
+        headers: [
+          {
+            key: "Link",
+            value: getHomepageLinkHeader(),
+          },
+        ],
+        source: "/",
+      },
       {
         headers: [
           {

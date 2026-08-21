@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Orbitron, Rajdhani } from "next/font/google";
+import { WebMcpProvider } from "@/components/agent/webmcp-provider";
 import { ThemeProvider } from "@/components/theme";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
@@ -91,6 +92,27 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link
+          href="/.well-known/api-catalog"
+          rel="api-catalog"
+          type="application/linkset+json"
+        />
+        <link
+          href="/openapi.json"
+          rel="service-desc"
+          type="application/openapi+json"
+        />
+        <link href="/docs/api" rel="service-doc" type="text/html" />
+        <link
+          href="/.well-known/ai-catalog.json"
+          rel="describedby"
+          type="application/json"
+        />
+        <link
+          href="/.well-known/agent-skills/index.json"
+          rel="describedby"
+          type="application/json"
+        />
         <script
           id="theme-init"
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
@@ -209,6 +231,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider>
           {children}
+          <WebMcpProvider />
           <Toaster
             position="bottom-right"
             toastOptions={{
