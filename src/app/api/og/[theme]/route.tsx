@@ -1,8 +1,6 @@
 import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
 
-export const runtime = "edge";
-
 type ThemeKey = "ares" | "tron" | "clu" | "athena" | "aphrodite" | "poseidon";
 
 interface ThemeConfig {

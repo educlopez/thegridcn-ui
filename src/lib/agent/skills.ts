@@ -38,11 +38,22 @@ The Gridcn is a Tron-inspired shadcn/ui theme and component registry. Components
 
 - A React project that shadcn/ui supports (Next.js, Vite, Remix, Astro).
 - Tailwind CSS 4 recommended.
-- \`components.json\` from \`npx shadcn@latest init\`.
+- \`components.json\` from \`npx shadcn@latest init\` (Radix or Base UI, Vega style).
+
+## Configure Radix or Base UI
+
+shadcn 4.18 uses \`style: "radix-vega"\` or \`style: "base-vega"\` in \`components.json\`. Apply a Gridcn preset (also registers \`@thegridcn\` and Tron fonts):
+
+\`\`\`bash
+npx shadcn@latest add @thegridcn/radix-vega
+npx shadcn@latest add @thegridcn/base-vega
+\`\`\`
+
+This site uses Radix. Theme CSS and HUD components work with either primitive. \`@thegridcn/button\` and other \`ui/\` items still copy Radix source — Base UI apps should keep their own primitives for those.
 
 ## Register the namespace
 
-Add this to the project's \`components.json\`:
+If you skipped the preset, add this to the project's \`components.json\`:
 
 \`\`\`json
 {

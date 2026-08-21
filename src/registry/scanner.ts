@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { readdir, readFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 import type { PackageJson } from "type-fest";
+import { type DesignSystemItem, mergeDesignSystemItems } from "./design-system";
 
 export interface ComponentDependency {
   name: string;
@@ -198,6 +199,24 @@ export async function scanComponents(
 }
 
 /**
+ * thegridcn filenames that collide with shadcn/ui base components (and
+ * timeline, which is published under a prefixed name). Keep this in sync with
+ * `getRegistryName` in src/lib/registry-name.ts.
+ */
+const THEGRIDCN_PREFIXED_NAMES = new Set([
+  "alert",
+  "badge",
+  "pagination",
+  "select",
+  "skeleton",
+  "slider",
+  "tabs",
+  "timeline",
+  "toggle",
+  "tooltip",
+]);
+
+/**
  * Determines the registry type based on component path
  */
 function getRegistryType(
@@ -207,6 +226,16 @@ function getRegistryType(
     return "registry:component";
   }
   return "components:ui";
+}
+
+function registryItemName(componentPath: string, fileName: string): string {
+  if (
+    componentPath.includes("/thegridcn/") &&
+    THEGRIDCN_PREFIXED_NAMES.has(fileName)
+  ) {
+    return `thegridcn-${fileName}`;
+  }
+  return fileName;
 }
 
 /**
@@ -220,7 +249,8 @@ export async function generateRegistryEntries(
   const entries: ComponentRegistryEntry[] = [];
 
   for (const component of components) {
-    const componentName = basename(component.path, ".tsx");
+    const fileName = basename(component.path, ".tsx");
+    const componentName = registryItemName(component.path, fileName);
     const { dependencies, registryDependencies } = await extractDependencies(
       component.path,
       component.content,
@@ -296,7 +326,7 @@ export interface RegistryItem {
 export interface ShadcnRegistry {
   $schema: string;
   homepage?: string;
-  items: RegistryItem[];
+  items: Array<RegistryItem | DesignSystemItem>;
   name: string;
 }
 
@@ -391,7 +421,7 @@ export async function generateShadcnRegistry(
   return {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     homepage: options?.homepage,
-    items: items.sort((a, b) => a.name.localeCompare(b.name)),
+    items: mergeDesignSystemItems(items),
     name: options?.name || "thegridcn",
   };
 }

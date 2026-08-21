@@ -16,13 +16,32 @@ export interface MarkdownPage {
 
 const FILE_CACHE = new Map<string, string | null>();
 
-function readProjectFile(relativePath: string): string | null {
+function markdownFilePath(
+  relativePath: "CONTRIBUTING.md" | "docs/api.md" | "docs/install.md"
+): string {
+  switch (relativePath) {
+    case "CONTRIBUTING.md":
+      return join(process.cwd(), "CONTRIBUTING.md");
+    case "docs/api.md":
+      return join(process.cwd(), "docs", "api.md");
+    case "docs/install.md":
+      return join(process.cwd(), "docs", "install.md");
+    default: {
+      const _exhaustive: never = relativePath;
+      return _exhaustive;
+    }
+  }
+}
+
+function readProjectFile(
+  relativePath: "CONTRIBUTING.md" | "docs/api.md" | "docs/install.md"
+): string | null {
   if (FILE_CACHE.has(relativePath)) {
     return FILE_CACHE.get(relativePath) ?? null;
   }
 
   try {
-    const content = readFileSync(join(process.cwd(), relativePath), "utf8");
+    const content = readFileSync(markdownFilePath(relativePath), "utf8");
     FILE_CACHE.set(relativePath, content);
     return content;
   } catch {
@@ -54,7 +73,12 @@ Tron-inspired shadcn/ui theme system with Greek-god color schemes, HUD component
 
 ## Install
 
-Register the namespace in \`components.json\`:
+Apply a Radix or Base UI preset (Vega style), or register the namespace in \`components.json\`:
+
+\`\`\`bash
+npx shadcn@latest add @thegridcn/radix-vega
+npx shadcn@latest add @thegridcn/base-vega
+\`\`\`
 
 \`\`\`json
 {

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { SiteFooter, TronHeader } from "@/components/layout";
+import { usePrimitive } from "@/components/registry/primitive-provider";
+import { PrimitiveSwitcherCompact } from "@/components/registry/primitive-switcher";
 import { ThemeShowcaseSection } from "@/components/showcase";
 import {
   GridScanOverlay,
@@ -26,6 +28,10 @@ import {
   StatusStrip,
   ThemeDossierSelector,
 } from "@/components/website";
+import {
+  buildComponentInstallCommand,
+  downloadComponentsJson,
+} from "@/lib/shadcn-primitive";
 
 // Dynamic import for Three.js components (client-side only)
 const Grid3D = dynamic(
@@ -107,7 +113,7 @@ const STATUS_STRIP_ARCHITECTURE = [
 
 const STATUS_STRIP_FAQ = [
   { highlighted: true, label: "SECTION", value: "INTEL" },
-  { label: "QUERIES", value: "8 INDEXED" },
+  { label: "QUERIES", value: "9 INDEXED" },
   { label: "STATUS", value: "DECLASSIFIED" },
 ];
 
@@ -145,7 +151,14 @@ function TerminalInstall() {
   const VISIBLE_ITEMS = 5;
 
   const currentPm = packageManagerById.get(selectedPm) || packageManagers[0];
-  const command = `${currentPm.command} shadcn@latest list @thegridcn`;
+  const { primitive } = usePrimitive();
+  const selectedComponent = availableComponents[selectedIndex];
+  const command = buildComponentInstallCommand(
+    `${currentPm.command} shadcn@latest add`,
+    primitive,
+    selectedComponent
+  );
+  const commandRest = command.slice(`${currentPm.command} `.length);
 
   const copyCommand = () => {
     navigator.clipboard.writeText(command);
@@ -269,6 +282,17 @@ function TerminalInstall() {
 
         {/* Content */}
         <div className="relative space-y-3 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <PrimitiveSwitcherCompact />
+            <button
+              type="button"
+              onClick={() => downloadComponentsJson(primitive)}
+              className="border border-primary/30 bg-primary/5 px-2 py-1 font-mono text-[9px] text-primary uppercase tracking-wider transition-colors hover:bg-primary/10"
+            >
+              components.json
+            </button>
+          </div>
+
           {/* Command line with package manager selector */}
           <div className="flex flex-wrap items-center gap-2 font-mono text-sm">
             <span className="glow-text text-primary">$</span>
@@ -320,9 +344,8 @@ function TerminalInstall() {
               ) : null}
             </div>
 
-            <code className="text-foreground">
-              shadcn@latest list{" "}
-              <span className="text-primary">@thegridcn</span>
+            <code className="min-w-0 truncate text-foreground">
+              {commandRest}
             </code>
 
             {/* Copy button */}
@@ -903,7 +926,7 @@ export default function Home() {
                     </span>
                   </div>
                   <div className="font-mono text-[9px] tracking-wider">
-                    <span className="text-foreground/50">RECORDS:8</span>
+                    <span className="text-foreground/50">RECORDS:9</span>
                     <span className="ml-3 text-primary">[ ONLINE ]</span>
                   </div>
                 </div>
@@ -931,16 +954,52 @@ export default function Home() {
                       How do I install The Gridcn components?
                     </AccordionTrigger>
                     <AccordionContent className="text-foreground/80">
-                      You can install components using the shadcn CLI. Run{" "}
+                      Pick Radix UI or Base UI in the terminal (or the
+                      components explorer), then run the generated command. It
+                      applies{" "}
                       <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-primary text-xs">
-                        pnpm dlx shadcn@latest add @thegridcn/[component]
+                        @thegridcn/radix-vega
                       </code>{" "}
-                      to add individual components, or use{" "}
+                      or{" "}
                       <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-primary text-xs">
-                        pnpm dlx shadcn@latest list @thegridcn
+                        @thegridcn/base-vega
                       </code>{" "}
-                      to browse all available components. Works with npm, yarn,
-                      and bun too.
+                      and the component. You can also download{" "}
+                      <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-primary text-xs">
+                        components.json
+                      </code>
+                      . Primitives come from shadcn; HUD and themes come from
+                      The Gridcn.
+                    </AccordionContent>
+                  </AccordionItem>
+
+                  <AccordionItem
+                    value="primitives"
+                    className="border-primary/20"
+                  >
+                    <AccordionTrigger className="font-display text-foreground text-sm tracking-wider hover:text-primary hover:no-underline">
+                      Radix UI or Base UI?
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/80">
+                      Same model as other shadcn registries: one{" "}
+                      <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-primary text-xs">
+                        style
+                      </code>{" "}
+                      in{" "}
+                      <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-primary text-xs">
+                        components.json
+                      </code>
+                      .{" "}
+                      <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-primary text-xs">
+                        radix-vega
+                      </code>{" "}
+                      or{" "}
+                      <code className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-primary text-xs">
+                        base-vega
+                      </code>
+                      . Button, Dialog, and other primitives install from
+                      official shadcn using that style. Gridcn HUD, themes, and
+                      3D components layer on top of whichever library you chose.
                     </AccordionContent>
                   </AccordionItem>
 

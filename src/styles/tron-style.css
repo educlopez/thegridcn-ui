@@ -422,7 +422,8 @@
       to left,
       var(--primary) var(--tron-corner-size),
       transparent var(--tron-corner-size)
-    ) top right,
+    )
+    top right,
     linear-gradient(
       to bottom,
       var(--primary) var(--tron-corner-size),
@@ -434,7 +435,8 @@
       to right,
       var(--primary) var(--tron-corner-size),
       transparent var(--tron-corner-size)
-    ) bottom left,
+    )
+    bottom left,
     linear-gradient(
       to top,
       var(--primary) var(--tron-corner-size),
@@ -446,7 +448,8 @@
       to left,
       var(--primary) var(--tron-corner-size),
       transparent var(--tron-corner-size)
-    ) bottom right,
+    )
+    bottom right,
     linear-gradient(
       to top,
       var(--primary) var(--tron-corner-size),

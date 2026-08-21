@@ -21,7 +21,20 @@ overrides:
   "@eslint/eslintrc>ajv": "^6.12.6"
   "eslint>ajv": "^6.12.6"
   "@isaacs/brace-expansion": ">=2.0.0"
-  qs: ">=6.14.0"
+  qs: "^6.15.2"
+  # Pin each vulnerable major so overrides do not jump to a new API.
+  "brace-expansion@5": "^5.0.9"
+  "nanoid@3": "^3.3.18"
+  "js-yaml@4": "^4.3.1"
+  "fast-uri@3": "^3.1.5"
+  "@babel/core": "^7.29.7"
+  postcss: "^8.5.23"
+  sharp: "^0.35.0"
+  hono: "^4.12.34"
+  "@hono/node-server@1": "^1.19.15"
+  ip-address: "^10.3.1"
+  body-parser: "^2.3.0"
+  esbuild: "^0.28.1"
 
 # SECURITY: supply-chain hardening (npm-security-best-practices)
 minimumReleaseAge: 2880

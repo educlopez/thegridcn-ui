@@ -9,10 +9,13 @@ interface RenderOptions {
 }
 
 export async function renderMarkdownFile(
-  relativePath: string,
+  relativePath: "CONTRIBUTING.md" | "docs/api.md" | "docs/install.md",
   options: RenderOptions = {}
 ): Promise<string> {
-  const absolute = path.join(process.cwd(), relativePath);
+  const absolute =
+    relativePath === "CONTRIBUTING.md"
+      ? path.join(process.cwd(), "CONTRIBUTING.md")
+      : path.join(process.cwd(), "docs", relativePath.slice("docs/".length));
   const raw = fs.readFileSync(absolute, "utf-8");
   return renderMarkdown(raw, options);
 }

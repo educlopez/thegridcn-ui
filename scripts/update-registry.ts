@@ -11,43 +11,13 @@ import {
   generateShadcnRegistry,
 } from "../src/registry/scanner";
 
-async function loadComponentsJson() {
-  const content = await readFile(
-    join(process.cwd(), "components.json"),
-    "utf-8"
-  );
-  return JSON.parse(content);
-}
-
 async function updateRegistry() {
   console.log("🔍 Scanning components...");
 
   try {
-    // Load current components.json
-    const componentsJson = await loadComponentsJson();
-
-    // Generate registry entries
+    // Generate registry entries. Do not write them into components.json —
+    // shadcn 4.16+ only accepts `@namespace` registry URLs there.
     const registryIndex = await generateRegistryIndex();
-
-    // Update components.json with registry
-    const updatedComponentsJson = {
-      ...componentsJson,
-      registries: {
-        ...(componentsJson.registries || {}),
-        "https://ui.shadcn.com": {
-          name: "shadcn/ui",
-          registry: registryIndex,
-          url: "https://ui.shadcn.com",
-        },
-      },
-    };
-
-    // Write updated components.json
-    await writeFile(
-      join(process.cwd(), "components.json"),
-      `${JSON.stringify(updatedComponentsJson, null, 2)}\n`,
-      "utf-8"
-    );
 
     // Generate TypeScript registry index
     const registryIndexContent = `// Auto-generated registry index
@@ -113,7 +83,6 @@ export function getRegistryDependencies(name: string): string[] {
     const componentCount = Object.keys(registryIndex).length;
     console.log("✅ Registry updated successfully!");
     console.log(`   Found ${componentCount} components`);
-    console.log("   Updated components.json");
     console.log("   Updated src/registry/index.ts");
     console.log("   Updated registry.json");
   } catch (error) {

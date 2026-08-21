@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { usePrimitive } from "@/components/registry/primitive-provider";
+import { PrimitiveSwitcher } from "@/components/registry/primitive-switcher";
 import {
   selectableThemes,
   type Theme,
@@ -9,6 +11,10 @@ import {
   useTheme,
 } from "@/components/theme";
 import { TronIntensitySwitcherCompact } from "@/components/theme/tron-intensity-switcher";
+import {
+  downloadComponentsJson,
+  getPrimitiveMeta,
+} from "@/lib/shadcn-primitive";
 import { cn } from "@/lib/utils";
 
 // Maps for O(1) lookups
@@ -72,9 +78,13 @@ function TronDataRow({ label, value }: { label: string; value: string }) {
 function InstallNotice({
   theme,
   intensity,
+  primitiveLabel,
+  style,
 }: {
   theme: string;
   intensity: string;
+  primitiveLabel: string;
+  style: string;
 }) {
   const isDefaultTheme = theme === "tron";
   const isDefaultIntensity = intensity === "light";
@@ -86,9 +96,15 @@ function InstallNotice({
 
       <div className="space-y-1.5 rounded border border-foreground/10 bg-foreground/5 p-2.5">
         <p className="font-mono text-[8px] text-foreground/70 leading-relaxed">
-          DEFAULT: <span className="text-primary">TRON</span> +{" "}
+          UI LIBRARY:{" "}
+          <span className="text-primary">{primitiveLabel.toUpperCase()}</span> (
+          <span className="text-primary">{style}</span>). Primitives install
+          from shadcn; HUD and themes from @thegridcn.
+        </p>
+        <p className="font-mono text-[8px] text-foreground/70 leading-relaxed">
+          DEFAULT THEME: <span className="text-primary">TRON</span> +{" "}
           <span className="text-primary">LIGHT</span>. The install command
-          updates automatically when you change settings.
+          updates when you change library, theme, or intensity.
         </p>
         {!isDefault && (
           <p className="font-mono text-[8px] text-foreground leading-relaxed">
@@ -121,8 +137,10 @@ interface CustomizerProps {
 
 export function Customizer({ isMobile = false }: CustomizerProps) {
   const { theme, setTheme, tronIntensity } = useTheme();
+  const { primitive } = usePrimitive();
   const currentTheme = themeById.get(theme);
   const currentIntensity = intensityById.get(tronIntensity);
+  const primitiveMeta = getPrimitiveMeta(primitive);
 
   const content = (
     <div className="p-4">
@@ -154,7 +172,12 @@ export function Customizer({ isMobile = false }: CustomizerProps) {
       )}
 
       {/* Install Info */}
-      <InstallNotice theme={theme} intensity={tronIntensity} />
+      <InstallNotice
+        theme={theme}
+        intensity={tronIntensity}
+        primitiveLabel={primitiveMeta.label}
+        style={primitiveMeta.style}
+      />
 
       {/* System Status Panel */}
       <div className="relative mb-6 rounded border border-foreground/15 bg-foreground/5 p-3">
@@ -168,6 +191,10 @@ export function Customizer({ isMobile = false }: CustomizerProps) {
           SYSTEM CONFIG
         </div>
         <TronDataRow
+          label="LIBRARY"
+          value={primitiveMeta.label.toUpperCase()}
+        />
+        <TronDataRow
           label="THEME"
           value={currentTheme?.name.toUpperCase() || "—"}
         />
@@ -176,6 +203,28 @@ export function Customizer({ isMobile = false }: CustomizerProps) {
           value={currentIntensity?.name.toUpperCase() || "—"}
         />
         <TronDataRow label="STATUS" value="OPERATIONAL" />
+      </div>
+
+      {/* UI Library */}
+      <div className="mb-6">
+        <TronSectionHeader
+          code="LIB-002.B"
+          title="UI LIBRARY"
+          highlight="SELECT"
+        />
+        <PrimitiveSwitcher />
+        <button
+          type="button"
+          onClick={() => downloadComponentsJson(primitive)}
+          className="mt-2 w-full border border-primary/30 bg-primary/5 px-2 py-1.5 font-mono text-[9px] text-primary uppercase tracking-wider transition-colors hover:bg-primary/10"
+        >
+          Download components.json
+        </button>
+        <p className="mt-2 font-mono text-[8px] text-foreground/60 leading-relaxed">
+          Same pattern as other shadcn registries: pick Radix or Base UI, then
+          install. Primitives follow your style; Gridcn HUD and themes layer on
+          top.
+        </p>
       </div>
 
       {/* Theme Selection */}

@@ -16,7 +16,34 @@ A project that shadcn/ui can write into:
 npx shadcn@latest init
 ```
 
-Answer the prompts for style, base color (pick `neutral`), and CSS variables (say yes).
+Pick **Radix UI** or **Base UI**, then the **Vega** style (Vega is the New York look this registry uses). Base color: `neutral`. CSS variables: yes.
+
+Or skip the prompts and apply a Gridcn `registry:base` preset — see [Radix UI and Base UI](#radix-ui-and-base-ui).
+
+---
+
+## Radix UI and Base UI
+
+shadcn 4.18 stores the primitive library in `components.json` `style` as `{library}-{style}`. Vega is this registry's look (the old `new-york` style):
+
+| `style` | Primitive library | Preset |
+| --- | --- | --- |
+| `radix-vega` | Radix UI (this site) | `@thegridcn/radix-vega` |
+| `base-vega` | Base UI | `@thegridcn/base-vega` |
+
+A project can only have one of those values. Apply the matching preset and it writes `style`, aliases, fonts (Rajdhani, Orbitron, Geist Mono), and the `@thegridcn` registry URL:
+
+```bash
+npx shadcn@latest add @thegridcn/radix-vega
+# or
+npx shadcn@latest add @thegridcn/base-vega
+```
+
+On [thegridcn.com](https://thegridcn.com) and in the [component explorer](https://thegridcn.com/components), pick **Radix UI** or **Base UI**. The CLI command updates, and **Download components.json** gives you a pre-filled file — the same pattern other shadcn registries use.
+
+**Works with either primitive:** theme CSS (`theme-ares`, …), intensity styles, and HUD / thegridcn components that are CSS-based. Button, Dialog, and other primitives install from official shadcn using your `style`.
+
+**This site's own `ui/` copies** still import `@radix-ui/*` (the showcase runs on Radix). `@thegridcn/button` is that Radix source. Base UI apps should install `button` from shadcn after `base-vega`, not `@thegridcn/button`.
 
 ---
 
@@ -32,7 +59,7 @@ Add `@thegridcn` once to your `components.json` and skip typing URLs:
 }
 ```
 
-From then on, every item is a short name away:
+From then on, every item is a short name away. If you applied `@thegridcn/radix-vega` or `@thegridcn/base-vega`, this namespace is already registered.
 
 ```bash
 # base shadcn component (our version, re-exported)
@@ -125,13 +152,13 @@ curl -sL https://raw.githubusercontent.com/educlopez/thegridcn-ui/main/registry.
 Install a button, a Tron data card, the Ares theme, then render it.
 
 ```bash
-# 1. init shadcn if you haven't
+# 1. init shadcn if you haven't (Radix or Base UI, Vega style)
 npx shadcn@latest init
 
-# 2. register the namespace in components.json
-#    "registries": { "@thegridcn": "https://thegridcn.com/r/{name}.json" }
+# 2. apply a Gridcn base (registers @thegridcn + fonts)
+npx shadcn@latest add @thegridcn/radix-vega
 
-# 3. install everything in one shot
+# 3. install a theme and components
 npx shadcn@latest add @thegridcn/theme-ares @thegridcn/button @thegridcn/data-card
 ```
 
@@ -219,10 +246,10 @@ Verified working:
 - Single-file `registry:component` items (base + tron).
 - Items with `dependencies` (npm) and `registryDependencies` (sibling items).
 - `registry:style` theme items.
+- `registry:base` presets (`radix-vega`, `base-vega`) and `registry:font` items.
 
 Known limitations:
 
-- The `components.json` in this repo includes a large inlined `registries` field used internally for the showcase's live source preview. Consumers of the registry don't need it — they only need their own `components.json` scaffolded by `shadcn init`.
 - The 3D components don't declare `ssr: false` in their registry entries. Consumers must wrap them with `dynamic(..., { ssr: false })` themselves (see Troubleshooting).
 
 If you hit anything else, open an issue at the repo.

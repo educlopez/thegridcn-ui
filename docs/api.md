@@ -33,8 +33,11 @@ Register once in `components.json`:
 Then:
 
 ```bash
+npx shadcn@latest add @thegridcn/radix-vega
 npx shadcn@latest add @thegridcn/radar
 ```
+
+`radix-vega` and `base-vega` are `registry:base` presets that set `components.json` `style` to Radix or Base UI (Vega / New York). Theme CSS and HUD items work with either; copied `ui/` components still ship Radix source.
 
 Themed payload (merges theme CSS into the registry item):
 

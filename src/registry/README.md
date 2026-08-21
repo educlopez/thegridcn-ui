@@ -8,7 +8,8 @@ The registry system provides:
 - **Automatic component discovery**: Scans the `src/components/ui/` directory
 - **Dependency tracking**: Automatically detects component dependencies
 - **Registry index**: Generates a TypeScript registry index for programmatic access
-- **shadcn UI compatibility**: Updates `components.json` with registry configuration
+- **shadcn UI compatibility**: Generates `registry.json` for `shadcn build`
+- **Radix and Base UI presets**: `src/registry/design-system.ts` ships `registry:base` (`radix-vega`, `base-vega`) and Tron `registry:font` items. `pnpm registry:update` merges them into `registry.json`.
 
 ## Usage
 
@@ -21,11 +22,10 @@ pnpm registry:update
 ```
 
 This command will:
-1. Scan all components in `src/components/ui/`
+1. Scan all components in `src/components/ui/` and `src/components/thegridcn/`
 2. Extract dependencies and registry dependencies
-3. Update `components.json` with the registry
-4. Generate `src/registry/index.ts` with the registry index
-5. Generate `registry.json` in shadcn UI registry format
+3. Generate `src/registry/index.ts` with the registry index
+4. Generate `registry.json` in shadcn UI registry format
 
 ### Using the Registry Programmatically
 

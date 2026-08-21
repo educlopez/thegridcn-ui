@@ -28,17 +28,6 @@
       "dependencies": ["class-variance-authority"]
     },
     {
-      "name": "alert",
-      "type": "registry:component",
-      "title": "Alert",
-      "files": [
-        {
-          "path": "src/components/thegridcn/alert.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
       "name": "alert-dialog",
       "type": "registry:component",
       "title": "Alert Dialog",
@@ -1628,6 +1617,128 @@
           "path": "src/components/thegridcn/alert.tsx",
           "type": "registry:component"
         }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "font-rajdhani",
+      "type": "registry:font",
+      "title": "Rajdhani",
+      "description": "Rajdhani body font used by The Gridcn.",
+      "font": {
+        "family": "'Rajdhani', sans-serif",
+        "import": "Rajdhani",
+        "provider": "google",
+        "subsets": ["latin"],
+        "variable": "--font-sans",
+        "weight": ["300", "400", "500", "600", "700"]
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "font-orbitron",
+      "type": "registry:font",
+      "title": "Orbitron",
+      "description": "Orbitron display/heading font used by The Gridcn.",
+      "font": {
+        "family": "'Orbitron', sans-serif",
+        "import": "Orbitron",
+        "provider": "google",
+        "subsets": ["latin"],
+        "variable": "--font-heading",
+        "weight": ["400", "500", "600", "700", "800", "900"]
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "font-geist-mono",
+      "type": "registry:font",
+      "title": "Geist Mono",
+      "description": "Geist Mono code font used by The Gridcn.",
+      "font": {
+        "family": "'Geist Mono Variable', monospace",
+        "import": "Geist_Mono",
+        "provider": "google",
+        "subsets": ["latin"],
+        "variable": "--font-mono"
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "radix-vega",
+      "type": "registry:base",
+      "title": "The Gridcn (Radix / Vega)",
+      "description": "The Gridcn on Radix UI with Vega (New York) style, aliases, fonts, and the @thegridcn registry.",
+      "docs": "Configures components.json for Radix UI + Vega (the New York look).\n\nRegisters the @thegridcn namespace and installs Rajdhani, Orbitron, and Geist Mono.\n\nThis site and the copied src/components/ui items use Radix primitives. After this preset, add a theme (theme-ares) and any HUD components.",
+      "extends": "none",
+      "config": {
+        "aliases": {
+          "components": "@/components",
+          "hooks": "@/hooks",
+          "lib": "@/lib",
+          "ui": "@/components/ui",
+          "utils": "@/lib/utils"
+        },
+        "iconLibrary": "lucide",
+        "menuAccent": "subtle",
+        "menuColor": "default",
+        "registries": {
+          "@thegridcn": "https://thegridcn.com/r/{name}.json"
+        },
+        "rsc": true,
+        "rtl": false,
+        "style": "radix-vega",
+        "tailwind": {
+          "baseColor": "neutral",
+          "css": "src/app/globals.css",
+          "cssVariables": true,
+          "prefix": ""
+        },
+        "tsx": true
+      },
+      "registryDependencies": [
+        "font-rajdhani",
+        "font-orbitron",
+        "font-geist-mono"
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "base-vega",
+      "type": "registry:base",
+      "title": "The Gridcn (Base UI / Vega)",
+      "description": "The Gridcn on Base UI with Vega (New York) style, aliases, fonts, and the @thegridcn registry.",
+      "docs": "Configures components.json for Base UI + Vega (the New York look).\n\nRegisters the @thegridcn namespace and installs Rajdhani, Orbitron, and Geist Mono.\n\nTheme CSS, intensity styles, and HUD/thegridcn components are CSS-based and work with Base UI. @thegridcn/button and other ui/ items still copy Radix source — keep your own Base UI primitives for those, or use @thegridcn/radix-vega instead.",
+      "extends": "none",
+      "config": {
+        "aliases": {
+          "components": "@/components",
+          "hooks": "@/hooks",
+          "lib": "@/lib",
+          "ui": "@/components/ui",
+          "utils": "@/lib/utils"
+        },
+        "iconLibrary": "lucide",
+        "menuAccent": "subtle",
+        "menuColor": "default",
+        "registries": {
+          "@thegridcn": "https://thegridcn.com/r/{name}.json"
+        },
+        "rsc": true,
+        "rtl": false,
+        "style": "base-vega",
+        "tailwind": {
+          "baseColor": "neutral",
+          "css": "src/app/globals.css",
+          "cssVariables": true,
+          "prefix": ""
+        },
+        "tsx": true
+      },
+      "registryDependencies": [
+        "font-rajdhani",
+        "font-orbitron",
+        "font-geist-mono"
       ]
     }
   ]
