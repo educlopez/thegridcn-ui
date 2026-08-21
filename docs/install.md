@@ -222,7 +222,6 @@ Verified working:
 
 Known limitations:
 
-- The `components.json` in this repo includes a large inlined `registries` field used internally for the showcase's live source preview. Consumers of the registry don't need it — they only need their own `components.json` scaffolded by `shadcn init`.
 - The 3D components don't declare `ssr: false` in their registry entries. Consumers must wrap them with `dynamic(..., { ssr: false })` themselves (see Troubleshooting).
 
 If you hit anything else, open an issue at the repo.

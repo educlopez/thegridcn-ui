@@ -28,17 +28,6 @@
       "dependencies": ["class-variance-authority"]
     },
     {
-      "name": "alert",
-      "type": "registry:component",
-      "title": "Alert",
-      "files": [
-        {
-          "path": "src/components/thegridcn/alert.tsx",
-          "type": "registry:component"
-        }
-      ]
-    },
-    {
       "name": "alert-dialog",
       "type": "registry:component",
       "title": "Alert Dialog",
