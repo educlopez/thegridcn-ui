@@ -100,19 +100,46 @@ the same recommendation unless new evidence changed the choice.
 
 Risk gate: docs, tests, harness, or isolated contributor-tooling changes are low
 or medium. Auth, secrets, env handling, or anything that could leak tokens:
-high — leave the PR open. This repo publishes a package other people depend on:
-any change to exported components, props, CLI flags, or public types is high
-too, however small — open the PR and leave it ready-for-review. Never merge with failing or skipped checks. Never
+high — leave the PR open. This repo publishes a package other people
+depend on: any change to exported components, props, CLI flags, or public
+types is high too, however small — open the PR and leave it ready-for-review. Never merge with failing or skipped checks. Never
 force-push. Never open competing PRs.
 
 Check for an existing open PR or live Cloud Agent already working the same
 issue. Review that work instead of opening a second PR.
+
+## Hard limits
+
+These hold even when breaking one would let you finish the task. Finishing is
+not the goal; finishing within these limits is.
+
+**Never push to a protected or default branch.** Every change goes on a fresh
+branch and through a pull request, including one you consider trivial.
+
+**Never create, edit, enable, or dispatch a GitHub Actions workflow**, and never
+touch anything else under `.github/`, unless the issue you are investigating is
+itself about that file and the pull request says so. Authoring CI to obtain a
+permission you were not granted is out of bounds — it is privilege escalation
+whatever the intent, and it runs unreviewed code with a repository token.
+
+**Never widen your own access**: no new secrets, no token scope changes, no
+repository or workflow permission edits, no self-approving a pull request.
+
+If a limit blocks you, that is a finding, not an obstacle. Report it and stop.
 
 ## Always finish with an outcome comment
 
 This step is mandatory even when the issue is already closed (for example by a
 merged PR whose body says `Fixes #N`). Closing via autolink is not a comment.
 Post the comment on the issue before you stop.
+
+If you cannot post the comment — the token lacks `issues: write`, or the API
+refuses — do **not** engineer around it. Put the outcome in the pull request
+description, say plainly there that the issue comment could not be posted and
+why, and stop. A missing comment is a small, visible failure. Manufacturing the
+permission to post it (a workflow, a fresh token, a push to the default branch)
+is a large, quiet one.
+
 
 After each listed issue, leave a short GitHub comment that states the outcome
 (`fixed`, `skipped`, `closed`, or `failed`) in one or two sentences. Keep it
