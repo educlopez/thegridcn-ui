@@ -52,3 +52,11 @@ No environment variables are required. The `/components` route is always accessi
 - **Orbitron** - Display/heading font (Tron-style)
 - **Rajdhani** - Body text
 - **Geist Mono** - Monospace/code
+
+## Friction log
+
+Papercuts while developing this repo are GitHub issues labeled `friction`, not
+files in the tree. Load `.cursor/skills/friction-log/SKILL.md` when you hit one
+(policy: `docs/contributing/friction-log.md`). A daily Cursor agent
+([`educlopez/friction-log`](https://github.com/educlopez/friction-log))
+investigates them.
