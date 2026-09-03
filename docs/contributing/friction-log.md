@@ -55,9 +55,9 @@ The investigator chooses one outcome per issue:
 
 A skip comment includes `<!-- friction-log:skipped -->`. Later daily runs ignore
 that issue until @educlopez comments (approve the recommendation, close it, or
-give a different approach). The marker counts only when the automation or an
-owner login wrote it — otherwise any commenter on a public repository could
-silence an issue indefinitely.
+give a different approach). The marker counts only when `github-actions[bot]`,
+`cursor[bot]` or a configured owner login wrote it — otherwise any commenter on
+a public repository could silence an issue indefinitely.
 
 After a successful spawn the sweep comments
 `<!-- friction-log:claimed:YYYY-MM-DD -->` on each issue it handed to the
@@ -65,7 +65,14 @@ agent, and later runs the same UTC day treat those issues as ineligible. A
 second investigator is therefore spawned only for work the first one never
 received. `--force` ignores claims entirely. Only the issues actually listed in
 the prompt are claimed (at most 20); a longer backlog stays eligible so a later
-run picks it up instead of being silenced unread.
+run picks it up instead of being silenced unread. The same trusted-author rule
+applies: a claim is only honoured from those logins.
+
+Claims are written after the agent has already spawned, so a failed write does
+not abort the run — the sweep finishes, names those issue numbers in
+`result.unclaimed`, and warns. Those issues stay unclaimed, so a later run the
+same day can spawn a second investigator on them. That is the deliberate
+trade: a duplicate investigator is recoverable, a silently dropped run is not.
 
 ## Operator controls
 
