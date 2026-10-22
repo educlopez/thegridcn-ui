@@ -10,6 +10,9 @@ export default defineConfig({
     },
   },
   test: {
+    coverage: {
+      include: ["src/**/*.{ts,tsx}"],
+    },
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
   },
