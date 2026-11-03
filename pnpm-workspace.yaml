@@ -44,6 +44,8 @@ overrides:
   "fflate@0.6": "^0.6.11"
   postcss-selector-parser: "^7.1.6"
   "@modelcontextprotocol/sdk": "^1.32.1"
+  # GHSA-mrhx-c7xc-m3w5: every installed zod is 4.x; no 3.x copy in the tree.
+  zod: "4.6.6"
 
 # SECURITY: supply-chain hardening (npm-security-best-practices)
 minimumReleaseAge: 2880
