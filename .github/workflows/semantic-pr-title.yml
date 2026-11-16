@@ -18,7 +18,6 @@ jobs:
   validate:
     name: Validate PR title
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
     steps:
       - name: 📝 Lint PR title against Conventional Commits
         uses: amannn/action-semantic-pull-request@v5.5.3
