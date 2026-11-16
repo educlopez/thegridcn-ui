@@ -19,7 +19,6 @@ jobs:
   lint:
     name: Lint & format
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
@@ -44,7 +43,6 @@ jobs:
   typecheck:
     name: Type check
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
@@ -69,7 +67,6 @@ jobs:
   tests:
     name: Test suite
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
