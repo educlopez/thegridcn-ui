@@ -10,23 +10,23 @@ export const metadata: Metadata = {
     canonical: "https://thegridcn.com/docs/install",
   },
   description:
-    "Install thegridcn components, themes, and tokens via the shadcn CLI. Works with Next.js, Vite, Remix and any React project.",
+    "Install The Gridcn theme and components with the shadcn CLI. Register the namespace, pick Radix UI or Base UI, and add themes and tokens to any React app.",
   openGraph: {
     description:
-      "Install thegridcn components, themes, and tokens via the shadcn CLI.",
+      "Install The Gridcn theme and components with the shadcn CLI. Register the namespace, pick Radix UI or Base UI, and add themes and tokens to any React app.",
     images: [{ height: 630, url: "/api/og/tron", width: 1200 }],
     siteName: "The Gridcn",
-    title: "Install Guide | The Gridcn",
+    title: "Install The Gridcn theme for shadcn/ui | The Gridcn",
     type: "article",
     url: "https://thegridcn.com/docs/install",
   },
-  title: "Install Guide | The Gridcn",
+  title: "Install The Gridcn theme for shadcn/ui | The Gridcn",
   twitter: {
     card: "summary_large_image",
     description:
-      "Install thegridcn components, themes, and tokens via the shadcn CLI.",
+      "Install The Gridcn theme and components with the shadcn CLI. Register the namespace, pick Radix UI or Base UI, and add themes and tokens to any React app.",
     images: ["/api/og/tron"],
-    title: "Install Guide | The Gridcn",
+    title: "Install The Gridcn theme for shadcn/ui | The Gridcn",
   },
 };
 
