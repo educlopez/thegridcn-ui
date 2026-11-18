@@ -147,7 +147,7 @@
       "includes": [
         "src/components/thegridcn/**",
         "src/components/layout/**",
-        "src/app/page.tsx",
+        "src/app/home-page.tsx",
         "src/app/components/page.tsx"
       ],
       "linter": {
