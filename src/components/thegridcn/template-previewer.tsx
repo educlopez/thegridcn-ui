@@ -149,7 +149,7 @@ export function TemplatePreviewer({ name, slug }: TemplatePreviewerProps) {
     DEVICE_CONFIG.find((d) => d.id === device) ?? DEVICE_CONFIG[0];
 
   return (
-    <div className="flex h-screen flex-col bg-background">
+    <div className="flex h-full min-h-0 flex-col bg-background">
       {/* Toolbar header */}
       <header className="grid shrink-0 grid-cols-3 items-center border-border border-b bg-card/95 px-4 py-2.5 backdrop-blur-sm">
         {/* Left: Back + Template name */}

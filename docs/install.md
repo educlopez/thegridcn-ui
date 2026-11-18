@@ -1,6 +1,6 @@
 # Install guide · shadcn CLI
 
-The GridCN ships a [shadcn/ui](https://ui.shadcn.com/)-compatible registry. Every component is a single `npx shadcn add` away, either by namespace (`@thegridcn/button`) or by full URL.
+The GridCN ships a [shadcn/ui](https://ui.shadcn.com/)-compatible registry. Every component is a single `npx shadcn add` away, either by namespace (`@thegridcn/button`) or by full URL. After install, see how to structure a [shadcn grid](/docs/shadcn-grid).
 
 ---
 

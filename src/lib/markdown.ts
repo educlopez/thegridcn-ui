@@ -9,7 +9,11 @@ interface RenderOptions {
 }
 
 export async function renderMarkdownFile(
-  relativePath: "CONTRIBUTING.md" | "docs/api.md" | "docs/install.md",
+  relativePath:
+    | "CONTRIBUTING.md"
+    | "docs/api.md"
+    | "docs/install.md"
+    | "docs/shadcn-grid.md",
   options: RenderOptions = {}
 ): Promise<string> {
   const absolute =
