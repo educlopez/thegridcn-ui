@@ -597,10 +597,20 @@ export function HomePage() {
             </div>
 
             {/* Subtitle */}
-            <p className="mx-auto mb-8 max-w-2xl text-center text-foreground/80 text-lg">
+            <p className="mx-auto mb-4 max-w-2xl text-center text-foreground/80 text-lg">
               <span className="text-primary">Tron UI</span> for React: a
               shadcn/ui theme with HUD components, Greek-god color schemes, and
               Three.js effects.
+            </p>
+            <p className="mx-auto mb-8 max-w-2xl text-center text-foreground/70 text-sm">
+              Need a shadcn grid for dashboards or landings? Read the{" "}
+              <Link
+                href="/docs/shadcn-grid"
+                className="text-primary underline-offset-4 hover:underline"
+              >
+                shadcn grid
+              </Link>{" "}
+              guide.
             </p>
 
             {/* CTA Buttons */}

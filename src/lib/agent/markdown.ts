@@ -16,9 +16,13 @@ export interface MarkdownPage {
 
 const FILE_CACHE = new Map<string, string | null>();
 
-function markdownFilePath(
-  relativePath: "CONTRIBUTING.md" | "docs/api.md" | "docs/install.md"
-): string {
+type ProjectMarkdownFile =
+  | "CONTRIBUTING.md"
+  | "docs/api.md"
+  | "docs/install.md"
+  | "docs/shadcn-grid.md";
+
+function markdownFilePath(relativePath: ProjectMarkdownFile): string {
   switch (relativePath) {
     case "CONTRIBUTING.md":
       return join(process.cwd(), "CONTRIBUTING.md");
@@ -26,6 +30,8 @@ function markdownFilePath(
       return join(process.cwd(), "docs", "api.md");
     case "docs/install.md":
       return join(process.cwd(), "docs", "install.md");
+    case "docs/shadcn-grid.md":
+      return join(process.cwd(), "docs", "shadcn-grid.md");
     default: {
       const _exhaustive: never = relativePath;
       return _exhaustive;
@@ -33,9 +39,7 @@ function markdownFilePath(
   }
 }
 
-function readProjectFile(
-  relativePath: "CONTRIBUTING.md" | "docs/api.md" | "docs/install.md"
-): string | null {
+function readProjectFile(relativePath: ProjectMarkdownFile): string | null {
   if (FILE_CACHE.has(relativePath)) {
     return FILE_CACHE.get(relativePath) ?? null;
   }
@@ -247,6 +251,9 @@ export function getMarkdownForPath(pathname: string): MarkdownPage {
       break;
     case "/docs/install":
       body = readProjectFile("docs/install.md") ?? fallbackMarkdown(path);
+      break;
+    case "/docs/shadcn-grid":
+      body = readProjectFile("docs/shadcn-grid.md") ?? fallbackMarkdown(path);
       break;
     case "/game":
       body = gameMarkdown();

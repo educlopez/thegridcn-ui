@@ -43,6 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       lastModified: now,
       priority: 0.7,
+      url: `${BASE_URL}/docs/shadcn-grid`,
+    },
+    {
+      changeFrequency: "monthly",
+      lastModified: now,
+      priority: 0.7,
       url: `${BASE_URL}/docs/api`,
     },
     {

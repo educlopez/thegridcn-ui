@@ -96,12 +96,24 @@ export default function ComponentsPage() {
         <div className="container mx-auto flex flex-col items-center justify-between gap-3 px-4 py-3 sm:flex-row">
           <div className="flex items-center gap-3">
             <div className="hidden h-1.5 w-1.5 animate-pulse bg-primary sm:block" />
-            <p className="text-center font-mono text-[11px] text-foreground/80 tracking-wider sm:text-left">
-              <span className="text-primary">NEW:</span> See these components in
-              action with our <span className="text-foreground">Dashboard</span>{" "}
-              and <span className="text-foreground">Landing Page</span>{" "}
-              templates
-            </p>
+            <div className="flex flex-col gap-1 text-center sm:text-left">
+              <p className="font-mono text-[11px] text-foreground/80 tracking-wider">
+                <span className="text-primary">NEW:</span> See these components
+                in action with our{" "}
+                <span className="text-foreground">Dashboard</span> and{" "}
+                <span className="text-foreground">Landing Page</span> templates
+              </p>
+              <p className="font-mono text-[11px] text-foreground/80 tracking-wider">
+                Building a{" "}
+                <Link
+                  href="/docs/shadcn-grid"
+                  className="text-primary underline underline-offset-2"
+                >
+                  shadcn grid
+                </Link>
+                ? These modules drop into the layout.
+              </p>
+            </div>
           </div>
           <Link
             href="/templates"

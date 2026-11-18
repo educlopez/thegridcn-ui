@@ -70,6 +70,20 @@ export default function TemplatesPickerPage() {
             Full-page compositions demonstrating thegridcn components in
             real-world layouts. Click to view full-screen.
           </p>
+          <p className="mx-auto mt-3 max-w-2xl font-mono text-foreground/60 text-sm">
+            Each template is a full-page Tron UI composition on shadcn/ui. Open
+            one to preview, then install the pieces from the registry.
+          </p>
+          <p className="mx-auto mt-2 max-w-2xl font-mono text-foreground/60 text-sm">
+            Each template is a full-page{" "}
+            <Link
+              href="/docs/shadcn-grid"
+              className="text-primary underline underline-offset-2"
+            >
+              shadcn grid layout
+            </Link>{" "}
+            you can preview and install.
+          </p>
         </div>
 
         {/* Template cards grid */}
