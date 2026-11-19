@@ -513,8 +513,14 @@
   letter-spacing: 0.08em;
 }
 
-.gridcn-prose h1 {
+.gridcn-prose h1,
+.gridcn-prose .gridcn-prose-title {
   font-size: 1.75rem;
+}
+/* Demoted "# Title" from markdown: an h2 that keeps the h1 look. */
+.gridcn-prose .gridcn-prose-title {
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 .gridcn-prose h2 {
   padding-bottom: 0.5rem;

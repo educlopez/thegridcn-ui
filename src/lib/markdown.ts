@@ -36,6 +36,21 @@ export async function renderMarkdown(
     gfm: true,
   });
 
+  // The page shell (DocShell) already renders the page's only <h1>. A
+  // top-level "# Title" in the markdown source becomes an <h2> that keeps
+  // the h1 look, so each docs page ends up with a single H1.
+  marked.use({
+    renderer: {
+      heading({ tokens, depth }) {
+        if (depth !== 1) {
+          return false;
+        }
+        const inner = this.parser.parseInline(tokens);
+        return `<h2 class="gridcn-prose-title">${inner}</h2>\n`;
+      },
+    },
+  });
+
   marked.use({
     async: true,
     async walkTokens(token) {
