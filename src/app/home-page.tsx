@@ -542,16 +542,16 @@ export function HomePage() {
       {/* Main content */}
       <main className="relative z-10">
         {/* Hero section */}
-        <section className="relative min-h-[100vh] overflow-hidden">
+        {/*
+          DOM order puts the title and the "Tron UI for React" sentence before
+          the HUD decoration, so crawlers and screen readers reach the
+          explanation first. Flex `order-first` and absolute positioning keep
+          the visual layout unchanged.
+        */}
+        <section className="relative flex min-h-[100vh] flex-col overflow-hidden">
           {/* Grid map overlay */}
           <GridMap />
           <GridScanOverlay />
-
-          {/* Uplink header bar - project info */}
-          <UplinkHeader
-            leftText={`THEME: ${currentTheme?.name.toUpperCase() || "ARES"} - ${currentTheme?.god.toUpperCase() || "GOD OF WAR"}`}
-            rightText="COMPONENTS: 50+ MODULES • THEMES: 6 VARIANTS • STATUS: ACTIVE"
-          />
 
           {/* HUD corner frames */}
           <div className="pointer-events-none absolute top-10 right-4 bottom-4 left-4 z-20 hidden lg:block">
@@ -565,8 +565,25 @@ export function HomePage() {
           <div className="container relative mx-auto px-4 py-12 md:py-20">
             {/* Central content with HUD frame */}
             <div className="relative mx-auto max-w-4xl">
-              {/* Outer scanning frame */}
-              <div className="absolute -inset-4 md:-inset-8">
+              {/* Title content */}
+              <div className="relative z-10 flex flex-col py-12 text-center md:py-16">
+                <h1 className="font-black font-display text-6xl text-primary tracking-[0.15em] [text-shadow:0_0_80px_oklch(from_var(--primary)_l_c_h/0.5),0_0_160px_oklch(from_var(--primary)_l_c_h/0.3)] md:text-8xl lg:text-[9rem]">
+                  THE GRIDCN
+                </h1>
+                <div className="mt-4 font-mono text-primary text-sm tracking-[0.4em] md:text-base">
+                  TRON THEME SYSTEM FOR SHADCN/UI
+                </div>
+                {/* Decorative label: rendered above the title via order-first */}
+                <div
+                  aria-hidden="true"
+                  className="order-first mb-3 font-mono text-[10px] text-foreground/80 tracking-[0.5em]"
+                >
+                  CLASSIFIED PROJECT
+                </div>
+              </div>
+
+              {/* Outer scanning frame (absolute, decorative) */}
+              <div aria-hidden="true" className="absolute -inset-4 md:-inset-8">
                 <div className="absolute inset-0 border border-primary/20" />
                 <div className="absolute -top-1 -left-1 h-10 w-10 border-primary border-t-2 border-l-2" />
                 <div className="absolute -top-1 -right-1 h-10 w-10 border-primary border-t-2 border-r-2" />
@@ -578,21 +595,11 @@ export function HomePage() {
               </div>
 
               {/* Scanning reticle */}
-              <div className="absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 opacity-20">
+              <div
+                aria-hidden="true"
+                className="absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 opacity-20"
+              >
                 <Reticle size={500} variant="scanning" />
-              </div>
-
-              {/* Title content */}
-              <div className="relative z-10 py-12 text-center md:py-16">
-                <div className="mb-3 font-mono text-[10px] text-foreground/80 tracking-[0.5em]">
-                  CLASSIFIED PROJECT
-                </div>
-                <h1 className="font-black font-display text-6xl text-primary tracking-[0.15em] [text-shadow:0_0_80px_oklch(from_var(--primary)_l_c_h/0.5),0_0_160px_oklch(from_var(--primary)_l_c_h/0.3)] md:text-8xl lg:text-[9rem]">
-                  THE GRIDCN
-                </h1>
-                <div className="mt-4 font-mono text-primary text-sm tracking-[0.4em] md:text-base">
-                  TRON THEME SYSTEM FOR SHADCN/UI
-                </div>
               </div>
             </div>
 
@@ -673,6 +680,14 @@ export function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* Uplink header bar - project info (shown at the top via order-first) */}
+          <UplinkHeader
+            aria-hidden="true"
+            className="order-first"
+            leftText={`THEME: ${currentTheme?.name.toUpperCase() || "ARES"} - ${currentTheme?.god.toUpperCase() || "GOD OF WAR"}`}
+            rightText="COMPONENTS: 50+ MODULES • THEMES: 6 VARIANTS • STATUS: ACTIVE"
+          />
 
           {/* Bottom scroll indicator */}
           <div className="absolute right-0 bottom-0 left-0">
