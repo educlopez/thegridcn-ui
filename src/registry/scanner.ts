@@ -3,6 +3,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
 import type { PackageJson } from "type-fest";
 import { type DesignSystemItem, mergeDesignSystemItems } from "./design-system";
+import { FEATURE_ITEMS, type FeatureItem } from "./feature-items";
 
 export interface ComponentDependency {
   name: string;
@@ -326,7 +327,7 @@ export interface RegistryItem {
 export interface ShadcnRegistry {
   $schema: string;
   homepage?: string;
-  items: Array<RegistryItem | DesignSystemItem>;
+  items: Array<RegistryItem | DesignSystemItem | FeatureItem>;
   name: string;
 }
 
@@ -389,9 +390,13 @@ export async function generateShadcnRegistry(
     componentsDirs,
     options?.includeVersions
   );
-  const items: RegistryItem[] = [];
+  const items: Array<RegistryItem | FeatureItem> = [...FEATURE_ITEMS];
+  const featureNames = new Set<string>(FEATURE_ITEMS.map(({ name }) => name));
 
   for (const entry of entries) {
+    if (featureNames.has(entry.name)) {
+      continue;
+    }
     const fileContent = entry.files[0]?.content || "";
     const description = extractDescription(fileContent);
 

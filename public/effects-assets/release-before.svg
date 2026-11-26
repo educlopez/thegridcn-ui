@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <title>Release overview with individual build logs</title>
+  <rect width="640" height="360" fill="#101721" />
+  <rect
+    x="38"
+    y="34"
+    width="564"
+    height="292"
+    rx="13"
+    fill="#131e2b"
+    stroke="#465e74"
+  />
+  <path d="M38 81h564M154 81v245" stroke="#465e74" />
+  <g fill="#cbd9e6" font-family="monospace">
+    <text x="62" y="64" font-size="17">RELEASE OVERVIEW</text>
+    <text x="174" y="111" font-size="14">BUILD LOGS</text>
+    <text x="62" y="115" font-size="10">BUILDS</text>
+    <text x="62" y="143" font-size="10">ARTIFACTS</text>
+    <text x="62" y="171" font-size="10">PIPELINES</text>
+    <text x="190" y="157" font-size="14">#1204 application / main</text>
+    <text x="190" y="195" font-size="14">#1203 worker / main</text>
+    <text x="190" y="233" font-size="14">#1202 api / staging</text>
+    <text x="190" y="271" font-size="14">#1201 application / main</text>
+  </g>
+  <path
+    d="M172 126h409m-409 47h409m-409 38h409m-409 38h409m-409 38h409"
+    stroke="#465e74"
+  />
+</svg>

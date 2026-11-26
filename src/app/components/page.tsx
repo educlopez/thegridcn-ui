@@ -10,6 +10,7 @@ import {
   Preview,
 } from "@/components/components-page";
 import { TheGridcnLogo, TronHeader } from "@/components/layout";
+import { SoundToggle } from "@/components/sounds/sound-toggle";
 import { UplinkHeader } from "@/components/thegridcn";
 import { type ComponentItem, getComponentById } from "@/lib/component-data";
 import { cn } from "@/lib/utils";
@@ -29,20 +30,25 @@ export default function ComponentsPage() {
 
   // Get component from URL hash or default
   React.useEffect(() => {
-    const hash = window.location.hash.slice(1);
-    if (hash) {
-      const component = getComponentById(hash);
-      if (component) {
-        setSelectedComponentId(component.id);
-      }
-    } else {
-      // Default to data-card component
-      const dataCard = getComponentById("data-card");
-      if (dataCard) {
-        setSelectedComponentId(dataCard.id);
-        window.history.replaceState(null, "", `#${dataCard.id}`);
+    function syncHash() {
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        const component = getComponentById(hash);
+        if (component) {
+          setSelectedComponentId(component.id);
+        }
+      } else {
+        // Default to data-card component
+        const dataCard = getComponentById("data-card");
+        if (dataCard) {
+          setSelectedComponentId(dataCard.id);
+          window.history.replaceState(null, "", `#${dataCard.id}`);
+        }
       }
     }
+    syncHash();
+    window.addEventListener("hashchange", syncHash);
+    return () => window.removeEventListener("hashchange", syncHash);
   }, []);
 
   // Close panels when selecting a component
@@ -115,13 +121,22 @@ export default function ComponentsPage() {
               </p>
             </div>
           </div>
-          <Link
-            href="/templates"
-            className="group flex shrink-0 items-center gap-2 rounded border border-primary/50 bg-primary/10 px-4 py-1.5 font-mono text-[10px] text-primary uppercase tracking-widest transition-all hover:bg-primary/20 hover:shadow-[0_0_12px_rgba(var(--primary-rgb,0,180,255),0.15)]"
-          >
-            View Templates
-            <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-          </Link>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <SoundToggle />
+            <Link
+              className="inline-flex min-h-11 items-center gap-1 rounded border border-primary/30 px-3 font-mono text-xs hover:bg-primary/10"
+              href="/sounds"
+            >
+              Sounds <ArrowRight aria-hidden="true" size={14} />
+            </Link>
+            <Link
+              href="/templates"
+              className="group flex shrink-0 items-center gap-2 rounded border border-primary/50 bg-primary/10 px-4 py-1.5 font-mono text-[10px] text-primary uppercase tracking-widest transition-all hover:bg-primary/20 hover:shadow-[0_0_12px_rgba(var(--primary-rgb,0,180,255),0.15)]"
+            >
+              View Templates
+              <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </div>
         </div>
       </div>
 

@@ -24,6 +24,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       changeFrequency: "monthly",
       lastModified: now,
+      priority: 0.7,
+      url: `${BASE_URL}/sounds`,
+    },
+    {
+      changeFrequency: "monthly",
+      lastModified: now,
+      priority: 0.7,
+      url: `${BASE_URL}/effects`,
+    },
+    {
+      changeFrequency: "monthly",
+      lastModified: now,
       priority: 0.8,
       url: `${BASE_URL}/templates`,
     },

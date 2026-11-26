@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -7,7 +8,7 @@ import * as React from "react";
 import { SiteFooter, TronHeader } from "@/components/layout";
 import { usePrimitive } from "@/components/registry/primitive-provider";
 import { PrimitiveSwitcherCompact } from "@/components/registry/primitive-switcher";
-import { ThemeShowcaseSection } from "@/components/showcase";
+import { SoundDeck } from "@/components/sounds/sound-deck";
 import {
   GridScanOverlay,
   Radar,
@@ -28,6 +29,12 @@ import {
   StatusStrip,
   ThemeDossierSelector,
 } from "@/components/website";
+import { GalleryAtlas } from "@/components/website/gallery-atlas";
+import {
+  RebootLab,
+  RebootTerminal,
+  StackInspector,
+} from "@/components/website/reboot-lab";
 import {
   buildComponentInstallCommand,
   downloadComponentsJson,
@@ -694,9 +701,12 @@ export function HomePage() {
             <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
             <div className="flex items-center justify-center gap-8 py-3">
               <div className="h-px w-24 bg-gradient-to-r from-transparent to-primary/50" />
-              <div className="animate-bounce font-mono text-[9px] text-foreground/80 tracking-widest">
-                ↓ SCROLL ↓
-              </div>
+              <Link
+                className="inline-flex min-h-11 items-center gap-2 font-mono text-foreground/80 text-xs tracking-widest hover:text-primary focus-visible:outline-2 focus-visible:outline-primary"
+                href="#reboot"
+              >
+                TRY THE LIVE EFFECTS <ArrowDown aria-hidden="true" size={14} />
+              </Link>
               <div className="h-px w-24 bg-gradient-to-l from-transparent to-primary/50" />
             </div>
           </div>
@@ -707,8 +717,30 @@ export function HomePage() {
           <ThemeDossierSelector />
         </div>
 
-        {/* Theme Showcase grid */}
-        <ThemeShowcaseSection />
+        <section
+          className="mx-auto max-w-6xl px-4 py-16"
+          id="gallery-atlas"
+          aria-labelledby="atlas-title"
+        >
+          <p className="font-mono text-primary text-xs tracking-widest">
+            REGISTRY / PERCEPTION FIELD
+          </p>
+          <h2 className="mt-2 font-display text-3xl" id="atlas-title">
+            Explore the component gallery
+          </h2>
+          <p className="mt-2 mb-5 text-muted-foreground text-sm">
+            Move over a sector or select its name to reveal the components
+            inside.
+          </p>
+          <GalleryAtlas />
+          <Link
+            className="mt-4 inline-flex min-h-11 items-center gap-2 text-primary text-sm underline-offset-4 hover:underline"
+            href="/components"
+          >
+            Browse the full registry{" "}
+            <ArrowUpRight aria-hidden="true" size={15} />
+          </Link>
+        </section>
 
         {/* Features Section */}
         <section
@@ -858,6 +890,7 @@ export function HomePage() {
                 }
               />
             </div>
+            <RebootLab />
           </div>
         </section>
 
@@ -877,33 +910,35 @@ export function HomePage() {
             </div>
 
             <div className="mx-auto max-w-4xl">
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
-                {[
-                  { name: "React", status: "UI" },
-                  { name: "Tailwind", status: "STYLE" },
-                  { name: "shadcn/ui", status: "COMPONENTS" },
-                  { name: "Three.js", status: "3D" },
-                  { name: "TypeScript", status: "TYPES" },
-                ].map((tech) => (
-                  <div
-                    key={tech.name}
-                    className="group relative overflow-hidden border border-border/50 bg-card/30 p-4 backdrop-blur-sm transition-all hover:border-primary/50 hover:bg-card/50"
-                  >
-                    {/* Corner decorations */}
-                    <div className="absolute -top-px -left-px h-3 w-3 border-primary/40 border-t-2 border-l-2 transition-colors group-hover:border-primary" />
-                    <div className="absolute -right-px -bottom-px h-3 w-3 border-primary/40 border-r-2 border-b-2 transition-colors group-hover:border-primary" />
+              <StackInspector>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+                  {[
+                    { name: "React", status: "UI" },
+                    { name: "Tailwind", status: "STYLE" },
+                    { name: "shadcn/ui", status: "COMPONENTS" },
+                    { name: "Three.js", status: "3D" },
+                    { name: "TypeScript", status: "TYPES" },
+                  ].map((tech) => (
+                    <div
+                      key={tech.name}
+                      className="group relative overflow-hidden border border-border/50 bg-card/30 p-4 backdrop-blur-sm transition-all hover:border-primary/50 hover:bg-card/50"
+                    >
+                      {/* Corner decorations */}
+                      <div className="absolute -top-px -left-px h-3 w-3 border-primary/40 border-t-2 border-l-2 transition-colors group-hover:border-primary" />
+                      <div className="absolute -right-px -bottom-px h-3 w-3 border-primary/40 border-r-2 border-b-2 transition-colors group-hover:border-primary" />
 
-                    <div className="text-center">
-                      <div className="font-mono text-[8px] text-foreground/80 tracking-widest">
-                        {tech.status}
-                      </div>
-                      <div className="font-bold font-display text-primary text-sm tracking-wider">
-                        {tech.name}
+                      <div className="text-center">
+                        <div className="font-mono text-[8px] text-foreground/80 tracking-widest">
+                          {tech.status}
+                        </div>
+                        <div className="font-bold font-display text-primary text-sm tracking-wider">
+                          {tech.name}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </StackInspector>
             </div>
           </div>
         </section>
@@ -1281,58 +1316,92 @@ export function HomePage() {
           </div>
         </section>
 
+        <section
+          aria-labelledby="grid-sounds-title"
+          className="scroll-mt-16 border-primary/20 border-t bg-background py-16 sm:py-24"
+          id="grid-sounds"
+        >
+          <div className="container mx-auto grid items-center gap-8 px-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] lg:gap-14">
+            <div>
+              <p className="font-mono text-primary text-xs tracking-widest">
+                AUDIO / GRID SOUNDS
+              </p>
+              <h2
+                className="mt-3 font-bold font-display text-3xl tracking-tight sm:text-4xl"
+                id="grid-sounds-title"
+              >
+                Hear the interface.
+              </h2>
+              <p className="mt-4 max-w-md text-foreground/75 leading-relaxed">
+                Give a launch, a selection, or a confirmation its own cue.
+                Audition three sounds here, or explore the bank and download the
+                WAVs.
+              </p>
+              <Link
+                className="mt-5 inline-flex min-h-11 items-center gap-2 rounded border border-primary/40 bg-primary/10 px-4 font-mono text-primary text-xs hover:bg-primary/20 focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                href="/sounds"
+              >
+                Open sound gallery <ArrowUpRight aria-hidden="true" size={15} />
+              </Link>
+            </div>
+            <SoundDeck sampler />
+          </div>
+        </section>
+
         {/* Final CTA */}
         <section className="relative border-primary/20 border-t py-24">
           <GridScanOverlay />
 
           <div className="container relative mx-auto px-4 text-center">
             {/* Terminal-style CTA box */}
-            <div className="relative mx-auto max-w-2xl overflow-hidden border border-primary/30 bg-panel">
-              {/* Corner brackets - Tron style */}
-              <div className="absolute -top-px -left-px h-4 w-4 border-primary border-t-2 border-l-2" />
-              <div className="absolute -top-px -right-px h-4 w-4 border-primary border-t-2 border-r-2" />
-              <div className="absolute -bottom-px -left-px h-4 w-4 border-primary border-b-2 border-l-2" />
-              <div className="absolute -right-px -bottom-px h-4 w-4 border-primary border-r-2 border-b-2" />
+            <RebootTerminal>
+              <div className="relative overflow-hidden border border-primary/30 bg-panel">
+                {/* Corner brackets - Tron style */}
+                <div className="absolute -top-px -left-px h-4 w-4 border-primary border-t-2 border-l-2" />
+                <div className="absolute -top-px -right-px h-4 w-4 border-primary border-t-2 border-r-2" />
+                <div className="absolute -bottom-px -left-px h-4 w-4 border-primary border-b-2 border-l-2" />
+                <div className="absolute -right-px -bottom-px h-4 w-4 border-primary border-r-2 border-b-2" />
 
-              {/* Scanline effect */}
-              <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
+                {/* Scanline effect */}
+                <div className="crt-scanlines pointer-events-none absolute inset-0 opacity-[0.03]" />
 
-              {/* Header bar */}
-              <div className="relative border-primary/30 border-b bg-primary/5 px-4 py-2">
-                <div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-primary via-primary/50 to-transparent" />
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1">
-                      <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
-                      <div className="h-1.5 w-3 bg-primary/60" />
+                {/* Header bar */}
+                <div className="relative border-primary/30 border-b bg-primary/5 px-4 py-2">
+                  <div className="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-primary via-primary/50 to-transparent" />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1">
+                        <div className="h-1.5 w-1.5 animate-pulse bg-primary" />
+                        <div className="h-1.5 w-3 bg-primary/60" />
+                      </div>
+                      <span className="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">
+                        AWAITING USER INPUT
+                      </span>
                     </div>
-                    <span className="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">
-                      AWAITING USER INPUT
-                    </span>
-                  </div>
-                  <div className="font-mono text-[9px] tracking-wider">
-                    <span className="text-primary">[ READY ]</span>
+                    <div className="font-mono text-[9px] tracking-wider">
+                      <span className="text-primary">[ READY ]</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Content */}
-              <div className="relative px-8 py-12 md:px-16">
-                <h2 className="mb-6 font-bold font-display text-4xl text-primary tracking-wider [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)] md:text-5xl">
-                  READY TO ENTER?
-                </h2>
-                <p className="mx-auto mb-8 max-w-xl text-foreground/80">
-                  Explore all components, customize themes, and build immersive
-                  digital experiences.
-                </p>
-                <Link
-                  href="/components"
-                  className="group relative inline-flex overflow-hidden rounded border-2 border-primary bg-primary px-12 py-4 font-bold font-mono text-primary-foreground text-sm tracking-wider transition-all hover:shadow-[0_0_40px_var(--primary)]"
-                >
-                  <span className="relative z-10">EXPLORE COMPONENTS</span>
-                </Link>
+                {/* Content */}
+                <div className="relative px-8 py-12 md:px-16">
+                  <h2 className="mb-6 font-bold font-display text-4xl text-primary tracking-wider [text-shadow:0_0_40px_oklch(from_var(--primary)_l_c_h/0.4)] md:text-5xl">
+                    READY TO ENTER?
+                  </h2>
+                  <p className="mx-auto mb-8 max-w-xl text-foreground/80">
+                    Explore all components, customize themes, and build
+                    immersive digital experiences.
+                  </p>
+                  <Link
+                    href="/components"
+                    className="group relative inline-flex max-w-full overflow-hidden rounded border-2 border-primary bg-primary px-5 py-4 font-bold font-mono text-primary-foreground text-sm tracking-wider transition-all hover:shadow-[0_0_40px_var(--primary)] sm:px-12"
+                  >
+                    <span className="relative z-10">EXPLORE COMPONENTS</span>
+                  </Link>
+                </div>
               </div>
-            </div>
+            </RebootTerminal>
           </div>
         </section>
       </main>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
+import { SoundToggle } from "@/components/sounds/sound-toggle";
 import { cn } from "@/lib/utils";
 import { TheGridcnLogo } from "./thegridcn-logo";
 
@@ -65,6 +66,9 @@ function CloseIcon({ className }: { className?: string }) {
   );
 }
 
+const navActionClass =
+  "inline-flex h-11 min-h-11 min-w-11 items-center justify-center rounded border border-primary/30 bg-primary/5 transition-colors hover:border-primary/50 hover:bg-primary/10 focus-visible:outline-2 focus-visible:outline-primary sm:h-9 sm:min-h-9 sm:min-w-9";
+
 function GitHubStars() {
   const [stars, setStars] = React.useState<number | null>(null);
 
@@ -94,7 +98,7 @@ function GitHubStars() {
       href="https://github.com/educlopez/thegridcn-ui"
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-1.5 rounded border border-primary/30 bg-primary/5 px-2.5 py-1.5 font-mono text-xs transition-colors hover:border-primary/50 hover:bg-primary/10"
+      className={cn(navActionClass, "gap-1.5 px-2.5 font-mono text-xs")}
     >
       <GitHubIcon className="h-4 w-4 text-primary" />
       <span className="text-primary">
@@ -120,6 +124,8 @@ export function TronHeader({ navItems }: TronHeaderProps) {
   const defaultNavItems: NavItem[] = [
     { href: "/", label: "HOME" },
     { href: "/components", label: "COMPONENTS" },
+    { href: "/effects", label: "EFFECTS" },
+    { href: "/sounds", label: "SOUNDS" },
     { href: "/templates", label: "TEMPLATES" },
     { href: "/game", label: "GAME" },
   ];
@@ -168,7 +174,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "group relative px-4 py-2 font-mono text-xs tracking-widest transition-colors",
+                    "group relative px-2.5 py-2 font-mono text-xs tracking-widest transition-colors xl:px-4",
                     pathname === item.href
                       ? "text-primary"
                       : "text-foreground hover:text-primary"
@@ -190,6 +196,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
 
             {/* Right section - Social & Actions */}
             <div className="flex flex-1 items-center justify-end gap-3">
+              <SoundToggle className={navActionClass} compact />
               {/* GitHub Stars */}
               <div className="hidden sm:block">
                 <GitHubStars />
@@ -197,10 +204,11 @@ export function TronHeader({ navItems }: TronHeaderProps) {
 
               {/* X (Twitter) Link */}
               <a
+                aria-label="X"
                 href="https://x.com/educalvolpz"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center rounded border border-primary/30 bg-primary/5 px-2.5 py-1.5 transition-colors hover:border-primary/50 hover:bg-primary/10"
+                className={navActionClass}
               >
                 <XIcon className="h-4 w-4 text-primary" />
               </a>
@@ -209,7 +217,7 @@ export function TronHeader({ navItems }: TronHeaderProps) {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="flex items-center rounded border border-primary/30 bg-primary/5 px-2.5 py-1.5 text-primary transition-colors hover:border-primary/50 hover:bg-primary/10 lg:hidden"
+                className={cn(navActionClass, "text-primary lg:hidden")}
                 aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 {mobileMenuOpen ? (

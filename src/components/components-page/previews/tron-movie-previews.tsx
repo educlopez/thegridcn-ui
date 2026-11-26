@@ -115,6 +115,11 @@ import {
   VideoProgress,
   Waveform,
 } from "@/components/thegridcn";
+import {
+  playGridSound,
+  prepareGridSound,
+  useGridSoundEnabled,
+} from "@/lib/grid-sounds";
 
 // Dynamic 3D components
 const Grid3D = dynamic(
@@ -758,19 +763,25 @@ export const GaugePreview = React.memo(function GaugePreview() {
 
 export const WaveformPreview = React.memo(function WaveformPreview() {
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const soundEnabled = useGridSoundEnabled();
   const audioCtxRef = React.useRef<AudioContext | null>(null);
   const oscillatorsRef = React.useRef<OscillatorNode[]>([]);
 
+  const stop = React.useCallback(() => {
+    for (const oscillator of oscillatorsRef.current) {
+      oscillator.stop();
+    }
+    oscillatorsRef.current = [];
+    audioCtxRef.current?.close().catch(() => undefined);
+    audioCtxRef.current = null;
+  }, []);
+
   function toggleAudio() {
-    if (isPlaying) {
-      oscillatorsRef.current.forEach((o) => {
-        try {
-          o.stop();
-        } catch {}
-      });
-      oscillatorsRef.current = [];
-      audioCtxRef.current?.close();
-      audioCtxRef.current = null;
+    if (!soundEnabled || typeof AudioContext === "undefined") {
+      return;
+    }
+    if (audioCtxRef.current) {
+      stop();
       setIsPlaying(false);
       return;
     }
@@ -809,17 +820,13 @@ export const WaveformPreview = React.memo(function WaveformPreview() {
     setIsPlaying(true);
   }
 
-  React.useEffect(
-    () => () => {
-      oscillatorsRef.current.forEach((o) => {
-        try {
-          o.stop();
-        } catch {}
-      });
-      audioCtxRef.current?.close();
-    },
-    []
-  );
+  React.useEffect(() => {
+    if (!soundEnabled) {
+      stop();
+      setIsPlaying(false);
+    }
+    return stop;
+  }, [soundEnabled, stop]);
 
   return (
     <div className="space-y-4">
@@ -832,11 +839,17 @@ export const WaveformPreview = React.memo(function WaveformPreview() {
       <div className="flex items-center justify-center gap-4">
         <button
           type="button"
+          disabled={!soundEnabled}
           onClick={toggleAudio}
           className="rounded border border-primary/50 bg-primary/10 px-4 py-1.5 font-mono text-[10px] text-primary uppercase tracking-widest transition-colors hover:bg-primary/20"
         >
-          {isPlaying ? "■ STOP" : "▶ PLAY SYNTH"}
+          {isPlaying ? "Stop synth" : "Play synth"}
         </button>
+        {!soundEnabled && (
+          <p className="text-muted-foreground text-xs">
+            Turn demo sound on to play the synth.
+          </p>
+        )}
       </div>
       <Waveform
         label="SIGNAL MONITOR"
@@ -891,18 +904,43 @@ export const DataStreamPreview = React.memo(function DataStreamPreview() {
   );
 });
 
+const bootSteps = [
+  { duration: 500, label: "Loading kernel modules" },
+  { duration: 700, label: "Initializing network stack" },
+  { duration: 400, label: "Mounting grid filesystem" },
+  { duration: 600, label: "Starting security protocols" },
+  { duration: 300, label: "System ready" },
+];
+
 export const BootSequencePreview = React.memo(function BootSequencePreview() {
+  const [run, setRun] = React.useState(0);
+  const [running, setRunning] = React.useState(false);
+  const onComplete = React.useCallback(() => {
+    setRunning(false);
+    playGridSound("boot");
+  }, []);
+
   return (
     <div className="space-y-4">
+      <button
+        className="min-h-11 rounded border border-primary/40 px-3 font-mono text-primary text-xs hover:bg-primary/10 disabled:opacity-60"
+        disabled={running}
+        onClick={() => {
+          prepareGridSound();
+          playGridSound("activate");
+          setRunning(true);
+          setRun((value) => value + 1);
+        }}
+        type="button"
+      >
+        {running ? "Booting" : "Start boot"}
+      </button>
       <BootSequence
+        autoStart={run > 0}
+        key={run}
+        onComplete={onComplete}
+        steps={bootSteps}
         title="GRID INITIALIZATION"
-        steps={[
-          { duration: 500, label: "Loading kernel modules" },
-          { duration: 700, label: "Initializing network stack" },
-          { duration: 400, label: "Mounting grid filesystem" },
-          { duration: 600, label: "Starting security protocols" },
-          { duration: 300, label: "System ready" },
-        ]}
       />
     </div>
   );
@@ -2194,12 +2232,41 @@ export const TogglePreview = React.memo(function TogglePreview() {
   const [a, setA] = React.useState(true);
   const [b, setB] = React.useState(false);
   const [c, setC] = React.useState(true);
+  const withSound =
+    (setValue: (value: boolean) => void) => (value: boolean) => {
+      setValue(value);
+      playGridSound("select");
+    };
   return (
     <div className="flex flex-col items-start gap-4">
-      <Toggle checked={a} onChange={setA} label="GRID UPLINK" size="md" />
-      <Toggle checked={b} onChange={setB} label="STEALTH MODE" size="md" />
-      <Toggle checked={c} onChange={setC} label="AUTO-SCAN" size="sm" />
-      <Toggle label="DISABLED" size="md" disabled defaultChecked />
+      <Toggle
+        checked={a}
+        onChange={withSound(setA)}
+        aria-label="GRID UPLINK"
+        label="GRID UPLINK"
+        size="md"
+      />
+      <Toggle
+        checked={b}
+        onChange={withSound(setB)}
+        aria-label="STEALTH MODE"
+        label="STEALTH MODE"
+        size="md"
+      />
+      <Toggle
+        checked={c}
+        onChange={withSound(setC)}
+        aria-label="AUTO-SCAN"
+        label="AUTO-SCAN"
+        size="sm"
+      />
+      <Toggle
+        aria-label="DISABLED"
+        label="DISABLED"
+        size="md"
+        disabled
+        defaultChecked
+      />
     </div>
   );
 });
@@ -2515,28 +2582,51 @@ export const AgentAvatarPreview = React.memo(function AgentAvatarPreview() {
 // ---------------------------------------------------------------------------
 
 export const CopyButtonPreview = React.memo(function CopyButtonPreview() {
+  const onCopy = () => playGridSound("confirm");
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <CopyButton
+          onCopy={onCopy}
           value="npm install @thegridcn/ui"
           variant="default"
           size="md"
         >
           COPY
         </CopyButton>
-        <CopyButton value="pnpm add @thegridcn/ui" variant="ghost" size="md">
+        <CopyButton
+          onCopy={onCopy}
+          value="pnpm add @thegridcn/ui"
+          variant="ghost"
+          size="md"
+        >
           GHOST
         </CopyButton>
-        <CopyButton value="yarn add @thegridcn/ui" variant="outline" size="md">
+        <CopyButton
+          onCopy={onCopy}
+          value="yarn add @thegridcn/ui"
+          variant="outline"
+          size="md"
+        >
           OUTLINE
         </CopyButton>
       </div>
       <div className="flex flex-wrap items-center gap-3">
-        <CopyButton value="npx thegridcn init" variant="default" size="sm">
+        <CopyButton
+          onCopy={onCopy}
+          value="npx thegridcn init"
+          variant="default"
+          size="sm"
+        >
           SM DEFAULT
         </CopyButton>
-        <CopyButton value="disabled" variant="default" size="sm" disabled>
+        <CopyButton
+          onCopy={onCopy}
+          value="disabled"
+          variant="default"
+          size="sm"
+          disabled
+        >
           DISABLED
         </CopyButton>
       </div>

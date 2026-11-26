@@ -17,6 +17,8 @@ interface FooterColumn {
 const navigateColumn: FooterColumn = {
   links: [
     { href: "/components", label: "Components" },
+    { href: "/effects", label: "Effects" },
+    { href: "/sounds", label: "Sounds" },
     { href: "/templates", label: "Templates" },
     { href: "/templates/dashboard", label: "Dashboard Template" },
     { href: "/templates/landing", label: "Landing Template" },
