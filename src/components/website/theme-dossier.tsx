@@ -2,7 +2,16 @@
 
 import dynamic from "next/dynamic";
 import * as React from "react";
-import { selectableThemes, useTheme } from "@/components/theme";
+import {
+  ScanReveal,
+  type ScanRevealHandle,
+} from "@/components/thegridcn/scan-reveal";
+import {
+  selectableThemes,
+  type Theme,
+  themes,
+  useTheme,
+} from "@/components/theme";
 import { cn } from "@/lib/utils";
 
 // Dynamic import for 3D component to avoid SSR issues
@@ -13,6 +22,7 @@ const GodAvatar3D = dynamic(
 );
 
 interface ThemeDossierCardProps {
+  busy: boolean;
   godName: string;
   isActive: boolean;
   onClick: () => void;
@@ -54,6 +64,7 @@ const defaultDescription = {
 
 // Memoized card component to prevent unnecessary re-renders (rerender-memo pattern)
 const ThemeDossierCard = React.memo(function ThemeDossierCard({
+  busy,
   themeId,
   themeName,
   themeColor,
@@ -65,6 +76,8 @@ const ThemeDossierCard = React.memo(function ThemeDossierCard({
 
   return (
     <button
+      aria-disabled={busy}
+      aria-pressed={isActive}
       type="button"
       onClick={onClick}
       className={cn(
@@ -244,22 +257,40 @@ const backgroundGridStyle = {
 
 export function ThemeDossierSelector() {
   const { theme, setTheme } = useTheme();
+  const [busy, setBusy] = React.useState(false);
+  const reveal = React.useRef<ScanRevealHandle>(null);
+  const active = themes.find(({ id }) => id === theme);
+
+  const activate = React.useCallback(
+    (next: Theme) => {
+      if (busy || theme === next) {
+        return;
+      }
+      if (reveal.current?.reveal(() => setTheme(next))) {
+        setBusy(true);
+      } else {
+        setTheme(next);
+      }
+    },
+    [busy, setTheme, theme]
+  );
 
   // Memoize the theme cards to avoid recreation
   const themeCards = React.useMemo(
     () =>
       selectableThemes.map((t) => (
         <ThemeDossierCard
+          busy={busy}
           key={t.id}
           themeId={t.id}
           themeName={t.name}
           themeColor={t.color}
           godName={t.god}
           isActive={theme === t.id}
-          onClick={() => setTheme(t.id)}
+          onClick={() => activate(t.id)}
         />
       )),
-    [theme, setTheme]
+    [activate, busy, theme]
   );
 
   return (
@@ -292,22 +323,32 @@ export function ThemeDossierSelector() {
           [ IDENTITY PROFILES • CLICK TO ACTIVATE ]
         </p>
 
+        <ScanReveal
+          className="mb-5"
+          duration={600}
+          onComplete={() => setBusy(false)}
+          ref={reveal}
+          sound="select"
+          variant="pixel"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3 border-primary/30 border-y bg-background px-3 py-3 font-mono text-xs">
+            <div className="flex items-center gap-2" role="status">
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 shrink-0 bg-primary"
+              />
+              <span className="text-foreground/75">Active theme</span>
+              <strong className="text-primary">{active?.name ?? theme}</strong>
+            </div>
+            <span className="text-foreground/65">
+              PIXEL RESOLVE / {selectableThemes.length} THEMES
+            </span>
+          </div>
+        </ScanReveal>
+
         {/* Theme grid */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {themeCards}
-        </div>
-
-        {/* Bottom status bar */}
-        <div className="mt-8 flex items-center justify-between border-primary/30 border-t pt-4">
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-            <span className="font-mono text-foreground/80 text-xs">
-              SYSTEM STATUS: OPERATIONAL
-            </span>
-          </div>
-          <div className="font-mono text-foreground/80 text-xs">
-            {selectableThemes.length} THEMES AVAILABLE
-          </div>
         </div>
       </div>
 

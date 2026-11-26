@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* The registry snapshot contains escaped source strings, not template files. */
+@source not "../registry/index.ts";
+@source not "../../public/r";
+
 @custom-variant dark (&:is(.dark *));
 
 /* Panel background - defined before @theme so it's available for utilities */

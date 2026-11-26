@@ -73,6 +73,69 @@ npx shadcn@latest add @thegridcn/button @thegridcn/hud @thegridcn/radar
 
 See the full walkthrough (namespace vs full URL, theming, tokens, troubleshooting) in [`docs/install.md`](./docs/install.md).
 
+## Effects and sound
+
+Install the Shatter wrapper and its optional sound runtime from the configured registry:
+
+```bash
+npx shadcn@latest add @thegridcn/shatter
+```
+
+```tsx
+"use client";
+
+import { useRef } from "react";
+import { Shatter, type ShatterHandle } from "@/components/thegridcn/shatter";
+
+export function ScanPanel() {
+  const effect = useRef<ShatterHandle>(null);
+
+  return (
+    <Shatter ref={effect} sound="confirm" onComplete={() => {/* update scan state */}}>
+      <section>
+        <h2>Diagnostics</h2>
+        <button type="button" onClick={() => effect.current?.play()}>
+          Run scan
+        </button>
+      </section>
+    </Shatter>
+  );
+}
+```
+
+Shatter uses live HTML when HTML-in-Canvas and WebGL are available. Otherwise it keeps normal DOM and still calls `onComplete`, including with reduced motion. Omit `sound` for a silent wrapper. When you set a cue, it plays only after the user opts in via `setGridSoundEnabled(true)` from `@/lib/grid-sounds` in a user interaction.
+
+The `/sounds` page lets you audition and download ten WAV cues or try them in a step-by-step relay sequence. The showcase's site-wide sound switch starts off and is available in the main navigation.
+
+```bash
+npx shadcn@latest add @thegridcn/sound-pad @thegridcn/sound-sequence
+```
+
+Use `<SoundPad cue="confirm" />` to audition a cue or pass `steps` (each with `id`, `label`, `action`, and `cue`) to `SoundSequence`. Both reuse `@thegridcn/grid-sounds`; install it alone if you only need the engine. Connect to your own opt-in with `setGridSoundEnabled`. A muted sequence still advances and provides visual feedback.
+
+Install the data-inspection effects with the same namespace:
+
+```bash
+npx shadcn@latest add @thegridcn/focus-lens @thegridcn/scan-reveal
+```
+
+- **Focus Lens** wraps real content: `<FocusLens sound="select"><TelemetryTable /></FocusLens>`. Its Inspect data button activates a WebGL glass lens with pointer, touch, or arrow-key magnification; without native capture it enlarges the same DOM in place.
+- **Scan Reveal** wraps an updating panel. Use `useRef<ScanRevealHandle>(null)`, then call `effect.current?.reveal(() => setSnapshot(next))` in an event. Pass a synchronous UI update: the effect captures the old and new panel and distorts them locally along a WebGL scan front, or applies the update directly if native capture or motion is unavailable. Set `sound="confirm"` if the user has enabled sound.
+
+Explore the effects in `/effects`, change the global theme, or switch between Auto and DOM only to compare fallbacks. Effects inherit the panel's CSS color tokens. Set `forceDom` on an effect wrapper to opt out of capture or set `activation="direct"` on Focus Lens to use it without a button. Pixel Resolve, Pulse Reveal and Prism Fold are `ScanReveal` variants (`variant="pixel"`, `variant="pulse"` and `variant="prism"`); Contrast Lens is a `FocusLens` variant (`variant="contrast"`). They reuse the same install items.
+
+The Grid protocol presets are also installable through `@thegridcn/scan-reveal`. For example, wrap a routing update in `<ScanReveal ref={effect} variant="lightcycle" sound="ignition">`. Use `disc` / `disc-lock` for identity verification, `rez` / `materialize` for program loading, and `gate` / `gate-shift` for sector changes. Each cue is optional.
+
+Install the deployment inspector with `npx shadcn@latest add @thegridcn/control-rods @thegridcn/scaffold-diff`. Control Rods takes `samples` with stable IDs and a controlled `pinned` / `onPin` pair. Scaffold Diff takes numeric `rows` with before/after values and a controlled `compared` / `onCompare` pair. Both render ordinary DOM first; native HTML capture animates only on interaction or a reading change. Omit `sound` to stay silent or pass `forceDom` to skip capture.
+
+For product pages and dashboards, install a KPI sparkline (`metric-trend`), a quota meter (`usage-meter`), an image comparison (`before-after`), or an async action that gives separate success/error feedback (`sound-action`):
+
+```bash
+npx shadcn@latest add @thegridcn/metric-trend @thegridcn/usage-meter @thegridcn/before-after @thegridcn/sound-action
+```
+
+For a human-readable event log that reveals its underlying fields, install `@thegridcn/machine-readout` and pass `records` with `id`, `summary`, and `fields: [{ key, value }]`. For a navigable atlas, install `@thegridcn/perception-field` and pass `sectors` with `id`, `title`, `description`, and `entries: [{ label, href }]`. Both accept `forceDom` and an optional `sound` cue. Hovering a sector is silent; its entries remain ordinary links.
+
 ## Theme usage
 
 Wrap your app once, then switch themes anywhere.

@@ -1,12 +1,19 @@
+import { gridProtocols } from "./grid-protocols";
+
 /**
  * Map showcase component IDs to shadcn registry item names.
  * Keep in sync with THEGRIDCN_PREFIXED_NAMES in src/registry/scanner.ts.
  */
 const SPECIAL_REGISTRY_NAMES: Record<string, string> = {
+  ...Object.fromEntries(gridProtocols.map(({ id }) => [id, "scan-reveal"])),
   "alert-banner": "thegridcn-alert",
   badge: "thegridcn-badge",
+  "contrast-lens": "focus-lens",
   "grid-3d": "grid",
   pagination: "thegridcn-pagination",
+  "pixel-resolve": "scan-reveal",
+  "prism-fold": "scan-reveal",
+  "pulse-reveal": "scan-reveal",
   select: "thegridcn-select",
   "sidebar-nav": "sidebar",
   skeleton: "thegridcn-skeleton",
