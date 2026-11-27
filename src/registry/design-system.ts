@@ -91,7 +91,11 @@ export const REGISTRY_FONTS = [
   },
 ] as const;
 
-const FONT_REGISTRY_DEPENDENCIES = REGISTRY_FONTS.map((item) => item.name);
+// Bare names resolve against ui.shadcn.com/r/styles/{style}/.
+// These fonts exist only in this registry, so the CLI must be sent to @thegridcn.
+const FONT_REGISTRY_DEPENDENCIES = REGISTRY_FONTS.map(
+  (item) => `@thegridcn/${item.name}`
+);
 
 const RADIX_VEGA_DOCS = `Configures components.json for Radix UI + Vega (the New York look).
 
