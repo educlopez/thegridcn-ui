@@ -1697,9 +1697,9 @@
         "tsx": true
       },
       "registryDependencies": [
-        "font-rajdhani",
-        "font-orbitron",
-        "font-geist-mono"
+        "@thegridcn/font-rajdhani",
+        "@thegridcn/font-orbitron",
+        "@thegridcn/font-geist-mono"
       ]
     },
     {
@@ -1736,9 +1736,9 @@
         "tsx": true
       },
       "registryDependencies": [
-        "font-rajdhani",
-        "font-orbitron",
-        "font-geist-mono"
+        "@thegridcn/font-rajdhani",
+        "@thegridcn/font-orbitron",
+        "@thegridcn/font-geist-mono"
       ]
     }
   ]
