@@ -10,8 +10,16 @@ import {
   REGISTRY_FONTS,
 } from "@/registry/design-system";
 
+interface RegistryFont {
+  dependency?: string;
+  family: string;
+  import: string;
+  provider: string;
+}
+
 interface RegistryFileItem {
   files?: Array<{ path: string }>;
+  font?: RegistryFont;
   name: string;
   registryDependencies?: string[];
   type: string;
@@ -39,6 +47,38 @@ describe("design-system registry items", () => {
     expect(radix.config.registries["@thegridcn"]).toContain("/r/{name}.json");
     expect(base.config.registries["@thegridcn"]).toBe(
       radix.config.registries["@thegridcn"]
+    );
+  });
+
+  it("installs Rajdhani from the static Fontsource package on Vite", () => {
+    const rajdhani = REGISTRY_FONTS.find(
+      (font) => font.name === "font-rajdhani"
+    );
+    const orbitron = REGISTRY_FONTS.find(
+      (font) => font.name === "font-orbitron"
+    );
+    const geistMono = REGISTRY_FONTS.find(
+      (font) => font.name === "font-geist-mono"
+    );
+
+    expect(rajdhani?.font.dependency).toBe("@fontsource/rajdhani");
+    expect(rajdhani?.font.provider).toBe("google");
+    expect(rajdhani?.font.import).toBe("Rajdhani");
+    expect(rajdhani?.font.family).toBe("'Rajdhani', sans-serif");
+    expect(JSON.stringify(rajdhani)).not.toContain(
+      "@fontsource-variable/rajdhani"
+    );
+    expect(orbitron?.font).not.toHaveProperty("dependency");
+    expect(geistMono?.font).not.toHaveProperty("dependency");
+
+    const published = publishedRegistry.items.find(
+      (item) => item.name === "font-rajdhani"
+    );
+    expect(published?.type).toBe("registry:font");
+    expect(published?.font?.dependency).toBe("@fontsource/rajdhani");
+    expect(published?.font?.provider).toBe("google");
+    expect(JSON.stringify(published)).not.toContain(
+      "@fontsource-variable/rajdhani"
     );
   });
 

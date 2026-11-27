@@ -1626,6 +1626,7 @@
       "title": "Rajdhani",
       "description": "Rajdhani body font used by The Gridcn.",
       "font": {
+        "dependency": "@fontsource/rajdhani",
         "family": "'Rajdhani', sans-serif",
         "import": "Rajdhani",
         "provider": "google",

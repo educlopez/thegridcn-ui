@@ -49,6 +49,11 @@ export const REGISTRY_FONTS = [
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
     description: "Rajdhani body font used by The Gridcn.",
     font: {
+      // Vite installs Fontsource. The CLI defaults to
+      // @fontsource-variable/<name>, and that package does not exist for
+      // Rajdhani. This static package does. Next ignores it and keeps
+      // next/font/google.
+      dependency: "@fontsource/rajdhani",
       family: "'Rajdhani', sans-serif",
       import: "Rajdhani",
       provider: "google" as const,
